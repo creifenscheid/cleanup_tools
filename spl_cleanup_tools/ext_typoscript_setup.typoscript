@@ -1,0 +1,7 @@
+module.tx_splcleanuptools {
+    view {
+        templateRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Templates/
+        partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
+        layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
+    }
+}

@@ -1,0 +1,39 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:fnn="http://typo3.org/ns/Fnn/FnnAmt24/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="content">
+    <div class="container">
+        <h1>Cleanup Tools</h1>
+
+        <div class="misc">
+            <h2>Misc</h2>
+            <div class="row">
+                <f:render partial="Item" arguments="{task:'FlexForms',utility:'FlexForm',utilityAction:'cleanupFlexForms'}" />
+                <f:render partial="Item" arguments="{task:'Versions',utility:'FlexForm',utilityAction:'cleanupVersions'}" />
+            </div>
+        </div>
+
+        <div class="record-related">
+            <h2>Record related</h2>
+            <div class="row">
+                <f:render partial="Item" arguments="{task:'Orphan records',utility:'Record',utilityAction:'cleanupOrphanRecords'}" />
+                <f:render partial="Item" arguments="{task:'Deleted records',utility:'Record',utilityAction:'cleanupDeletedRecords'}" />
+            </div>
+        </div>
+
+        <div class="file-related">
+            <h2>File related</h2>
+            <div class="row">
+                <f:render partial="Item" arguments="{task:'Missing relations',utility:'File',utilityAction:'cleanupMissingRelations',updateReferenceIndex:1}" />
+                <f:render partial="Item" arguments="{task:'Multiple referenced files',utility:'File',utilityAction:'cleanupMultipleReferencedFiles',updateReferenceIndex:1}" />
+                <f:render partial="Item" arguments="{task:'Missing files',utility:'File',utilityAction:'cleanupMissingFiles',updateReferenceIndex:1}" />
+                <f:render partial="Item" arguments="{task:'Lost files',utility:'File',utilityAction:'cleanupLostFiles',updateReferenceIndex:1}" />
+                <f:render partial="Item" arguments="{task:'RTE images',utility:'File',utilityAction:'cleanupRteImages'}" />
+            </div>
+        </div>
+    </div>
+</f:section>
+
+</html>
