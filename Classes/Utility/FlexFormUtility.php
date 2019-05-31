@@ -36,7 +36,7 @@ namespace SPL\SplCleanupTools\Utility;
 class FlexFormUtility
 {
     /**
-     * xxx
+     * FlexForms
      *
      * @return void
      */

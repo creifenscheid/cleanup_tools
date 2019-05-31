@@ -36,27 +36,27 @@ namespace SPL\SplCleanupTools\Utility;
 class FileUtility
 {
     /**
-     * xxx
+     * Missing relations
      *
      * @return void
      */
-    public function cleanupMissingRelations () : void
+    public function cleanupMissingRelations (bool $updateReferenceIndex) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
     }
 
     /**
-     * xxx
+     * Multiple reference files
      *
      * @return void
      */
-    public function cleanupMultipleReferencedFiles () : void
+    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
     }
 
     /**
-     * xxx
+     * RTE images
      *
      * @return void
      */
@@ -66,21 +66,21 @@ class FileUtility
     }
 
     /**
-     * xxx
+     * Missing files
      *
      * @return void
      */
-    public function cleanupMissingFiles () : void
+    public function cleanupMissingFiles (bool $updateReferenceIndex) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
     }
 
     /**
-     * xxx
+     * Lost files
      *
      * @return void
      */
-    public function cleanupLostFiles () : void
+    public function cleanupLostFiles (bool $updateReferenceIndex) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
     }

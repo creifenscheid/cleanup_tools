@@ -28,29 +28,19 @@ namespace SPL\SplCleanupTools\Utility;
  ***************************************************************/
 
 /**
- * Class RecordUtility
+ * Class VersionUtility
  *
  * @package SPL\SplCleanupTools\Utility
  * @author  Christian Reifenscheid
  */
-class RecordUtility
+class VersionUtility
 {
     /**
-     * Orphan records
+     * Versions
      *
      * @return void
      */
-    public function cleanupOrphanRecords () : void
-    {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
-    }
-
-    /**
-     * Deleted records
-     *
-     * @return void
-     */
-    public function cleanupDeletedRecords () : void
+    public function cleanupVersions () : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
     }
