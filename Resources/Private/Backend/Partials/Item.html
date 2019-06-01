@@ -2,7 +2,7 @@
     <h3>{task}</h3>
 
     <f:form action="cleanup" controller="Cleanup" method="post" enctype="multipart/form-data">
-        <f:form.hidden name="utility" value="{utility}"/>
+        <f:form.hidden name="utilityClass" value="{utilityClass}"/>
         <f:form.hidden name="utilityAction" value="{utilityAction}"/>
 
         <f:if condition="{updateReferenceIndex}">

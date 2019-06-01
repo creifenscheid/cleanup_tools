@@ -57,22 +57,46 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             // walk through the files
              while (false !== ($file = readdir($handle))) {
                  if ($file !== '.' && $file !== '..') {
-                     
+                    
                      // push the utilities into the storage
-                     $utilityPaths[] = $utilityFolder.$file;
+                     $utilityPaths[\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', $file)[0]] = $utilityFolder.$file;
                  }
             }
             
             closedir($handle);
         }
         
-        foreach ($utilityPaths as $utilityPath) {
+        // prepare utility information for the view
+        foreach ($utilityPaths as $utilityName => $utilityPath) {
+            
+            // get utility class from file
             $utilityClass = $this->getClassFromFile($utilityPath);
-            // ToDo store utilities and there functions in a multidimensional array
-            var_dump($utilityClass);
+            
+            // store utility name
+            $utilities[$utilityName]['name'] = $utilityName;
+            
+            // store utility class
+            $utilities[$utilityName]['class'] = $utilityClass;
+            
+            // get and store class methods
+            $methods = get_class_methods(new $utilityClass);
+            
+            foreach ($methods as $method) {
+                
+                // prepare method information for view
+                $utilities[$utilityName]['methods'][] = [
+                    
+                    // 1. turn lowerCamelCase method name into lower case underscored
+                    // 2. replace underscores by space
+                    // 3. set the first char to upper case
+                    'name' => ucfirst(str_replace('_',' ',\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($method))),
+                    'method' => $method
+                ];
+            }
         }
-       
-        die();
+        
+        // assign utilities to the view
+        $this->view->assign('utilities', $utilities);
     }
 
     /**
@@ -87,35 +111,31 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $arguments = $this->request->getArguments();
 
         // check for required arguments
-        if ($arguments['utilityAction'] && $arguments['utility']) {
+        if ($arguments['utilityAction'] && $arguments['utilityClass']) {
 
             // get utility and utility action from arguments
-            $utilityName = $arguments['utility'];
+            $utilityClass = $arguments['utilityClass'];
             $utilityActionName = $arguments['utilityAction'];
 
-            // define reflection object
-            /** @var \ReflectionClass $className */
-            $thisReflection = new \ReflectionClass($this);
-
-            // get namespace
-            $thisNamespace = $thisReflection->getNamespaceName();
-
-            // generate utility namespace
-            $utilityNamespace = str_replace('Controller', 'Utility', $thisNamespace) . '\\' . $utilityName . 'Utility';
-
             // init utility
-            $utility = $this->objectManager->get($utilityNamespace);
+            $utility = $this->objectManager->get($utilityClass);
 
             // call action in utility
             $result = $utility->$utilityActionName();
 
             $this->view->assignMultiple([
-                'result' => $result
+                'result' => $result,
+                'service' => $utilityClass
             ]);
         }
     }
     
-    private function getClassFromFile($filePath)
+    /**
+     * Returns the qualified namespace of the given file
+     * 
+     * @param string $filePath - path of the file
+     */
+    private function getClassFromFile(string $filePath) : string
     {
         // grab the file content
         $contents = file_get_contents($filePath);
