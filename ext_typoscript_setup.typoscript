@@ -4,4 +4,33 @@ module.tx_splcleanuptools {
         partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
         layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
     }
+    utilities {
+        SPL\SplCleanupTools\Utility\FileUtility {
+        	methods {
+				excludes =       	
+        	}
+        }
+        SPL\SplCleanupTools\Utility\FlexFormUtility {
+        	methods {
+				excludes = 
+        	}
+        }
+        SPL\SplCleanupTools\Utility\RecordUtility {
+        	methods {
+				excludes =         	
+        	}
+        }
+        SPL\SplCleanupTools\Utility\VersionUtility {
+        	methods {
+				excludes =         	
+        	}
+        }
+    }
+    
+    mapping {
+    	parameter {
+    		# method parameter = form field type
+    		updateReferenceIndex = checkbox
+    	}
+    }
 }

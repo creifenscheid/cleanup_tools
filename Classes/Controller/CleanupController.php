@@ -1,100 +1,102 @@
 <?php
-
 namespace SPL\SplCleanupTools\Controller;
 
-/***************************************************************
+use TYPO3\CMS\Extbase\Mvc\Controller\AbstractController;
+
+/**
+ * *************************************************************
  *
- *  Copyright notice
+ * Copyright notice
  *
- *  (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
- *  All rights reserved
+ * All rights reserved
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ * This script is part of the TYPO3 project. The TYPO3 project is
+ * free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * The GNU General Public License can be found at
+ * http://www.gnu.org/copyleft/gpl.html.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This script is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * This copyright notice MUST APPEAR in all copies of the script!
+ * *************************************************************
+ */
 
 /**
  * Class CleanupController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+
+    /**
+     * Module configuration
+     *
+     * @var array
+     */
+    protected $configuration = [];
+
     /**
      * action index
      *
      * @return void
      */
-    public function indexAction() : void
-    {   
-        // define a storage for all found utility paths
-        $utilityPaths = [];
+    public function indexAction(): void
+    {
+        // init configurationManager
+        $configurationManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
+        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         
-        // define a storage for utilities for the view
+        // init typoscript service
+        $typoscriptService = $this->objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
+        
+        // get module configuration
+        $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
+        
+        // define a storage for utilities
         $utilities = [];
-        
-        // define path to utility folder
-        $utilityFolder = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('spl_cleanup_tools').'Classes/Utility/';
-        
-        // read the folder
-        if ($handle = opendir($utilityFolder)) {
+
+        // loop through configured utilities
+        foreach ($this->configuration['utilities'] as $utilityClass => $utilityConfiguration) {
             
-            // walk through the files
-             while (false !== ($file = readdir($handle))) {
-                 if ($file !== '.' && $file !== '..') {
-                    
-                     // push the utilities into the storage
-                     $utilityPaths[\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('.', $file)[0]] = $utilityFolder.$file;
-                 }
-            }
-            
-            closedir($handle);
-        }
-        
-        // prepare utility information for the view
-        foreach ($utilityPaths as $utilityName => $utilityPath) {
-            
-            // get utility class from file
-            $utilityClass = $this->getClassFromFile($utilityPath);
-            
-            // store utility name
-            $utilities[$utilityName]['name'] = $utilityName;
-            
-            // store utility class
-            $utilities[$utilityName]['class'] = $utilityClass;
+            // set utility information
+            $utilities[$utilityClass] = [
+                'name' => end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $utilityClass)),
+                'class' => $utilityClass
+            ];
             
             // get and store class methods
-            $methods = get_class_methods(new $utilityClass);
+            $methods = get_class_methods(new $utilityClass());
             
+            // loop through every method
             foreach ($methods as $method) {
                 
-                // prepare method information for view
-                $utilities[$utilityName]['methods'][] = [
+                // check method
+                if ($this->checkMethodBlacklist($method, $utilityConfiguration['methods'])) {
                     
-                    // 1. turn lowerCamelCase method name into lower case underscored
-                    // 2. replace underscores by space
-                    // 3. set the first char to upper case
-                    'name' => ucfirst(str_replace('_',' ',\TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($method))),
-                    'method' => $method
-                ];
+                    // prepare method information for view
+                    $utilities[$utilityClass]['methods'][] = [
+                        
+                        // 1. turn lowerCamelCase method name into lower case underscored
+                        // 2. replace underscores by space
+                        // 3. set the first char to upper case
+                        'name' => ucfirst(str_replace('_', ' ', \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($method))),
+                        'method' => $method
+                    ];
+                }
             }
         }
-        
+
         // assign utilities to the view
         $this->view->assign('utilities', $utilities);
     }
@@ -105,7 +107,7 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @return void
      * @throws \ReflectionException
      */
-    public function cleanupAction() : void
+    public function cleanupAction(): void
     {
         // get arguments from request
         $arguments = $this->request->getArguments();
@@ -130,69 +132,17 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
     
-    /**
-     * Returns the qualified namespace of the given file
-     * 
-     * @param string $filePath - path of the file
-     */
-    private function getClassFromFile(string $filePath) : string
-    {
-        // grab the file content
-        $contents = file_get_contents($filePath);
+    private function checkMethodBlacklist ($method, $configuration) : bool {
         
-        // define vars for namespace and class name
-        $namespace = $class = '';
+        // get configured includes and excludes
+        $excludes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configuration['excludes']);
         
-        // set helper values to know that we have found the namespace/class token and need to collect the string values after them
-        $gettingNamespace = $gettingClass = false;
-        
-        // go through each token and evaluate it as necessary
-        foreach (token_get_all($contents) as $token) {
-            
-            // if this token is the namespace declaring, then flag that the next tokens will be the namespace name
-            if (is_array($token) && $token[0] == T_NAMESPACE) {
-                $gettingNamespace = true;
-            }
-            
-            // if this token is the class declaring, then flag that the next tokens will be the class name
-            if (is_array($token) && $token[0] == T_CLASS) {
-                $gettingClass = true;
-            }
-            
-            // while we're grabbing the namespace name...
-            if ($gettingNamespace === true) {
-                
-                // if the token is a string or the namespace separator...
-                if(is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
-                    
-                    // append the token's value to the name of the namespace
-                    $namespace .= $token[1];
-                    
-                }
-                
-                else if ($token === ';') {
-                    
-                    // if the token is the semicolon, then we're done with the namespace declaration
-                    $gettingNamespace = false;
-                    
-                }
-            }
-            
-            // while we're grabbing the class name...
-            if ($gettingClass === true) {
-                
-                // if the token is a string, it's the name of the class
-                if(is_array($token) && $token[0] == T_STRING) {
-                    
-                    // store the token's value as the class name
-                    $class = $token[1];
-                    
-                    break;
-                }
-            }
+        // if method is in excludes - return false to skip the method
+        if (in_array($method, $excludes)) {
+            return false;
         }
         
-        // build and return the fully-qualified class name
-        return $namespace ? $namespace . '\\' . $class : $class;  
+        // if method is not in the configuration - return true to add the method
+        return true;
     }
 }
