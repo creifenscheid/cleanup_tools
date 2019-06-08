@@ -1,5 +1,6 @@
-<div class="col-sm-4">
-    <h3>{task}</h3>
+<div class="col-sm-3">
+    <h2>{task}</h2>
+    <p>{utilityName}</p>
 
     <f:form action="cleanup" controller="Cleanup" method="post" enctype="multipart/form-data">
         <f:form.hidden name="utilityClass" value="{utilityClass}"/>
@@ -12,6 +13,6 @@
             </div>
         </f:if>
 
-        <f:form.submit name="submit" value="Insert broom icon here" class="btn btn-primary"/>
+        <f:form.submit name="submit" value="Clean up" class="btn btn-primary"/>
     </f:form>
 </div>
