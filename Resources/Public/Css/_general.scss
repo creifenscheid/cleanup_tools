@@ -1,0 +1,29 @@
+.main-color {
+	background-color: $mainColor;
+	color: white;
+}
+
+.main-color-hover:hover {
+	background-color: $mainColorDark;
+	color: white;
+	transition: background-color $transitionTime $transitionEffect;
+}
+
+.main-color-dark {
+	background-color: $mainColorDark;
+	color: white;
+}
+
+.item {
+	.headline {
+		font-weight: bold;
+		font-size: 16px;
+		padding-bottom: 5px;
+	}
+	
+	.utility {
+		display: inline;
+		padding: 5px;
+		font-size: 10px;
+    }
+}

@@ -1,0 +1,23 @@
+.main-color {
+  background-color: #005f6a;
+  color: white; }
+
+.main-color-hover:hover {
+  background-color: #003238;
+  color: white;
+  transition: background-color 300ms ease-out; }
+
+.main-color-dark {
+  background-color: #003238;
+  color: white; }
+
+.item .headline {
+  font-weight: bold;
+  font-size: 16px;
+  padding-bottom: 5px; }
+.item .utility {
+  display: inline;
+  padding: 5px;
+  font-size: 10px; }
+
+/*# sourceMappingURL=TxCleanupTools.css.map */
