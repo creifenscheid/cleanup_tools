@@ -1,8 +1,6 @@
 <?php
 namespace SPL\SplCleanupTools\Controller;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\AbstractController;
-
 /**
  * *************************************************************
  *
@@ -75,6 +73,10 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'class' => $utilityClass
             ];
             
+            if ($utilityConfiguration['color']) {
+                $utilities[$utilityClass]['color'] = $utilityConfiguration['color'];
+            }
+            
             // get and store class methods
             $methods = get_class_methods(new $utilityClass());
             
@@ -84,14 +86,25 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 // check method
                 if ($this->checkMethodBlacklist($method, $utilityConfiguration['methods'])) {
                     
+                    $reflection = new \ReflectionMethod($utilityClass, $method);
+                    $parameters = $reflection->getParameters();
+                    
+                    $methodParameters = [];
+                    
+                    foreach ($parameters as $parameter) {
+                        
+                        $methodParameters[] = [
+                            'name' => $parameter->getName(),
+                            'label' => $this->unLowerCamelCase($parameter->getName()),
+                            'formType' => $this->configuration['mapping']['parameter'][$parameter->getName()]
+                        ];
+                    }
+                    
                     // prepare method information for view
                     $utilities[$utilityClass]['methods'][] = [
-                        
-                        // 1. turn lowerCamelCase method name into lower case underscored
-                        // 2. replace underscores by space
-                        // 3. set the first char to upper case
-                        'name' => ucfirst(str_replace('_', ' ', \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($method))),
-                        'method' => $method
+                        'name' => $this->unLowerCamelCase($method),
+                        'method' => $method,
+                        'parameters' => $methodParameters
                     ];
                 }
             }
@@ -132,6 +145,13 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
     }
     
+    /**
+     * Function to check if a method of a utility is blacklisted
+     * 
+     * @param string $method
+     * @param array $configuration
+     * @return bool
+     */
     private function checkMethodBlacklist ($method, $configuration) : bool {
         
         // get configured includes and excludes
@@ -144,5 +164,19 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         
         // if method is not in the configuration - return true to add the method
         return true;
+    }
+    
+    /**
+     * Function to transform strings from lowerCamelCase to string with spaces
+     * 
+     * @param string $input
+     * @return string
+     */
+    private function unLowerCamelCase (string $input) : string {
+        
+        // 1. turn lowerCamelCase method name into lower case underscored
+        // 2. replace underscores by space
+        // 3. set the first char to upper case
+        return ucfirst(str_replace('_', ' ', \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($input)));
     }
 }

@@ -6,12 +6,11 @@
 
 <f:section name="content">
 	<div class="container">
-		<h1>Cleanup Tools</h1>
-		
 		<div class="row">
-			<f:for each="{utilities}" as="utility">
+			<h1>Cleanup Tools</h1>
+			<f:for each="{utilities}" as="utility" iteration="iterator">
 				<f:for each="{utility.methods}" as="method">
-					<f:render partial="Item" arguments="{task:method.name,utilityClass:utility.class,utilityAction:method.method,utilityName:utility.name}" />
+					<f:render partial="Item" arguments="{task:method.name,utilityClass:utility.class,utilityAction:method.method,utilityName:utility.name,utilityColor:utility.color,parameters:method.parameters}" />
 				</f:for>
 			</f:for>
 		</div>

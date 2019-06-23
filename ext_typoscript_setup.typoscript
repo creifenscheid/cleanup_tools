@@ -6,21 +6,25 @@ module.tx_splcleanuptools {
     }
     utilities {
         SPL\SplCleanupTools\Utility\FileUtility {
+        	color = #8A867F
         	methods {
 				excludes =       	
         	}
         }
         SPL\SplCleanupTools\Utility\FlexFormUtility {
+        	color = #FFBE87
         	methods {
 				excludes = 
         	}
         }
         SPL\SplCleanupTools\Utility\RecordUtility {
+        	color = #E38A74
         	methods {
 				excludes =         	
         	}
         }
         SPL\SplCleanupTools\Utility\VersionUtility {
+        	color = #BF5967
         	methods {
 				excludes =         	
         	}
@@ -30,7 +34,7 @@ module.tx_splcleanuptools {
     mapping {
     	parameter {
     		# method parameter = form field type
-    		updateReferenceIndex = checkbox
+    		updateReferenceIndex = Checkbox
     	}
     }
 }
