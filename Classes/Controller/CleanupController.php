@@ -131,12 +131,17 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             // get utility and utility action from arguments
             $utilityClass = $arguments['utilityClass'];
             $utilityActionName = $arguments['utilityAction'];
+            $utilityActionParameter = $arguments['parameters'];
 
             // init utility
             $utility = $this->objectManager->get($utilityClass);
 
             // call action in utility
-            $result = $utility->$utilityActionName();
+            if ($utilityActionParameter) {
+                $result = call_user_func_array([$utility,$utilityActionName], $utilityActionParameter);
+            } else {
+                $result = $utility->$utilityActionName();
+            }
 
             $this->view->assignMultiple([
                 'result' => $result,

@@ -42,7 +42,7 @@ class FileUtility
      */
     public function cleanupMissingRelations (bool $updateReferenceIndex) : void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
 
     /**
@@ -52,7 +52,7 @@ class FileUtility
      */
     public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex) : void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
 
     /**
@@ -72,7 +72,7 @@ class FileUtility
      */
     public function cleanupMissingFiles (bool $updateReferenceIndex) : void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
 
     /**
@@ -82,6 +82,6 @@ class FileUtility
      */
     public function cleanupLostFiles (bool $updateReferenceIndex) : void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
 }
