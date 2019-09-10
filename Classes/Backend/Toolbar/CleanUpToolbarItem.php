@@ -42,25 +42,34 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @return bool TRUE if user has access, FALSE if not
      */
     public function checkAccess() {
-        
+        $backendUser = $this->getBackendUser();
+        if ($backendUser->isAdmin()) {
+            return true;
+        }
+        foreach ($this->optionValues as $value) {
+            if ($backendUser->getTSConfig()['options.']['cleanUp.'][$value] ?? false) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
-     * Render "item" part of this toolbar
+     * Render toolbar item
      *
      * @return string Toolbar item HTML
      */
     public function getItem() {
-        
+        return $this->getFluidTemplateObject('CleanUpToolbarItem.html')->render();
     }
     
     /**
-     * TRUE if this toolbar item has a collapsible drop down
+     * Toolbar has a drop down
      *
      * @return bool
      */
     public function hasDropDown() {
-        
+        return true;
     }
     
     /**
@@ -69,29 +78,26 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @return string Drop down HTML
      */
     public function getDropDown() {
-        
+        $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
+        return $view->render();
     }
     
     /**
      * No additional attributes needed
      *
-     * @return array List item HTML attributes
+     * @return array
      */
     public function getAdditionalAttributes() {
         return [];
     }
     
     /**
-     * Returns an integer between 0 and 100 to determine
-     * the position of this item relative to others
-     *
-     * By default, extensions should return 50 to be sorted between main core
-     * items and other items that should be on the very right.
+     * Return index
      *
      * @return int 0 .. 100
      */
     public function getIndex() {
-        
+        return 50;
     }
     
     /**
@@ -104,11 +110,21 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     {
         $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
         $view->setLayoutRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts']);
-        $view->setPartialRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Partials/Backend/ToolbarItems/ToolbarItems']);
-        $view->setTemplateRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Templates/Backend/ToolbarItems/fToolbarItems']);
+        $view->setPartialRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials']);
+        $view->setTemplateRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates']);
         $view->setTemplate($filename);
         
         $view->getRequest()->setControllerExtensionName('Backend');
         return $view;
+    }
+    
+    /**
+     * Returns the current BE user.
+     *
+     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     */
+    protected function getBackendUser()
+    {
+        return $GLOBALS['BE_USER'];
     }
 }
