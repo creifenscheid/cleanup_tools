@@ -37,6 +37,27 @@ namespace SPL\SplCleanupTools\Backend\Toolbar;
 class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
 {
     /**
+     * @var array
+     */
+    protected $cleanupActions = [];
+    
+    public function __construct() {
+        
+        $configuration = [];
+        
+        /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
+        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
+        
+        foreach ($configuration['toolbar']['items'] as $backendRoute => $itemConfiguration) {
+            $this->cleanupActions[] = [
+                'title' => $itemConfiguration['title'],
+                'description' => $itemConfiguration['description'],
+                'href' => (string)$uriBuilder->buildUriFromRoute($backendRoute)
+            ];
+        }
+    }
+    
+    /**
      * Checks whether the user has access to this toolbar item
      *
      * @return bool TRUE if user has access, FALSE if not
@@ -79,6 +100,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      */
     public function getDropDown() {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
+        $view->assign('cleanupActions', $this->cleanupActions);
         return $view->render();
     }
     

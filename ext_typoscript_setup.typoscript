@@ -4,6 +4,7 @@ module.tx_splcleanuptools {
         partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
         layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
     }
+    
     utilities {
         SPL\SplCleanupTools\Utility\FileUtility {
         	color = #8A867F

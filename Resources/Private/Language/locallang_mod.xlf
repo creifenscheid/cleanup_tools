@@ -10,9 +10,17 @@
 				<source>Cleanup Tools</source>
 			</trans-unit>
 			
+			<!-- TOOLBAR -->
 			<trans-unit id="toolbar.title">
 				<source>Cleanup Tools</source>
 			</trans-unit>
+			<trans-unit id="toolbar.item.flexforms.title">
+				<source>FlexForms</source>
+			</trans-unit>
+			<trans-unit id="toolbar.item.flexforms.description">
+				<source>Cleanup flexforms</source>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>
