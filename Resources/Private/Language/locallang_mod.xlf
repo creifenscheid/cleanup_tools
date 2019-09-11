@@ -9,6 +9,10 @@
 			<trans-unit id="mlang_labels_tabdescr">
 				<source>Cleanup Tools</source>
 			</trans-unit>
+			
+			<trans-unit id="toolbar.title">
+				<source>Cleanup Tools</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
