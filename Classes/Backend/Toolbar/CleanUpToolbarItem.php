@@ -43,7 +43,18 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     
     public function __construct() {
         
-        $configuration = [];
+        /** \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        
+        /** \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
+        $configurationManager = $objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
+        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        
+        /** \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService */
+        $typoscriptService = $objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
+       
+        // get typoscript configuration as plain array
+        $configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
         
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
@@ -52,7 +63,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             $this->cleanupActions[] = [
                 'title' => $itemConfiguration['title'],
                 'description' => $itemConfiguration['description'],
-                'href' => (string)$uriBuilder->buildUriFromRoute($backendRoute)
+                'href' => (string)$uriBuilder->buildUriFromRoute($backendRoute, $itemConfiguration['parameter']?:[])
             ];
         }
     }
