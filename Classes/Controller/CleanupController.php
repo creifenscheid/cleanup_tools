@@ -151,6 +151,34 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
     
     /**
+     * Toolbar action
+     *
+     *
+     */
+    public function toolbarAction ()
+    {
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $queryParams = $request->getQueryParams();
+        
+        $clearCmd = $queryParams['clearCmd'] ? : null;
+        
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump([$request,$clearCmd, $queryParams], __CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__);
+        
+        /**
+         * ToDo:
+         * Mapping von clearCmd auf entsprechende Utility/-Klasse - vgl. cleanUpAction
+         * Ggf. einen Konstruktor aufsetzen, welcher die TS-Konfiguration aufbereitet und ein Array mit den Utilities und deren Methoden zur Verfügung stellt.
+         * Sollte dann auch von der IndexAction verwendet werden können.
+         * 
+         * $result = $utility->$utilityActionName();
+         */
+        
+        
+        
+        return new \TYPO3\CMS\Core\Http\HtmlResponse('');
+    }
+    
+    /**
      * Function to check if a method of a utility is blacklisted
      * 
      * @param string $method

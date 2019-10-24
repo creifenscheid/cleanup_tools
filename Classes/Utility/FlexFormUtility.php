@@ -44,20 +44,4 @@ class FlexFormUtility
     {
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__FUNCTION__);
     }
-    
-    /**
-     * FlexForms
-     *
-     * 
-     */
-    public function toolbarCleanupFlexForms ()
-    {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__FUNCTION__);
-        die();
-        
-        if ($this->redirect) {
-            return new RedirectResponse(GeneralUtility::locationHeaderUrl($this->redirect), 303);
-        }
-        return new HtmlResponse('');
-    }
 }

@@ -3,6 +3,6 @@
 return [
     'splcleanuptools_flexforms' => [
         'path' => '/splcleanuptools/flexforms',
-        'target' => SPL\SplCleanupTools\Utility\FlexFormUtility::class . '::toolbarCleanupFlexForms'
+        'target' => SPL\SplCleanupTools\Controller\CleanupController::class . '::toolbarAction'
     ]
 ];
