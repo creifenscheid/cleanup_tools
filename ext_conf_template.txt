@@ -1,0 +1,2 @@
+# cat=Configuration; type=boolean; label= Enable toolbar item
+enableToolbarItem = 1

@@ -2,9 +2,6 @@
 
 defined ('TYPO3_MODE') or die();
 
-// Register toolbar item
-$GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem::class;
-
 // Register icons
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
     \TYPO3\CMS\Core\Imaging\IconRegistry::class
@@ -14,3 +11,12 @@ $iconRegistry->registerIcon(
     \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
     ['source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_toolbar.svg']
 );
+
+// get extension configuration
+$backendConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)
+->get('spl_cleanup_tools');
+
+// Register toolbar item
+if ($backendConfiguration['enableToolbarItem']) {
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem::class;
+}
