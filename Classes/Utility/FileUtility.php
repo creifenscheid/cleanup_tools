@@ -40,7 +40,7 @@ class FileUtility
      *
      * @return void
      */
-    public function cleanupMissingRelations (bool $updateReferenceIndex) : void
+    public function cleanupMissingRelations (bool $updateReferenceIndex = false) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
@@ -50,7 +50,7 @@ class FileUtility
      *
      * @return void
      */
-    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex) : void
+    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
@@ -70,7 +70,7 @@ class FileUtility
      *
      * @return void
      */
-    public function cleanupMissingFiles (bool $updateReferenceIndex) : void
+    public function cleanupMissingFiles (bool $updateReferenceIndex = false) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
@@ -80,7 +80,7 @@ class FileUtility
      *
      * @return void
      */
-    public function cleanupLostFiles (bool $updateReferenceIndex) : void
+    public function cleanupLostFiles (bool $updateReferenceIndex = false) : void
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
     }
