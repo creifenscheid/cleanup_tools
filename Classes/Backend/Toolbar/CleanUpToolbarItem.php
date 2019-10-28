@@ -78,11 +78,6 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         if ($backendUser->isAdmin()) {
             return true;
         }
-        foreach ($this->optionValues as $value) {
-            if ($backendUser->getTSConfig()['options.']['cleanUp.'][$value] ?? false) {
-                return true;
-            }
-        }
         return false;
     }
     
