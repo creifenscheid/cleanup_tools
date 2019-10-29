@@ -20,3 +20,11 @@ $backendConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TY
 if ($backendConfiguration['enableToolbarItem']) {
     $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem::class;
 }
+
+// TASK: JOBS
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\SPL\SplCleanupTools\Task\CleanupTask::class] = [
+    'extension' => 'spl_cleanup_tools',
+    'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.title',
+    'description' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.description',
+    'additionalFields' => \SPL\SplCleanupTools\Task\CleanupAdditionalFieldProvider::class
+];

@@ -20,7 +20,14 @@
 			<trans-unit id="toolbar.item.flexforms.description">
 				<source>Cleanup flexforms</source>
 			</trans-unit>
-			
+
+			<!-- TASKS -->
+			<trans-unit id="tasks.cleanup.title">
+				<source>Cleanup Tools</source>
+			</trans-unit>
+			<trans-unit id="tasks.cleanup.description">
+				<source>Various tools to cleanup your TYPO3.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
