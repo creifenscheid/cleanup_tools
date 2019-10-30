@@ -82,6 +82,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function getAdditionalInformation() : string
     {
-        return 'Cleanup Action: ' . $this->cleanupAction;
+        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information', '') . ' ' . $this->cleanupAction;
+ 
     }
 }

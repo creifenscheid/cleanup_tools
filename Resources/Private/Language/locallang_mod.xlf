@@ -31,6 +31,9 @@
 			<trans-unit id="tasks.cleanup.fields.cleanupaction">
 				<source>Which cleanup action shall be executed?</source>
 			</trans-unit>
+			<trans-unit id="tasks.cleanup.information">
+				<source>Configured action:</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
