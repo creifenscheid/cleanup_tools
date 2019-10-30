@@ -1,4 +1,5 @@
 <?php
+
 namespace SPL\SplCleanupTools\Task;
 
 /**
@@ -32,14 +33,14 @@ namespace SPL\SplCleanupTools\Task;
  * Class CleanupController
  *
  * @package SPL\SplCleanupTools\Task
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
 class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 {
     /**
      * @var string
      */
-    public $resource;
+    protected $cleanupAction;
 
     /**
      * @return bool
@@ -50,12 +51,34 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     }
 
     /**
+     * Returns the cleanup action
+     *
+     * @return string
+     */
+    public function getCleanupAction() : string
+    {
+        return $this->cleanupAction;
+    }
+
+    /**
+     * Sets the cleanup action
+     *
+     * @param string $cleanupAction
+     *
+     * @return void
+     */
+    public function setCleanupAction(string $cleanupAction) : void
+    {
+        $this->cleanupAction = $cleanupAction;
+    }
+
+    /**
      * This method returns the selected table as additional information
      *
      * @return string Information to display
      */
     public function getAdditionalInformation() : string
     {
-        return 'Resource: ' . $this->resource;
+        return 'Cleanup Action: ' . $this->cleanupAction;
     }
 }

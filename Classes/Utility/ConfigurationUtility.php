@@ -1,4 +1,5 @@
 <?php
+
 namespace SPL\SplCleanupTools\Utility;
 
 /**
@@ -32,7 +33,7 @@ namespace SPL\SplCleanupTools\Utility;
  * Class ConfigurationUtility
  *
  * @package SPL\SplCleanupTools\Utility
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
 class ConfigurationUtility
 {
@@ -123,18 +124,19 @@ class ConfigurationUtility
      *
      * @return array
      */
-    public function getAllUtilities(): array
+    public function getAllUtilities() : array
     {
         return $this->utilities;
     }
 
     /**
      * Return utility of given method
-     * 
+     *
      * @param string $methodName
+     *
      * @return array|NULL
      */
-    public function getUtilityByMethod(string $methodName): ?array
+    public function getUtilityByMethod(string $methodName) : ?array
     {
         foreach ($this->utilities as $utility) {
             foreach ($utility['methods'] as $method) {
@@ -143,7 +145,7 @@ class ConfigurationUtility
                 }
             }
         }
-        
+
         return null;
     }
 
@@ -151,10 +153,11 @@ class ConfigurationUtility
      * Function to check if a method of a utility is blacklisted
      *
      * @param string $method
-     * @param array $configuration
+     * @param array  $configuration
+     *
      * @return bool
      */
-    private function checkMethodBlacklist($method, $configuration): bool
+    private function checkMethodBlacklist($method, $configuration) : bool
     {
 
         // get configured includes and excludes
@@ -173,9 +176,10 @@ class ConfigurationUtility
      * Function to transform strings from lowerCamelCase to string with spaces
      *
      * @param string $input
+     *
      * @return string
      */
-    private function unLowerCamelCase(string $input): string
+    private function unLowerCamelCase(string $input) : string
     {
 
         // 1. turn lowerCamelCase method name into lower case underscored
