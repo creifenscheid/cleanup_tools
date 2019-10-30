@@ -38,20 +38,24 @@ class RecordUtility
     /**
      * Orphan records
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupOrphanRecords () : void
+    public function cleanupOrphanRecords () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        
+        return true;
     }
 
     /**
      * Deleted records
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupDeletedRecords () : void
+    public function cleanupDeletedRecords () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        
+        return true;
     }
 }

@@ -38,50 +38,60 @@ class FileUtility
     /**
      * Missing relations
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupMissingRelations (bool $updateReferenceIndex = false) : void
+    public function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        
+        return true;
     }
 
     /**
      * Multiple reference files
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : void
+    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        
+        return true;
     }
 
     /**
      * RTE images
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupRteImages () : void
+    public function cleanupRteImages () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        
+        return true;
     }
 
     /**
      * Missing files
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupMissingFiles (bool $updateReferenceIndex = false) : void
+    public function cleanupMissingFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        
+        return true;
     }
 
     /**
      * Lost files
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupLostFiles (bool $updateReferenceIndex = false) : void
+    public function cleanupLostFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        
+        return true;
     }
 }

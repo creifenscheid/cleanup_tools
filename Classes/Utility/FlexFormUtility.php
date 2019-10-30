@@ -38,10 +38,12 @@ class FlexFormUtility
     /**
      * FlexForms
      *
-     * @return void
+     * @return bool
      */
-    public function cleanupFlexForms () : void
+    public function cleanupFlexForms () : bool
     {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__);
+        
+        return true;
     }
 }
