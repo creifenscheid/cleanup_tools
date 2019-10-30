@@ -48,7 +48,7 @@ module.tx_splcleanuptools {
 	    		title = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.title
 	    		description = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.description
 	    		parameter {
-	    			clearCmd = cleanupFlexForms
+	    			action = cleanupFlexForms
 	    		}
 	    	}
 	    }
