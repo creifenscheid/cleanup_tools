@@ -29,21 +29,16 @@ namespace SPL\SplCleanupTools\Controller;
  */
 
 /**
- * Class CleanupController
+ * Class ToolbarController
  *
  * @package SPL\SplCleanupTools\Controller
  * @author Christian Reifenscheid
  */
-class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
     /**
+     * Cleanup utility
      * 
-     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
-     */
-    protected $configurationUtility;
-    
-    /**
-     *
      * @var \SPL\SplCleanupTools\Utility\CleanupUtility
      */
     protected $cleanupUtility;
@@ -52,44 +47,28 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * Constructor
      */
     public function __construct() {
-        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
         $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
     }
-
+    
     /**
-     * action index
+     * Main action
      *
-     * @return void
-     */
-    public function indexAction(): void
-    {
-        // assign utilities to the view
-        $this->view->assign('utilities', $this->configurationUtility->getAllUtilities());
-    }
-
-    /**
-     * action cleanup
      *
-     * @return void
-     * @throws \ReflectionException
      */
-    public function cleanupAction(): void
+    public function mainAction (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response)
     {
-        // get arguments from request
-        $arguments = $this->request->getArguments();
-
-        // check for required arguments
-        if ($arguments['utilityAction']) {
-
-            // get utility and utility action from arguments
-            $utilityActionName = $arguments['utilityAction'];
-            $utilityActionParameter = $arguments['parameters'];
-
-            $result = $this->cleanupUtility->processAction($utilityActionName,$utilityActionParameter);
-            
-            $this->view->assignMultiple([
-                'result' => $result
-            ]);
+        // get query params
+        $queryParams = $request->getQueryParams();
+        
+        // get clean command from query params
+        $action = $queryParams['action'] ? : null;
+        
+        // if cleanCmd is given
+        if ($action) {
+            // process action through cleanup utility
+            $this->cleanupUtility->processAction($action);
         }
+        
+        return $response;
     }
 }
