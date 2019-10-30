@@ -1,4 +1,5 @@
 <?php
+
 namespace SPL\SplCleanupTools\Task;
 
 /**
@@ -32,10 +33,40 @@ namespace SPL\SplCleanupTools\Task;
  * Class CleanupController
  *
  * @package SPL\SplCleanupTools\Task
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
 class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
+    /**
+     * Cleanup action
+     *
+     * @var string
+     */
+    protected $cleanupAction = '';
+
+    /**
+     * Configuration utility
+     *
+     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility
+     */
+    protected $configurationUtility;
+
+    /**
+     * Task name
+     *
+     * @var string
+     */
+    protected $cleanupActionTaskName = 'scheduler_cleanuptools_cleanupaction';
+
+    /**
+     * CleanupAdditionalFieldProvider constructor.
+     */
+    public function __construct()
+    {
+        // init configurationUtility
+        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
+    }
+
     /**
      * Gets additional fields to render in the form to add/edit a task
      *
@@ -50,22 +81,21 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
 
         // Initialize selected fields
-        // resource
-        if (!isset($taskInfo['scheduler_jobs_resource'])) {
-            $taskInfo['scheduler_jobs_resource'] = $this->resource;
+        if (!isset($taskInfo[$this->cleanupActionTaskName])) {
+            $taskInfo[$this->cleanupActionTaskName] = $this->cleanupAction;
             if ($currentSchedulerModuleAction->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-                $taskInfo['scheduler_jobs_resource'] = $task->resource;
+                $taskInfo[$this->cleanupActionTaskName] = $task->getCleanupAction();
             }
         }
-        $fieldName = 'tx_scheduler[scheduler_jobs_resource]';
-        $fieldId = 'scheduler_jobs_resource';
-        $fieldValue = $taskInfo['scheduler_jobs_resource'];
-        $fieldHtml = '';#$this->buildResourceSelector($fieldName, $fieldId, $fieldValue);
-        $additionalFields[$fieldId] = [
+
+        $fieldName = 'tx_scheduler[' . $this->cleanupActionTaskName . ']';
+        $fieldValue = $taskInfo[$this->cleanupActionTaskName];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupActionTaskName, $fieldValue);
+        $additionalFields[$this->cleanupActionTaskName] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:fnn_amt24manager/Resources/Private/Language/locallang.xlf:label.jobsTask.resource',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.cleanupaction',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $fieldId
+            'cshLabel' => $this->cleanupActionTaskName
         ];
 
         return $additionalFields;
@@ -79,18 +109,13 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @return bool TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
-    public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
+    public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule) : bool
     {
-        $validData = false;
-
-        // resource
-        if (!isset($submittedData['scheduler_jobs_resource'])) {
-            $validData = true;
-        } elseif ($submittedData['scheduler_jobs_resource']) {
-            $validData = true;
+        if ($this->configurationUtility->getUtilityByMethod($submittedData[$this->cleanupActionTaskName])) {
+            return true;
         }
 
-        return $validData;
+        return false;
     }
 
     /**
@@ -101,7 +126,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
-        $task->resource = $submittedData['scheduler_jobs_resource'];
+        $task->setCleanupAction($submittedData[$this->cleanupActionTaskName]);
     }
 
     /**
@@ -113,19 +138,35 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        /*$service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Fnn\FnnAmt24\Service\Service::class);
-        $resources = $service->getResources();
+        $utilities = $this->configurationUtility->getAllUtilities();
 
-        $options = [];
+        // define storage for option groups
+        $optionGroups = [];
 
-        foreach ($resources as $key => $value) {
-            $selected = '';
-            if ($fieldValue === $value) {
-                $selected = ' selected="selected"';
+        // loop through all utilities
+        foreach ($utilities as $utility) {
+
+            // define option storage
+            $options = [];
+
+            // loop through all methods of the current utility
+            foreach ($utility['methods'] as $method) {
+                $selected = '';
+
+                // add attribute "selected" for existing field value
+                if ($fieldValue === $method['method']) {
+                    $selected = ' selected="selected"';
+                }
+
+                // add option to option storage
+                $options[] = '<option value="' . $method['method'] . '" ' . $selected . '>' . $method['name'] . '</option>';
             }
-            $options[] = '<option value="' . $value . '" ' . $selected . '>' . $key . '</option>';
+
+            // add option group to option group storage
+            $optionGroups[] = '<optgroup label="' . $utility['class'] . '">' . implode('', $options) . '</optgroup>';
         }
 
-        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';*/
+        // return html for select field with option groups and options
+        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $optionGroups) . '</select>';
     }
 }

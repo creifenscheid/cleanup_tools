@@ -28,6 +28,9 @@
 			<trans-unit id="tasks.cleanup.description">
 				<source>Various tools to cleanup your TYPO3.</source>
 			</trans-unit>
+			<trans-unit id="tasks.cleanup.fields.cleanupaction">
+				<source>Which cleanup action shall be executed?</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
