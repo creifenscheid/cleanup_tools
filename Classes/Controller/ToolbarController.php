@@ -51,9 +51,12 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     }
     
     /**
-     * Main action
-     *
-     *
+     * Main action to perform toolbar request
+     * 
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * 
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function mainAction (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response)
     {
