@@ -87,6 +87,22 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
             $result = $this->cleanupUtility->processAction($utilityActionName,$utilityActionParameter);
             
+            if ($result) {
+                $this->addFlashMessage(
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message'),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline'),
+                    \TYPO3\CMS\Core\Messaging\FlashMessage::OK
+                );
+            }
+            
+            else {
+                $this->addFlashMessage(
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message'),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline'),
+                    \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+                    );
+            }
+            
             $this->view->assignMultiple([
                 'result' => $result
             ]);

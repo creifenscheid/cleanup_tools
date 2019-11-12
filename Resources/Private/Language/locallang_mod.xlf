@@ -34,6 +34,20 @@
 			<trans-unit id="tasks.cleanup.information">
 				<source>Configured action:</source>
 			</trans-unit>
+			
+			<!-- FLASH MESSAGES -->
+			<trans-unit id="messages.error.headline">
+				<source>Error</source>
+			</trans-unit>
+			<trans-unit id="messages.error.message">
+				<source>Processing the cleanup action was not successfull.</source>
+			</trans-unit>
+			<trans-unit id="messages.success.headline">
+				<source>Success</source>
+			</trans-unit>
+			<trans-unit id="messages.success.message">
+				<source>Cleanup action has been processed.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
