@@ -4,9 +4,29 @@
 <f:layout name="Default"/>
 
 <f:section name="content">
-    <div class="container">
-        <h1>Cleaned up xxx</h1>
-    </div>
+	<f:debug title="Cleanup.html"></f:debug>
+	
+	<f:if condition="{result}">
+		<f:then>
+		    <script>
+		         top.TYPO3.Notification.success('Ok', 'Läuft!');
+		    </script>
+			<div class="container">
+		        <h1>Cleaned up xxx</h1>
+		    </div>
+		</f:then>
+		<f:else>
+		    <script>
+		         top.TYPO3.Notification.error('Error', 'Iwas ging schief!');
+		    </script>
+			<div class="container">
+		        <h1>Something went wrong</h1>
+		    </div>
+		</f:else>
+	</f:if>
+
+    
+    
 </f:section>
 
 </html>
