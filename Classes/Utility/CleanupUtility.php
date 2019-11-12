@@ -94,7 +94,17 @@ class CleanupUtility
             }
         }
         
-        // ToDo: implemnt error for missing utility
+        // Error: utility could not be found
+        $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessage::class,
+            'My message text',
+            'Message Header', // [optional] the header
+            \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+            );
+        
+        // add message
+        $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
+        $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+        $messageQueue->addMessage($message);
         
         return false;
         
