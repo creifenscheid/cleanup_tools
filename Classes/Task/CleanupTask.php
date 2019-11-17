@@ -40,7 +40,12 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     /**
      * @var string
      */
-    protected $cleanupAction;
+    protected $cleanupAction = '';
+    
+    /**
+     * @var null|array
+     */
+    protected $parameter;
 
     /**
      * @return bool
@@ -73,6 +78,27 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function setCleanupAction(string $cleanupAction) : void
     {
         $this->cleanupAction = $cleanupAction;
+    }
+
+    /**
+     * Returns the parameter
+     * 
+     * @return null|array
+     */
+    public function getParameter() : ?array
+    {
+        return $this->parameter;
+    }
+
+    /**
+     * Sets the parameter
+     * 
+     * @param null|array $parameter
+     * @return void
+     */
+    public function setParameter($parameter) : void
+    {
+        $this->parameter = $parameter;
     }
 
     /**

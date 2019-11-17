@@ -148,6 +148,18 @@ class ConfigurationUtility
 
         return null;
     }
+    
+    public function getMethodConfiguration(string $methodName) : ?array {
+        foreach ($this->utilities as $utility) {
+            foreach ($utility['methods'] as $method) {
+                if ($method['method'] === $methodName) {
+                    return $method;
+                }
+            }
+        }
+        
+        return null;
+    }
 
     /**
      * Function to check if a method of a utility is blacklisted
