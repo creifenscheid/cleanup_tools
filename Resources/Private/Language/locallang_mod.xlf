@@ -37,16 +37,16 @@
 			
 			<!-- FLASH MESSAGES -->
 			<trans-unit id="messages.error.headline">
-				<source>Error</source>
+				<source>Oops</source>
 			</trans-unit>
 			<trans-unit id="messages.error.message">
-				<source>Processing the cleanup action was not successfull.</source>
+				<source>Processing of action "%s" was not successfull.</source>
 			</trans-unit>
 			<trans-unit id="messages.success.headline">
-				<source>Success</source>
+				<source>Yeah</source>
 			</trans-unit>
 			<trans-unit id="messages.success.message">
-				<source>Cleanup action has been processed.</source>
+				<source>Action "%s" has been processed.</source>
 			</trans-unit>
 		</body>
 	</file>
