@@ -4,60 +4,71 @@ module.tx_splcleanuptools {
         partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
         layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
     }
-    
+
     utilities {
         SPL\SplCleanupTools\Utility\FileUtility {
-        	color = #8A867F
-        	methods {
-				excludes =       	
-        	}
+            color = #8A867F
+            methods {
+                excludes =
+            }
         }
+
         SPL\SplCleanupTools\Utility\FlexFormUtility {
-        	color = #FFBE87
-        	methods {
-				excludes = 
-        	}
+            color = #FFBE87
+            methods {
+                excludes =
+            }
         }
+
         SPL\SplCleanupTools\Utility\RecordUtility {
-        	color = #E38A74
-        	methods {
-				excludes =         	
-        	}
+            color = #E38A74
+            methods {
+                excludes =
+            }
         }
+
         SPL\SplCleanupTools\Utility\VersionUtility {
-        	color = #BF5967
-        	methods {
-				excludes =         	
-        	}
+            color = #BF5967
+            methods {
+                excludes =
+            }
         }
     }
-    
+
     toolbar {
-	    items {
-	    
-	    	# ToDo: snippet for documentation
-	    	# backendRoute {
-	    	#	 title = link title
-	    	#	 description = link description
-	    	#	 parameter {
-	    	#		clearCmd = cleanup method name
-	    	#	 }
-	    	# }
-	    
-	    	splcleanuptools_flexforms {
-	    		title = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.title
-	    		description = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.description
-	    		parameter {
-	    			action = cleanupFlexForms
-	    		}
-	    	}
-	    }
+        items {
+
+            # ToDo: snippet for documentation
+            # backendRoute {
+            #     title = link title
+            #     description = link description
+            #     parameter {
+            #        clearCmd = cleanup method name
+            #     }
+            # }
+
+            splcleanuptools_flexforms {
+                title = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.title
+                description = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.description
+                parameter {
+                    action = cleanupFlexForms
+                }
+            }
+        }
     }
-    
+
+    task {
+        cleanupMissingRelations {
+            parameters {
+                updateReferenceIndex = false
+            }
+        }
+    }
+
     mapping {
-    	parameter {
-    		# method parameter = form field type
-    		updateReferenceIndex = Checkbox
-    	}
+        parameter {
+            # method parameter = form field type
+            updateReferenceIndex = Checkbox
+        }
     }
 }

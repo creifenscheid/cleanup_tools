@@ -42,6 +42,8 @@ class FileUtility
      */
     public function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
     {
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
+
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
         
         return true;

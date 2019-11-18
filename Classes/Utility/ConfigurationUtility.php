@@ -148,8 +148,16 @@ class ConfigurationUtility
 
         return null;
     }
-    
-    public function getMethodConfiguration(string $methodName) : ?array {
+
+    /**
+     * Get configuration of method
+     *
+     * @param string $methodName
+     *
+     * @return array|null
+     */
+    public function getMethodConfiguration(string $methodName) : ?array
+    {
         foreach ($this->utilities as $utility) {
             foreach ($utility['methods'] as $method) {
                 if ($method['method'] === $methodName) {
@@ -157,7 +165,25 @@ class ConfigurationUtility
                 }
             }
         }
-        
+
+        return null;
+    }
+
+    /**
+     * Returns task configuration of method
+     *
+     * @param string $methodName
+     *
+     * @return array|null
+     */
+    public function getTaskConfigurationForMethod(string $methodName) : ?array
+    {
+        foreach ($this->configuration['task'] as $key => $methodConfiguration) {
+            if ($key === $methodName) {
+                return $methodConfiguration;
+            }
+        }
+
         return null;
     }
 
