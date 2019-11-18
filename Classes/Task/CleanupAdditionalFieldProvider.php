@@ -161,8 +161,14 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                     $selected = ' selected="selected"';
                 }
 
+                if (empty($method['parameters'])) {
+                    $label = $method['name'];
+                } else  {
+                    $label = $method['name'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
+                }
+
                 // add option to option storage
-                $options[] = '<option value="' . $method['method'] . '" ' . $selected . '>' . $label = $method['name'] . '</option>';
+                $options[] = '<option value="' . $method['method'] . '" ' . $selected . '>' . $label . '</option>';
             }
 
             // add option group to option group storage
