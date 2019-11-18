@@ -64,14 +64,18 @@ class CleanupUtility
 
     /**
      * Function to initialze a utility and call the requested action
-     * 
+     *
      * @param string $action
-     * @param array $parameter
-     * 
+     * @param array  $parameter
+     *
      * @return bool
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public function processAction(string $action, array $parameter = null) : bool
     {
+        // define return var
+        $return = false;
+
         // get utility of cleanCmd
         $utility = $this->configurationUtility->getUtilityByMethod($action);
         
@@ -87,14 +91,15 @@ class CleanupUtility
             // if parameter are given
             if ($parameter) {
                 // call action with parameter
-                return call_user_func_array([$utility,$action], $parameter);
+                $return = \call_user_func_array([$utility,$action], $parameter);
             } else {
+
                 // call action
-                return $utility->$action();
+                $return = $utility->$action();
             }
         }
         
-        return false;
+        return $return;
         
     }
 }
