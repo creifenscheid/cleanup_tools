@@ -34,9 +34,6 @@
 			<trans-unit id="tasks.cleanup.information">
 				<source>Configured action:</source>
 			</trans-unit>
-			<trans-unit id="tasks.cleanup.parameter">
-				<source>(please save to get parameter configuration)</source>
-			</trans-unit>
 			
 			<!-- FLASH MESSAGES -->
 			<trans-unit id="messages.error.headline">
