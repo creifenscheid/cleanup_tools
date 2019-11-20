@@ -66,13 +66,12 @@ class CleanupUtility
      * Function to initialze a utility and call the requested action
      *
      * @param string $action
-     * @param array  $parameter
+     * @param array  $parameters
      *
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function processAction(string $action, array $parameter = null) : bool
-    {
+    public function processAction(string $action, array $parameters = null) : bool {
         // define return var
         $return = false;
 
@@ -89,9 +88,9 @@ class CleanupUtility
             $utility = $this->objectManager->get($utilityClass);
             
             // if parameter are given
-            if ($parameter) {
+            if ($parameters) {
                 // call action with parameter
-                $return = \call_user_func_array([$utility,$action], $parameter);
+                $return = \call_user_func_array([$utility,$action], $parameters);
             } else {
 
                 // call action
