@@ -58,9 +58,13 @@ module.tx_splcleanuptools {
     }
 
     task {
+    	# ToDo: snippet for documentation
         cleanupMissingRelations {
             parameters {
-                updateReferenceIndex = false
+                updateReferenceIndex {
+                	value = false
+                	type = bool
+                }
             }
         }
     }

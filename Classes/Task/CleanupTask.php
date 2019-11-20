@@ -52,13 +52,14 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     {
         /** @var \SPL\SplCleanupTools\Utility\CleanupUtility $cleanupUtility */
         $cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+        
         /** @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility */
         $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
 
         $methodConfiguration = $configurationUtility->getTaskConfigurationForMethod($this->cleanupAction);
 
         if ($methodConfiguration) {
-            $parameters = $methodConfiguration['parameters'];
+            $parameters = $this->convertParameters($methodConfiguration['parameters']);
 
             // process action through cleanup utility with parameters
             return $cleanupUtility->processAction($this->cleanupAction, $methodConfiguration['parameters']);
@@ -99,5 +100,30 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     {
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information', '') . ' ' . $this->cleanupAction;
  
+    }
+    
+    /**
+     * 
+     * 
+     * @param array $parametersArray
+     * @return array
+     */
+    private function convertParameters (array $parametersArray) : array {
+        $preparedParameters = [];
+        
+        foreach ($parametersArray as $parameter) {
+            $preparedParameters = '';
+        }
+        
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($parametersArray, __CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__); die();
+        
+        
+        return $preparedParameters;
+    }
+    
+    private function castValue ($value, $type) {
+        switch ($type) {
+            
+        }
     }
 }
