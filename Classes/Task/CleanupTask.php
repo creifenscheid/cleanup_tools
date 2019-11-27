@@ -52,7 +52,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     {
         /** @var \SPL\SplCleanupTools\Utility\CleanupUtility $cleanupUtility */
         $cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
-        
+
         /** @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility */
         $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
 
@@ -62,9 +62,9 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
             $parameters = $this->convertParameters($methodConfiguration['parameters']);
 
             // process action through cleanup utility with parameters
-            return $cleanupUtility->processAction($this->cleanupAction, $methodConfiguration['parameters']);
+            return $cleanupUtility->processAction($this->cleanupAction, $parameters);
         }
-    
+
         // process action through cleanup utility
         return $cleanupUtility->processAction($this->cleanupAction);
     }
@@ -99,31 +99,70 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function getAdditionalInformation() : string
     {
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information', '') . ' ' . $this->cleanupAction;
- 
     }
-    
+
     /**
-     * 
-     * 
+     * Convert configured parameters into array with keys and correct casted values
+     *
      * @param array $parametersArray
+     *
      * @return array
      */
-    private function convertParameters (array $parametersArray) : array {
+    private function convertParameters(array $parametersArray) : array
+    {
         $preparedParameters = [];
-        
-        foreach ($parametersArray as $parameter) {
-            $preparedParameters = '';
+
+        foreach ($parametersArray as $parameter => $parameterConfiguration) {
+            // cast given value
+            $castedValue = $this->castValue($parameterConfiguration['value'], $parameterConfiguration['type']);
+
+            // if value is given
+            if ($castedValue) {
+                // push parameter into result array
+                $preparedParameters[$parameter] = $castedValue;
+            }
         }
-        
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($parametersArray, __CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__); die();
-        
-        
+
         return $preparedParameters;
     }
-    
-    private function castValue ($value, $type) {
+
+    /**
+     * Function to convert a given value into the given data type
+     *
+     * @param        $value
+     * @param string $type
+     *
+     * @return bool|int|string|null
+     */
+    private function castValue($value, string $type)
+    {
+        $result = null;
+
         switch ($type) {
-            
+
+            default:
+                $result = $value ? : null;
+                break;
+
+            case 'string':
+                $result = $value ? trim((string)$value) : null;
+                break;
+
+            case 'int':
+            case 'integer':
+                $result = $value ? (int)trim((string)$value) : null;
+                break;
+
+            case 'bool':
+            case 'boolean':
+                if ((string)$value === '1' || strtolower($value) === 'true') {
+                    $result = true;
+                } elseif ((string)$value === '0' || strtolower($value) === 'false') {
+                    $result = false;
+                }
+                break;
         }
+
+        return $result;
     }
 }
