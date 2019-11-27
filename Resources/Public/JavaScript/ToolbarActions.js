@@ -10,10 +10,14 @@ define([
             url: uri,
             method: 'post',
             success: function(response) {
-                console.log(response); // ToDo: alert fly
+            	if (response.status === 'ok') {
+            		top.TYPO3.Notification.success(response.headline, response.message);
+            	} else {
+            		top.TYPO3.Notification.error(response.headline, response.message);
+            	}
             },
-            error: function(response) {
-                console.log(response); // ToDo: alert fly
+            error: function() {
+        		top.TYPO3.Notification.error('Something went wrong', 'Unfortunately, the ajax call failed.');
             }
         });
     };

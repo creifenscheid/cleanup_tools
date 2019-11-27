@@ -45,6 +45,9 @@
 			<trans-unit id="messages.error.message">
 				<source>Processing of action "%s" was not successfull.</source>
 			</trans-unit>
+			<trans-unit id="messages.error.message.no-action">
+				<source>No action was set.</source>
+			</trans-unit>
 			<trans-unit id="messages.success.headline">
 				<source>Yeah</source>
 			</trans-unit>

@@ -42,13 +42,6 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      * @var \SPL\SplCleanupTools\Utility\CleanupUtility
      */
     protected $cleanupUtility;
-
-    /**
-     * Configuration utility
-     *
-     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
-     */
-    protected $configurationUtility;
     
     /**
      * Constructor
@@ -56,9 +49,6 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     public function __construct() {
         parent::__construct();
         $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
-
-        // init configuration utility
-        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
     }
 
     /**
@@ -80,7 +70,6 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 
         // if cleanCmd is given
         if ($action) {
-            $actionUtility = $this->configurationUtility->getUtilityByMethod($action);
 
             // process action through cleanup utility
             $processResult = $this->cleanupUtility->processAction($action);
@@ -88,21 +77,21 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             if ($processResult) {
                 $return = [
                     'status' => 'ok',
-                    'processedAction' => $action,
-                    'processedUtility' => $actionUtility['class']
+                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline','SplCleanupTools'),
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message','SplCleanupTools',[$action])
                 ];
             } else {
                 $return = [
                     'status' => 'error',
-                    'errorMessage' => 'Something went wrong.', // ToDo: LLL
-                    'processedAction' => $action,
-                    'processedUtility' => $actionUtility['class']
+                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message','SplCleanupTools',[$action])
                 ];
             }
         } else {
             $return = [
                 'status' => 'error',
-                'errorMessage' => 'No clean command was given' // ToDo: LLL
+                'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
+                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-action','SplCleanupTools')
             ];
         }
 
