@@ -39,25 +39,26 @@ class CleanupUtility
 {
     /**
      * Configuration utility
-     * 
+     *
      * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
      */
     protected $configurationUtility;
-    
+
     /**
      * Object manager
-     * 
+     *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     protected $objectManager;
-    
+
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         // init object manager
         $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        
+
         // init configuration utility
         $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
     }
@@ -71,34 +72,35 @@ class CleanupUtility
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function processAction(string $action, array $parameters = null) : bool {
+    public function processAction(string $action, array $parameters = null) : bool
+    {
         // define return var
         $return = false;
 
         // get utility of cleanCmd
         $utility = $this->configurationUtility->getUtilityByMethod($action);
-        
+
         // if a utility is returned
         if ($utility) {
-            
+
             // get utility class
             $utilityClass = $utility['class'];
-            
+
             // init utility
             $utility = $this->objectManager->get($utilityClass);
-            
+
             // if parameter are given
             if ($parameters) {
                 // call action with parameter
-                $return = \call_user_func_array([$utility,$action], $parameters);
+                $return = \call_user_func_array([$utility, $action], $parameters);
             } else {
 
                 // call action
                 $return = $utility->$action();
             }
         }
-        
+
         return $return;
-        
+
     }
 }
