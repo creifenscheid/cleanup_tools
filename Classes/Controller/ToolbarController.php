@@ -42,36 +42,75 @@ class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      * @var \SPL\SplCleanupTools\Utility\CleanupUtility
      */
     protected $cleanupUtility;
+
+    /**
+     * Configuration utility
+     *
+     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
+     */
+    protected $configurationUtility;
     
     /**
      * Constructor
      */
     public function __construct() {
+        parent::__construct();
         $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+
+        // init configuration utility
+        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
     }
-    
+
     /**
      * Main action to perform toolbar request
-     * 
+     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * 
+     * @param \Psr\Http\Message\ResponseInterface      $response
+     *
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function mainAction (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response)
+    public function mainAction(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response) : \Psr\Http\Message\ResponseInterface
     {
         // get query params
         $queryParams = $request->getQueryParams();
-        
+
         // get clean command from query params
         $action = $queryParams['action'] ? : null;
-        
+
         // if cleanCmd is given
         if ($action) {
+            $actionUtility = $this->configurationUtility->getUtilityByMethod($action);
+
             // process action through cleanup utility
-            $this->cleanupUtility->processAction($action);
+            $processResult = $this->cleanupUtility->processAction($action);
+
+            if ($processResult) {
+                $return = [
+                    'status' => 'ok',
+                    'processedAction' => $action,
+                    'processedUtility' => $actionUtility['class']
+                ];
+            } else {
+                $return = [
+                    'status' => 'error',
+                    'errorMessage' => 'Something went wrong.', // ToDo: LLL
+                    'processedAction' => $action,
+                    'processedUtility' => $actionUtility['class']
+                ];
+            }
+        } else {
+            $return = [
+                'status' => 'error',
+                'errorMessage' => 'No clean command was given' // ToDo: LLL
+            ];
         }
-        
+
+        // define response body
+        $response->getBody()->write(json_encode($return));
+
+        // set and return response
+        $response = $response->withHeader('Content-Type', 'application/json; charset=utf-8');
         return $response;
     }
 }

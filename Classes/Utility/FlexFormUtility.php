@@ -42,7 +42,7 @@ class FlexFormUtility
      */
     public function cleanupFlexForms () : bool
     {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__);
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__);
         
         return true;
     }

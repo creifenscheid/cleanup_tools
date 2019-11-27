@@ -40,34 +40,41 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @var array
      */
     protected $cleanupActions = [];
-    
+
+    /**
+     * CleanUpToolbarItem constructor.
+     *
+     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     */
     public function __construct() {
-        
+
         /** \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        
+
         /** \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
         $configurationManager = $objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
         $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        
+
         /** \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService */
         $typoscriptService = $objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
-       
+
         // get typoscript configuration as plain array
         $configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
-        
+
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
-        
+
         foreach ($configuration['toolbar']['items'] as $backendRoute => $itemConfiguration) {
+            $uri = (string)$uriBuilder->buildUriFromRoute($backendRoute, $itemConfiguration['parameter']?:[]);
+
             $this->cleanupActions[] = [
                 'title' => $itemConfiguration['title'],
                 'description' => $itemConfiguration['description'],
-                'href' => (string)$uriBuilder->buildUriFromRoute($backendRoute, $itemConfiguration['parameter']?:[])
+                'onclickCode' => 'TYPO3.ToolbarActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
             ];
         }
     }
-    
+
     /**
      * Checks whether the user has access to this toolbar item
      *
@@ -80,7 +87,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         }
         return false;
     }
-    
+
     /**
      * Render toolbar item
      *
@@ -89,7 +96,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getItem() {
         return $this->getFluidTemplateObject('CleanUpToolbarItem.html')->render();
     }
-    
+
     /**
      * Toolbar has a drop down
      *
@@ -98,7 +105,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function hasDropDown() {
         return true;
     }
-    
+
     /**
      * Render "drop down" part of this toolbar
      *
@@ -109,7 +116,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         $view->assign('cleanupActions', $this->cleanupActions);
         return $view->render();
     }
-    
+
     /**
      * No additional attributes needed
      *
@@ -118,7 +125,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getAdditionalAttributes() {
         return [];
     }
-    
+
     /**
      * Return index
      *
@@ -127,7 +134,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getIndex() {
         return 50;
     }
-    
+
     /**
      * Returns a new standalone view, shorthand function
      *
@@ -141,11 +148,11 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         $view->setPartialRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials']);
         $view->setTemplateRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates']);
         $view->setTemplate($filename);
-        
+
         $view->getRequest()->setControllerExtensionName('Backend');
         return $view;
     }
-    
+
     /**
      * Returns the current BE user.
      *

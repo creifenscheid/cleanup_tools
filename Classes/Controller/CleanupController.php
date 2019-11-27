@@ -71,7 +71,8 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * action cleanup
      *
      * @return void
-     * @throws \ReflectionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public function cleanupAction(): void
     {
