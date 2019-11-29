@@ -36,13 +36,87 @@ namespace SPL\SplCleanupTools\Utility;
 class FlexFormUtility
 {
     /**
-     * FlexForms
-     *
+     * table
+     * 
+     * @var string
+     */
+    protected $table = 'tt_content';
+    
+    /**
+     * fieldName
+     * 
+     * @var string
+     */
+    protected $fieldName = 'pi_flexform';
+    
+    /**
+     * Cleanup flexforms
+     * 
+     * @param null|int $recordUid
      * @return bool
      */
-    public function cleanupFlexForms () : bool
+    public function cleanupFlexForms ($recordUid = null) : bool
     {
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':'. __FUNCTION__ .'::'.__LINE__);
+        
+        // initialize flexform tools
+        /** @var \TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools $flexObj */
+        $flexFormTools = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
+        
+        // initialize query builder
+        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $queryBuilder */
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Database\ConnectionPool::class)
+        ->getQueryBuilderForTable ($this->table);
+        
+        // remove all restrictions like hidden, deleted etc.
+        $queryBuilder->getRestrictions ()->removeAll ();
+        
+        // get full record of updated record
+        $fullRecord = $queryBuilder->select ('*')
+        ->from ($this->table)
+        ->where (
+            $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid, \PDO::PARAM_INT))
+            )
+            ->execute ()
+            ->fetch ();
+            
+            // check if the defined field exists in the record
+            if ($fullRecord[$this->fieldName]) {
+                
+                // clean XML and check against the record fetched from the database
+                $cleanedFlexFormXML = $flexFormTools->cleanFlexFormXML ($this->table, $this->fieldName, $fullRecord);
+                
+                if ($cleanedFlexFormXML !== $fullRecord[$this->fieldName]) {
+                    // update record with cleaned flexform
+                    $result = $queryBuilder
+                    ->update ($this->table)
+                    ->where (
+                        $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid))
+                        )
+                        ->set ($this->fieldName, $cleanedFlexFormXML)
+                        ->execute ();
+                        
+                        // if something went wrong, drop a warning
+                        if (!$result) {
+                            /** @var \TYPO3\CMS\Core\Messaging\FlashMessage $message */
+                            $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessage::class,
+                                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                    'messages.hook.warning.message',
+                                    'spl_cleanup_tools'
+                                    ),
+                                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                    'messages.hook.warning.headline',
+                                    'spl_cleanup_tools'
+                                    ),
+                                \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING
+                                );
+                            
+                            /** @var \TYPO3\CMS\Core\Messaging\FlashMessageService $flashMessageService */
+                            $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
+                            $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+                            $messageQueue->addMessage($message);
+                        }
+                }
+            }
         
         return true;
     }

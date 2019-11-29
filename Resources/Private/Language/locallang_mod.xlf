@@ -54,6 +54,12 @@
 			<trans-unit id="messages.success.message">
 				<source>Action "%s" has been processed.</source>
 			</trans-unit>
+			<trans-unit id="messages.hook.warning.headline">
+				<source>Watch out</source>
+			</trans-unit>
+			<trans-unit id="message.hook.warning.message">
+				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
