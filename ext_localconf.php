@@ -21,6 +21,12 @@ if ($backendConfiguration['enableToolbarItem']) {
     $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem::class;
 }
 
+// Register hook
+if ($backendConfiguration['enableFlexFormOptimization']) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['spl_cleanup_tools'] = \SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['spl_cleanup_tools'] = \SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook::class;
+}
+
 // TASK: JOBS
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\SPL\SplCleanupTools\Task\CleanupTask::class] = [
     'extension' => 'spl_cleanup_tools',

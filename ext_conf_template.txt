@@ -1,2 +1,5 @@
 # cat=Configuration; type=boolean; label= Enable toolbar item
 enableToolbarItem = 1
+
+# cat=Configuration; type=boolean; label= Enable FlexForm optimization hook
+enableFlexFormOptimization = 0
