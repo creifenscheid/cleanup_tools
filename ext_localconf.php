@@ -21,10 +21,15 @@ if ($backendConfiguration['enableToolbarItem']) {
     $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem::class;
 }
 
-// Register hook
+// HOOK: Cleanup flexforms of elements on saving
 if ($backendConfiguration['enableFlexFormOptimization']) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['spl_cleanup_tools'] = \SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['spl_cleanup_tools'] = \SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook::class;
+}
+
+// HOOK: Cleanup flexforms button in element preview
+if ($backendConfiguration['enableFlexFormOptimizationInPreview']) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] = \SPL\SplCleanupTools\Hooks\DrawItemHook::class;
 }
 
 // TASK: JOBS

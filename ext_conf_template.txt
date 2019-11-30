@@ -3,3 +3,6 @@ enableToolbarItem = 1
 
 # cat=Configuration; type=boolean; label= Enable FlexForm optimization hook
 enableFlexFormOptimization = 0
+
+# cat=Configuration; type=boolean; label= Enable FlexForm optimization button in tt_content preview
+enableFlexFormOptimizationInPreview = 1
