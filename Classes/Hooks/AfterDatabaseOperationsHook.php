@@ -29,7 +29,7 @@ namespace SPL\SplCleanupTools\Hooks;
  */
 
 /**
- * Class CleanupController
+ * Class AfterDatabaseOperationsHook
  *
  * @package SPL\SplCleanupTools\Hooks
  * @author Christian Reifenscheid
