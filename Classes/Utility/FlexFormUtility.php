@@ -120,4 +120,17 @@ class FlexFormUtility
         
         return true;
     }
+    
+    /**
+     * Check if flexform of given record is valid
+     * 
+     * @param int $recordUid
+     * @return bool
+     */
+    public function isFlexFormValid (int $recordUid) : bool
+    {
+        // ToDo: add logic to check if flexform is well formed
+        
+        return false;
+    }
 }
