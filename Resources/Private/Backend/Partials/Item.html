@@ -13,7 +13,9 @@
 
 			<div class="col-xs-3">
 				<f:for each="{parameters}" as="parameter">
-					<f:render partial="FormFields/{parameter.formType}" arguments="{utilityAction: utilityAction, name: parameter.name, label: parameter.label}" />
+					<f:if condition="{parameter.formType}">
+						<f:render partial="FormFields/{parameter.formType}" arguments="{utilityAction: utilityAction, name: parameter.name, label: parameter.label}" />	
+					</f:if>
 				</f:for>
 			</div>
 
