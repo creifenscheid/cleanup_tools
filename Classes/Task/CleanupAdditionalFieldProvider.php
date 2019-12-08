@@ -141,19 +141,20 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        $utilities = $this->configurationUtility->getAllUtilities();
+        //$utilities = $this->configurationUtility->getAllUtilities();
+        $utilities = $this->configurationUtility->getUtilitiesByAdditionalUsage('task');
 
         // define storage for option groups
         $optionGroups = [];
 
         // loop through all utilities
-        foreach ($utilities as $utility) {
+        foreach ($utilities as $utilityClass => $utilityMethods) {
 
             // define option storage
             $options = [];
 
             // loop through all methods of the current utility
-            foreach ($utility['methods'] as $method) {
+            foreach ($utilityMethods as $method) {
                 $selected = '';
 
                 // add attribute "selected" for existing field value
@@ -172,7 +173,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             }
 
             // add option group to option group storage
-            $optionGroups[] = '<optgroup label="' . $utility['class'] . '">' . implode('', $options) . '</optgroup>';
+            $optionGroups[] = '<optgroup label="' . $utilityClass . '">' . implode('', $options) . '</optgroup>';
         }
 
         // return html for select field with option groups and options

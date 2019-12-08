@@ -56,10 +56,12 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         /** @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility */
         $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
 
-        $methodConfiguration = $configurationUtility->getTaskConfigurationForMethod($this->cleanupAction);
+        // get method configuration
+        $methodConfiguration = $configurationUtility->getMethodConfiguration($this->cleanupAction);
 
-        if ($methodConfiguration) {
-            $parameters = $this->convertParameters($methodConfiguration['parameters']);
+        // check if parameters are configured
+        if ($methodConfiguration['parameterConfiguration']) {
+            $parameters = $this->convertParameters($methodConfiguration['parameterConfiguration']);
 
             // process action through cleanup utility with parameters
             return $cleanupUtility->processAction($this->cleanupAction, $parameters);
