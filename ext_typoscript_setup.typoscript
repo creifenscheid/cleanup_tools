@@ -34,11 +34,6 @@ module.tx_splcleanuptools {
 	            	excludes = 
 	            }
 	            
-	            afterDatabaseOperationsHook {
-	            	enable = 0
-	            	excludes = 
-	            }
-	            
 	            drawItemHook {
 	            	enable = 0
 	            	excludes = 
@@ -59,11 +54,6 @@ module.tx_splcleanuptools {
 	            }
 	            
 	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
-	            
-	            afterDatabaseOperationsHook {
 	            	enable = 1
 	            	excludes = 
 	            }
@@ -92,11 +82,6 @@ module.tx_splcleanuptools {
 	            	excludes = 
 	            }
 	            
-	            afterDatabaseOperationsHook {
-	            	enable = 0
-	            	excludes = 
-	            }
-	            
 	            drawItemHook {
 	            	enable = 0
 	            	excludes = 
@@ -118,11 +103,6 @@ module.tx_splcleanuptools {
 	            
 	            task {
 	            	enable = 1
-	            	excludes = 
-	            }
-	            
-	            afterDatabaseOperationsHook {
-	            	enable = 0
 	            	excludes = 
 	            }
 	            
