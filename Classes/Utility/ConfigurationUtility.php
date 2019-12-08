@@ -35,7 +35,7 @@ namespace SPL\SplCleanupTools\Utility;
  * @package SPL\SplCleanupTools\Utility
  * @author  Christian Reifenscheid
  */
-class ConfigurationUtility
+class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
