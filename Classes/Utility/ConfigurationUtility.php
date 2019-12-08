@@ -52,6 +52,15 @@ class ConfigurationUtility
      * @var array
      */
     protected $utilities = [];
+    
+    /**
+     * Configured additional usages of utilities incl.
+     * existing and allowed methods
+     *
+     * @var array
+     */
+    protected $additionalUsages = [];
+    
 
     /**
      * Constructor
@@ -91,7 +100,7 @@ class ConfigurationUtility
             foreach ($methods as $method) {
 
                 // check method
-                if ($this->checkMethodBlacklist($method, $utilityConfiguration['methods'])) {
+                if ($this->checkBlacklist($method, $utilityConfiguration['methods'])) {
 
                     $reflection = new \ReflectionMethod($utilityClass, $method);
                     $parameters = $reflection->getParameters();
@@ -106,13 +115,28 @@ class ConfigurationUtility
                             'formType' => $this->configuration['mapping']['parameter'][$parameter->getName()]
                         ];
                     }
-
-                    // prepare method information for view
-                    $this->utilities[$utilityClass]['methods'][] = [
+                    
+                    // prepare method information
+                    $methodInformation = [
                         'name' => $this->unLowerCamelCase($method),
                         'method' => $method,
-                        'parameters' => $methodParameters
+                        'parameters' => $methodParameters,
+                        'parameterConfiguration' => $utilityConfiguration['methods']['parameterConfigurations'][$method] ?: null
                     ];
+
+                    // add method information to storage
+                    $this->utilities[$utilityClass]['methods'][] = $methodInformation;
+                    
+                    // check additional usage configuration of utility
+                    foreach ($utilityConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
+                        if ((int)$additionalUsageConfiguration['enable'] === 1) {
+                            
+                            // check if method is blacklisted for additional usage
+                            if ($this->checkBlacklist($method, $additionalUsageConfiguration)) { 
+                                $this->additionalUsages[$additionalUsageType][$utilityClass][] = $methodInformation;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -127,6 +151,21 @@ class ConfigurationUtility
     public function getAllUtilities() : array
     {
         return $this->utilities;
+    }
+    
+    /**
+     * Return utilities for an additional usage
+     * 
+     * @param string $usageType
+     * @return array|NULL
+     */
+    public function getUtilitiesByAdditionalUsage (string $usageType) : ?array
+    {
+        if ($this->additionalUsages[$usageType]) {
+            return $this->additionalUsages[$usageType];
+        }
+            
+        return null;
     }
 
     /**
@@ -148,7 +187,7 @@ class ConfigurationUtility
 
         return null;
     }
-
+    
     /**
      * Get configuration of method
      *
@@ -165,25 +204,7 @@ class ConfigurationUtility
                 }
             }
         }
-
-        return null;
-    }
-
-    /**
-     * Returns task configuration of method
-     *
-     * @param string $methodName
-     *
-     * @return array|null
-     */
-    public function getTaskConfigurationForMethod(string $methodName) : ?array
-    {
-        foreach ($this->configuration['task'] as $key => $methodConfiguration) {
-            if ($key === $methodName) {
-                return $methodConfiguration;
-            }
-        }
-
+        
         return null;
     }
 
@@ -195,7 +216,7 @@ class ConfigurationUtility
      *
      * @return bool
      */
-    private function checkMethodBlacklist($method, $configuration) : bool
+    private function checkBlacklist($method, $configuration) : bool
     {
 
         // get configured includes and excludes

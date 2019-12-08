@@ -9,14 +9,69 @@ module.tx_splcleanuptools {
         SPL\SplCleanupTools\Utility\FileUtility {
             color = #8A867F
             methods {
-                excludes =
+            	# ToDo: documentation global excludes
+                excludes = 
+                
+                parameterConfigurations {
+            		cleanupMissingRelations {
+			            updateReferenceIndex {
+		                    value = false
+		                    type = bool
+		                }
+			        }
+            	}
+            }
+            
+            additionalUsage {
+	            toolbar {
+	            	enable = 0
+            		# ToDo: documentation additional usage excludes
+	            	excludes = 
+	            }
+	            
+	            task {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            afterDatabaseOperationsHook {
+	            	enable = 0
+	            	excludes = 
+	            }
+	            
+	            drawItemHook {
+	            	enable = 0
+	            	excludes = 
+	            }
             }
         }
 
         SPL\SplCleanupTools\Utility\FlexFormUtility {
             color = #FFBE87
             methods {
-                excludes =
+                excludes = isFlexFormValid
+            }
+            
+            additionalUsage {
+	            toolbar {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            task {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            afterDatabaseOperationsHook {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            drawItemHook {
+	            	enable = 1
+	            	excludes = 
+	            }
             }
         }
 
@@ -25,12 +80,56 @@ module.tx_splcleanuptools {
             methods {
                 excludes =
             }
+            
+            additionalUsage {
+	            toolbar {
+	            	enable = 0
+	            	excludes = 
+	            }
+	            
+	            task {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            afterDatabaseOperationsHook {
+	            	enable = 0
+	            	excludes = 
+	            }
+	            
+	            drawItemHook {
+	            	enable = 0
+	            	excludes = 
+	            }
+            }
         }
 
         SPL\SplCleanupTools\Utility\VersionUtility {
             color = #BF5967
             methods {
                 excludes =
+            }
+            
+            additionalUsage {
+	            toolbar {
+	            	enable = 0
+	            	excludes = 
+	            }
+	            
+	            task {
+	            	enable = 1
+	            	excludes = 
+	            }
+	            
+	            afterDatabaseOperationsHook {
+	            	enable = 0
+	            	excludes = 
+	            }
+	            
+	            drawItemHook {
+	            	enable = 0
+	            	excludes = 
+	            }
             }
         }
     }
@@ -47,9 +146,9 @@ module.tx_splcleanuptools {
             #     }
             # }
 
-            splcleanuptools_flexforms {
-                title = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.title
-                description = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.flexforms.description
+            splcleanuptools_cleanupFlexForms {
+                title = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.cleanupFlexForms.title
+                description = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.cleanupFlexForms.description
                 parameter {
                     action = cleanupFlexForms
                 }
