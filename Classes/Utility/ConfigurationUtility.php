@@ -125,7 +125,7 @@ class ConfigurationUtility
                     ];
 
                     // add method information to storage
-                    $this->utilities[$utilityClass]['methods'][] = $methodInformation;
+                    $this->utilities[$utilityClass]['methods'][$method] = $methodInformation;
                     
                     // check additional usage configuration of utility
                     foreach ($utilityConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
@@ -133,7 +133,7 @@ class ConfigurationUtility
                             
                             // check if method is blacklisted for additional usage
                             if ($this->checkBlacklist($method, $additionalUsageConfiguration)) { 
-                                $this->additionalUsages[$additionalUsageType][$utilityClass][] = $methodInformation;
+                                $this->additionalUsages[$additionalUsageType][$utilityClass][$method] = $methodInformation;
                             }
                         }
                     }
