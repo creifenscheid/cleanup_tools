@@ -14,10 +14,10 @@
 			<trans-unit id="toolbar.title">
 				<source>Cleanup Tools</source>
 			</trans-unit>
-			<trans-unit id="toolbar.item.flexforms.title">
+			<trans-unit id="toolbar.item.cleanupFlexForms.title">
 				<source>FlexForms</source>
 			</trans-unit>
-			<trans-unit id="toolbar.item.flexforms.description">
+			<trans-unit id="toolbar.item.cleanupFlexForms.description">
 				<source>Cleanup flexforms</source>
 			</trans-unit>
 

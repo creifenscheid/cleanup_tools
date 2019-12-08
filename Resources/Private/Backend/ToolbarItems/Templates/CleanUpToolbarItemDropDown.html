@@ -10,11 +10,10 @@
 		<div class="dropdown-table-row">
 			<a href="#" class="toolbar-cache-flush-action" onclick="{cleanupAction.onclickCode}">
 				<div class="dropdown-table-column dropdown-table-column-top dropdown-table-text">
-					<f:translate key="{cleanupAction.title}" />
+					{cleanupAction.title}
 					<br>
-					<small class="text-muted">{f:translate(key: '{f:if(condition: cleanupAction.description, then: cleanupAction.description, else:
-						cleanupAction.title)}')}
-					</small>
+					<small class="text-muted">{cleanupAction.description}</small>
+					<small class="text-muted"><i>{cleanupAction.utility}</i></small>
 				</div>
 			</a>
 		</div>

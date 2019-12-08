@@ -47,31 +47,28 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
     public function __construct() {
-
-        /** \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-
-        /** \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager */
-        $configurationManager = $objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
-        /** \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService */
-        $typoscriptService = $objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
-
-        // get typoscript configuration as plain array
-        $configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
+        
+        /** @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility */
+        $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
 
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
-        foreach ($configuration['toolbar']['items'] as $backendRoute => $itemConfiguration) {
-            $uri = (string)$uriBuilder->buildUriFromRoute($backendRoute, $itemConfiguration['parameter']?:[]);
-
-            $this->cleanupActions[] = [
-                'title' => $itemConfiguration['title'],
-                'description' => $itemConfiguration['description'],
-                'onclickCode' => 'TYPO3.ToolbarActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
-            ];
+        $toolbarItems = $configurationUtility->getUtilitiesByAdditionalUsage('toolbar');
+        
+        foreach ($toolbarItems as $utility => $methods) {
+            
+            foreach ($methods as $method) {
+                
+                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_toolbar', ['action' => $method['method']]);
+                
+                $this->cleanupActions[] = [
+                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.title','spl_cleanup_tools'),
+                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.description','spl_cleanup_tools'),
+                    'utility' => $utility,
+                    'onclickCode' => 'TYPO3.ToolbarActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
+                ];
+            }
         }
     }
 
