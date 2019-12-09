@@ -1,0 +1,31 @@
+.spl-cleanup-tools-be-module {
+	.main-color {
+		background-color: $mainColor;
+		color: white;
+	}
+	
+	.main-color-hover:hover {
+		background-color: $mainColorDark;
+		color: white;
+		transition: background-color $transitionTime $transitionEffect;
+	}
+	
+	.main-color-dark {
+		background-color: $mainColorDark;
+		color: white;
+	}
+	
+	.item {
+		.headline {
+			padding-bottom: 5px;
+			font-weight: bold;
+			font-size: 16px;
+		}
+		
+		.utility {
+			display: inline;
+			padding: 5px;
+			font-size: 10px;
+	    }
+	}
+}

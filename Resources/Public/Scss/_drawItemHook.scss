@@ -1,0 +1,21 @@
+.spl-cleanup-tools-draw-item-hook {
+	.display-flex {
+		display: flex;
+		
+		&.center {
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+	
+	.alert-splcleanuptools {
+	    color: $alertColor;
+	    background-color: $alertBackground;
+	    border-color: $alertBorder;
+	}
+	
+	.btn-splcleanuptools {
+	    background-color: white;
+	    border-color: $alertBorder;
+	}
+}

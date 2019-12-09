@@ -18,4 +18,12 @@ if (TYPO3_MODE === 'BE') {
             'labels' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf',
         ] // moduleConfiguration
     );
+    
+    // Register CSS
+    $GLOBALS['TBE_STYLES']['skins']['spl_cleanup_tools'] = [
+        'name' => 'Cleanup tools',
+        'stylesheetDirectories' => [
+            'css' => 'EXT:spl_cleanup_tools/Resources/Public/Css/'
+        ]
+    ];
 }

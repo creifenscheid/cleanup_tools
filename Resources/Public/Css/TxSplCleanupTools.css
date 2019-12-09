@@ -1,0 +1,31 @@
+.spl-cleanup-tools-be-module .main-color {
+  background-color: #005f6a;
+  color: white; }
+.spl-cleanup-tools-be-module .main-color-hover:hover {
+  background-color: #003238;
+  color: white;
+  transition: background-color 300ms ease-out; }
+.spl-cleanup-tools-be-module .main-color-dark {
+  background-color: #003238;
+  color: white; }
+.spl-cleanup-tools-be-module .item .headline {
+  padding-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px; }
+.spl-cleanup-tools-be-module .item .utility {
+  display: inline;
+  padding: 5px;
+  font-size: 10px; }
+
+.spl-cleanup-tools-draw-item-hook .display-flex {
+  display: flex; }
+  .spl-cleanup-tools-draw-item-hook .display-flex.center {
+    justify-content: space-between;
+    align-items: center; }
+.spl-cleanup-tools-draw-item-hook .alert-splcleanuptools {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb; }
+.spl-cleanup-tools-draw-item-hook .btn-splcleanuptools {
+  background-color: white;
+  border-color: #f5c6cb; }
