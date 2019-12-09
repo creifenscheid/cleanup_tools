@@ -3,15 +3,24 @@ define([
 ], function($) {
     'use strict';
 
-    let ToolbarActions = {};
+    let SplCleanupToolsActions = {};
 
-    ToolbarActions.process = function(uri) {
+    SplCleanupToolsActions.process = function(uri, recordUid = null) {
         $.ajax({
             url: uri,
             method: 'post',
             success: function(response) {
             	if (response.status === 'ok') {
             		top.TYPO3.Notification.success(response.headline, response.message);
+            		
+            		if (recordUid) {
+                		const hideElementOnSuccess = $('.hide-on-success-' + recordUid);
+                		
+                		if (hideElementOnSuccess.length) {
+                			hideElementOnSuccess.hide();
+                		}
+            			
+            		}
             	} else {
             		top.TYPO3.Notification.error(response.headline, response.message);
             	}
@@ -23,7 +32,7 @@ define([
     };
 
     // expose to global
-    TYPO3.ToolbarActions = ToolbarActions;
+    TYPO3.SplCleanupToolsActions = SplCleanupToolsActions;
 
-    return ToolbarActions;
+    return SplCleanupToolsActions;
 });

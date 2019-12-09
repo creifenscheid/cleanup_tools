@@ -127,7 +127,7 @@ class FlexFormUtility
      * @param int $recordUid
      * @return bool
      */
-    public function isFlexFormValid (int $recordUid) : bool
+    public function isValidFlexForm (int $recordUid) : bool
     {
         // ToDo: add logic to check if flexform is well formed
         

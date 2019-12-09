@@ -33,18 +33,13 @@ module.tx_splcleanuptools {
 	            	enable = 1
 	            	excludes = 
 	            }
-	            
-	            drawItemHook {
-	            	enable = 0
-	            	excludes = 
-	            }
             }
         }
 
         SPL\SplCleanupTools\Utility\FlexFormUtility {
             color = #FFBE87
             methods {
-                excludes = isFlexFormValid
+                excludes = isValidFlexForm
             }
             
             additionalUsage {
@@ -54,11 +49,6 @@ module.tx_splcleanuptools {
 	            }
 	            
 	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
-	            
-	            drawItemHook {
 	            	enable = 1
 	            	excludes = 
 	            }
@@ -81,11 +71,6 @@ module.tx_splcleanuptools {
 	            	enable = 1
 	            	excludes = 
 	            }
-	            
-	            drawItemHook {
-	            	enable = 0
-	            	excludes = 
-	            }
             }
         }
 
@@ -103,11 +88,6 @@ module.tx_splcleanuptools {
 	            
 	            task {
 	            	enable = 1
-	            	excludes = 
-	            }
-	            
-	            drawItemHook {
-	            	enable = 0
 	            	excludes = 
 	            }
             }

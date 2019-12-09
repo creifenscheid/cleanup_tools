@@ -60,13 +60,13 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             
             foreach ($methods as $method) {
                 
-                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_toolbar', ['action' => $method['method']]);
+                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method']]);
                 
                 $this->cleanupActions[] = [
                     'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.title','spl_cleanup_tools'),
                     'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.description','spl_cleanup_tools'),
                     'utility' => $utility,
-                    'onclickCode' => 'TYPO3.ToolbarActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
+                    'onclickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];
             }
         }

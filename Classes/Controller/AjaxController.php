@@ -29,12 +29,12 @@ namespace SPL\SplCleanupTools\Controller;
  */
 
 /**
- * Class ToolbarController
+ * Class AjaxController
  *
  * @package SPL\SplCleanupTools\Controller
  * @author Christian Reifenscheid
  */
-class ToolbarController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
+class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
     /**
      * Cleanup utility

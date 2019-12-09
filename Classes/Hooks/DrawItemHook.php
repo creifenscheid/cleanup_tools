@@ -59,24 +59,32 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                 /* @var \SPL\SplCleanupTools\Utility\FlexFormUtility $flexFormUtility */
                 $flexFormUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\FlexFormUtility::class);
                 
-                if (!$flexFormUtility->isFlexFormValid((int) $row['uid'])) {
+                if (!$flexFormUtility->isValidFlexForm((int) $row['uid'])) {
+                    
+                    /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
+                    $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
                    
-                    /** @var \TYPO3\CMS\Core\Imaging\IconFactory */
-                    $iconFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconFactory::class);
-                    $iconTitle = 'This element has translations on wrong page id!';
-                    $icon = $iconFactory->getIcon('tx-splcleanuptools-toolbar', \TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL);
-                    $iconMarkup = $icon->render();
-                    $originalHeaderContent = $headerContent;
+                    /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
+                    $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
                     
-                    $bla = '
-                        <div class="btn-toolbar" role="toolbar" aria-label="">
-				            <a href="/typo3/index.php?route=%2Fweb%2Flayout%2F&amp;token=58b06528c6a4b0bc0422006e677b2eba50b4b576&amp;id=1&amp;clear_cache=1" class="btn btn-default btn-sm " title="Clear cache for this page">
-'.$iconMarkup.'
-                            </a>
-                        </div>
-';
+                    // set format
+                    $view->setFormat('html');
                     
-                    $headerContent = '<div style="position: absolute; right: 10px; width: 16px; height: 16px;" title="' . $iconTitle . '">' . $bla . '</div>' . $originalHeaderContent;
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => 'cleanupFlexForms']);
+                    
+                    // assignments
+                    $view->assignMultiple([
+                        'onClickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ','.$row['uid'].'); return false;',
+                        'recordUid' => $row['uid']
+                    ]);
+                    
+                    // set template path
+                    $templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::resolveBackPath(PATH_site . 'typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
+                    
+                    // set view template
+                    $view->setTemplatePathAndFilename($templateFile);
+                    
+                    $headerContent .= $view->render();
                 }
             }
         }

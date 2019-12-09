@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'splcleanuptools_toolbar' => [
-        'path' => '/splcleanuptools/flexforms',
-        'target' => SPL\SplCleanupTools\Controller\ToolbarController::class . '::mainAction'
+    'splcleanuptools_ajax' => [
+        'path' => '/splcleanuptools/ajax',
+        'target' => SPL\SplCleanupTools\Controller\AjaxController::class . '::mainAction'
     ]
 ];

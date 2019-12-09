@@ -1,19 +1,20 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:fnn="http://typo3.org/ns/Fnn/FnnAmt24/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
 <f:layout name="Default" />
 
 <f:section name="content">
-	<div class="container">
-		<div class="row">
-			<h1>Cleanup Tools</h1>
-			<f:for each="{utilities}" as="utility" iteration="iterator">
-				<f:for each="{utility.methods}" as="method">
-					<f:render partial="Item" arguments="{task:method.name,utilityAction:method.method,utilityName:utility.name,utilityColor:utility.color,parameters:method.parameters}" />
+	<div class="spl-cleanup-tools-be-module">
+		<div class="container">
+			<div class="row">
+				<h1>Cleanup Tools</h1>
+				<f:for each="{utilities}" as="utility" iteration="iterator">
+					<f:for each="{utility.methods}" as="method">
+						<f:render partial="Item" arguments="{task:method.name,utilityAction:method.method,utilityName:utility.name,utilityColor:utility.color,parameters:method.parameters}" />
+					</f:for>
 				</f:for>
-			</f:for>
-		</div>
+			</div>
+	</div>
 	</div>
 </f:section>
 
