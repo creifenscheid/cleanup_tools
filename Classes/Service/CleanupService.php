@@ -1,6 +1,6 @@
 <?php
 
-namespace SPL\SplCleanupTools\Utility;
+namespace SPL\SplCleanupTools\Service;
 
 /**
  * *************************************************************
@@ -30,15 +30,15 @@ namespace SPL\SplCleanupTools\Utility;
  */
 
 /**
- * Class CleanupUtility
+ * Class CleanupService
  *
- * @package SPL\SplCleanupTools\Utility
+ * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class CleanupUtility
+class CleanupService
 {
     /**
-     * Configuration utility
+     * Configuration service
      *
      * @var \SPL\SplCleanupTools\Service\ConfigurationService
      */

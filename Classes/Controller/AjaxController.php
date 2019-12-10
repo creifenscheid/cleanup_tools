@@ -37,18 +37,18 @@ namespace SPL\SplCleanupTools\Controller;
 class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
     /**
-     * Cleanup utility
+     * Cleanup service
      * 
-     * @var \SPL\SplCleanupTools\Utility\CleanupUtility
+     * @var \SPL\SplCleanupTools\Service\CleanupService
      */
-    protected $cleanupUtility;
+    protected $cleanupService;
     
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct();
-        $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
     }
 
     /**
@@ -72,7 +72,7 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         if ($action) {
 
             // process action through cleanup utility
-            $processResult = $this->cleanupUtility->processAction($action);
+            $processResult = $this->cleanupService->processAction($action);
 
             if ($processResult) {
                 $return = [

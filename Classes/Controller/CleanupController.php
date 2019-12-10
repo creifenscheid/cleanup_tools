@@ -44,16 +44,16 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     
     /**
      *
-     * @var \SPL\SplCleanupTools\Utility\CleanupUtility
+     * @var \SPL\SplCleanupTools\Service\CleanupService
      */
-    protected $cleanupUtility;
+    protected $cleanupService;
     
     /**
      * Constructor
      */
     public function __construct() {
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
-        $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
     }
 
     /**
@@ -86,7 +86,7 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $utilityActionName = $arguments['utilityAction'];
             $utilityActionParameter = $arguments['parameters'];
 
-            $result = $this->cleanupUtility->processAction($utilityActionName,$utilityActionParameter);
+            $result = $this->cleanupService->processAction($utilityActionName,$utilityActionParameter);
             
             if ($result) {
                 $this->addFlashMessage(

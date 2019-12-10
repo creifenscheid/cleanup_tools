@@ -54,11 +54,11 @@ class AfterDatabaseOperationsHook
         // if an content element is update in field pi_flexform
         if ($status === 'update' && $table === 'tt_content' && array_key_exists ($fieldName, $fields)) {
             
-            /** @var \SPL\SplCleanupTools\Utility\CleanupUtility $cleanupUtility */
-            $cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+            /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
+            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
             
             // process action through cleanup utility
-            return $cleanupUtility->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
+            return $cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
         }
     }
 }

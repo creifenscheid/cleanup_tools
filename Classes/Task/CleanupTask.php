@@ -50,8 +50,8 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function execute() : bool
     {
-        /** @var \SPL\SplCleanupTools\Utility\CleanupUtility $cleanupUtility */
-        $cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
+        /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
 
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
@@ -64,11 +64,11 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
             $parameters = $this->convertParameters($methodConfiguration['parameterConfiguration']);
 
             // process action through cleanup utility with parameters
-            return $cleanupUtility->processAction($this->cleanupAction, $parameters);
+            return $cleanupService->processAction($this->cleanupAction, $parameters);
         }
 
         // process action through cleanup utility
-        return $cleanupUtility->processAction($this->cleanupAction);
+        return $cleanupService->processAction($this->cleanupAction);
     }
 
     /**
