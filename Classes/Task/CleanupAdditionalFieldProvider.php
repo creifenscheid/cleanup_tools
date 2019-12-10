@@ -45,11 +45,11 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $cleanupAction = '';
 
     /**
-     * Configuration utility
+     * Configuration service
      *
-     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility
+     * @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService
      */
-    protected $configurationUtility;
+    protected $configurationService;
     
     /**
      * Task name
@@ -63,8 +63,8 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function __construct()
     {
-        // init configurationUtility
-        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
+        // init configurationService
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
     }
 
     /**
@@ -114,7 +114,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationUtility->getUtilityByMethod($submittedData[$this->cleanupActionTaskName])) {
+        if ($this->configurationService->getUtilityByMethod($submittedData[$this->cleanupActionTaskName])) {
             return true;
         }
 
@@ -141,8 +141,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        //$utilities = $this->configurationUtility->getAllUtilities();
-        $utilities = $this->configurationUtility->getUtilitiesByAdditionalUsage('task');
+        $utilities = $this->configurationService->getUtilitiesByAdditionalUsage('task');
 
         // define storage for option groups
         $optionGroups = [];

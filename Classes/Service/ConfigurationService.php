@@ -1,6 +1,6 @@
 <?php
 
-namespace SPL\SplCleanupTools\Utility;
+namespace SPL\SplCleanupTools\Service;
 
 /**
  * *************************************************************
@@ -30,12 +30,12 @@ namespace SPL\SplCleanupTools\Utility;
  */
 
 /**
- * Class ConfigurationUtility
+ * Class ConfigurationService
  *
- * @package SPL\SplCleanupTools\Utility
+ * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class ConfigurationUtility implements \TYPO3\CMS\Core\SingletonInterface
+class ConfigurationService
 {
 
     /**

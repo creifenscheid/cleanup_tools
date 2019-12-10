@@ -38,9 +38,9 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 {
     /**
      * 
-     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
+     * @var \SPL\SplCleanupTools\Service\ConfigurationService
      */
-    protected $configurationUtility;
+    protected $configurationService;
     
     /**
      *
@@ -52,7 +52,7 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * Constructor
      */
     public function __construct() {
-        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
         $this->cleanupUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\CleanupUtility::class);
     }
 
@@ -64,7 +64,7 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function indexAction(): void
     {
         // assign utilities to the view
-        $this->view->assign('utilities', $this->configurationUtility->getAllUtilities());
+        $this->view->assign('utilities', $this->configurationService->getAllUtilities());
     }
 
     /**

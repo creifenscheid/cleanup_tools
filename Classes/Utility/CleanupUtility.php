@@ -40,9 +40,9 @@ class CleanupUtility
     /**
      * Configuration utility
      *
-     * @var \SPL\SplCleanupTools\Utility\ConfigurationUtility
+     * @var \SPL\SplCleanupTools\Service\ConfigurationService
      */
-    protected $configurationUtility;
+    protected $configurationService;
 
     /**
      * Object manager
@@ -59,8 +59,8 @@ class CleanupUtility
         // init object manager
         $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
-        // init configuration utility
-        $this->configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
+        // init configuration service
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
     }
 
     /**
@@ -78,7 +78,7 @@ class CleanupUtility
         $return = false;
 
         // get utility of cleanCmd
-        $utility = $this->configurationUtility->getUtilityByMethod($action);
+        $utility = $this->configurationService->getUtilityByMethod($action);
 
         // if a utility is returned
         if ($utility) {

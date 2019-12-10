@@ -48,13 +48,13 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      */
     public function __construct() {
         
-        /** @var \SPL\SplCleanupTools\Utility\ConfigurationUtility $configurationUtility */
-        $configurationUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Utility\ConfigurationUtility::class);
+        /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
 
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
-        $toolbarItems = $configurationUtility->getUtilitiesByAdditionalUsage('toolbar');
+        $toolbarItems = $configurationService->getUtilitiesByAdditionalUsage('toolbar');
         
         foreach ($toolbarItems as $utility => $methods) {
             
