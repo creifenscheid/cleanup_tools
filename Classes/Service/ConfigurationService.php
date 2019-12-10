@@ -61,6 +61,13 @@ class ConfigurationService
      */
     protected $additionalUsages = [];
     
+    /**
+     * localizationFile
+     * 
+     * @var string
+     */
+    protected $localizationFile = '';
+    
 
     /**
      * Constructor
@@ -79,6 +86,9 @@ class ConfigurationService
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
+        
+        // set localization from ts configuration
+        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf';
 
         // loop through configured utilities
         foreach ($this->configuration['utilities'] as $utilityClass => $utilityConfiguration) {
@@ -111,14 +121,12 @@ class ConfigurationService
 
                         $methodParameters[] = [
                             'name' => $parameter->getName(),
-                            'label' => $this->unLowerCamelCase($parameter->getName()),
                             'formType' => $this->configuration['mapping']['parameter'][$parameter->getName()]
                         ];
                     }
                     
                     // prepare method information
                     $methodInformation = [
-                        'name' => $this->unLowerCamelCase($method),
                         'method' => $method,
                         'parameters' => $methodParameters,
                         'parameterConfiguration' => $utilityConfiguration['methods']['parameterConfigurations'][$method] ?: null
@@ -140,6 +148,16 @@ class ConfigurationService
                 }
             }
         }
+    }
+
+    /**
+     * Returns the localization file
+     * 
+     * @return string
+     */
+    public function getLocalizationFile () : string 
+    {
+        return $this->localizationFile;
     }
 
     /**
@@ -229,21 +247,5 @@ class ConfigurationService
 
         // if method is not in the configuration - return true to add the method
         return true;
-    }
-
-    /**
-     * Function to transform strings from lowerCamelCase to string with spaces
-     *
-     * @param string $input
-     *
-     * @return string
-     */
-    private function unLowerCamelCase(string $input) : string
-    {
-
-        // 1. turn lowerCamelCase method name into lower case underscored
-        // 2. replace underscores by space
-        // 3. set the first char to upper case
-        return ucfirst(str_replace('_', ' ', \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($input)));
     }
 }

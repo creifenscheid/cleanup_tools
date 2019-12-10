@@ -63,8 +63,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
                 $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method']]);
                 
                 $this->cleanupActions[] = [
-                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.title','spl_cleanup_tools'),
-                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:toolbar.item.'.$method['method'].'.description','spl_cleanup_tools'),
+                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.'.$method['method']),
+                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:description.'.$method['method']),
                     'utility' => $utility,
                     'onclickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];

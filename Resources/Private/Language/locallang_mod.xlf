@@ -9,16 +9,74 @@
 			<trans-unit id="mlang_labels_tabdescr">
 				<source>Cleanup Tools</source>
 			</trans-unit>
-			
-			<!-- TOOLBAR -->
-			<trans-unit id="toolbar.title">
+			<trans-unit id="module.headline">
 				<source>Cleanup Tools</source>
 			</trans-unit>
-			<trans-unit id="toolbar.item.cleanupFlexForms.title">
+			
+			<!-- LABEL -->
+			<trans-unit id="label.cleanupFlexForms">
 				<source>FlexForms</source>
 			</trans-unit>
-			<trans-unit id="toolbar.item.cleanupFlexForms.description">
+			<trans-unit id="label.cleanupMissingRelations">
+				<source>Missing relations</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupMultipleReferencedFiles">
+				<source>Multiple referenced files</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupRteImages">
+				<source>RTE images</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupMissingFiles">
+				<source>Missing files</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupLostFiles">
+				<source>Lost files</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupOrphanRecords">
+				<source>Orphan records</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupDeletedRecords">
+				<source>Deleted records</source>
+			</trans-unit>
+			<trans-unit id="label.cleanupVersions">
+				<source>Versions</source>
+			</trans-unit>
+			<trans-unit id="label.updateReferenceIndex">
+				<source>Update reference index</source>
+			</trans-unit>
+			
+			<!-- DESCRIPTIONS -->
+			<trans-unit id="description.cleanupFlexForms">
 				<source>Cleanup flexforms</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupMissingRelations">
+				<source>Cleanup missing relations</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupMultipleReferencedFiles">
+				<source>Cleanup multiple referenced files</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupRteImages">
+				<source>Cleanup RTE images</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupMissingFiles">
+				<source>Cleanup missing files</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupLostFiles">
+				<source>Cleanup lost files</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupOrphanRecords">
+				<source>Cleanup orphan records</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupDeletedRecords">
+				<source>Cleanup deleted records</source>
+			</trans-unit>
+			<trans-unit id="description.cleanupVersions">
+				<source>Cleanup versions</source>
+			</trans-unit>
+			
+			<!-- BE MODULE -->
+			<trans-unit id="module.submit">
+				<source>Clean up</source>
 			</trans-unit>
 
 			<!-- TASKS -->
@@ -36,6 +94,11 @@
 			</trans-unit>
 			<trans-unit id="tasks.cleanup.parameter">
 				<source>(parameters are set with typoscript)</source>
+			</trans-unit>
+			
+			<!-- DRAW ITEM HOOK -->
+			<trans-unit id="drawitemhook.message">
+				<source>The flexform of this element is not valid and needs to be cleaned up.</source>
 			</trans-unit>
 
 			<!-- FLASH MESSAGES -->
@@ -59,11 +122,6 @@
 			</trans-unit>
 			<trans-unit id="message.hook.warning.message">
 				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
-			</trans-unit>
-			
-			<!-- DRAW ITEM HOOK -->
-			<trans-unit id="drawitemhook.message">
-				<source>The flexform of this element is not valid and needs to be cleaned up.</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -64,7 +64,10 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function indexAction(): void
     {
         // assign utilities to the view
-        $this->view->assign('utilities', $this->configurationService->getAllUtilities());
+        $this->view->assignMultiple([
+            'utilities' => $this->configurationService->getAllUtilities(),
+            'localizationFile' => $this->configurationService->getLocalizationFile()
+        ]);
     }
 
     /**
