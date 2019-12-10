@@ -40,7 +40,7 @@ class VersionUtility
      *
      * @return bool
      */
-    public function cleanupVersions () : bool
+    public static function cleanupVersions () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
         

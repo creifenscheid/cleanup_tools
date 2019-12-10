@@ -40,7 +40,7 @@ class RecordUtility
      *
      * @return bool
      */
-    public function cleanupOrphanRecords () : bool
+    public static function cleanupOrphanRecords () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
         
@@ -52,7 +52,7 @@ class RecordUtility
      *
      * @return bool
      */
-    public function cleanupDeletedRecords () : bool
+    public static function cleanupDeletedRecords () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
         

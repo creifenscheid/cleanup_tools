@@ -40,7 +40,7 @@ class FileUtility
      *
      * @return bool
      */
-    public function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
+    public static function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
 
@@ -54,7 +54,7 @@ class FileUtility
      *
      * @return bool
      */
-    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : bool
+    public static function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
         
@@ -66,7 +66,7 @@ class FileUtility
      *
      * @return bool
      */
-    public function cleanupRteImages () : bool
+    public static function cleanupRteImages () : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
         
@@ -78,7 +78,7 @@ class FileUtility
      *
      * @return bool
      */
-    public function cleanupMissingFiles (bool $updateReferenceIndex = false) : bool
+    public static function cleanupMissingFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
         
@@ -90,7 +90,7 @@ class FileUtility
      *
      * @return bool
      */
-    public function cleanupLostFiles (bool $updateReferenceIndex = false) : bool
+    public static function cleanupLostFiles (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
         
