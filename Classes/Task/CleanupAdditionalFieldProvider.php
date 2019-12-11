@@ -59,12 +59,20 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $cleanupActionTaskName = 'scheduler_cleanuptools_cleanupaction';
     
     /**
+     * Localization file
+     *
+     * @var string
+     */
+    protected $localizationFile = '';
+    
+    /**
      * CleanupAdditionalFieldProvider constructor.
      */
     public function __construct()
     {
         // init configurationService
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
@@ -96,7 +104,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
         $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupActionTaskName, $fieldValue);
         $additionalFields[$this->cleanupActionTaskName] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.cleanupaction',
+            'label' => $this->localizationFile.':tasks.cleanup.fields.cleanupaction',
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $this->cleanupActionTaskName
         ];
@@ -164,7 +172,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 if (empty($method['parameters'])) {
                     $label = $method['name'];
                 } else  {
-                    $label = $method['name'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
+                    $label = $method['name'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':tasks.cleanup.parameter');
                 }
 
                 // add option to option storage

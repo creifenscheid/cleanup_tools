@@ -40,6 +40,11 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @var array
      */
     protected $cleanupActions = [];
+    
+    /**
+     * @var string
+     */
+    protected $localizationFile = '';
 
     /**
      * CleanUpToolbarItem constructor.
@@ -50,6 +55,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        
+        $this->localizationFile = $configurationService->getLocalizationFile();
 
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
@@ -63,8 +70,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
                 $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method']]);
                 
                 $this->cleanupActions[] = [
-                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.'.$method['method']),
-                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:description.'.$method['method']),
+                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':label.'.$method['method']),
+                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':description.'.$method['method']),
                     'utility' => $utility,
                     'onclickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];
@@ -91,7 +98,9 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * @return string Toolbar item HTML
      */
     public function getItem() {
-        return $this->getFluidTemplateObject('CleanUpToolbarItem.html')->render();
+        $view = $this->getFluidTemplateObject('CleanUpToolbarItem.html');
+        $view->assign('localizationFile', $this->localizationFile);
+        return $view->render();
     }
 
     /**
@@ -110,7 +119,10 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      */
     public function getDropDown() {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
-        $view->assign('cleanupActions', $this->cleanupActions);
+        $view->assignMultiple([
+            'cleanupActions' => $this->cleanupActions,
+            'localizationFile' => $this->localizationFile
+        ]);
         return $view->render();
     }
 

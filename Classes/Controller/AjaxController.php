@@ -38,10 +38,24 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
     /**
      * Cleanup service
-     * 
+     *
      * @var \SPL\SplCleanupTools\Service\CleanupService
      */
     protected $cleanupService;
+    
+    /**
+     * Configuration service
+     *
+     * @var \SPL\SplCleanupTools\Service\ConfigurationService
+     */
+    protected $configurationService;
+    
+    /**
+     * Localization file
+     * 
+     * @var string
+     */
+    protected $localizationFile = '';
     
     /**
      * Constructor
@@ -49,6 +63,8 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     public function __construct() {
         parent::__construct();
         $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
@@ -77,21 +93,21 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             if ($processResult) {
                 $return = [
                     'status' => 'ok',
-                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline','SplCleanupTools'),
-                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message','SplCleanupTools',[$action])
+                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$action])
                 ];
             } else {
                 $return = [
                     'status' => 'error',
-                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
-                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message','SplCleanupTools',[$action])
+                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$action])
                 ];
             }
         } else {
             $return = [
                 'status' => 'error',
-                'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
-                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-action','SplCleanupTools')
+                'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
+                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message.no-action','SplCleanupTools')
             ];
         }
 

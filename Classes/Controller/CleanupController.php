@@ -49,11 +49,19 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $cleanupService;
     
     /**
+     * Localization file
+     *
+     * @var string
+     */
+    protected $localizationFile = '';
+    
+    /**
      * Constructor
      */
     public function __construct() {
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
         $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
+        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
@@ -93,16 +101,16 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             
             if ($result) {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message','SplCleanupTools',[$utilityActionName]),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline','SplCleanupTools'),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$utilityActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::OK
                 );
             }
             
             else {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message','SplCleanupTools',[$utilityActionName]),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$utilityActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                     );
             }

@@ -61,6 +61,9 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                 
                 if (!$flexFormUtility->isValidFlexForm((int) $row['uid'])) {
                     
+                    /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+                    $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+                    
                     /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
                     $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
                    
@@ -75,7 +78,8 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                     // assignments
                     $view->assignMultiple([
                         'onClickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ','.$row['uid'].'); return false;',
-                        'recordUid' => $row['uid']
+                        'recordUid' => $row['uid'],
+                        'localizationFile' => $configurationService->getLocalizationFile()
                     ]);
                     
                     // set template path
