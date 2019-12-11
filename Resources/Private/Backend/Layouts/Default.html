@@ -1,17 +1,20 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-	<f:be.container pageTitle="CleanupTools">
-		<div class="typo3-fullDoc">
-			<div id="typo3-docheader">
-				<div class="typo3-docheader-functions">
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
-				</div>
-			</div>
-			<div id="typo3-docbody">
-				<div id="typo3-inner-docbody">
-					<f:flashMessages />
-					<f:render section="content" />
-				</div>
-			</div>
-		</div>
-	</f:be.container>
+<be:moduleLayout>
+
+	<f:variable name="menuCleanup">{localizationFile}:module.menu.cleanup</f:variable>
+	<f:variable name="menuBackup">{localizationFile}:module.menu.backup</f:variable>
+	
+	<be:moduleLayout.menu identifier="SplCleanupToolsBackendModule">
+		<be:moduleLayout.menuItem label="{f:translate(key: menuCleanup)}" uri="{f:uri.action(controller: 'Cleanup', action: 'index')}"/>
+		<be:moduleLayout.menuItem label="{f:translate(key: menuBackup)}" uri="{f:uri.action(controller: 'Backup', action: 'index')}"/>
+	</be:moduleLayout.menu>
+
+	<f:render section="Content" />
+
+</be:moduleLayout>
+
 </html>

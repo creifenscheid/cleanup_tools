@@ -34,14 +34,8 @@ namespace SPL\SplCleanupTools\Controller;
  * @package SPL\SplCleanupTools\Controller
  * @author Christian Reifenscheid
  */
-class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
 {
-    /**
-     * 
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService
-     */
-    protected $configurationService;
-    
     /**
      *
      * @var \SPL\SplCleanupTools\Service\CleanupService
@@ -49,19 +43,11 @@ class CleanupController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected $cleanupService;
     
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-    
-    /**
      * Constructor
      */
     public function __construct() {
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        parent::__construct();
         $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**

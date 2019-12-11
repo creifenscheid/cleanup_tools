@@ -10,7 +10,8 @@ if (TYPO3_MODE === 'BE') {
         '', // position
         [
             'Cleanup' => 'index,cleanup',
-            'Toolbar' => 'main'
+            'Ajax' => 'main',
+            'Backup' => 'index'
         ], // controllerActions
         [
             'access' => 'admin',
