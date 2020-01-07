@@ -76,7 +76,7 @@
 			
 			<!-- BE MODULE -->
 			<trans-unit id="module.menu.cleanup">
-				<source>Clean up</source>
+				<source>Cleanup</source>
 			</trans-unit>
 			<trans-unit id="module.menu.backup">
 				<source>Backup</source>
@@ -128,6 +128,23 @@
 			</trans-unit>
 			<trans-unit id="message.hook.warning.message">
 				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
+			</trans-unit>
+
+			<!-- BACKUP MODULE -->
+			<trans-unit id="module.backup.headline">
+				<source>Backup</source>
+			</trans-unit>
+			<trans-unit id="module.backup.card.export.title">
+				<source>Export</source>
+			</trans-unit>
+			<trans-unit id="module.backup.card.export.description">
+				<source>Generate backup of database.</source>
+			</trans-unit>
+			<trans-unit id="module.backup.card.import.title">
+				<source>Import</source>
+			</trans-unit>
+			<trans-unit id="module.backup.card.import.description">
+				<source>Import database from backup file.</source>
 			</trans-unit>
 		</body>
 	</file>

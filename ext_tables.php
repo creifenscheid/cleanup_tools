@@ -11,7 +11,7 @@ if (TYPO3_MODE === 'BE') {
         [
             'Cleanup' => 'index,cleanup',
             'Ajax' => 'main',
-            'Backup' => 'index'
+            'Backup' => 'index,exportDb,importDb'
         ], // controllerActions
         [
             'access' => 'admin',

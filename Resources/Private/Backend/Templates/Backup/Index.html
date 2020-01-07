@@ -7,40 +7,12 @@
 	<div class="spl-cleanup-tools-be-module">
 		<div class="container">
 			<div class="row">
-				<h1>Backup</h1>
+				<h1><f:translate key="{localizationFile}:module.backup.headline" /></h1>
 				
 				<div class="card-container">
-					<div class="card card-size-fixed-small">
-						<div class="card-header">
-							<div class="card-icon">
-								<img src="/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg" width="64" height="64" class="card-header-icon-image">
-							</div>
-							
-							<div class="card-header-body">
-								<h1 class="card-title">Export</h1>
-								<span class="card-subtitle">Generate backup of database.</span>
-							</div>
-						</div>
-						<div class="card-footer">
-							<a href="#" class="btn btn-primary" data-inline="1" data-require="TYPO3/CMS/Install/Cache">Export</a>
-						</div>
-					</div>
-					
-					<div class="card card-size-fixed-small">
-						<div class="card-header">
-							<div class="card-icon">
-								<img src="/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg" width="64" height="64" class="card-header-icon-image">
-							</div>
-							
-							<div class="card-header-body">
-								<h1 class="card-title">Import</h1>
-								<span class="card-subtitle">Import database from backup file</span>
-							</div>
-						</div>
-						<div class="card-footer">
-							<a href="#" class="btn btn-primary" data-inline="1" data-require="TYPO3/CMS/Install/Cache">Import</a>
-						</div>
-					</div>
+					<f:render partial="Backup/Card" arguments="{localizationFile: localizationFile, title: 'module.backup.card.export.title', description: 'module.backup.card.export.description', image: '/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg', action: 'exportDb'}" />
+
+					<f:render partial="Backup/Card" arguments="{localizationFile: localizationFile, title: 'module.backup.card.import.title', description: 'module.backup.card.import.description', image: '/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg', action: 'importDb'}" />
 				</div>
 			</div>
 		</div>
