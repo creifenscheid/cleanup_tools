@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z" product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+        	<!-- BACKUP -->
+            <trans-unit id="tx_splcleanuptools_domain_model_backup">
+                <source>Backup</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.original_uid">
+                <source>Original uid</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.table">
+                <source>Table</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.data">
+                <source>Data</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
