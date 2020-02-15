@@ -58,6 +58,20 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $data = '';
     
     /**
+     * crdate
+     * 
+     * @var integer
+     */
+    protected $crdate = 0;
+    
+    /**
+     * cruser_id
+     * 
+     * @var integer
+     */
+    protected $cruserId = 0;
+
+    /**
      * Returns the orignal uid
      * 
      * @return null|integer
@@ -121,5 +135,49 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setData($data) : void
     {
         $this->data = $data;
+    }
+    
+    /**
+     * Returns crdate
+     * 
+     * @return number
+     */
+    public function getCrdate() : int
+    {
+        return $this->crdate;
+    }
+    
+    /**
+     * Sets crdate
+     * 
+     * @param number $crdate
+     * 
+     * @return void
+     */
+    public function setCrdate(int $crdate) : void
+    {
+        $this->crdate = $crdate;
+    }
+    
+    /**
+     * Returns cruser_id
+     * 
+     * @return number
+     */
+    public function getCruserId() : int
+    {
+        return $this->cruserId;
+    }
+    
+    /**
+     * Sets cruser_id
+     * 
+     * @param number $cruserId
+     * 
+     * @return void
+     */
+    public function setCruserId(int $cruserId) : void
+    {
+        $this->cruserId = $cruserId;
     }
 }

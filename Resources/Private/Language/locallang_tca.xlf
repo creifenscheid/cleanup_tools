@@ -3,9 +3,23 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z" product-name="spl_cleanup_tools">
         <header/>
         <body>
+        	<!-- PALETTES -->
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.palettes.creation">
+                <source>Creation</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.palettes.backupData">
+                <source>Backup data</source>
+            </trans-unit>
+            
         	<!-- BACKUP -->
             <trans-unit id="tx_splcleanuptools_domain_model_backup">
                 <source>Backup</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.crdate">
+                <source>Creation date</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.cruser_id">
+                <source>Created by user</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_backup.original_uid">
                 <source>Original uid</source>
