@@ -8,6 +8,8 @@
 .spl-cleanup-tools-be-module .main-color-dark {
   background-color: #003238;
   color: white; }
+.spl-cleanup-tools-be-module .item.header {
+  font-weight: bold; }
 .spl-cleanup-tools-be-module .item .headline {
   padding-bottom: 5px;
   font-weight: bold;

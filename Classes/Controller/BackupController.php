@@ -37,15 +37,38 @@ namespace SPL\SplCleanupTools\Controller;
 class BackupController extends \SPL\SplCleanupTools\Controller\BaseController
 {
     /**
+     * Backup repository
+     * 
+     * @var \SPL\SplCleanupTools\Domain\Repository\BackupRepository
+     */
+    protected $backupRepository;
+
+    /**
+     * Inject backup repository
+     * 
+     * @param \SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository
+     */
+    public function injectBackupRepository (\SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository) {
+        $this->backupRepository = $backupRepository;
+    }
+    
+    /**
      * action index
      *
      * @return void
      */
     public function indexAction(): void
     {
+        // define query settings
+        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(FALSE);
+        // set query settings
+        $this->backupRepository->setDefaultQuerySettings($querySettings);
+        
         // assign to the view
         $this->view->assignMultiple([
-            'localizationFile' => $this->configurationService->getLocalizationFile()
+            'localizationFile' => $this->configurationService->getLocalizationFile(),
+            'backups' => $this->backupRepository->findAll()
         ]);
     }
 

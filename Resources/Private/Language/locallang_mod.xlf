@@ -134,17 +134,20 @@
 			<trans-unit id="module.backup.headline">
 				<source>Backup</source>
 			</trans-unit>
-			<trans-unit id="module.backup.card.export.title">
-				<source>Export</source>
+			<trans-unit id="module.backup.item.originalUid">
+				<source>Original uid</source>
 			</trans-unit>
-			<trans-unit id="module.backup.card.export.description">
-				<source>Generate backup of database.</source>
+			<trans-unit id="module.backup.item.table">
+				<source>Table</source>
 			</trans-unit>
-			<trans-unit id="module.backup.card.import.title">
+			<trans-unit id="module.backup.item.crdate">
+				<source>Creation date</source>
+			</trans-unit>
+			<trans-unit id="module.backup.item.cruserId">
+				<source>Created by</source>
+			</trans-unit>
+			<trans-unit id="module.backup.item.import.title">
 				<source>Import</source>
-			</trans-unit>
-			<trans-unit id="module.backup.card.import.description">
-				<source>Import database from backup file.</source>
 			</trans-unit>
 		</body>
 	</file>

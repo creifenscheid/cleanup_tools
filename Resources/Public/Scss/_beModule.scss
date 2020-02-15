@@ -16,6 +16,10 @@
 	}
 	
 	.item {
+		&.header {
+			font-weight: bold;
+		}
+	
 		.headline {
 			padding-bottom: 5px;
 			font-weight: bold;

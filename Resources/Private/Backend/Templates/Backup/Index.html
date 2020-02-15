@@ -9,11 +9,29 @@
 			<div class="row">
 				<h1><f:translate key="{localizationFile}:module.backup.headline" /></h1>
 				
-				<div class="card-container">
-					<f:render partial="Backup/Card" arguments="{localizationFile: localizationFile, title: 'module.backup.card.export.title', description: 'module.backup.card.export.description', image: '/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg', action: 'exportDb'}" />
-
-					<f:render partial="Backup/Card" arguments="{localizationFile: localizationFile, title: 'module.backup.card.import.title', description: 'module.backup.card.import.description', image: '/typo3/sysext/install/Resources/Public/Icons/modules/install-database-analyze.svg', action: 'importDb'}" />
+				<div class="row">
+					<div class="item header">
+						<div class="col-xs-2">
+							<f:translate key="{localizationFile}:module.backup.item.originalUid" />
+						</div>
+					
+						<div class="col-xs-3">
+							<f:translate key="{localizationFile}:module.backup.item.table" />
+						</div>
+					
+						<div class="col-xs-3">
+							<f:translate key="{localizationFile}:module.backup.item.crdate" />
+						</div>
+					
+						<div class="col-xs-3">
+							<f:translate key="{localizationFile}:module.backup.item.cruserId" />
+						</div>
+					</div>
 				</div>
+				
+				<f:for each="{backups}" as="backup" iteration="iterator">
+					<f:render partial="Backup/Item" arguments="{localizationFile:localizationFile,backup:backup}" />
+				</f:for>
 			</div>
 		</div>
 	</div>
