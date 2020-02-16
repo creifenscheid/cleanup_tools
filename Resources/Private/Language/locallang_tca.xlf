@@ -4,22 +4,44 @@
         <header/>
         <body>
         	<!-- PALETTES -->
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.palettes.creation">
+            <trans-unit id="tx_splcleanuptools_domain_model.general.palettes.creation">
                 <source>Creation</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.palettes.logData">
+                <source>Log data</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_backup.palettes.backupData">
                 <source>Backup data</source>
+            </trans-unit>
+            
+        	<!-- GENERAL -->
+            <trans-unit id="tx_splcleanuptools_domain_model.general.crdate">
+                <source>Creation date</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model.general.cruser_id">
+                <source>Created by user</source>
+            </trans-unit>
+            
+        	<!-- LOG -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log">
+                <source>Log</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.utility">
+                <source>Utility</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.action">
+                <source>Action</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.backups">
+                <source>Backups</source>
             </trans-unit>
             
         	<!-- BACKUP -->
             <trans-unit id="tx_splcleanuptools_domain_model_backup">
                 <source>Backup</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.crdate">
-                <source>Creation date</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.cruser_id">
-                <source>Created by user</source>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.log">
+                <source>Log</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_backup.original_uid">
                 <source>Original uid</source>

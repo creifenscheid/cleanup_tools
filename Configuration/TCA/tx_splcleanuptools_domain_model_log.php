@@ -2,30 +2,29 @@
 
 return [
     'ctrl' => [
-        'hideTable' => true,
-        'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup',
-        'label' => 'original_uid',
-        'label_alt' => 'table, crdate',
+        'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
+        'label' => 'utility',
+        'label_alt' => 'action, crdate',
         'label_alt_force' => 1,
-        'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_backup.svg',
+        'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log.svg',
         'sortby' => 'crdate',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'crdate, cruser_id, log, original_uid, table, data'
+        'searchFields' => 'crdate,cruser_id,utility,action,backups'
     ],
     
     'interface' => [
-        'showRecordFieldList' => 'crdate, cruser_id, log, original_uid, table, data'
+        'showRecordFieldList' => 'crdate,cruser_id,utility,action,backups'
     ],
     
     'types' => [
         '0' => [
             'showitem' => '
                 --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.palettes.creation;creation,
-                --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.palettes.backupData;backupData,
+                --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.palettes.logData;logData,
             '
         ],
     ],
@@ -34,8 +33,8 @@ return [
         'creation' => [
             'showitem' => 'crdate,cruser_id',
         ],
-        'backupData' => [
-            'showitem' => 'log, --linebreak--, original_uid, --linebreak--, table, --linebreak--, data',
+        'logData' => [
+            'showitem' => 'utility,action,--linebreak--,backups',
         ],
     ],
     
@@ -62,42 +61,32 @@ return [
             ]
         ],
         
-        'log' => [
+        'utility' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.log',
-            'config' => [
-                'type' => 'select',
-                'foreign_table' => 'tx_splcleanuptools_domain_model_log',
-                'readOnly' => true
-            ]
-        ],
-        
-        'original_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.original_uid',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.utility',
             'config' => [
                 'type' => 'input',
                 'readOnly' => true
             ]
         ],
         
-        'table' => [
+        'action' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.table',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.action',
             'config' => [
                 'type' => 'input',
                 'readOnly' => true
             ]
         ],
         
-        'data' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.data',
+        'backups' => [
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.backups',
             'config' => [
-                'type' => 'text',
-                'cols' => 50,
-                'readOnly' => true
-            ]
-        ]
+                'type' => 'inline',
+                'foreign_table' => 'tx_splcleanuptools_domain_model_backup',
+                'foreign_field' => 'log'
+            ],
+            
+        ],
     ]
 ];

@@ -29,41 +29,33 @@ namespace SPL\SplCleanupTools\Domain\Model;
  */
 
 /**
- * Class Backup
+ * Class Log
  *
  * @package SPL\SplCleanupTools\Domain\Model
  * @author Christian Reifenscheid
  */
-class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
-     * log
+     * backups
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log>
-     * @cascade remove
+     * @var \SPL\SplCleanupTools\Domain\Model\Backup
      */
-    protected $log;
+    protected $backups;
     
     /**
-     * originalUid
-     * 
-     * @var integer
-     */
-    protected $originalUid = 0;
-    
-    /**
-     * table
+     * utility
      * 
      * @var string
      */
-    protected $table = '';
+    protected $utility = '';
     
     /**
-     * data
+     * action
      * 
      * @var string
      */
-    protected $data = '';
+    protected $action = '';
     
     /**
      * crdate
@@ -79,91 +71,69 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $cruserId = 0;
     
-    /**
-     * Returns the log
+    /*
+     * Returns the backups
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log>
+     * @return \SPL\SplCleanupTools\Domain\Model\Backup
      */
-    public function getLog()
+    public function getBackups() : \SPL\SplCleanupTools\Domain\Model\Backup
     {
-        return $this->log;
+        return $this->backups;
     }
     
     /**
-     * Sets the log
+     * Sets the backups
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log> $log
+     * @param \SPL\SplCleanupTools\Domain\Model\Backup $backups
      * @return void
      */
-    public function setLog(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $log)
+    public function setBackups(\SPL\SplCleanupTools\Domain\Model\Backup $backups) : void
     {
-        $this->log = $log;
+        $this->backups = $backups;
     }
 
     /**
-     * Returns the orignal uid
-     * 
-     * @return null|integer
-     */
-    public function getOriginalUid() : ?int
-    {
-        return $this->originalUid;
-    }
-
-    /**
-     * Sets the original uid
-     * 
-     * @param integer $originalUid
-     * 
-     * @return void
-     */
-    public function setOriginalUid(int $originalUid) : void
-    {
-        $this->originalUid = $originalUid;
-    }
-
-    /**
-     * Returns the table
+     * Returns the utility
      * 
      * @return null|string
      */
-    public function getTable() : ?string
+    public function getUtility() : ?string
     {
-        return $this->table;
+        return $this->utility;
     }
 
     /**
-     * Sets the table
+     * Sets the utility
      * 
-     * @param string $table
+     * @param string $utility
      * 
      * @return void
      */
-    public function setTable(string $table) : void
+    public function setUtility(string $utility) : void
     {
-        $this->table = $table;
+        $this->utility = $utility;
     }
 
     /**
-     * Returns the data
+     * Returns the action
      * 
      * @return null|string
      */
-    public function getData() : ?string
+    public function getAction() : ?string
     {
-        return $this->data;
+        return $this->action;
     }
 
     /**
-     * Sets the data
+     * Sets the action
      * 
      * @param string $data
      * 
      * @return void
      */
-    public function setData($data) : void
+    public function setAction($action) : void
     {
-        $this->data = $data;
+        $this->action = $action;
     }
     
     /**
