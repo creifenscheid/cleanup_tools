@@ -78,8 +78,8 @@
 			<trans-unit id="module.menu.cleanup">
 				<source>Cleanup</source>
 			</trans-unit>
-			<trans-unit id="module.menu.backup">
-				<source>Backup</source>
+			<trans-unit id="module.menu.history">
+				<source>History</source>
 			</trans-unit>
 			<trans-unit id="module.submit">
 				<source>Clean up</source>
@@ -130,24 +130,9 @@
 				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
 			</trans-unit>
 
-			<!-- BACKUP MODULE -->
-			<trans-unit id="module.backup.headline">
-				<source>Backup</source>
-			</trans-unit>
-			<trans-unit id="module.backup.item.originalUid">
-				<source>Original uid</source>
-			</trans-unit>
-			<trans-unit id="module.backup.item.table">
-				<source>Table</source>
-			</trans-unit>
-			<trans-unit id="module.backup.item.crdate">
-				<source>Creation date</source>
-			</trans-unit>
-			<trans-unit id="module.backup.item.cruserId">
-				<source>Created by</source>
-			</trans-unit>
-			<trans-unit id="module.backup.item.import.title">
-				<source>Import</source>
+			<!-- HISTORY MODULE -->
+			<trans-unit id="module.history.headline">
+				<source>History</source>
 			</trans-unit>
 		</body>
 	</file>

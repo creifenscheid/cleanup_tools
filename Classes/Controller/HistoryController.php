@@ -29,12 +29,12 @@ namespace SPL\SplCleanupTools\Controller;
  */
 
 /**
- * Class BackupController
+ * Class HistoryController
  *
  * @package SPL\SplCleanupTools\Controller
  * @author Christian Reifenscheid
  */
-class BackupController extends \SPL\SplCleanupTools\Controller\BaseController
+class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
 {
     /**
      * Backup repository
@@ -73,32 +73,15 @@ class BackupController extends \SPL\SplCleanupTools\Controller\BaseController
     }
 
     /**
-     * Export db
+     * Revert history item
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function exportDbAction(): void {
+    public function revertAction(): void {
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
 
         $this->addFlashMessage(
-            'Export',
-            'Ok',
-            \TYPO3\CMS\Core\Messaging\FlashMessage::OK
-        );
-
-        $this->forward('index');
-    }
-
-    /**
-     * Import db
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     */
-    public function importDbAction(): void {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
-
-        $this->addFlashMessage(
-            'Import',
+            'Revert',
             'Ok',
             \TYPO3\CMS\Core\Messaging\FlashMessage::OK
         );
