@@ -32,6 +32,9 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log.action">
                 <source>Action</source>
             </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.state">
+                <source>State</source>
+            </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_log.backups">
                 <source>Backups</source>
             </trans-unit>

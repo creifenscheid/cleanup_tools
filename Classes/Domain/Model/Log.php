@@ -58,6 +58,13 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $action = '';
     
     /**
+     * State
+     * 
+     * @var bool
+     */
+    protected $state = 1;
+    
+    /**
      * crdate
      * 
      * @var integer
@@ -136,6 +143,28 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->action = $action;
     }
     
+    /**
+     * Returns the state
+     * 
+     * @return boolean
+     */
+    public function getState() : bool
+    {
+        return $this->state;
+    }
+
+    /**
+     * Sets the state
+     * 
+     * @param boolean $state
+     * 
+     * @return void
+     */
+    public function setState($state) : void
+    {
+        $this->state = $state;
+    }
+
     /**
      * Returns crdate
      * 

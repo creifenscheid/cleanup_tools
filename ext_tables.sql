@@ -4,6 +4,7 @@
 CREATE TABLE tx_splcleanuptools_domain_model_log (
 	utility varchar(255) DEFAULT NULL,
 	action varchar(255) DEFAULT NULL,
+	state tinyint (1) DEFAULT 0,
 	backups varchar(255) DEFAULT '' NOT NULL
 );
 
