@@ -5,7 +5,7 @@ return [
         'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup',
         'label' => 'original_uid',
-        'label_alt' => 'table, crdate',
+        'label_alt' => 'table',
         'label_alt_force' => 1,
         'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_backup.svg',
         'sortby' => 'crdate',
@@ -14,54 +14,28 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'crdate, cruser_id, log, original_uid, table, data'
+        'searchFields' => 'log, original_uid, table, data'
     ],
     
     'interface' => [
-        'showRecordFieldList' => 'crdate, cruser_id, log, original_uid, table, data'
+        'showRecordFieldList' => 'log, original_uid, table, data'
     ],
     
     'types' => [
         '0' => [
             'showitem' => '
-                --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.palettes.creation;creation,
                 --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.palettes.backupData;backupData,
             '
         ],
     ],
     
     'palettes' => [
-        'creation' => [
-            'showitem' => 'crdate,cruser_id',
-        ],
         'backupData' => [
             'showitem' => 'log, --linebreak--, original_uid, --linebreak--, table, --linebreak--, data',
         ],
     ],
     
     'columns' => [
-        'crdate' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.crdate',
-            'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime',
-                'readOnly' => true
-            ]
-        ],
-        
-        'cruser_id' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.cruser_id',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'foreign_table' => 'be_users',
-                'readOnly' => true
-            ]
-        ],
-        
         'log' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.log',
