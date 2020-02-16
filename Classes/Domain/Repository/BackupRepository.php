@@ -36,10 +36,6 @@ namespace SPL\SplCleanupTools\Domain\Repository;
  */
 class BackupRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    protected $defaultOrderings = [
-        'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
-    ];
-    
     /**
      * Persist all
      */

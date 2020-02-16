@@ -58,7 +58,7 @@ class CleanupService
     {
         // init object manager
         $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-
+        
         // init configuration service
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
     }
@@ -99,6 +99,18 @@ class CleanupService
                 $return = $utility->$action();
             }
         }
+        
+        // write log
+        $log = new \SPL\SplCleanupTools\Domain\Model\Log();
+        $log->setCrdate(time());
+        $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+        $log->setUtility($utilityClass);
+        $log->setAction($action);
+        $log->setState($return);
+        
+        /**  @var \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository */
+        $logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
+        $logRepository->add($log);
 
         return $return;
 
