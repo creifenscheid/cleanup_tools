@@ -51,7 +51,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function execute() : bool
     {
         /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class, ['Scheduler task']);
 
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);

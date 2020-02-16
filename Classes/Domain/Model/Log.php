@@ -44,6 +44,13 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $backups;
     
     /**
+     * processing_context
+     * 
+     * @var string
+     */
+    protected $processingContext = '';
+    
+    /**
      * utility
      * 
      * @var string
@@ -58,7 +65,7 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $action = '';
     
     /**
-     * State
+     * state
      * 
      * @var bool
      */
@@ -97,6 +104,28 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBackups(\SPL\SplCleanupTools\Domain\Model\Backup $backups) : void
     {
         $this->backups = $backups;
+    }
+
+    /**
+     * Returns $processingContext 
+     * 
+     * @return string
+     */
+    public function getProcessingContext() : string
+    {
+        return $this->processingContext;
+    }
+
+    /**
+     * Sets processingContext
+     * 
+     * @param string $processingContext
+     * 
+     * @return void
+     */
+    public function setProcessingContext($processingContext) : void
+    {
+        $this->processingContext = $processingContext;
     }
 
     /**

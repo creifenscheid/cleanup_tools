@@ -67,7 +67,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             
             foreach ($methods as $method) {
                 
-                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method']]);
+                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method'], 'processingContext' => 'Toolbar']);
                 
                 $this->cleanupActions[] = [
                     'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':label.'.$method['method']),
