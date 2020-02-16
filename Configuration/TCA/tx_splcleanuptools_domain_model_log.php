@@ -4,7 +4,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'utility',
-        'label_alt' => 'action, crdate',
+        'label_alt' => 'action, crdate, processing_context',
         'label_alt_force' => 1,
         'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log.svg',
         'sortby' => 'crdate',
