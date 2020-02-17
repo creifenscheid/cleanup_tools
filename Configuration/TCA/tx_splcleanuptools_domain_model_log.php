@@ -104,8 +104,7 @@ return [
                 'type' => 'inline',
                 'foreign_table' => 'tx_splcleanuptools_domain_model_backup',
                 'foreign_field' => 'log'
-            ],
-            
-        ],
+            ]
+        ]
     ]
 ];

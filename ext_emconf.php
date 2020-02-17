@@ -26,7 +26,7 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'CleanUp-Tools',
+    'title' => 'Cleanup-Tools',
     'description' => 'Provides tools to clean up your TYPO3 installation.',
     'category' => 'service',
     'author' => 'Christian Reifenscheid',

@@ -46,9 +46,9 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * processing_context
      * 
-     * @var string
+     * @var integer
      */
-    protected $processingContext = '';
+    protected $processingContext = 0;
     
     /**
      * utility
@@ -109,9 +109,9 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns $processingContext 
      * 
-     * @return string
+     * @return int
      */
-    public function getProcessingContext() : string
+    public function getProcessingContext() : int
     {
         return $this->processingContext;
     }
@@ -119,11 +119,11 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets processingContext
      * 
-     * @param string $processingContext
+     * @param int $processingContext
      * 
      * @return void
      */
-    public function setProcessingContext($processingContext) : void
+    public function setProcessingContext(int $processingContext) : void
     {
         $this->processingContext = $processingContext;
     }

@@ -55,7 +55,8 @@ class AfterDatabaseOperationsHook
         if ($status === 'update' && $table === 'tt_content' && array_key_exists ($fieldName, $fields)) {
             
             /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
-            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class, ['AfterDatabaseOperationsHook']);
+            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);    
+            $cleanupService->setProcessingContext(\SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_DBHOOK);
             
             // process action through cleanup utility
             return $cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);

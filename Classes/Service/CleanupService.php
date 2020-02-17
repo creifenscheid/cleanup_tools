@@ -38,11 +38,20 @@ namespace SPL\SplCleanupTools\Service;
 class CleanupService
 {
     /**
+     * Processing contexts
+     */
+    const PROCESSING_CONTEXT_BEMODULE = 0;
+    const PROCESSING_CONTEXT_TOOLBAR = 1;
+    const PROCESSING_CONTEXT_SCHEDULER = 2;
+    const PROCESSING_CONTEXT_DRAWITEMHOOK = 3;
+    const PROCESSING_CONTEXT_DBHOOK = 4;
+    
+    /**
      * Processing context
      * 
-     * @var string
+     * @var int
      */
-    protected $processingContext;
+    protected $processingContext = 0;
     
     /**
      * Configuration service
@@ -61,28 +70,23 @@ class CleanupService
     /**
      * Constructor
      */
-    public function __construct($processingContext = null)
+    public function __construct()
     {
         // init object manager
         $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
         
         // init configuration service
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
-        
-        // set processing context
-        if ($processingContext) {
-            $this->processingContext = $processingContext;
-        }
     }
     
     /**
      * Set processing context
      * 
-     * @param string $processingContext
+     * @param int $processingContext
      * 
      * @return void
      */
-    public function setProcessingContext (string $processingContext) : void {
+    public function setProcessingContext (int $processingContext) : void {
         $this->processingContext = $processingContext;
     }
 
