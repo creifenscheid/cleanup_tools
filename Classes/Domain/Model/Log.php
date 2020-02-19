@@ -39,7 +39,8 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * backups
      *
-     * @var \SPL\SplCleanupTools\Domain\Model\Backup
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Backup>
+     * @cascade remove
      */
     protected $backups;
     
@@ -85,12 +86,48 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $cruserId = 0;
     
+    /**
+    * __construct
+    */
+    public function __construct()
+    {
+        $this->initStorageObjects();
+    }
+    
+    /**
+     * @return void
+     */
+    protected function initStorageObjects() : void
+    {
+        $this->backups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+    
+    /*
+     * Add a backup
+     *
+     * @return void
+     */
+    public function addBackup(\SPL\SplCleanupTools\Domain\Model\Backup $backup) : void
+    {
+        $this->backups->attach($backup);
+    }
+    
+    /*
+     * Remove a backup
+     *
+     * @return void
+     */
+    public function removeBackup(\SPL\SplCleanupTools\Domain\Model\Backup $backupToRemove) : void
+    {
+        $this->backups->detach($backupToRemove);
+    }
+    
     /*
      * Returns the backups
      *
-     * @return \SPL\SplCleanupTools\Domain\Model\Backup
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
-    public function getBackups() : \SPL\SplCleanupTools\Domain\Model\Backup
+    public function getBackups() : \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
         return $this->backups;
     }
@@ -98,10 +135,10 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the backups
      *
-     * @param \SPL\SplCleanupTools\Domain\Model\Backup $backups
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $backups
      * @return void
      */
-    public function setBackups(\SPL\SplCleanupTools\Domain\Model\Backup $backups) : void
+    public function setBackups(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backups) : void
     {
         $this->backups = $backups;
     }

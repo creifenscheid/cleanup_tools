@@ -39,17 +39,17 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
     /**
      * Backup repository
      * 
-     * @var \SPL\SplCleanupTools\Domain\Repository\BackupRepository
+     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
-    protected $backupRepository;
+    protected $logRepository;
 
     /**
-     * Inject backup repository
+     * Inject log repository
      * 
-     * @param \SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository
+     * @param \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function injectBackupRepository (\SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository) {
-        $this->backupRepository = $backupRepository;
+    public function injectLogRepository (\SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository) {
+        $this->logRepository = $logRepository;
     }
     
     /**
@@ -63,12 +63,12 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
         $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(FALSE);
         // set query settings
-        $this->backupRepository->setDefaultQuerySettings($querySettings);
+        $this->logRepository->setDefaultQuerySettings($querySettings);
         
         // assign to the view
         $this->view->assignMultiple([
             'localizationFile' => $this->configurationService->getLocalizationFile(),
-            'backups' => $this->backupRepository->findAll()
+            'logs' => $this->logRepository->findAll()
         ]);
     }
 

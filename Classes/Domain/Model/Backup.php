@@ -39,8 +39,7 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * log
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log>
-     * @cascade remove
+     * @var \SPL\SplCleanupTools\Domain\Model\Log
      */
     protected $log;
     
@@ -68,7 +67,7 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the log
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log>
+     * @return \SPL\SplCleanupTools\Domain\Model\Log
      */
     public function getLog()
     {
@@ -78,10 +77,10 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the log
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\Log> $log
+     * @param \SPL\SplCleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $log)
+    public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log)
     {
         $this->log = $log;
     }

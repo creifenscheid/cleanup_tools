@@ -61,5 +61,7 @@ class AfterDatabaseOperationsHook
             // process action through cleanup utility
             return $cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
         }
+        
+        return;
     }
 }
