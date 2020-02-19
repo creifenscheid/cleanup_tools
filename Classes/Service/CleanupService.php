@@ -139,6 +139,12 @@ class CleanupService
             $log->setAction($action);
             $log->setState($return);
             
+            /** \SPL\SplCleanupTools\Domain\Model\Backup $backup */
+            $backup = new \SPL\SplCleanupTools\Domain\Model\Backup();
+            $backup->setData('xxx');
+            $backup->setLog($log);
+            $log->addBackup($backup);
+            
             /**  @var \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository */
             $logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
             $logRepository->add($log);
