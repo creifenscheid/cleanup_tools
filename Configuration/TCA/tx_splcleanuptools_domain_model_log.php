@@ -2,6 +2,7 @@
 
 return [
     'ctrl' => [
+        'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'utility',
         'label_alt' => 'action, crdate, processing_context',
@@ -65,7 +66,15 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.processing_context',
             'config' => [
-                'type' => 'input',
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.0', 0],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.1', 1],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.2', 2],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.3', 3],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.4', 4]
+                ],
                 'readOnly' => true
             ]
         ],

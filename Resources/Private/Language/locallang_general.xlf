@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z" product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+        	<!-- PROCESSING CONTEXTS -->
+            <trans-unit id="tx_splcleanuptools.general.processingcontext.0">
+                <source>BE module</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.processingcontext.1">
+                <source>Toolbar</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.processingcontext.2">
+                <source>Scheduler</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.processingcontext.3">
+                <source>Content item</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.processingcontext.4">
+                <source>After database operation</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

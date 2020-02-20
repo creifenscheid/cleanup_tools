@@ -85,6 +85,11 @@
 				<source>Clean up</source>
 			</trans-unit>
 
+			<!-- HISTORY MODULE -->
+			<trans-unit id="module.history.headline">
+				<source>History</source>
+			</trans-unit>
+
 			<!-- TASKS -->
 			<trans-unit id="tasks.cleanup.title">
 				<source>Cleanup Tools</source>
@@ -128,11 +133,6 @@
 			</trans-unit>
 			<trans-unit id="message.hook.warning.message">
 				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
-			</trans-unit>
-
-			<!-- HISTORY MODULE -->
-			<trans-unit id="module.history.headline">
-				<source>History</source>
 			</trans-unit>
 		</body>
 	</file>

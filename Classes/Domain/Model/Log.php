@@ -274,4 +274,16 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->cruserId = $cruserId;
     }
+
+    /**
+     * Return BE user object of cruser
+     *
+     * @return \TYPO3\CMS\Beuser\Domain\Model\BackendUser
+     */
+    public function getCruser () : \TYPO3\CMS\Beuser\Domain\Model\BackendUser
+    {
+        /** @var \TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository $beUserRepository */
+        $beUserRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository::class);
+        return $beUserRepository->findByUid($this->getCruserId());
+    }
 }
