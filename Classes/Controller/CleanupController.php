@@ -79,7 +79,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
         $arguments = $this->request->getArguments();
 
         // check for required arguments
-        if ($arguments['utilityAction']) {
+        if ($arguments['serviceAction']) {
 
             // get service and service action from arguments
             $serviceActionName = $arguments['serviceAction'];

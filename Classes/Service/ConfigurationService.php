@@ -91,7 +91,7 @@ class ConfigurationService
         $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf';
 
         // loop through configured utilities
-        foreach ($this->configuration['utilities'] as $serviceClass => $serviceConfiguration) {
+        foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
 
             // set utility information
             $this->services[$serviceClass] = [
@@ -133,7 +133,7 @@ class ConfigurationService
                     ];
 
                     // add method information to storage
-                    $this->utilities[$serviceClass]['methods'][$method] = $methodInformation;
+                    $this->services[$serviceClass]['methods'][$method] = $methodInformation;
 
                     // check additional usage configuration of utility
                     foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
@@ -216,8 +216,8 @@ class ConfigurationService
      */
     public function getMethodConfiguration(string $methodName) : ?array
     {
-        foreach ($this->services as $utility) {
-            foreach ($utility['methods'] as $method) {
+        foreach ($this->services as $service) {
+            foreach ($service['methods'] as $method) {
                 if ($method['method'] === $methodName) {
                     return $method;
                 }
@@ -237,16 +237,13 @@ class ConfigurationService
      */
     private function checkBlacklist($method, $configuration) : bool
     {
-
         // get configured includes and excludes
-        $excludes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configuration['excludes']);
+        $methodExcludes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configuration['excludes']);
 
-        // if method is in excludes - return false to skip the method
-        if (in_array($method, $excludes)) {
-            return false;
-        }
+        // add global excludes
+        $excludes = array_merge($methodExcludes, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$this->configuration['settings']['globalExcludes']));
 
-        // if method is not in the configuration - return true to add the method
-        return true;
+        // if method is in excludes or is magic method - return false to skip the method
+        return !(\in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
     }
 }

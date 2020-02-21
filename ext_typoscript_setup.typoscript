@@ -4,39 +4,40 @@ module.tx_splcleanuptools {
         partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
         layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
     }
-    
+
     settings {
-    	localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf
+        localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf
+        globalExcludes = getLog,setLog,generateBackup
     }
 
     services {
         SPL\SplCleanupTools\Service\FileService {
             color = #8A867F
             methods {
-            	# ToDo: documentation global excludes
-                excludes = 
-                
+                # ToDo: documentation global excludes
+                excludes =
+
                 parameterConfigurations {
-            		cleanupMissingRelations {
-			            updateReferenceIndex {
-		                    value = false
-		                    type = bool
-		                }
-			        }
-            	}
+                    cleanupMissingRelations {
+                        updateReferenceIndex {
+                            value = false
+                            type = bool
+                        }
+                    }
+                }
             }
-            
+
             additionalUsage {
-	            toolbar {
-	            	enable = 0
-            		# ToDo: documentation additional usage excludes
-	            	excludes = 
-	            }
-	            
-	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
+                toolbar {
+                    enable = 0
+                    # ToDo: documentation additional usage excludes
+                    excludes =
+                }
+
+                task {
+                    enable = 1
+                    excludes =
+                }
             }
         }
 
@@ -45,17 +46,17 @@ module.tx_splcleanuptools {
             methods {
                 excludes = isValidFlexForm
             }
-            
+
             additionalUsage {
-	            toolbar {
-	            	enable = 1
-	            	excludes = 
-	            }
-	            
-	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
+                toolbar {
+                    enable = 1
+                    excludes =
+                }
+
+                task {
+                    enable = 1
+                    excludes =
+                }
             }
         }
 
@@ -64,17 +65,17 @@ module.tx_splcleanuptools {
             methods {
                 excludes =
             }
-            
+
             additionalUsage {
-	            toolbar {
-	            	enable = 0
-	            	excludes = 
-	            }
-	            
-	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
+                toolbar {
+                    enable = 0
+                    excludes =
+                }
+
+                task {
+                    enable = 1
+                    excludes =
+                }
             }
         }
 
@@ -83,17 +84,17 @@ module.tx_splcleanuptools {
             methods {
                 excludes =
             }
-            
+
             additionalUsage {
-	            toolbar {
-	            	enable = 0
-	            	excludes = 
-	            }
-	            
-	            task {
-	            	enable = 1
-	            	excludes = 
-	            }
+                toolbar {
+                    enable = 0
+                    excludes =
+                }
+
+                task {
+                    enable = 1
+                    excludes =
+                }
             }
         }
     }

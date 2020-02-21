@@ -170,9 +170,9 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 }
 
                 if (empty($method['parameters'])) {
-                    $label = $method['name'];
+                    $label = $method['method'];
                 } else  {
-                    $label = $method['name'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':tasks.cleanup.parameter');
+                    $label = $method['method'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':tasks.cleanup.parameter');
                 }
 
                 // add option to option storage
