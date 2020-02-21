@@ -122,7 +122,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationService->getUtilityByMethod($submittedData[$this->cleanupActionTaskName])) {
+        if ($this->configurationService->getServiceByMethod($submittedData[$this->cleanupActionTaskName])) {
             return true;
         }
 
@@ -149,19 +149,19 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        $utilities = $this->configurationService->getUtilitiesByAdditionalUsage('task');
+        $services = $this->configurationService->getServicesByAdditionalUsage('task');
 
         // define storage for option groups
         $optionGroups = [];
 
         // loop through all utilities
-        foreach ($utilities as $utilityClass => $utilityMethods) {
+        foreach ($services as $serviceClass => $serviceMethods) {
 
             // define option storage
             $options = [];
 
             // loop through all methods of the current utility
-            foreach ($utilityMethods as $method) {
+            foreach ($serviceMethods as $method) {
                 $selected = '';
 
                 // add attribute "selected" for existing field value
@@ -180,7 +180,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             }
 
             // add option group to option group storage
-            $optionGroups[] = '<optgroup label="' . $utilityClass . '">' . implode('', $options) . '</optgroup>';
+            $optionGroups[] = '<optgroup label="' . $serviceClass . '">' . implode('', $options) . '</optgroup>';
         }
 
         // return html for select field with option groups and options

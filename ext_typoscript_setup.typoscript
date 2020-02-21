@@ -9,8 +9,8 @@ module.tx_splcleanuptools {
     	localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf
     }
 
-    utilities {
-        SPL\SplCleanupTools\Utility\FileUtility {
+    services {
+        SPL\SplCleanupTools\Service\FileService {
             color = #8A867F
             methods {
             	# ToDo: documentation global excludes
@@ -40,7 +40,7 @@ module.tx_splcleanuptools {
             }
         }
 
-        SPL\SplCleanupTools\Utility\FlexFormUtility {
+        SPL\SplCleanupTools\Service\FlexFormService {
             color = #FFBE87
             methods {
                 excludes = isValidFlexForm
@@ -59,7 +59,7 @@ module.tx_splcleanuptools {
             }
         }
 
-        SPL\SplCleanupTools\Utility\RecordUtility {
+        SPL\SplCleanupTools\Service\RecordService {
             color = #E38A74
             methods {
                 excludes =
@@ -78,7 +78,7 @@ module.tx_splcleanuptools {
             }
         }
 
-        SPL\SplCleanupTools\Utility\VersionUtility {
+        SPL\SplCleanupTools\Service\VersionService {
             color = #BF5967
             methods {
                 excludes =

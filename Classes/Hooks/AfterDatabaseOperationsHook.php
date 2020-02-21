@@ -1,4 +1,5 @@
 <?php
+
 namespace SPL\SplCleanupTools\Hooks;
 
 /**
@@ -32,36 +33,39 @@ namespace SPL\SplCleanupTools\Hooks;
  * Class AfterDatabaseOperationsHook
  *
  * @package SPL\SplCleanupTools\Hooks
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
 class AfterDatabaseOperationsHook
 {
     /**
      * processDatamap_afterDatabaseOperations
      *
-     * @param string                                   $status
-     * @param string                                   $table
-     * @param integer                                  $recordUid
-     * @param array                                    $fields
+     * @param string  $status
+     * @param string  $table
+     * @param integer $recordUid
+     * @param array   $fields
      *
-     * @return void
+     * @return bool
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function processDatamap_afterDatabaseOperations ($status, $table, $recordUid, $fields) {
-        
+    public function processDatamap_afterDatabaseOperations($status, $table, $recordUid, $fields) : bool
+    {
+
         // define field to check on
         $fieldName = 'pi_flexform';
-        
+
         // if an content element is update in field pi_flexform
-        if ($status === 'update' && $table === 'tt_content' && array_key_exists ($fieldName, $fields)) {
-            
+        if ($status === 'update' && $table === 'tt_content' && array_key_exists($fieldName, $fields)) {
+
             /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
-            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);    
+            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
             $cleanupService->setProcessingContext(\SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_DBHOOK);
-            
+
             // process action through cleanup utility
             return $cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
         }
-        
-        return;
+
+        return false;
     }
 }

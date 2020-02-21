@@ -61,9 +61,9 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
-        $toolbarItems = $configurationService->getUtilitiesByAdditionalUsage('toolbar');
+        $toolbarItems = $configurationService->getServicesByAdditionalUsage('toolbar');
         
-        foreach ($toolbarItems as $utility => $methods) {
+        foreach ($toolbarItems as $service => $methods) {
             
             foreach ($methods as $method) {
                 
@@ -72,7 +72,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
                 $this->cleanupActions[] = [
                     'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':label.'.$method['method']),
                     'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':description.'.$method['method']),
-                    'utility' => $utility,
+                    'service' => $service,
                     'onclickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];
             }

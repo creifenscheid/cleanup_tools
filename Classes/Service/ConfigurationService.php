@@ -46,13 +46,13 @@ class ConfigurationService
     protected $configuration = [];
 
     /**
-     * Configured utilities incl.
+     * Configured services incl.
      * existing and allowed methods
      *
      * @var array
      */
-    protected $utilities = [];
-    
+    protected $services = [];
+
     /**
      * Configured additional usages of utilities incl.
      * existing and allowed methods
@@ -60,14 +60,14 @@ class ConfigurationService
      * @var array
      */
     protected $additionalUsages = [];
-    
+
     /**
      * localizationFile
-     * 
+     *
      * @var string
      */
     protected $localizationFile = '';
-    
+
 
     /**
      * Constructor
@@ -86,33 +86,33 @@ class ConfigurationService
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
-        
+
         // set localization from ts configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf';
+        $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf';
 
         // loop through configured utilities
-        foreach ($this->configuration['utilities'] as $utilityClass => $utilityConfiguration) {
+        foreach ($this->configuration['utilities'] as $serviceClass => $serviceConfiguration) {
 
             // set utility information
-            $this->utilities[$utilityClass] = [
-                'name' => end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $utilityClass)),
-                'class' => $utilityClass
+            $this->services[$serviceClass] = [
+                'name' => end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $serviceClass)),
+                'class' => $serviceClass
             ];
 
-            if ($utilityConfiguration['color']) {
-                $this->utilities[$utilityClass]['color'] = $utilityConfiguration['color'];
+            if ($serviceConfiguration['color']) {
+                $this->services[$serviceClass]['color'] = $serviceConfiguration['color'];
             }
 
             // get and store class methods
-            $methods = get_class_methods(new $utilityClass());
+            $methods = get_class_methods(new $serviceClass());
 
             // loop through every method
             foreach ($methods as $method) {
 
                 // check method
-                if ($this->checkBlacklist($method, $utilityConfiguration['methods'])) {
+                if ($this->checkBlacklist($method, $serviceConfiguration['methods'])) {
 
-                    $reflection = new \ReflectionMethod($utilityClass, $method);
+                    $reflection = new \ReflectionMethod($serviceClass, $method);
                     $parameters = $reflection->getParameters();
 
                     $methodParameters = [];
@@ -124,24 +124,24 @@ class ConfigurationService
                             'formType' => $this->configuration['mapping']['parameter'][$parameter->getName()]
                         ];
                     }
-                    
+
                     // prepare method information
                     $methodInformation = [
                         'method' => $method,
                         'parameters' => $methodParameters,
-                        'parameterConfiguration' => $utilityConfiguration['methods']['parameterConfigurations'][$method] ?: null
+                        'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
                     ];
 
                     // add method information to storage
-                    $this->utilities[$utilityClass]['methods'][$method] = $methodInformation;
-                    
+                    $this->utilities[$serviceClass]['methods'][$method] = $methodInformation;
+
                     // check additional usage configuration of utility
-                    foreach ($utilityConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
+                    foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
                         if ((int)$additionalUsageConfiguration['enable'] === 1) {
-                            
+
                             // check if method is blacklisted for additional usage
-                            if ($this->checkBlacklist($method, $additionalUsageConfiguration)) { 
-                                $this->additionalUsages[$additionalUsageType][$utilityClass][$method] = $methodInformation;
+                            if ($this->checkBlacklist($method, $additionalUsageConfiguration)) {
+                                $this->additionalUsages[$additionalUsageType][$serviceClass][$method] = $methodInformation;
                             }
                         }
                     }
@@ -152,60 +152,61 @@ class ConfigurationService
 
     /**
      * Returns the localization file
-     * 
+     *
      * @return string
      */
-    public function getLocalizationFile () : string 
+    public function getLocalizationFile() : string
     {
         return $this->localizationFile;
     }
 
     /**
-     * Returns utilities incl.
+     * Returns services incl.
      * methods and configuration
      *
      * @return array
      */
-    public function getAllUtilities() : array
+    public function getAllServices() : array
     {
-        return $this->utilities;
+        return $this->services;
     }
-    
+
     /**
-     * Return utilities for an additional usage
-     * 
+     * Return services for an additional usage
+     *
      * @param string $usageType
+     *
      * @return array|NULL
      */
-    public function getUtilitiesByAdditionalUsage (string $usageType) : ?array
+    public function getServicesByAdditionalUsage(string $usageType) : ?array
     {
         if ($this->additionalUsages[$usageType]) {
             return $this->additionalUsages[$usageType];
         }
-            
+
         return null;
     }
 
     /**
-     * Return utility of given method
+     * Return service of given method
      *
      * @param string $methodName
      *
      * @return array|NULL
      */
-    public function getUtilityByMethod(string $methodName) : ?array
+    public function getServiceByMethod(string $methodName) : ?array
     {
-        foreach ($this->utilities as $utility) {
-            foreach ($utility['methods'] as $method) {
+        foreach ($this->services as $service) {
+            foreach ($service['methods'] as $method) {
                 if ($method['method'] === $methodName) {
-                    return $utility;
+                    return $service;
                 }
             }
         }
 
         return null;
     }
-    
+
     /**
      * Get configuration of method
      *
@@ -215,14 +216,14 @@ class ConfigurationService
      */
     public function getMethodConfiguration(string $methodName) : ?array
     {
-        foreach ($this->utilities as $utility) {
+        foreach ($this->services as $utility) {
             foreach ($utility['methods'] as $method) {
                 if ($method['method'] === $methodName) {
                     return $method;
                 }
             }
         }
-        
+
         return null;
     }
 

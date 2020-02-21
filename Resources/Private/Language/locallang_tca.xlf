@@ -29,8 +29,8 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log.processing_context">
                 <source>Processing context</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.utility">
-                <source>Utility</source>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.service">
+                <source>Service</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_log.action">
                 <source>Action</source>

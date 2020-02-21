@@ -8,9 +8,9 @@
 		<div class="container">
 			<div class="row">
 				<h1><f:translate key="{localizationFile}:module.headline"/></h1>
-				<f:for each="{utilities}" as="utility" iteration="iterator">
-					<f:for each="{utility.methods}" as="method">
-						<f:render partial="Item" arguments="{localizationFile:localizationFile,utilityAction:method.method,utilityName:utility.name,utilityColor:utility.color,parameters:method.parameters}" />
+				<f:for each="{services}" as="service" iteration="iterator">
+					<f:for each="{service.methods}" as="method">
+						<f:render partial="Item" arguments="{localizationFile:localizationFile,serviceAction:method.method,serviceName:utility.name,serviceColor:service.color,parameters:method.parameters}" />
 					</f:for>
 				</f:for>
 			</div>

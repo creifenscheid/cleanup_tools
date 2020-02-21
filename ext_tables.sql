@@ -3,7 +3,7 @@
 #
 CREATE TABLE tx_splcleanuptools_domain_model_log (
 	processing_context tinyint(1) DEFAULT '0',
-	utility varchar(255) DEFAULT NULL,
+	service varchar(255) DEFAULT NULL,
 	action varchar(255) DEFAULT NULL,
 	state tinyint(1) DEFAULT '0',
 	backups int(11) DEFAULT '0' NOT NULL

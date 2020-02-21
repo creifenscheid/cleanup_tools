@@ -58,9 +58,9 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
      */
     public function indexAction(): void
     {
-        // assign utilities to the view
+        // assign services to the view
         $this->view->assignMultiple([
-            'utilities' => $this->configurationService->getAllUtilities(),
+            'services' => $this->configurationService->getAllServices(),
             'localizationFile' => $this->configurationService->getLocalizationFile()
         ]);
     }
@@ -71,6 +71,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
      * @return void
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Object\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public function cleanupAction(): void
     {
@@ -80,15 +81,15 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
         // check for required arguments
         if ($arguments['utilityAction']) {
 
-            // get utility and utility action from arguments
-            $utilityActionName = $arguments['utilityAction'];
-            $utilityActionParameter = $arguments['parameters'];
+            // get service and service action from arguments
+            $serviceActionName = $arguments['serviceAction'];
+            $serviceActionParameter = $arguments['parameters'];
 
-            $result = $this->cleanupService->processAction($utilityActionName,$utilityActionParameter);
+            $result = $this->cleanupService->processAction($serviceActionName,$serviceActionParameter);
             
             if ($result) {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$utilityActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$serviceActionName]),
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::OK
                 );
@@ -96,7 +97,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
             
             else {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$utilityActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$serviceActionName]),
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                     );

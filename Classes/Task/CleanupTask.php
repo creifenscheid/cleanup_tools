@@ -47,6 +47,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      *
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public function execute() : bool
     {

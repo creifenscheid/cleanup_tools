@@ -1,6 +1,6 @@
 <?php
 
-namespace SPL\SplCleanupTools\Utility;
+namespace SPL\SplCleanupTools\Service;
 
 /***************************************************************
  *
@@ -28,12 +28,12 @@ namespace SPL\SplCleanupTools\Utility;
  ***************************************************************/
 
 /**
- * Class FlexFormUtility
+ * Class FlexFormService
  *
- * @package SPL\SplCleanupTools\Utility
+ * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class FlexFormUtility
+class FlexFormService extends \SPL\SplCleanupTools\Service\AbstractService
 {   
     /**
      * Cleanup flexforms
@@ -41,7 +41,7 @@ class FlexFormUtility
      * @param null|int $recordUid
      * @return bool
      */
-    public static function cleanupFlexForms ($recordUid = null) : bool
+    public function cleanupFlexForms ($recordUid = null) : bool
     {
         $table = 'tt_content';
         $fieldName = 'pi_flexform';
@@ -69,6 +69,9 @@ class FlexFormUtility
             
             // check if the defined field exists in the record
             if ($fullRecord[$fieldName]) {
+
+                // backup element
+                $this->generateBackup();
                 
                 // clean XML and check against the record fetched from the database
                 $cleanedFlexFormXML = $flexFormTools->cleanFlexFormXML ($table, $fieldName, $fullRecord);

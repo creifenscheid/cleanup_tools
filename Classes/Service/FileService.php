@@ -1,6 +1,6 @@
 <?php
 
-namespace SPL\SplCleanupTools\Utility;
+namespace SPL\SplCleanupTools\Service;
 
 /***************************************************************
  *
@@ -28,23 +28,21 @@ namespace SPL\SplCleanupTools\Utility;
  ***************************************************************/
 
 /**
- * Class FileUtility
+ * Class FileService
  *
- * @package SPL\SplCleanupTools\Utility
+ * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class FileUtility
+class FileService extends \SPL\SplCleanupTools\Service\AbstractService
 {
     /**
      * Missing relations
      *
      * @return bool
      */
-    public static function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
+    public function cleanupMissingRelations (bool $updateReferenceIndex = false) : bool
     {
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
-
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
         
         return true;
     }
@@ -54,9 +52,9 @@ class FileUtility
      *
      * @return bool
      */
-    public static function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : bool
+    public function cleanupMultipleReferencedFiles (bool $updateReferenceIndex = false) : bool
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
         
         return true;
     }
@@ -66,9 +64,9 @@ class FileUtility
      *
      * @return bool
      */
-    public static function cleanupRteImages () : bool
+    public function cleanupRteImages () : bool
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
         
         return true;
     }
@@ -78,9 +76,9 @@ class FileUtility
      *
      * @return bool
      */
-    public static function cleanupMissingFiles (bool $updateReferenceIndex = false) : bool
+    public function cleanupMissingFiles (bool $updateReferenceIndex = false) : bool
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
         
         return true;
     }
@@ -90,9 +88,9 @@ class FileUtility
      *
      * @return bool
      */
-    public static function cleanupLostFiles (bool $updateReferenceIndex = false) : bool
+    public function cleanupLostFiles (bool $updateReferenceIndex = false) : bool
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($updateReferenceIndex, __FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($updateReferenceIndex, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
         
         return true;
     }

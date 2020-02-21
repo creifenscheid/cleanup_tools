@@ -98,52 +98,53 @@ class CleanupService
      *
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public function processAction(string $action, array $parameters = null) : bool
     {
         // define return var
         $return = false;
 
-        // get utility of cleanCmd
-        $utility = $this->configurationService->getUtilityByMethod($action);
+        // get service of cleanCmd
+        $serviceConfiguration = $this->configurationService->getServiceByMethod($action);
 
-        // if a utility is returned
-        if ($utility) {
+        // if a service is returned
+        if ($serviceConfiguration) {
 
-            // get utility class
-            $utilityClass = $utility['class'];
+            // get service class
+            $serviceClass = $serviceConfiguration['class'];
 
-            // init utility
-            $utility = $this->objectManager->get($utilityClass);
+            // init service
+            $service = $this->objectManager->get($serviceClass);
 
-            // if parameter are given
-            if ($parameters) {
-                // call action with parameter
-                $return = \call_user_func_array([$utility, $action], $parameters);
-            } else {
-
-                // call action
-                $return = $utility->$action();
-            }
-            
             // write log
             $log = new \SPL\SplCleanupTools\Domain\Model\Log();
             $log->setCrdate(time());
             $log->setProcessingContext($this->processingContext);
-            
+
             if ($GLOBALS['BE_USER']->user['uid']) {
                 $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
             }
-            
-            $log->setUtility($utilityClass);
+
+            $log->setUtility($serviceClass);
             $log->setAction($action);
             $log->setState($return);
-            
-            /** \SPL\SplCleanupTools\Domain\Model\Backup $backup */
-            $backup = new \SPL\SplCleanupTools\Domain\Model\Backup();
-            $backup->setData('xxx');
-            $backup->setLog($log);
-            $log->addBackup($backup);
+
+            // set log in service
+            $service->setLog($log);
+
+            // if parameter are given
+            if ($parameters) {
+                // call action with parameter
+                $return = \call_user_func_array([$service, $action], $parameters);
+            } else {
+
+                // call action
+                $return = $service->$action();
+            }
+
+            // get updated log from service
+            $log = $service->getLog();
             
             /**  @var \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository */
             $logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);

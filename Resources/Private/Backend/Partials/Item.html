@@ -1,20 +1,20 @@
 <div class="row">
 	<div class="item">
 		<f:form class="form" action="cleanup" controller="Cleanup" method="post" enctype="multipart/form-data">
-			<f:form.hidden name="utilityAction" value="{utilityAction}" />
+			<f:form.hidden name="serviceAction" value="{serviceAction}" />
 
 			<div class="col-xs-5">
-				<p class="headline"><f:translate key="{localizationFile}:label.{utilityAction}"/></p>
+				<p class="headline"><f:translate key="{localizationFile}:label.{serviceAction}"/></p>
 			</div>
 
 			<div class="col-xs-3">
-				<p class="utility main-color-dark" {f:if(condition:utilityColor, then:'style="background-color: {utilityColor}"')}>{utilityName}</p>
+				<p class="service main-color-dark" {f:if(condition:serviceColor, then:'style="background-color: {serviceColor}"')}>{serviceName}</p>
 			</div>
 
 			<div class="col-xs-3">
 				<f:for each="{parameters}" as="parameter">
 					<f:if condition="{parameter.formType}">
-						<f:render partial="FormFields/{parameter.formType}" arguments="{localizationFile: localizationFile,utilityAction: utilityAction, name: parameter.name, label: parameter.label}" />	
+						<f:render partial="FormFields/{parameter.formType}" arguments="{localizationFile: localizationFile,serviceAction: serviceAction, name: parameter.name, label: parameter.label}" />
 					</f:if>
 				</f:for>
 			</div>

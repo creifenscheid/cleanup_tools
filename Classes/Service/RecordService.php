@@ -1,6 +1,6 @@
 <?php
 
-namespace SPL\SplCleanupTools\Utility;
+namespace SPL\SplCleanupTools\Service;
 
 /***************************************************************
  *
@@ -28,21 +28,33 @@ namespace SPL\SplCleanupTools\Utility;
  ***************************************************************/
 
 /**
- * Class VersionUtility
+ * Class RecordService
  *
- * @package SPL\SplCleanupTools\Utility
+ * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class VersionUtility
+class RecordService extends \SPL\SplCleanupTools\Service\AbstractService
 {
     /**
-     * Versions
+     * Orphan records
      *
      * @return bool
      */
-    public static function cleanupVersions () : bool
+    public function cleanupOrphanRecords () : bool
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(__FUNCTION__);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
+        
+        return true;
+    }
+
+    /**
+     * Deleted records
+     *
+     * @return bool
+     */
+    public function cleanupDeletedRecords () : bool
+    {
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
         
         return true;
     }

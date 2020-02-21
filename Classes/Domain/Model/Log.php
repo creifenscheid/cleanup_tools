@@ -52,11 +52,11 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $processingContext = 0;
     
     /**
-     * utility
+     * service
      * 
      * @var string
      */
-    protected $utility = '';
+    protected $service = '';
     
     /**
      * action
@@ -166,25 +166,25 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the utility
+     * Returns the service
      * 
      * @return null|string
      */
-    public function getUtility() : ?string
+    public function getService() : ?string
     {
-        return $this->utility;
+        return $this->service;
     }
 
     /**
-     * Sets the utility
+     * Sets the service
      * 
-     * @param string $utility
+     * @param string $service
      * 
      * @return void
      */
-    public function setUtility(string $utility) : void
+    public function setService(string $service) : void
     {
-        $this->utility = $utility;
+        $this->service = $service;
     }
 
     /**
