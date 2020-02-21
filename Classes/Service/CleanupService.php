@@ -126,7 +126,7 @@ class CleanupService
                 $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
             }
 
-            $log->setUtility($serviceClass);
+            $log->setService($serviceClass);
             $log->setAction($action);
             $log->setState($return);
 
