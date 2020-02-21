@@ -6,6 +6,8 @@ define([
     let SplCleanupToolsActions = {};
 
     SplCleanupToolsActions.process = function(uri, recordUid = null) {
+    	console.log(uri);
+    	
         $.ajax({
             url: uri,
             method: 'post',

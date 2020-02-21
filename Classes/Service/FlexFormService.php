@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class FlexFormService extends \SPL\SplCleanupTools\Service\AbstractService
+class FlexFormService extends \SPL\SplCleanupTools\Service\BaseService
 {   
     /**
      * Cleanup flexforms
@@ -69,14 +69,15 @@ class FlexFormService extends \SPL\SplCleanupTools\Service\AbstractService
             
             // check if the defined field exists in the record
             if ($fullRecord[$fieldName]) {
-
-                // backup element
-                $this->generateBackup();
                 
                 // clean XML and check against the record fetched from the database
                 $cleanedFlexFormXML = $flexFormTools->cleanFlexFormXML ($table, $fieldName, $fullRecord);
                 
                 if ($cleanedFlexFormXML !== $fullRecord[$fieldName]) {
+                    
+                    // backup element
+                    $this->generateBackup($fullRecord,$table);
+                    
                     // update record with cleaned flexform
                     $result = $queryBuilder
                     ->update ($table)

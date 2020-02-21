@@ -51,7 +51,6 @@ class AfterDatabaseOperationsHook
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $recordUid, $fields) : bool
     {
-
         // define field to check on
         $fieldName = 'pi_flexform';
 

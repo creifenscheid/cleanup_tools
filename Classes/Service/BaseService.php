@@ -28,12 +28,12 @@ namespace SPL\SplCleanupTools\Service;
  ***************************************************************/
 
 /**
- * Class AbstractUtility
+ * Class BaseService
  *
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-abstract class AbstractService
+class BaseService
 {
     /**
      * $log
@@ -79,13 +79,13 @@ abstract class AbstractService
      * @param array  $element
      * @param string $table
      */
-    public function generateBackup($element, string $table) : void
+    public function generateBackup(array $element, string $table) : void
     {
         // if auto backup is enabled
         if ($this->extensionConfiguration['enableAutoBackup']) {
             // init backup element
             /** @var \SPL\SplCleanupTools\Domain\Model\Backup $backup */
-            $backup = new \SPL\SplCleanuptools\Domain\Model\Backup();
+            $backup = new \SPL\SplCleanupTools\Domain\Model\Backup();
 
             // set backup information
             $backup->setLog($this->log);

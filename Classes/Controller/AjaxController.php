@@ -89,11 +89,17 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         // get clean command from query params
         $action = $queryParams['action'] ? : null;
         
+        $recordUid = $queryParams['recordUid'] ? : null;
+        
         // if cleanCmd is given
         if ($action) {
 
             // process action through cleanup utility
-            $processResult = $this->cleanupService->processAction($action);
+            if ($recordUid) {
+                return $this->cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
+            } else {
+                return $processResult = $this->cleanupService->processAction($action);
+            }
 
             if ($processResult) {
                 $return = [

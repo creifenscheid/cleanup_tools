@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class VersionService  extends \SPL\SplCleanupTools\Service\AbstractService
+class VersionService  extends \SPL\SplCleanupTools\Service\BaseService
 {
     /**
      * Versions

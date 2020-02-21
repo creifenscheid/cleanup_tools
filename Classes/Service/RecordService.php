@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class RecordService extends \SPL\SplCleanupTools\Service\AbstractService
+class RecordService extends \SPL\SplCleanupTools\Service\BaseService
 {
     /**
      * Orphan records

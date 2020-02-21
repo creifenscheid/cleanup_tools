@@ -75,7 +75,7 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                     // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => 'cleanupFlexForms', 'processingContext' => \SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'processingContext' => \SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_DRAWITEMHOOK]);
 
                     // assignments
                     $view->assignMultiple([

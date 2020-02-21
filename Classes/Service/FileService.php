@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class FileService extends \SPL\SplCleanupTools\Service\AbstractService
+class FileService extends \SPL\SplCleanupTools\Service\BaseService
 {
     /**
      * Missing relations
