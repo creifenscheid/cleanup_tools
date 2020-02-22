@@ -89,12 +89,13 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         // get clean command from query params
         $action = $queryParams['action'] ? : null;
         
+        // get record uid if a specific record shall be cleaned
         $recordUid = $queryParams['recordUid'] ? : null;
         
         // if cleanCmd is given
         if ($action) {
 
-            // process action through cleanup utility
+            // process action through cleanup service
             if ($recordUid) {
                 $processResult = $this->cleanupService->processAction($action, ['recordUid' => (int)$recordUid]);
             } else {
@@ -126,8 +127,6 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         $response->getBody()->write(json_encode($return));
 
         // set and return response
-        $response = $response->withHeader('Content-Type', 'application/json; charset=utf-8');
-        
-        return $response;
+        return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
     }
 }
