@@ -96,9 +96,9 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 
             // process action through cleanup utility
             if ($recordUid) {
-                return $this->cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
+                $processResult = $this->cleanupService->processAction($action, ['recordUid' => (int)$recordUid]);
             } else {
-                return $processResult = $this->cleanupService->processAction($action);
+                $processResult = $this->cleanupService->processAction($action);
             }
 
             if ($processResult) {
@@ -127,6 +127,7 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 
         // set and return response
         $response = $response->withHeader('Content-Type', 'application/json; charset=utf-8');
+        
         return $response;
     }
 }
