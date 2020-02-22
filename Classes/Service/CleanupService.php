@@ -128,7 +128,6 @@ class CleanupService
 
             $log->setService($serviceClass);
             $log->setAction($action);
-            $log->setState($return);
 
             // set log in service
             $service->setLog($log);
@@ -145,6 +144,7 @@ class CleanupService
 
             // get updated log from service
             $log = $service->getLog();
+            $log->setState($return);
             
             /**  @var \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository */
             $logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);

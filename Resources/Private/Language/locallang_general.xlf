@@ -19,6 +19,14 @@
             <trans-unit id="tx_splcleanuptools.general.processingcontext.4">
                 <source>After database operation</source>
             </trans-unit>
+            
+            <!-- STATES -->
+            <trans-unit id="tx_splcleanuptools.general.state.error">
+                <source>error</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.state.ok">
+                <source>ok</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
