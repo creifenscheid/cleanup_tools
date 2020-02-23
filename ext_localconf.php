@@ -13,6 +13,13 @@ $iconRegistry->registerIcon(
     ['source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_icon.svg']
     );
 
+
+$iconRegistry->registerIcon(
+    'tx-splcleanuptools-restore',
+    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+    ['source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_restore.svg']
+    );
+
 // get extension configuration
 $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('spl_cleanup_tools');
 

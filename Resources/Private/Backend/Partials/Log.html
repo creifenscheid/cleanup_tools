@@ -1,4 +1,4 @@
-<tr>
+<tr class="logItem">
 	<td>
 		<f:format.date format="Y-m-d - H:i">{log.crdate}</f:format.date>
 	</td>
@@ -24,4 +24,47 @@
 			</f:else>
 		</f:if>
 	</td>
+	<td>
+		<f:if condition="{log.backups}">
+			<f:then>
+				knopp
+			</f:then>
+			<f:else>
+				-
+			</f:else>
+		</f:if>
+	</td>
 </tr>
+
+<f:if condition="{log.backups}">
+
+	<tr class="logItem-{log.uid}-backupHeadline">
+		<th colspan="3">
+			Backups
+		</th>
+		<th colspan="2">
+			Table
+		</th>
+		<th>
+			UID
+		</th>
+		<th></th>
+	</tr>
+	
+	<f:for each="{log.backups}" as="backup">
+		<tr class="logItem-{log.uid}-backupItem">
+			<td colspan="3"></td>
+			<td colspan="2">
+				{backup.table}
+			</td>
+			<td>
+				{backup.originalUid}
+			</td>
+			<td>
+				<a href="#" class="btn btn-splcleanuptools" onclick="console.log('hi')">
+					<core:icon identifier="tx-splcleanuptools-restore" size="small"/>
+				</a>
+			</td>
+		</tr>
+	</f:for>
+</f:if>
