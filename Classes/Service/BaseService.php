@@ -43,14 +43,17 @@ class BaseService
     protected $log;
 
     /**
-     * @var
+     * @var \SPL\SplCleanupTools\Service\BackupService
      */
-    protected $extensionConfiguration;
+    protected $backupService;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        // get extension configuration
-        $this->extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('spl_cleanup_tools');
+        // initialize backup service
+        $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class)
     }
 
     /**
@@ -73,28 +76,5 @@ class BaseService
     public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log) : void
     {
         $this->log = $log;
-    }
-
-    /**
-     * @param array  $element
-     * @param string $table
-     */
-    public function generateBackup(array $element, string $table) : void
-    {
-        // if auto backup is enabled
-        if ($this->extensionConfiguration['enableAutoBackup']) {
-            // init backup element
-            /** @var \SPL\SplCleanupTools\Domain\Model\Backup $backup */
-            $backup = new \SPL\SplCleanupTools\Domain\Model\Backup();
-
-            // set backup information
-            $backup->setLog($this->log);
-            $backup->setOriginalUid($element['uid']);
-            $backup->setTable($table);
-            $backup->setData(serialize($element));
-
-            // add backup to log
-            $this->log->addBackup($backup);
-        }
     }
 }
