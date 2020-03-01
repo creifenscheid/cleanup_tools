@@ -36,9 +36,30 @@ namespace SPL\SplCleanupTools\Service;
 class BackupService
 {
     /**
+     * extension configuration
+     *
      * @var array
      */
     protected $extensionConfiguration;
+    
+    /**
+     * backup repository
+     *
+     * @var \SPL\SplCleanupTools\Domain\Repository\BackupRepository
+     */
+    protected $backupRepository;
+    
+    /**
+     * Inject backup repository
+     *
+     * @var \SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository
+     *
+     * @return void
+     */
+    public function injectBackupRepository(\SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository) : void 
+    {
+        $this->backupRepository = $backupRepository;
+    }
     
     /**
      * Constructor
@@ -54,6 +75,8 @@ class BackupService
      *
      * @param array  $element
      * @param string $table
+     *
+     * @return void
      */
     public function backup(array $element, string $table) : void
     {
@@ -78,8 +101,10 @@ class BackupService
      * Restore element from given backup
      *
      * @param \SPL\SplCleanupTools\Domain\Model\Backup $backup
+     * @return void
      */
-    public function restore(\SPL\SplCleanupTools\Domain\Model\Backup $backup) {
+    public function restore(\SPL\SplCleanupTools\Domain\Model\Backup $backup) : void
+    {
         // initialze data handler
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         
@@ -91,5 +116,9 @@ class BackupService
         
         // process dataHandler
 $dataHandler->process_datamap();
+
+        // set restored flag
+        $backup->setRestored(true);
+        $this->backupRepository->update($backup);
     }
 }
