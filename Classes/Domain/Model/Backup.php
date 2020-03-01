@@ -65,6 +65,13 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $data = '';
     
     /**
+     * restored
+     *
+     * @var boolean
+     */
+    protected $restored = false;
+    
+    /**
      * Returns the log
      *
      * @return \SPL\SplCleanupTools\Domain\Model\Log
@@ -149,5 +156,27 @@ class Backup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setData($data) : void
     {
         $this->data = $data;
+    }
+    
+    /**
+     * Returns restored
+     * 
+     * @return bool
+     */
+    public function getRestored() : bool
+    {
+        return $this->restored;
+    }
+
+    /**
+     * Sets restored
+     * 
+     * @param bool $restored
+     * 
+     * @return void
+     */
+    public function setRestored(bool $restored) : void
+    {
+        $this->restored = $restored;
     }
 }

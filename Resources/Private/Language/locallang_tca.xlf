@@ -58,6 +58,9 @@
             <trans-unit id="tx_splcleanuptools_domain_model_backup.data">
                 <source>Data</source>
             </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_backup.restored">
+                <source>Restored</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

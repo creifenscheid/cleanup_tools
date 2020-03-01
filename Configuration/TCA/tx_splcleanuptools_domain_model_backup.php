@@ -31,7 +31,7 @@ return [
     
     'palettes' => [
         'backupData' => [
-            'showitem' => 'log, --linebreak--, original_uid, --linebreak--, table, --linebreak--, data',
+            'showitem' => 'log, restored, --linebreak--, original_uid, --linebreak--, table, --linebreak--, data',
         ],
     ],
     
@@ -70,6 +70,16 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 50,
+                'readOnly' => true
+            ]
+        ],
+        
+        'restored' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.restored',
+            'config' => [
+                'default' => 0
+                'type' => 'checkbox',
                 'readOnly' => true
             ]
         ]
