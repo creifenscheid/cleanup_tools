@@ -46,7 +46,7 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
     /**
      * BackupService
      *
-     * @var \SPL\SplCleanuoTools\Service\BackupService
+     * @var \SPL\SplCleanupTools\Service\BackupService
      */
     protected $backupService;
 
@@ -63,6 +63,7 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
      * Constructor
      */
     public function __construct() {
+        parent::__construct();
         $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class);
     }
     
@@ -81,24 +82,35 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
         
         // assign to the view
         $this->view->assignMultiple([
-            'localizationFile' => $this->configurationService->getLocalizationFile(),
+            'localizationFile' => $this->localizationFile,
             'logs' => $this->logRepository->findAll()
         ]);
     }
 
     /**
      * Restore history item
+     * 
+     * @param \SPL\SplCleanupTools\Domain\Model\Backup $backup
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function restoreAction(): void {
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
+    public function restoreAction(\SPL\SplCleanupTools\Domain\Model\Backup $backup): void {
 
-        $this->addFlashMessage(
-            'Revert',
-            'Ok',
-            \TYPO3\CMS\Core\Messaging\FlashMessage::OK
-        );
+        $result = $this->backupService->restore($backup);
+        
+        if ($result) {
+            $this->addFlashMessage(
+                'Restore',
+                'Ok',
+                \TYPO3\CMS\Core\Messaging\FlashMessage::OK
+            );
+        } else {
+            $this->addFlashMessage(
+                'Restore',
+                'Oops',
+                \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+            );
+        }
 
         $this->forward('index');
     }

@@ -61,7 +61,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
         // assign services to the view
         $this->view->assignMultiple([
             'services' => $this->configurationService->getAllServices(),
-            'localizationFile' => $this->configurationService->getLocalizationFile()
+            'localizationFile' => $this->localizationFile
         ]);
     }
 

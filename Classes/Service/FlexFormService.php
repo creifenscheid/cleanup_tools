@@ -76,7 +76,7 @@ class FlexFormService extends \SPL\SplCleanupTools\Service\BaseService
                 if ($cleanedFlexFormXML !== $fullRecord[$fieldName]) {
                     
                     // backup element
-                    $this->backupService->backup($fullRecord,$table);
+                    $this->backupService->backup($fullRecord,$table, $this->log);
                     
                     // update record with cleaned flexform
                     $result = $queryBuilder

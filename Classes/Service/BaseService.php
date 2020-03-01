@@ -53,7 +53,7 @@ class BaseService
     public function __construct()
     {
         // initialize backup service
-        $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class)
+        $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class);
     }
 
     /**

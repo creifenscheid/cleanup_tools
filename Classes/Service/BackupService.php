@@ -50,24 +50,15 @@ class BackupService
     protected $backupRepository;
     
     /**
-     * Inject backup repository
-     *
-     * @var \SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository
-     *
-     * @return void
-     */
-    public function injectBackupRepository(\SPL\SplCleanupTools\Domain\Repository\BackupRepository $backupRepository) : void 
-    {
-        $this->backupRepository = $backupRepository;
-    }
-    
-    /**
      * Constructor
      */
     public function __construct()
     {
         // get extension configuration
         $this->extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('spl_cleanup_tools');
+        
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        $this->backupRepository = $objectManager->get(\SPL\SplCleanupTools\Domain\Repository\BackupRepository::class);
     }
     
     /**
@@ -75,10 +66,11 @@ class BackupService
      *
      * @param array  $element
      * @param string $table
+     * @param \SPL\SplCleanupTools\Domain\Model\Log $log
      *
      * @return void
      */
-    public function backup(array $element, string $table) : void
+    public function backup(array $element, string $table, \SPL\SplCleanupTools\Domain\Model\Log $log) : void
     {
         // if auto backup is enabled
         if ($this->extensionConfiguration['enableAutoBackup']) {
@@ -87,13 +79,13 @@ class BackupService
             $backup = new \SPL\SplCleanupTools\Domain\Model\Backup();
 
             // set backup information
-            $backup->setLog($this->log);
+            $backup->setLog($log);
             $backup->setOriginalUid($element['uid']);
             $backup->setTable($table);
             $backup->setData(serialize($element));
 
             // add backup to log
-            $this->log->addBackup($backup);
+            $log->addBackup($backup);
         }
     }
     
@@ -110,13 +102,13 @@ class BackupService
         
         // get data from backup
         $data = unserialize($backup->getData());
-        #unset('uid', $data);
+        unset($data['uid']);
         
         // todo
-        $dataHandler->start($data, []);
+        //$dataHandler->start($data, []);
         
         // process dataHandler
-        $dataHandler->process_datamap();
+        //$dataHandler->process_datamap();
 
         // set restored flag
         $backup->setRestored(true);

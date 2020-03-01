@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'hideTable' => true,
+        #'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup',
         'label' => 'original_uid',
         'label_alt' => 'table',
@@ -78,8 +78,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_backup.restored',
             'config' => [
-                'default' => 0
-                'type' => 'checkbox',
+                'default' => 0,
+                'type' => 'check',
                 'readOnly' => true
             ]
         ]
