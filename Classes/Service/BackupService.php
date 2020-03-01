@@ -109,13 +109,14 @@ class BackupService
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         
         // get data from backup
-        $data = $backup->getData();
+        $data = unserialize($backup->getData());
         #unset('uid', $data);
         
+        // todo
         $dataHandler->start($data, []);
         
         // process dataHandler
-$dataHandler->process_datamap();
+        $dataHandler->process_datamap();
 
         // set restored flag
         $backup->setRestored(true);
