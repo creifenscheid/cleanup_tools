@@ -82,8 +82,15 @@ class BackupService
      */
     public function restore(int $backupUid) {
         // initialze data handler
+        $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         
         // setup data array
+        $data = [];
         
+        
+        $dataHandler->start($data, []);
+        
+        // process dataHandler
+$dataHandler->process_datamap();
     }
 }
