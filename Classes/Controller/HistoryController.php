@@ -37,11 +37,18 @@ namespace SPL\SplCleanupTools\Controller;
 class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
 {
     /**
-     * Backup repository
+     * Log repository
      * 
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
+    
+    /**
+     * BackupService
+     *
+     * @var \SPL\SplCleanuoTools\Service\BackupService
+     */
+    protected $backupService;
 
     /**
      * Inject log repository
@@ -50,6 +57,13 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
      */
     public function injectLogRepository (\SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository) {
         $this->logRepository = $logRepository;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class);
     }
     
     /**
@@ -73,11 +87,11 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
     }
 
     /**
-     * Revert history item
+     * Restore history item
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function revertAction(): void {
+    public function restoreAction(): void {
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(__CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
 
         $this->addFlashMessage(

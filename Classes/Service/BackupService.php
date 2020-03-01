@@ -77,10 +77,9 @@ class BackupService
     /**
      * Restore element from given backup
      *
-     * @param array  $element
-     * @param string $table
+     * @param \SPL\SplCleanupTools\Domain\Model\Backup $backup
      */
-    public function restore(int $backupUid) {
+    public function restore(\SPL\SplCleanupTools\Domain\Model\Backup $backup) {
         // initialze data handler
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         

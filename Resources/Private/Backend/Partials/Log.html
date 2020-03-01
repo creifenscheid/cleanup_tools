@@ -52,19 +52,23 @@
 	</tr>
 	
 	<f:for each="{log.backups}" as="backup">
-		<tr class="logItem-{log.uid}-backupItem">
-			<td colspan="3"></td>
-			<td colspan="2">
-				{backup.table}
-			</td>
-			<td>
-				{backup.originalUid}
-			</td>
-			<td>
-				<a href="#" class="btn btn-splcleanuptools" onclick="console.log('hi')">
-					<core:icon identifier="tx-splcleanuptools-restore" size="small"/>
-				</a>
-			</td>
-		</tr>
+		<f:if condition="backup.restored">
+		    <f:else>
+		        <tr class="logItem-{log.uid}-backupItem">
+			        <td colspan="3"></td>
+			        <td colspan="2">
+				        {backup.table}
+			        </td>
+			        <td>
+				        {backup.originalUid}
+			        </td>
+			        <td>
+			            <f:link.action controller="History" action="restore" class="btn btn-splcleanuptools" additionalParams="{backup:backup}">
+					        <core:icon identifier="tx-splcleanuptools-restore" size="small"/>
+				        <\f:link.action>
+			        </td>
+		        </tr>
+		    <\f:else>
+		<\f:if>
 	</f:for>
 </f:if>
