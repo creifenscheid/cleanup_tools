@@ -108,9 +108,9 @@ class BackupService
         // initialze data handler
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         
-        // setup data array
-        $data = [];
-        
+        // get data from backup
+        $data = $backup->getData();
+        #unset('uid', $data);
         
         $dataHandler->start($data, []);
         
