@@ -103,6 +103,7 @@ module.tx_splcleanuptools {
         parameter {
             # method parameter = form field type
             updateReferenceIndex = Checkbox
+            recordUid = InputNumber
         }
     }
 }

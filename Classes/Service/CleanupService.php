@@ -127,9 +127,6 @@ class CleanupService
             // init service
             $service = $this->objectManager->get($serviceClass);
 
-            // set log in service
-            $service->setLog($log);
-
             // if parameter are given
             if ($parameters) {
                 // call action with parameter

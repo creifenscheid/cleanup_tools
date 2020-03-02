@@ -44,6 +44,9 @@
 			<trans-unit id="label.updateReferenceIndex">
 				<source>Update reference index</source>
 			</trans-unit>
+			<trans-unit id="label.recordUid">
+				<source>Record uid</source>
+			</trans-unit>
 			
 			<!-- DESCRIPTIONS -->
 			<trans-unit id="description.cleanupFlexForms">
@@ -88,6 +91,24 @@
 			<!-- HISTORY MODULE -->
 			<trans-unit id="module.history.headline">
 				<source>History</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.service">
+				<source>Service</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.action">
+				<source>Action</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.user">
+				<source>User</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.processingContext">
+				<source>Processing context</source>
+			</trans-unit>
+			<trans-unit id="module.history.th.state">
+				<source>State</source>
 			</trans-unit>
 
 			<!-- TASKS -->
