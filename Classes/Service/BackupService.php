@@ -50,6 +50,13 @@ class BackupService
     protected $backupRepository;
     
     /**
+     * log repository
+     *
+     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     */
+    protected $logRepository;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -59,6 +66,8 @@ class BackupService
         
         $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
         $this->backupRepository = $objectManager->get(\SPL\SplCleanupTools\Domain\Repository\BackupRepository::class);
+        
+         $this->logRepository = $objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
     }
     
     /**
@@ -97,6 +106,12 @@ class BackupService
      */
     public function restore(\SPL\SplCleanupTools\Domain\Model\Backup $backup) : void
     {
+        // Log
+        $restoreLog = new \SPL\SplCleanupTools\Domain\Model\Log();
+        $restoreLog->setService(__CLASS__);
+        $restoreLog->setAction(__METHOD__);
+        
+        
         // initialze data handler
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         
