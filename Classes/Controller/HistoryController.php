@@ -89,28 +89,20 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
 
     /**
      * Restore history item
-     * 
+     *
      * @param \SPL\SplCleanupTools\Domain\Model\Backup $backup
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
     public function restoreAction(\SPL\SplCleanupTools\Domain\Model\Backup $backup): void {
-
-        $result = $this->backupService->restore($backup);
-        
-        if ($result) {
-            $this->addFlashMessage(
-                'Restore',
-                'Ok',
-                \TYPO3\CMS\Core\Messaging\FlashMessage::OK
-            );
-        } else {
-            $this->addFlashMessage(
-                'Restore',
-                'Oops',
-                \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
-            );
-        }
+        $this->backupService->restore($backup);
+        $this->addFlashMessage(
+            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[__FUNCTION__]),
+            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
+            \TYPO3\CMS\Core\Messaging\FlashMessage::OK
+        );
 
         $this->forward('index');
     }
