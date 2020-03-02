@@ -11,7 +11,7 @@ if (TYPO3_MODE === 'BE') {
         [
             'Cleanup' => 'index,cleanup',
             'Ajax' => 'main',
-            'History' => 'index, restore'
+            'History' => 'index'
         ], // controllerActions
         [
             'access' => 'admin',

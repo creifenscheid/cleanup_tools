@@ -42,13 +42,6 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
-    
-    /**
-     * BackupService
-     *
-     * @var \SPL\SplCleanupTools\Service\BackupService
-     */
-    protected $backupService;
 
     /**
      * Inject log repository
@@ -57,14 +50,6 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
      */
     public function injectLogRepository (\SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository) {
         $this->logRepository = $logRepository;
-    }
-    
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        parent::__construct();
-        $this->backupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\BackupService::class);
     }
     
     /**
@@ -85,25 +70,5 @@ class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
             'localizationFile' => $this->localizationFile,
             'logs' => $this->logRepository->findAll()
         ]);
-    }
-
-    /**
-     * Restore history item
-     *
-     * @param \SPL\SplCleanupTools\Domain\Model\Backup $backup
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
-    public function restoreAction(\SPL\SplCleanupTools\Domain\Model\Backup $backup): void {
-        $this->backupService->restore($backup);
-        $this->addFlashMessage(
-            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[__FUNCTION__]),
-            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
-            \TYPO3\CMS\Core\Messaging\FlashMessage::OK
-        );
-
-        $this->forward('index');
     }
 }

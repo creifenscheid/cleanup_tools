@@ -18,12 +18,11 @@
 			            <th>User</th>
 			            <th>Processing context</th>
 			            <th>State</th>
-			            <th>Backups</th>
 			        </tr>
 			        </thead>
 			        <tbody>
 				        <f:for each="{logs}" as="log">
-							<f:render partial="Log" arguments="{localizationFile:localizationFile,log:log}" />
+							<f:render partial="Historie/Log" arguments="{localizationFile:localizationFile,log:log}" />
 						</f:for>
 			        </tbody>
 			    </table>

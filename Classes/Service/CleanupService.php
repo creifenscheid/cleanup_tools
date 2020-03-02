@@ -66,6 +66,13 @@ class CleanupService
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     protected $objectManager;
+    
+    /**
+     * Log repository
+     * 
+     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     */
+    protected $logRepository;
 
     /**
      * Constructor
@@ -77,6 +84,9 @@ class CleanupService
         
         // init configuration service
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        
+        // init log repository
+        $this->logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
     }
     
     /**
@@ -117,18 +127,6 @@ class CleanupService
             // init service
             $service = $this->objectManager->get($serviceClass);
 
-            // write log
-            $log = new \SPL\SplCleanupTools\Domain\Model\Log();
-            $log->setCrdate(time());
-            $log->setProcessingContext($this->processingContext);
-
-            if ($GLOBALS['BE_USER']->user['uid']) {
-                $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
-            }
-
-            $log->setService($serviceClass);
-            $log->setAction($action);
-
             // set log in service
             $service->setLog($log);
 
@@ -141,14 +139,20 @@ class CleanupService
                 // call action
                 $return = $service->$action();
             }
-
-            // get updated log from service
-            $log = $service->getLog();
-            $log->setState($return);
             
-            /**  @var \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository */
-            $logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
-            $logRepository->add($log);
+            // write log
+            $log = new \SPL\SplCleanupTools\Domain\Model\Log();
+            $log->setCrdate(time());
+            
+            if ($GLOBALS['BE_USER']->user['uid']) {
+                $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+            }
+            
+            $log->setProcessingContext($this->processingContext);
+            $log->setService($serviceClass);
+            $log->setAction($action);
+            
+            $this->logRepository->add($log);
             
             /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
             $persistenceManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
@@ -156,6 +160,5 @@ class CleanupService
         }
 
         return $return;
-
     }
 }

@@ -38,29 +38,6 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log.state">
                 <source>State</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.backups">
-                <source>Backups</source>
-            </trans-unit>
-            
-        	<!-- BACKUP -->
-            <trans-unit id="tx_splcleanuptools_domain_model_backup">
-                <source>Backup</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.log">
-                <source>Log</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.original_uid">
-                <source>Original uid</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.table">
-                <source>Table</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.data">
-                <source>Data</source>
-            </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_backup.restored">
-                <source>Restored</source>
-            </trans-unit>
         </body>
     </file>
 </xliff>

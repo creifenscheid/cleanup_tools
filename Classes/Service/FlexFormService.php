@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class FlexFormService extends \SPL\SplCleanupTools\Service\BaseService
+class FlexFormService
 {   
     /**
      * Cleanup flexforms
