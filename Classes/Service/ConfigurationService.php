@@ -113,15 +113,13 @@ class ConfigurationService
                 if ($this->checkBlacklist($method, $serviceConfiguration['methods'])) {
 
                     $reflection = new \ReflectionMethod($serviceClass, $method);
-                    $parameters = $reflection->getParameters();
 
                     $methodParameters = [];
 
-                    foreach ($parameters as $parameter) {
-
+                    foreach ($reflection->getParameters() as $parameter) {
                         $methodParameters[] = [
                             'name' => $parameter->getName(),
-                            'formType' => $this->configuration['mapping']['parameter'][$parameter->getName()]
+                            'formType' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : null
                         ];
                     }
 

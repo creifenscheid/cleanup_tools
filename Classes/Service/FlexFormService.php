@@ -41,7 +41,7 @@ class FlexFormService
      * @param null|int $recordUid
      * @return bool
      */
-    public function cleanupFlexForms ($recordUid = null) : bool
+    public function cleanupFlexForms (int $recordUid = null) : bool
     {
         $table = 'tt_content';
         $fieldName = 'pi_flexform';

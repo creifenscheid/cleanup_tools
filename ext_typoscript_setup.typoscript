@@ -98,12 +98,4 @@ module.tx_splcleanuptools {
             }
         }
     }
-
-    mapping {
-        parameter {
-            # method parameter = form field type
-            updateReferenceIndex = Checkbox
-            recordUid = InputNumber
-        }
-    }
 }
