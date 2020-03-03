@@ -119,7 +119,7 @@ class ConfigurationService
                     foreach ($reflection->getParameters() as $parameter) {
                         $methodParameters[] = [
                             'name' => $parameter->getName(),
-                            'formType' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : null
+                            'formType' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()])
                         ];
                     }
 

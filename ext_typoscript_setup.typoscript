@@ -98,4 +98,12 @@ module.tx_splcleanuptools {
             }
         }
     }
+
+	#docu: fallback configuration - in case of missing type declaration but needed form field in be module
+    mapping {
+        parameter {
+            # method parameter = type declaration = form field partial
+            recordUid = int
+        }
+    }
 }
