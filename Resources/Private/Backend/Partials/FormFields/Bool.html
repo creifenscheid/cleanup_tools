@@ -1,2 +1,7 @@
-<f:form.checkbox id="{serviceAction}-{name}" name="parameters[{name}]" value="true" />
-<label for="{serviceAction}-{name}"><f:translate key="{localizationFile}:label.{name}"/></label>
+<f:variable name="labelYes"><f:translate key="{localizationFile}:label.yes" /></f:variable>
+<f:variable name="labelNo"><f:translate key="{localizationFile}:label.no" /></f:variable>
+
+<div class="form-group">
+    <label for="{serviceAction}-{name}" class="form-check-label"><f:translate key="{localizationFile}:label.{name}"/></label>
+    <f:form.select id="{serviceAction}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" />
+</div>

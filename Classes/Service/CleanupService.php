@@ -103,20 +103,20 @@ class CleanupService
     /**
      * Function to initialze a utility and call the requested action
      *
-     * @param string $action
+     * @param string $method
      * @param array  $parameters
      *
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function processAction(string $action, array $parameters = null) : bool
+    public function processAction(string $method, array $parameters = null) : bool
     {
         // define return var
         $return = false;
 
         // get service of cleanCmd
-        $serviceConfiguration = $this->configurationService->getServiceByMethod($action);
+        $serviceConfiguration = $this->configurationService->getServiceByMethod($method);
 
         // if a service is returned
         if ($serviceConfiguration) {
@@ -130,11 +130,11 @@ class CleanupService
             // if parameter are given
             if ($parameters) {
                 // call action with parameter
-                $return = \call_user_func_array([$service, $action], $parameters);
+                $return = \call_user_func_array([$service, $method], $parameters);
             } else {
 
                 // call action
-                $return = $service->$action();
+                $return = $service->$method();
             }
             
             // write log
@@ -147,7 +147,7 @@ class CleanupService
             
             $log->setProcessingContext($this->processingContext);
             $log->setService($serviceClass);
-            $log->setAction($action);
+            $log->setAction($method);
             
             $this->logRepository->add($log);
             

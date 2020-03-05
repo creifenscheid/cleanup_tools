@@ -83,6 +83,9 @@ class ConfigurationService
 
         // init typoscript service
         $typoscriptService = $objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
+        
+        // init log repository
+        $logRepository = $objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
@@ -98,10 +101,6 @@ class ConfigurationService
                 'name' => end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $serviceClass)),
                 'class' => $serviceClass
             ];
-
-            if ($serviceConfiguration['color']) {
-                $this->services[$serviceClass]['color'] = $serviceConfiguration['color'];
-            }
 
             // get and store class methods
             $methods = get_class_methods(new $serviceClass());
@@ -129,6 +128,16 @@ class ConfigurationService
                         'parameters' => $methodParameters,
                         'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
                     ];
+                    
+                    // get last log of action
+                    /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
+                    $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
+                    
+                    if ($lastLog) {
+                        $methodInformation['lastLog']['days'] = round((time() - $lastLog->getCrdate())/60/60/24);
+                        $methodInformation['lastLog']['log'] = $lastLog;
+                        $methodInformation['lastLog']['user'] = $lastLog->getCruser();
+                    }
 
                     // add method information to storage
                     $this->services[$serviceClass]['methods'][$method] = $methodInformation;

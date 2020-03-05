@@ -12,7 +12,6 @@ module.tx_splcleanuptools {
 
     services {
         SPL\SplCleanupTools\Service\FileService {
-            color = #8A867F
             methods {
                 # ToDo: documentation global excludes
                 excludes =
@@ -42,7 +41,6 @@ module.tx_splcleanuptools {
         }
 
         SPL\SplCleanupTools\Service\FlexFormService {
-            color = #FFBE87
             methods {
                 excludes = isValidFlexForm
             }
@@ -61,7 +59,6 @@ module.tx_splcleanuptools {
         }
 
         SPL\SplCleanupTools\Service\RecordService {
-            color = #E38A74
             methods {
                 excludes =
             }
@@ -80,7 +77,6 @@ module.tx_splcleanuptools {
         }
 
         SPL\SplCleanupTools\Service\VersionService {
-            color = #BF5967
             methods {
                 excludes =
             }

@@ -1,2 +1,6 @@
 <f:variable name="inputFloatPlaceholder">{localizationFile}:label.{name}</f:variable>
-<f:form.textfield id="{serviceAction}-{name}" name="parameters[{name}]" value="" type="text" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(float) {f:translate(key:inputFloatPlaceholder)}" />
+
+<div class="form-group">
+    <label for="{serviceAction}-{name}">(float) {f:translate(key:inputFloatPlaceholder)}</label>
+	<f:form.textfield id="{serviceAction}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(float) {f:translate(key:inputFloatPlaceholder)}" />	
+</div>

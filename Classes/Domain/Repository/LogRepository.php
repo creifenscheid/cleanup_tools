@@ -46,5 +46,28 @@ class LogRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function persistAll () {
         $this->persistAll();
     }
+    
+    /**
+     * Function to get logs by service and method
+     * 
+     * @param string $service
+     * @param string $method
+     */
+    public function findByServiceAndMethod(string $service, string $method) {
+        $query = $this->createQuery();
+        
+        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
+        
+        $query->matching(
+            $query->logicalAnd(
+                [
+                    $query->equals('service', $service),
+                    $query->equals('method', $method)
+                ]
+            )
+        );
+        
+        return $query->execute()->getFirst();
+    }
 }
 

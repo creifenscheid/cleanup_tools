@@ -59,11 +59,11 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $service = '';
     
     /**
-     * action
+     * method
      * 
      * @var string
      */
-    protected $action = '';
+    protected $method = '';
     
     /**
      * state
@@ -195,25 +195,25 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the action
+     * Returns the method
      * 
      * @return null|string
      */
-    public function getAction() : ?string
+    public function getMethod() : ?string
     {
-        return $this->action;
+        return $this->method;
     }
 
     /**
-     * Sets the action
+     * Sets the method
      * 
-     * @param string $data
+     * @param string $method
      * 
      * @return void
      */
-    public function setAction($action) : void
+    public function setMethod($method) : void
     {
-        $this->action = $action;
+        $this->method = $method;
     }
     
     /**

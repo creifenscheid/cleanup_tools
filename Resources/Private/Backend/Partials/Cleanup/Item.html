@@ -13,8 +13,25 @@
 	</div>
 	<div class="card-footer">
 		<div class="item last-log text-muted">
-			2 days ago<br/>
-			seppl
+			<f:if condition="{lastLog.timestamp} = 0">
+				<f:then>
+					<f:variable name="lastLogTime"><f:Format.date date="{lastLog.crDate}" format="h:i" /></f:variable>
+					<f:translate key="{localizationFile}:module.lastLog.today" arguments="{0:lastLogTime}" /><br/>
+				</f:then>
+				<f:else>
+					<f:if condition="{lastLog.timestamp} = 1">
+						<f:then>
+							<f:translate key="{localizationFile}:module.lastLog.yesterday" /><br/>
+						</f:then>
+						<f:else>
+							<f:if condition="{lastLog.timestamp} > 1">
+								<f:translate key="{localizationFile}:module.lastLog.days" arguments="{0:lastLog.days}" /><br/>
+							</f:if>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+			{lastLog.userName}
 		</div>
 		<div class="item button-container text-right">
 			<f:variable name="submitLabel"><f:translate key="{localizationFile}:module.submit"/></f:variable>

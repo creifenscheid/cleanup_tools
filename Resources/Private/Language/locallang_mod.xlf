@@ -47,6 +47,12 @@
 			<trans-unit id="label.recordUid">
 				<source>Record uid</source>
 			</trans-unit>
+			<trans-unit id="label.yes">
+				<source>Yes, please.</source>
+			</trans-unit>
+			<trans-unit id="label.no">
+				<source>No, thank you.</source>
+			</trans-unit>
 			
 			<!-- DESCRIPTIONS -->
 			<trans-unit id="description.cleanupFlexForms">
@@ -86,6 +92,15 @@
 			</trans-unit>
 			<trans-unit id="module.submit">
 				<source>Clean up</source>
+			</trans-unit>
+			<trans-unit id="module.lastLog.days">
+				<source>"%s" days ago</source>
+			</trans-unit>
+			<trans-unit id="module.lastLog.yesterday">
+				<source>yesterday</source>
+			</trans-unit>
+			<trans-unit id="module.lastLog.today">
+				<source>today, "%s"</source>
 			</trans-unit>
 
 			<!-- HISTORY MODULE -->
