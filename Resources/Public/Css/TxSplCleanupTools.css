@@ -1,23 +1,32 @@
-.spl-cleanup-tools-be-module .main-color {
-  background-color: #005f6a;
-  color: white; }
-.spl-cleanup-tools-be-module .main-color-hover:hover {
-  background-color: #003238;
-  color: white;
-  transition: background-color 300ms ease-out; }
-.spl-cleanup-tools-be-module .main-color-dark {
-  background-color: #003238;
-  color: white; }
-.spl-cleanup-tools-be-module .item.header {
-  font-weight: bold; }
-.spl-cleanup-tools-be-module .item .headline {
-  padding-bottom: 5px;
-  font-weight: bold;
-  font-size: 16px; }
-.spl-cleanup-tools-be-module .item .service {
-  display: inline;
-  padding: 5px;
-  font-size: 10px; }
+.spl-cleanup-tools-be-module .card {
+  position: relative;
+  padding-bottom: 55px; }
+.spl-cleanup-tools-be-module .card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 1rem;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: right; }
+  .spl-cleanup-tools-be-module .card-header .card-title {
+    color: rgba(0, 0, 0, 0.666);
+    margin-bottom: 2px; }
+.spl-cleanup-tools-be-module .card-body {
+  padding: 1rem; }
+  .spl-cleanup-tools-be-module .card-body label {
+    font-weight: normal; }
+.spl-cleanup-tools-be-module .card-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  padding: 1rem;
+  margin-top: 1rem;
+  height: 55px;
+  width: 100%; }
+  .spl-cleanup-tools-be-module .card-footer .item {
+    width: 50%;
+    min-height: 100%; }
+    .spl-cleanup-tools-be-module .card-footer .item .btn {
+      height: 100%; }
 
 .spl-cleanup-tools-draw-item-hook .display-flex {
   display: flex; }
@@ -31,3 +40,5 @@
 .spl-cleanup-tools-draw-item-hook .btn-splcleanuptools {
   background-color: white;
   border-color: #f5c6cb; }
+
+/*# sourceMappingURL=TxSplCleanupTools.css.map */

@@ -1,27 +1,24 @@
-<div class="row">
-	<div class="item">
-		<f:form class="form" action="cleanup" controller="Cleanup" method="post" enctype="multipart/form-data">
-			<f:form.hidden name="serviceAction" value="{serviceAction}" />
-			<div class="col-xs-5">
-				<p class="headline"><f:translate key="{localizationFile}:label.{serviceAction}"/></p>
-			</div>
-
-			<div class="col-xs-3">
-				<p class="service main-color-dark" {f:if(condition:serviceColor, then:'style="background-color: {serviceColor}"')}>{serviceName}</p>
-			</div>
-
-			<div class="col-xs-3">
-				<f:for each="{parameters}" as="parameter">
-					<f:if condition="{parameter.type}">
-						<f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceAction: serviceAction, name: parameter.name, label: parameter.label}" />
-					</f:if>
-				</f:for>
-			</div>
-
-			<div class="col-xs-1">
-				<f:variable name="submitLabel"><f:translate key="{localizationFile}:module.submit"/></f:variable>
-				<f:form.submit name="submit" value="{submitLabel}" class="btn main-color main-color-hover" />
-			</div>
-		</f:form>
+<f:form class="card card-size-fixed-small" action="cleanup" controller="Cleanup" method="post" enctype="multipart/form-data">
+	<div class="card-header">
+		<f:form.hidden name="serviceAction" value="{serviceAction}" />
+		<div class="card-title"><f:translate key="{localizationFile}:label.{serviceAction}"/></div>
+		<span>{serviceName}</span>
 	</div>
-</div>
+	<div class="card-body">
+		<f:for each="{parameters}" as="parameter">
+			<f:if condition="{parameter.type}">
+				<f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceAction: serviceAction, name: parameter.name, label: parameter.label}" />
+			</f:if>
+		</f:for>
+	</div>
+	<div class="card-footer">
+		<div class="item last-log text-muted">
+			2 days ago<br/>
+			seppl
+		</div>
+		<div class="item button-container text-right">
+			<f:variable name="submitLabel"><f:translate key="{localizationFile}:module.submit"/></f:variable>
+			<f:form.submit name="submit" value="{submitLabel}" class="btn btn-primary" />
+		</div>
+	</div>
+</f:form>

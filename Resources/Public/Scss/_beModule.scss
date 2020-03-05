@@ -1,35 +1,46 @@
 .spl-cleanup-tools-be-module {
-	.main-color {
-		background-color: $mainColor;
-		color: white;
-	}
-	
-	.main-color-hover:hover {
-		background-color: $mainColorDark;
-		color: white;
-		transition: background-color $transitionTime $transitionEffect;
-	}
-	
-	.main-color-dark {
-		background-color: $mainColorDark;
-		color: white;
-	}
-	
-	.item {
-		&.header {
-			font-weight: bold;
-		}
-	
-		.headline {
-			padding-bottom: 5px;
-			font-weight: bold;
-			font-size: 16px;
-		}
-		
-		.service {
-			display: inline;
-			padding: 5px;
-			font-size: 10px;
-	    }
-	}
+    .card {
+        position: relative;
+        padding-bottom: $footerHeight;
+    }
+
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.03);
+        padding: $spacing;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: right;
+
+        .card-title {
+            color: rgba(0, 0, 0, 0.666);
+            margin-bottom: 2px;
+        }
+    }
+
+    .card-body {
+        padding: $spacing;
+
+        label {
+            font-weight: normal;
+        }
+    }
+
+    .card-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        padding: $spacing;
+        margin-top: $spacing;
+        height: $footerHeight;
+        width: 100%;
+
+        .item {
+            width: 50%;
+            min-height: 100%;
+
+            .btn {
+                height: 100%;
+            }
+        }
+    }
 }
