@@ -35,7 +35,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class ConfigurationService
+class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
@@ -73,7 +73,7 @@ class ConfigurationService
      * Constructor
      */
     public function __construct()
-    {
+    {   
         // init object manager
         $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
