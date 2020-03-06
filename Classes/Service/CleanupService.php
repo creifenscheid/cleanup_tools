@@ -101,7 +101,7 @@ class CleanupService
     }
 
     /**
-     * Function to initialze a utility and call the requested action
+     * Function to initialize a utility and call the requested method
      *
      * @param string $method
      * @param array  $parameters
@@ -110,7 +110,7 @@ class CleanupService
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function processAction(string $method, array $parameters = null) : bool
+    public function processMethod(string $method, array $parameters = null) : bool
     {
         // define return var
         $return = false;
@@ -129,11 +129,11 @@ class CleanupService
 
             // if parameter are given
             if ($parameters) {
-                // call action with parameter
+                // call method with parameter
                 $return = \call_user_func_array([$service, $method], $parameters);
             } else {
 
-                // call action
+                // call method
                 $return = $service->$method();
             }
             

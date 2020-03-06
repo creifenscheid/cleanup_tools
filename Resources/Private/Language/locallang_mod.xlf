@@ -119,8 +119,8 @@
 			<trans-unit id="module.history.th.service">
 				<source>Service</source>
 			</trans-unit>
-			<trans-unit id="module.history.th.action">
-				<source>Action</source>
+			<trans-unit id="module.history.th.method">
+				<source>Method</source>
 			</trans-unit>
 			<trans-unit id="module.history.th.user">
 				<source>User</source>
@@ -139,11 +139,11 @@
 			<trans-unit id="tasks.cleanup.description">
 				<source>Various tools to cleanup your TYPO3.</source>
 			</trans-unit>
-			<trans-unit id="tasks.cleanup.fields.cleanupaction">
-				<source>Which cleanup action shall be executed?</source>
+			<trans-unit id="tasks.cleanup.fields.cleanupmethod">
+				<source>Which cleanup method shall be executed?</source>
 			</trans-unit>
 			<trans-unit id="tasks.cleanup.information">
-				<source>Configured action:</source>
+				<source>Configured method:</source>
 			</trans-unit>
 			<trans-unit id="tasks.cleanup.parameter">
 				<source>(parameters are set with typoscript)</source>
@@ -159,16 +159,16 @@
 				<source>Oops</source>
 			</trans-unit>
 			<trans-unit id="messages.error.message">
-				<source>Execution of action "%s" was not successfull.</source>
+				<source>Execution of method "%s" was not successfull.</source>
 			</trans-unit>
-			<trans-unit id="messages.error.message.no-action">
-				<source>No action was set.</source>
+			<trans-unit id="messages.error.message.no-method">
+				<source>No method was set.</source>
 			</trans-unit>
 			<trans-unit id="messages.success.headline">
 				<source>Yeah</source>
 			</trans-unit>
 			<trans-unit id="messages.success.message">
-				<source>Action "%s" has been executed.</source>
+				<source>Method "%s" has been executed.</source>
 			</trans-unit>
 			<trans-unit id="messages.hook.warning.headline">
 				<source>Watch out</source>

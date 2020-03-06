@@ -38,11 +38,11 @@ namespace SPL\SplCleanupTools\Task;
 class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
     /**
-     * Cleanup action
+     * Cleanup method
      *
      * @var string
      */
-    protected $cleanupAction = '';
+    protected $cleanupMethod = '';
 
     /**
      * Configuration service
@@ -56,7 +56,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @var string
      */
-    protected $cleanupActionTaskName = 'scheduler_cleanuptools_cleanupaction';
+    protected $cleanupMethodTaskName = 'scheduler_cleanuptools_cleanupmethod';
     
     /**
      * Localization file
@@ -86,27 +86,27 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
     {
-        $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
+        $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
         
         $additionalFields = [];
 
         // Initialize selected fields
-        // Cleanup action
-        if (!isset($taskInfo[$this->cleanupActionTaskName])) {
-            $taskInfo[$this->cleanupActionTaskName] = $this->cleanupAction;
-            if ($currentSchedulerModuleAction->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-                $taskInfo[$this->cleanupActionTaskName] = $task->getCleanupAction();
+        // Cleanup method
+        if (!isset($taskInfo[$this->cleanupMethodTaskName])) {
+            $taskInfo[$this->cleanupMethodTaskName] = $this->cleanupMethod;
+            if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
+                $taskInfo[$this->cleanupMethodTaskName] = $task->getCleanupMethod();
             }
         }
         
-        $fieldName = 'tx_scheduler[' . $this->cleanupActionTaskName . ']';
-        $fieldValue = $taskInfo[$this->cleanupActionTaskName];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupActionTaskName, $fieldValue);
-        $additionalFields[$this->cleanupActionTaskName] = [
+        $fieldName = 'tx_scheduler[' . $this->cleanupMethodTaskName . ']';
+        $fieldValue = $taskInfo[$this->cleanupMethodTaskName];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupMethodTaskName, $fieldValue);
+        $additionalFields[$this->cleanupMethodTaskName] = [
             'code' => $fieldHtml,
-            'label' => $this->localizationFile.':tasks.cleanup.fields.cleanupaction',
+            'label' => $this->localizationFile.':tasks.cleanup.fields.cleanupmethod',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $this->cleanupActionTaskName
+            'cshLabel' => $this->cleanupMethodTaskName
         ];
         
         return $additionalFields;
@@ -122,7 +122,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationService->getServiceByMethod($submittedData[$this->cleanupActionTaskName])) {
+        if ($this->configurationService->getServiceByMethod($submittedData[$this->cleanupMethodTaskName])) {
             return true;
         }
 
@@ -137,7 +137,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
-        $task->setCleanupAction($submittedData[$this->cleanupActionTaskName]);
+        $task->setCleanupMethod($submittedData[$this->cleanupMethodTaskName]);
     }
 
     /**

@@ -39,7 +39,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     /**
      * @var array
      */
-    protected $cleanupActions = [];
+    protected $cleanupMethods = [];
     
     /**
      * @var string
@@ -67,13 +67,13 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             
             foreach ($methods as $method) {
                 
-                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => $method['method'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
+                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => $method['method'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
                 
-                $this->cleanupActions[] = [
+                $this->cleanupMethods[] = [
                     'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':label.'.$method['method']),
                     'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':description.'.$method['method']),
                     'service' => $service,
-                    'onclickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
+                    'onclickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];
             }
         }
@@ -120,7 +120,7 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getDropDown() {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
         $view->assignMultiple([
-            'cleanupActions' => $this->cleanupActions,
+            'cleanupMethods' => $this->cleanupMethods,
             'localizationFile' => $this->localizationFile
         ]);
         return $view->render();

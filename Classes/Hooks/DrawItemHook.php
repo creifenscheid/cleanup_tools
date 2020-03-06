@@ -75,11 +75,11 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                     // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['action' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
 
                     // assignments
                     $view->assignMultiple([
-                        'onClickCode' => 'TYPO3.SplCleanupToolsActions.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
+                        'onClickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
                         'recordUid' => $row['uid'],
                         'localizationFile' => $configurationService->getLocalizationFile()
                     ]);

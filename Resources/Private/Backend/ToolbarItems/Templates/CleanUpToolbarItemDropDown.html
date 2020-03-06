@@ -1,19 +1,19 @@
 <html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupToolsActions'}" />
+<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupToolsMethods'}" />
 
 <h3 class="dropdown-headline">
 	<f:translate key="{localizationFile}:module.headline" />
 </h3>
 <hr>
 <div class="dropdown-table">
-	<f:for each="{cleanupActions}" as="cleanupAction">
+	<f:for each="{cleanupMethods}" as="cleanupMethod">
 		<div class="dropdown-table-row">
-			<a href="#" class="toolbar-cache-flush-action" onclick="{cleanupAction.onclickCode}">
+			<a href="#" class="toolbar-spl-cleanup-tools" onclick="{cleanupMethod.onclickCode}">
 				<div class="dropdown-table-column dropdown-table-column-top dropdown-table-text">
-					{cleanupAction.title}
+					{cleanupMethod.title}
 					<br>
-					<small class="text-muted">{cleanupAction.description}</small>
-					<small class="text-muted"><i>{cleanupAction.utility}</i></small>
+					<small class="text-muted">{cleanupMethod.description}</small>
+					<small class="text-muted"><i>{cleanupMethod.utility}</i></small>
 				</div>
 			</a>
 		</div>

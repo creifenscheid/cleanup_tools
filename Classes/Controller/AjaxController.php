@@ -87,39 +87,39 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         $this->cleanupService->setExecutionContext($executionContext);
         
         // get clean command from query params
-        $action = $queryParams['action'] ? : null;
+        $method = $queryParams['method'] ? : null;
         
         // get record uid if a specific record shall be cleaned
         $recordUid = $queryParams['recordUid'] ? : null;
         
         // if cleanCmd is given
-        if ($action) {
+        if ($method) {
 
-            // process action through cleanup service
+            // process method through cleanup service
             if ($recordUid) {
-                $processResult = $this->cleanupService->processAction($action, ['recordUid' => (int)$recordUid]);
+                $processResult = $this->cleanupService->processMethod($method, ['recordUid' => (int)$recordUid]);
             } else {
-                $processResult = $this->cleanupService->processAction($action);
+                $processResult = $this->cleanupService->processMethod($method);
             }
 
             if ($processResult) {
                 $return = [
                     'status' => 'ok',
                     'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
-                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$action])
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$method])
                 ];
             } else {
                 $return = [
                     'status' => 'error',
                     'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
-                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$action])
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$method])
                 ];
             }
         } else {
             $return = [
                 'status' => 'error',
                 'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
-                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message.no-action','SplCleanupTools')
+                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message.no-method','SplCleanupTools')
             ];
         }
 

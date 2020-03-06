@@ -129,7 +129,7 @@ class ConfigurationService
                         'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
                     ];
                     
-                    // get last log of action
+                    // get last log of method
                     /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
                     $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
                     

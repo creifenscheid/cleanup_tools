@@ -40,7 +40,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     /**
      * @var string
      */
-    protected $cleanupAction = '';
+    protected $cleanupMethod = '';
 
     /**
      * Execute function
@@ -59,40 +59,40 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
 
         // get method configuration
-        $methodConfiguration = $configurationService->getMethodConfiguration($this->cleanupAction);
+        $methodConfiguration = $configurationService->getMethodConfiguration($this->cleanupMethod);
 
         // check if parameters are configured
         if ($methodConfiguration['parameterConfiguration']) {
             $parameters = $this->convertParameters($methodConfiguration['parameterConfiguration']);
 
-            // process action through cleanup utility with parameters
-            return $cleanupService->processAction($this->cleanupAction, $parameters);
+            // process method through cleanup utility with parameters
+            return $cleanupService->processMethod($this->cleanupMethod, $parameters);
         }
 
-        // process action through cleanup utility
-        return $cleanupService->processAction($this->cleanupAction);
+        // process method through cleanup utility
+        return $cleanupService->processMethod($this->cleanupMethod);
     }
 
     /**
-     * Returns the cleanup action
+     * Returns the cleanup method
      *
      * @return string
      */
-    public function getCleanupAction() : string
+    public function getCleanupMethod() : string
     {
-        return $this->cleanupAction;
+        return $this->cleanupMethod;
     }
 
     /**
-     * Sets the cleanup action
+     * Sets the cleanup method
      *
-     * @param string $cleanupAction
+     * @param string $cleanupMethod
      *
      * @return void
      */
-    public function setCleanupAction(string $cleanupAction) : void
+    public function setCleanupMethod(string $cleanupMethod) : void
     {
-        $this->cleanupAction = $cleanupAction;
+        $this->cleanupMethod = $cleanupMethod;
     }
 
     /**
@@ -105,7 +105,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
         
-        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($configurationService->getLocalizationFile().':tasks.cleanup.information') . ' ' . $this->cleanupAction;
+        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($configurationService->getLocalizationFile().':tasks.cleanup.information') . ' ' . $this->cleanupMethod;
     }
 
     /**

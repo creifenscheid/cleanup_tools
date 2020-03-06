@@ -2,6 +2,6 @@
 <f:variable name="labelNo"><f:translate key="{localizationFile}:label.no" /></f:variable>
 
 <div class="form-group">
-    <label for="{serviceAction}-{name}" class="form-check-label"><f:translate key="{localizationFile}:label.{name}"/></label>
-    <f:form.select id="{serviceAction}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" />
+    <label for="{serviceMethod}-{name}" class="form-check-label"><f:translate key="{localizationFile}:label.{name}"/></label>
+    <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" />
 </div>

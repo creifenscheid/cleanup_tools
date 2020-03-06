@@ -3,9 +3,9 @@ define([
 ], function($) {
     'use strict';
 
-    let SplCleanupToolsActions = {};
+    let SplCleanupToolsMethods = {};
 
-    SplCleanupToolsActions.process = function(uri, recordUid = null) {
+    SplCleanupToolsMethods.process = function(uri, recordUid = null) {
     	console.log(uri);
     	
         $.ajax({
@@ -34,7 +34,7 @@ define([
     };
 
     // expose to global
-    TYPO3.SplCleanupToolsActions = SplCleanupToolsActions;
+    TYPO3.SplCleanupToolsMethods = SplCleanupToolsMethods;
 
-    return SplCleanupToolsActions;
+    return SplCleanupToolsMethods;
 });

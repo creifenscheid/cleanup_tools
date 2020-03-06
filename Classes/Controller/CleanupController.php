@@ -79,17 +79,17 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
         $arguments = $this->request->getArguments();
 
         // check for required arguments
-        if ($arguments['serviceAction']) {
+        if ($arguments['serviceMethod']) {
 
-            // get service and service action from arguments
-            $serviceActionName = $arguments['serviceAction'];
-            $serviceActionParameter = $arguments['parameters'];
+            // get service and service method from arguments
+            $serviceMethodName = $arguments['serviceMethod'];
+            $serviceMethodParameter = $arguments['parameters'];
 
-            $result = $this->cleanupService->processAction($serviceActionName,$serviceActionParameter);
+            $result = $this->cleanupService->processMethod($serviceMethodName,$serviceMethodParameter);
             
             if ($result) {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$serviceActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.message','SplCleanupTools',[$serviceMethodName]),
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.success.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::OK
                 );
@@ -97,7 +97,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
             
             else {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$serviceActionName]),
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.message','SplCleanupTools',[$serviceMethodName]),
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':messages.error.headline','SplCleanupTools'),
                     \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
                     );

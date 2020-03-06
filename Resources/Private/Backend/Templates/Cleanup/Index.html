@@ -11,7 +11,7 @@
 				<div class="card-container">
 					<f:for each="{services}" as="service" iteration="iterator">
 						<f:for each="{service.methods}" as="method">
-							<f:render partial="Cleanup/Item" arguments="{localizationFile:localizationFile,serviceAction:method.method,serviceName:service.name,parameters:method.parameters,lastLog:method.lastLog,daysSince:method.daysSince}" />
+							<f:render partial="Cleanup/Item" arguments="{localizationFile:localizationFile,serviceMethod:method.method,serviceName:service.name,parameters:method.parameters,lastLog:method.lastLog,daysSince:method.daysSince}" />
 						</f:for>
 					</f:for>
 				</div>

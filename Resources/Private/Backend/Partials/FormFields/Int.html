@@ -1,6 +1,6 @@
-<f:variable name="inputNumberPlaceholder">{localizationFile}:label.{name}</f:variable>
+<f:variable name="inputIntPlaceholder">{localizationFile}:label.{name}</f:variable>
 
 <div class="form-group">
-    <label for="{serviceAction}-{name}">(int) {f:translate(key:inputNumberPlaceholder)}</label>
-	<f:form.textfield id="{serviceAction}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" placeholder="(int) {f:translate(key:inputNumberPlaceholder)}" />	
+    <label for="{serviceMethod}-{name}">(int) {f:translate(key:inputIntPlaceholder)}</label>
+    <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(int) {f:translate(key:inputIntPlaceholder)}" />
 </div>
