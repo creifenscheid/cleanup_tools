@@ -104,7 +104,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
         $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupMethodTaskName, $fieldValue);
         $additionalFields[$this->cleanupMethodTaskName] = [
             'code' => $fieldHtml,
-            'label' => $this->localizationFile.':tasks.cleanup.fields.cleanupmethod',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.cleanupmethod',
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $this->cleanupMethodTaskName
         ];
@@ -172,7 +172,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 if (empty($method['parameters'])) {
                     $label = $method['method'];
                 } else  {
-                    $label = $method['method'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':tasks.cleanup.parameter');
+                    $label = $method['method'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
                 }
 
                 // add option to option storage

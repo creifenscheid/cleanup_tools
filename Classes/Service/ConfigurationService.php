@@ -91,7 +91,7 @@ class ConfigurationService
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
 
         // set localization from ts configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf';
+        $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
 
         // loop through configured utilities
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {

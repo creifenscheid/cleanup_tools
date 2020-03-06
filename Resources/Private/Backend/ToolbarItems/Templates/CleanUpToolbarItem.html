@@ -1,6 +1,4 @@
 <html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
-	<f:variable name="moduleHeadline">{localizationFile}:module.headline</f:variable>
-	
-	<span class="toolbar-item-icon" title="{f:translate(key: moduleHeadline)}">{core:icon(identifier: 'tx-splcleanuptools-icon', size: 'small', alternativeMarkupIdentifier: 'inline') -> f:format.raw()}</span>
-	<span class="toolbar-item-title">{f:translate(key: moduleHeadline) -> f:format.raw()}</span>
+	<span class="toolbar-item-icon" title="{f:translate(key: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.headline')}">{core:icon(identifier: 'tx-splcleanuptools-icon', size: 'small', alternativeMarkupIdentifier: 'inline') -> f:format.raw()}</span>
+	<span class="toolbar-item-title">{f:translate(key: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.headline') -> f:format.raw()}</span>
 </html>

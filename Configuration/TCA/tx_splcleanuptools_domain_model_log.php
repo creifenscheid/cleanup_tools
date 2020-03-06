@@ -69,11 +69,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.0', 0],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.1', 1],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.2', 2],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.3', 3],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.4', 4]
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.0', 0],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.1', 1],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.2', 2],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.3', 3],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.4', 4]
                 ],
                 'readOnly' => true
             ]

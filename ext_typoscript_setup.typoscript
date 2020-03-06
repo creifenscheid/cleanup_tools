@@ -6,7 +6,7 @@ module.tx_splcleanuptools {
     }
 
     settings {
-        localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf
+        localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf
         globalExcludes = getLog,setLog,generateBackup
     }
 

@@ -105,7 +105,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
         
-        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($configurationService->getLocalizationFile().':tasks.cleanup.information') . ' ' . $this->cleanupMethod;
+        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->cleanupMethod;
     }
 
     /**

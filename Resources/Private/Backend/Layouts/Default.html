@@ -5,12 +5,9 @@
 
 <be:moduleLayout>
 
-	<f:variable name="menuCleanup">{localizationFile}:module.menu.cleanup</f:variable>
-	<f:variable name="menuHistory">{localizationFile}:module.menu.history</f:variable>
-	
 	<be:moduleLayout.menu identifier="SplCleanupToolsBackendModule">
-		<be:moduleLayout.menuItem label="{f:translate(key: menuCleanup)}" uri="{f:uri.action(controller: 'Cleanup', action: 'index')}"/>
-		<be:moduleLayout.menuItem label="{f:translate(key: menuHistory)}" uri="{f:uri.action(controller: 'History', action: 'index')}"/>
+		<be:moduleLayout.menuItem label="{f:translate(key: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.menu.cleanup')}" uri="{f:uri.action(controller: 'Cleanup', action: 'index')}"/>
+		<be:moduleLayout.menuItem label="{f:translate(key: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.menu.history')}" uri="{f:uri.action(controller: 'History', action: 'index')}"/>
 	</be:moduleLayout.menu>
 
 	<f:render section="Content" />
