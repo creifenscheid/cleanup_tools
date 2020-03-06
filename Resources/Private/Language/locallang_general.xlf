@@ -19,6 +19,11 @@
             <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
+
+            <!-- MISC -->
+            <trans-unit id="tx_splcleanuptools.general.inExectionContext">
+                <source>in "%s" context</source>
+            </trans-unit>
             
             <!-- STATES -->
             <trans-unit id="tx_splcleanuptools.general.state.error">
