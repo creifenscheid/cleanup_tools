@@ -26,14 +26,14 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log">
                 <source>Log</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.processing_context">
-                <source>Processing context</source>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.execution_context">
+                <source>Execution context</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_log.service">
                 <source>Service</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.method">
-                <source>Method</source>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.action">
+                <source>Action</source>
             </trans-unit>
             <trans-unit id="tx_splcleanuptools_domain_model_log.state">
                 <source>State</source>

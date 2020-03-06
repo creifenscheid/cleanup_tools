@@ -13,25 +13,38 @@
 	</div>
 	<div class="card-footer">
 		<div class="item last-log text-muted">
-			<f:if condition="{lastLog.timestamp} = 0">
+			<f:if condition="{lastLog}">
 				<f:then>
-					<f:variable name="lastLogTime"><f:Format.date date="{lastLog.crDate}" format="h:i" /></f:variable>
-					<f:translate key="{localizationFile}:module.lastLog.today" arguments="{0:lastLogTime}" /><br/>
+					<f:switch expression="{daysSince}">
+						<f:case value="0">
+							<f:variable name="lastLogTime"><f:format.date date="{lastLog.crdate}" format="h:i" /></f:variable>
+							<f:translate key="{localizationFile}:module.lastLog.today" arguments="{0:lastLogTime}" /><br/>
+						</f:case>
+						<f:case value="1">
+							<f:translate key="{localizationFile}:module.lastLog.yesterday" /><br/>
+						</f:case>
+						<f:defaultCase>
+							<f:translate key="{localizationFile}:module.lastLog.days" arguments="{0:daysSince}" /><br/>
+						</f:defaultCase>
+					</f:switch>
+
+					<f:if condition="{lastLog.cruser}">
+						<f:translate key="{localizationFile}:module.lastLog.user" />
+
+						<f:if condition="{lastLog.cruser.realName}">
+							<f:then>
+								{lastLog.cruser.realName}
+							</f:then>
+							<f:else>
+								{lastLog.cruser.userName}
+							</f:else>
+						</f:if>
+					</f:if>
 				</f:then>
 				<f:else>
-					<f:if condition="{lastLog.timestamp} = 1">
-						<f:then>
-							<f:translate key="{localizationFile}:module.lastLog.yesterday" /><br/>
-						</f:then>
-						<f:else>
-							<f:if condition="{lastLog.timestamp} > 1">
-								<f:translate key="{localizationFile}:module.lastLog.days" arguments="{0:lastLog.days}" /><br/>
-							</f:if>
-						</f:else>
-					</f:if>
+					<f:translate key="{localizationFile}:module.notProcessed" />
 				</f:else>
 			</f:if>
-			{lastLog.userName}
 		</div>
 		<div class="item button-container text-right">
 			<f:variable name="submitLabel"><f:translate key="{localizationFile}:module.submit"/></f:variable>

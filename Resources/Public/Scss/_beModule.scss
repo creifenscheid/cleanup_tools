@@ -35,11 +35,18 @@
         width: 100%;
 
         .item {
-            width: 50%;
             min-height: 100%;
 
-            .btn {
-                height: 100%;
+            &.last-log {
+                width: 75%;
+            }
+
+            &.button-container {
+                width: 25%;
+
+                .btn {
+                    height: 100%;
+                }
             }
         }
     }

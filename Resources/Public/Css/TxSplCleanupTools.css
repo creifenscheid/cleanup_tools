@@ -23,10 +23,13 @@
   height: 55px;
   width: 100%; }
   .spl-cleanup-tools-be-module .card-footer .item {
-    width: 50%;
     min-height: 100%; }
-    .spl-cleanup-tools-be-module .card-footer .item .btn {
-      height: 100%; }
+    .spl-cleanup-tools-be-module .card-footer .item.last-log {
+      width: 75%; }
+    .spl-cleanup-tools-be-module .card-footer .item.button-container {
+      width: 25%; }
+      .spl-cleanup-tools-be-module .card-footer .item.button-container .btn {
+        height: 100%; }
 
 .spl-cleanup-tools-draw-item-hook .display-flex {
   display: flex; }
