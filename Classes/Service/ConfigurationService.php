@@ -134,9 +134,8 @@ class ConfigurationService
                     $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
                     
                     if ($lastLog) {
-                        $methodInformation['lastLog']['days'] = round((time() - $lastLog->getCrdate())/60/60/24);
-                        $methodInformation['lastLog']['log'] = $lastLog;
-                        $methodInformation['lastLog']['user'] = $lastLog->getCruser();
+                        $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate())/60/60/24);
+                        $methodInformation['lastLog'] = $lastLog;
                     }
 
                     // add method information to storage
