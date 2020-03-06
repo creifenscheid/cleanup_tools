@@ -38,20 +38,20 @@ namespace SPL\SplCleanupTools\Service;
 class CleanupService
 {
     /**
-     * Processing contexts
+     * Execution contexts
      */
-    const PROCESSING_CONTEXT_BEMODULE = 0;
-    const PROCESSING_CONTEXT_TOOLBAR = 1;
-    const PROCESSING_CONTEXT_SCHEDULER = 2;
-    const PROCESSING_CONTEXT_DRAWITEMHOOK = 3;
-    const PROCESSING_CONTEXT_DBHOOK = 4;
+    const EXECUTION_CONTEXT_BEMODULE = 0;
+    const EXECUTION_CONTEXT_TOOLBAR = 1;
+    const EXECUTION_CONTEXT_SCHEDULER = 2;
+    const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
+    const EXECUTION_CONTEXT_DBHOOK = 4;
     
     /**
-     * Processing context
+     * Execution context
      * 
      * @var int
      */
-    protected $processingContext = 0;
+    protected $executionContext = 0;
     
     /**
      * Configuration service
@@ -90,14 +90,14 @@ class CleanupService
     }
     
     /**
-     * Set processing context
+     * Set execution context
      * 
-     * @param int $processingContext
+     * @param int $executionContext
      * 
      * @return void
      */
-    public function setProcessingContext (int $processingContext) : void {
-        $this->processingContext = $processingContext;
+    public function setExecutionContext (int $executionContext) : void {
+        $this->executionContext = $executionContext;
     }
 
     /**
@@ -145,9 +145,9 @@ class CleanupService
                 $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
             }
             
-            $log->setProcessingContext($this->processingContext);
+            $log->setExecutionContext($this->executionContext);
             $log->setService($serviceClass);
-            $log->setAction($method);
+            $log->setMethod($method);
             
             $this->logRepository->add($log);
             

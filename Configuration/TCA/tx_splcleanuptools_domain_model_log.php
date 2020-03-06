@@ -5,7 +5,7 @@ return [
         'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'service',
-        'label_alt' => 'action, crdate, processing_context',
+        'label_alt' => 'action, crdate, execution_context',
         'label_alt_force' => 1,
         'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log.svg',
         'sortby' => 'crdate',
@@ -14,11 +14,11 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'crdate,cruser_id,processing_context,service,method,state'
+        'searchFields' => 'crdate,cruser_id,execution_context,service,method,state'
     ],
     
     'interface' => [
-        'showRecordFieldList' => 'crdate,cruser_id,processing_context,service,method,state'
+        'showRecordFieldList' => 'crdate,cruser_id,execution_context,service,method,state'
     ],
     
     'types' => [
@@ -35,7 +35,7 @@ return [
             'showitem' => 'crdate,cruser_id',
         ],
         'logData' => [
-            'showitem' => 'state,processing_context,--linebreak--,service,method',
+            'showitem' => 'state,execution_context,--linebreak--,service,method',
         ],
     ],
     
@@ -62,18 +62,18 @@ return [
             ]
         ],
         
-        'processing_context' => [
+        'execution_context' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.processing_context',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.execution_context',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.0', 0],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.1', 1],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.2', 2],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.3', 3],
-                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.processingcontext.4', 4]
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.0', 0],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.1', 1],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.2', 2],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.3', 3],
+                    ['LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_general.xlf:tx_splcleanuptools.general.executioncontext.4', 4]
                 ],
                 'readOnly' => true
             ]

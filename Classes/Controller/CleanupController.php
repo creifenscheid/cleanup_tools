@@ -48,7 +48,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
     public function __construct() {
         parent::__construct();
         $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
-        $this->cleanupService->setProcessingContext(\SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_BEMODULE);
+        $this->cleanupService->setExecutionContext(\SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 
     /**

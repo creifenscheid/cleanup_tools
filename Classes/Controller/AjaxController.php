@@ -82,9 +82,9 @@ class AjaxController extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         // get query params
         $queryParams = $request->getQueryParams();
         
-        // get processing context from query params
-        $processingContext = $queryParams['processingContext'] ? : null;
-        $this->cleanupService->setProcessingContext($processingContext);
+        // get execution context from query params
+        $executionContext = $queryParams['executionContext'] ? : null;
+        $this->cleanupService->setExecutionContext($executionContext);
         
         // get clean command from query params
         $action = $queryParams['action'] ? : null;

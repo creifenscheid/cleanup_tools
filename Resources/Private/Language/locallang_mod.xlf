@@ -94,13 +94,19 @@
 				<source>Clean up</source>
 			</trans-unit>
 			<trans-unit id="module.lastLog.days">
-				<source>"%s" days ago</source>
+				<source>executed %s days ago</source>
 			</trans-unit>
 			<trans-unit id="module.lastLog.yesterday">
-				<source>yesterday</source>
+				<source>executed yesterday</source>
 			</trans-unit>
 			<trans-unit id="module.lastLog.today">
-				<source>today, "%s"</source>
+				<source>executed today, %s</source>
+			</trans-unit>
+			<trans-unit id="module.notProcessed">
+				<source>not executed so far</source>
+			</trans-unit>
+			<trans-unit id="module.lastLog.user">
+				<source>by</source>
 			</trans-unit>
 
 			<!-- HISTORY MODULE -->
@@ -119,8 +125,8 @@
 			<trans-unit id="module.history.th.user">
 				<source>User</source>
 			</trans-unit>
-			<trans-unit id="module.history.th.processingContext">
-				<source>Processing context</source>
+			<trans-unit id="module.history.th.executionContext">
+				<source>Execution context</source>
 			</trans-unit>
 			<trans-unit id="module.history.th.state">
 				<source>State</source>
@@ -153,7 +159,7 @@
 				<source>Oops</source>
 			</trans-unit>
 			<trans-unit id="messages.error.message">
-				<source>Processing of action "%s" was not successfull.</source>
+				<source>Execution of action "%s" was not successfull.</source>
 			</trans-unit>
 			<trans-unit id="messages.error.message.no-action">
 				<source>No action was set.</source>
@@ -162,7 +168,7 @@
 				<source>Yeah</source>
 			</trans-unit>
 			<trans-unit id="messages.success.message">
-				<source>Action "%s" has been processed.</source>
+				<source>Action "%s" has been executed.</source>
 			</trans-unit>
 			<trans-unit id="messages.hook.warning.headline">
 				<source>Watch out</source>

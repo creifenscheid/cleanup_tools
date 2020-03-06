@@ -59,7 +59,7 @@ class AfterDatabaseOperationsHook
 
             /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
             $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
-            $cleanupService->setProcessingContext(\SPL\SplCleanupTools\Service\CleanupService::PROCESSING_CONTEXT_DBHOOK);
+            $cleanupService->setExecutionContext(\SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DBHOOK);
 
             // process action through cleanup utility
             return $cleanupService->processAction('cleanupFlexForms', ['recordUid' => (int)$recordUid]);

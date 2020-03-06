@@ -3,20 +3,20 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z" product-name="spl_cleanup_tools">
         <header/>
         <body>
-        	<!-- PROCESSING CONTEXTS -->
-            <trans-unit id="tx_splcleanuptools.general.processingcontext.0">
+        	<!-- EXECUTION CONTEXTS -->
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.0">
                 <source>BE module</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.processingcontext.1">
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.1">
                 <source>Toolbar</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.processingcontext.2">
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.2">
                 <source>Scheduler</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.processingcontext.3">
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.3">
                 <source>Content item</source>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.processingcontext.4">
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
             

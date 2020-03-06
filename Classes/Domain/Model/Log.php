@@ -45,11 +45,11 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $backups;
     
     /**
-     * processing_context
+     * execution_context
      * 
      * @var integer
      */
-    protected $processingContext = 0;
+    protected $executionContext = 0;
     
     /**
      * service
@@ -151,25 +151,25 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns $processingContext 
+     * Returns execution_context 
      * 
      * @return int
      */
-    public function getProcessingContext() : int
+    public function getExecutionContext() : int
     {
-        return $this->processingContext;
+        return $this->executionContext;
     }
 
     /**
-     * Sets processingContext
+     * Sets execution_context
      * 
-     * @param int $processingContext
+     * @param int $executionContext
      * 
      * @return void
      */
-    public function setProcessingContext(int $processingContext) : void
+    public function setExecutionContext(int $executionContext) : void
     {
-        $this->processingContext = $processingContext;
+        $this->executionContext = $executionContext;
     }
 
     /**
