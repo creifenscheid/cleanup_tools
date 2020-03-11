@@ -97,7 +97,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
         
             // skip service if not enabled
-            if (!$serviceConfiguration['enable') continue;
+            if (!$serviceConfiguration['enable']) {
+                continue;
+            }
 
             // set utility information
             $this->services[$serviceClass] = [
