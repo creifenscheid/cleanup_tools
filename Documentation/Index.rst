@@ -10,7 +10,7 @@
 .. _start:
 
 =============================================================
-SPL|Cleanup Tools
+Cleanup Tools
 =============================================================
 
 :Version:
@@ -30,7 +30,7 @@ SPL|Cleanup Tools
    `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
    license
 
-{extension.description}
+This extension provides tools to clean up your TYPO3 installation.
 
 **TYPO3**
 
@@ -49,7 +49,7 @@ SPL|Cleanup Tools
 
 **Extension Manual**
 
-   This documentation is for the TYPO3 extension <extkey>.
+   This documentation is for the TYPO3 extension <spl_cleanup_tools>.
 
 
 
