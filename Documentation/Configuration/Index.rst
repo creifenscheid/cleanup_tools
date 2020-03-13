@@ -10,7 +10,6 @@ Configuration
 Target group: **Developers, Integrators**
 
 After installation, no configuration is required to make the extension work.
-However, the extension offers customization options.
 
 Extension configuration
 =======================
@@ -29,11 +28,11 @@ Settings
 .. code-block:: typoscript
    module.tx_splcleanuptools {
       settings {
-        localizationFile = 
-        globalExcludes = 
+        localizationFile =
+        globalExcludes =
       }
    }
-   
+
 +-----------------------+-------------------------------------------------------------------------------------------------------+
 | localizationFile      |  Translation file for service related labels, e.g. in BE module or in the toolbar                     |
 +-----------------------+-------------------------------------------------------------------------------------------------------+
