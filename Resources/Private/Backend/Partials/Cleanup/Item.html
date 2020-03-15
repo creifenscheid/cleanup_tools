@@ -7,7 +7,7 @@
 	<div class="card-body">
 		<f:for each="{parameters}" as="parameter">
 			<f:if condition="{parameter.type}">
-				<f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, label: parameter.label}" />
+				<f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, label: parameter.label, mandatory: parameter.mandatory}" />
 			</f:if>
 		</f:for>
 	</div>

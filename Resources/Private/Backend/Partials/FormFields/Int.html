@@ -2,5 +2,5 @@
 
 <div class="form-group">
     <label for="{serviceMethod}-{name}">(int) {f:translate(key:inputIntPlaceholder)}</label>
-    <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(int) {f:translate(key:inputIntPlaceholder)}" />
+    <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(int) {f:translate(key:inputIntPlaceholder)}" {f:if (condition: mandatory, then: 'requiered')} />
 </div>

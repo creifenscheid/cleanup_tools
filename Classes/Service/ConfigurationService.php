@@ -123,7 +123,8 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
                     foreach ($reflection->getParameters() as $parameter) {
                         $methodParameters[] = [
                             'name' => $parameter->getName(),
-                            'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()])
+                            'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
+                            'manadatory' => $parameter->isdefaultvalueavailable ? false : true
                         ];
                     }
 
