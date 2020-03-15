@@ -21,5 +21,5 @@ It implements the following possibilities to execute cleanup methods:
 * processDatamap_afterDatabaseOperations hook
 * drawItem hook
 
-Cleanup services are configured within typoscript.
+Cleanup services are registered in typoscript.
 Therefor it is possible to extend the extension with your own services easily.
