@@ -249,13 +249,13 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      */
     private function checkBlacklist($method, $configuration) : bool
     {
-        // get configured includes and excludes
+        // get configured excludes
         $methodExcludes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configuration['excludes']);
 
         // add global excludes
         $excludes = array_merge($methodExcludes, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$this->configuration['settings']['globalExcludes']));
 
-        // if method is in excludes or is magic method - return false to skip the method
+        // if method is in excludes or a magic method - return false to skip
         return !(\in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
     }
 }
