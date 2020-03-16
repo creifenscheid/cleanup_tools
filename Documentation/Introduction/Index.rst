@@ -12,9 +12,9 @@ Target group: **Administrators**
 What does it do?
 ================
 
-This extension provides several services to cleanup your TYPO3 instance.
+This extension ports command line functions of core extension 'lowlevel' into the backend to clean up your TYPO3 installation.
 
-It implements the following possibilities to execute cleanup methods:
+It implements the following possibilities to execute these methods:
 
 * backend module
 * toolbar item
