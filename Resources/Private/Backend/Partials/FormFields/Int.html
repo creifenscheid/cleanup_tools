@@ -1,5 +1,13 @@
-<f:variable name="inputIntPlaceholder">{localizationFile}:label.{name}</f:variable>
+<f:variable name="labelInt">{localizationFile}:label.{name}</f:variable>
+
 <div class="form-group">
-    <label for="{serviceMethod}-{name}">(int) {f:translate(key:inputIntPlaceholder)}</label>
-    <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" placeholder="(int) {f:translate(key:inputIntPlaceholder)}" />
+    <label for="{serviceMethod}-{name}">{f:translate(key:labelInt)} [int]</label>
+    <f:if condition="{mandatory}">
+        <f:then>
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]', required:'required'}" placeholder="<required>"/>
+        </f:then>
+        <f:else>
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" />
+        </f:else>
+    </f:if>
 </div>

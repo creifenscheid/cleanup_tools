@@ -1,2 +1,13 @@
-<f:variable name="inputStringPlaceholder">{localizationFile}:label.{name}</f:variable>
-<f:form.textfield id="{serviceMethod}-{name}" name="parameters[{name}]" value="" type="text" placeholder="(string) {f:translate(key:inputStringPlaceholder)}" {f:if (condition: mandatory, then: 'requiered')} />
+<f:variable name="labelString">{localizationFile}:label.{name}</f:variable>
+
+<div class="form-group">
+    <label for="{serviceMethod}-{name}">{f:translate(key:labelString)} [string]</label>
+    <f:if condition="{mandatory}">
+        <f:then>
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" placeholder="<required>" additionalAttributes="{required:'required'}" />
+        </f:then>
+        <f:else>
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" />
+        </f:else>
+    </f:if>
+</div>
