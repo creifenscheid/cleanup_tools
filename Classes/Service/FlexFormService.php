@@ -36,6 +36,42 @@ namespace SPL\SplCleanupTools\Service;
 class FlexFormService
 {   
     /**
+     * Flexform tools
+     *
+     * @var \TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools
+     */
+    protected $flexformTools;
+    
+    /**
+     * Connection
+     *
+     * @var \TYPO3\CMS\Core\Database\ConnectionPool
+     */
+    protected $connection;
+    
+    /**
+     * table
+     *
+     * @var string
+     */
+    protected $table = 'tt_content';
+    
+    /**
+     * field name
+     *
+     * @var string
+     */
+    protected $fieldName = 'pi_flexform';
+    
+    public function __construct () {
+        // initialize flexform tools
+        $this->flexformTools = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
+        
+        // initialize query builder
+        $this->connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Database\ConnectionPool::class);
+    }
+    
+    /**
      * Cleanup flexforms
      * 
      * @param null|int $recordUid
@@ -43,42 +79,33 @@ class FlexFormService
      */
     public function cleanupFlexForms ($recordUid = null) : bool
     {
-        $table = 'tt_content';
-        $fieldName = 'pi_flexform';
+        // init new querybuilder
+        $queryBuilder = $this->connection->getQueryBuilderForTable ($this->table);
         
-        // initialize flexform tools
-        /** @var \TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools $flexObj */
-        $flexFormTools = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
-        
-        // initialize query builder
-        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $queryBuilder */
-        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Database\ConnectionPool::class)
-        ->getQueryBuilderForTable ($table);
-        
-        // remove all restrictions like hidden, deleted etc.
+        if ($recordUid) {
+            // remove all restrictions like hidden, deleted etc.
         $queryBuilder->getRestrictions ()->removeAll ();
         
-        // get full record of updated record
+        // get full record
         $fullRecord = $queryBuilder->select ('*')
-        ->from ($table)
+        ->from ($this->table)
         ->where (
             $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid, \PDO::PARAM_INT))
             )
             ->execute ()
             ->fetch ();
+        } else {
+            // todo
+        }
             
             // check if the defined field exists in the record
             if ($fullRecord[$fieldName]) {
                 
-                // clean XML and check against the record fetched from the database
-                $cleanedFlexFormXML = $flexFormTools->cleanFlexFormXML ($table, $fieldName, $fullRecord);
-                
-                if ($cleanedFlexFormXML !== $fullRecord[$fieldName]) {
-                    
-                    // backup element
-                    $this->backupService->backup($fullRecord,$table, $this->log);
+                // check if flexform is valid
+                if (!$this->isValid($fullRecord)) {
                     
                     // update record with cleaned flexform
+                    // todo: move into separate function
                     $result = $queryBuilder
                     ->update ($table)
                     ->where (
@@ -116,13 +143,15 @@ class FlexFormService
     /**
      * Check if flexform of given record is valid
      * 
-     * @param int $recordUid
+     * @param array $fullRecord
      * @return bool
      */
-    public static function isValidFlexForm (int $recordUid) : bool
+    private static function isValid (array $fullRecord) : bool
     {
-        // ToDo: add logic to check if flexform is well formed
+        // get cleaned flexform for record
+        $cleanedFlexFormXML = $this->flexFormTools->cleanFlexFormXML ($this->table, $this->fieldName, $fullRecord);
         
-        return false;
+        // return true|false based on comparison
+        return ($cleanedFlexFormXML === $fullRecord[$this->fieldName]);
     }
 }
