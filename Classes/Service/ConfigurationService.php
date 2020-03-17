@@ -113,10 +113,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             // loop through every method
             foreach ($methods as $method) {
 
-                // check method
-                if ($this->checkBlacklist($method, $serviceConfiguration['methods'])) {
+                 // init reflection of method
+                 $reflection = new \ReflectionMethod($serviceClass, $method);
 
-                    $reflection = new \ReflectionMethod($serviceClass, $method);
+                // check method
+                if ($reflection->isPublic() && $this->checkBlacklist($method, $serviceConfiguration['methods'])) {
 
                     $methodParameters = [];
 
