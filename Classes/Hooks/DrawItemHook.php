@@ -61,7 +61,7 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                 /* @var \SPL\SplCleanupTools\Service\FlexFormService $flexFormService */
                 $flexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\FlexFormService::class);
 
-                if (!$flexFormService->isValidFlexForm((int)$row['uid'])) {
+                if (!$flexFormService->isValidFlexForm($row) {
 
                     /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
                     $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
