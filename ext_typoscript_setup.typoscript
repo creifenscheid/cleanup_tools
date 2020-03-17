@@ -46,7 +46,7 @@ module.tx_splcleanuptools {
             enable = 1
             
             methods {
-                excludes = isValidFlexForm
+                excludes = 
             }
 
             additionalUsage {
