@@ -158,7 +158,7 @@ class FlexFormService
      * @param array $record
      * @return bool
      */
-    private function isValid (array $record) : bool
+    public function isValid (array $record) : bool
     {
         return ($this->getCleanFlexform($record) === $record[$this->fieldName]);
     }
