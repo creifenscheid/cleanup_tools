@@ -70,7 +70,7 @@ class FlexFormService
         // initialize flexform tools
         $this->flexformTools = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
         
-        // initialize querybuilder
+        // initialize connection
         $this->connection = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Database\ConnectionPool::class);
     }
     
@@ -85,36 +85,22 @@ class FlexFormService
         // init new querybuilder
         $queryBuilder = $this->connection->getQueryBuilderForTable ($this->table);
         
+        // set up querybuilder
+        $records = $queryBuilder->select ('*')
+            ->from ($this->table)
+        
         // if a record uid is given
         if ($recordUid) {
-            
-            // remove all restrictions like hidden, deleted etc.
-            $queryBuilder->getRestrictions ()->removeAll ();
-            
-            // get full record
-            $record = $queryBuilder->select ('*')
-            ->from ($this->table)
-            ->where (
+            $queryBuilder->where (
                 $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid, \PDO::PARAM_INT))
-                )
-            ->execute ()
-            ->fetch ();
+                );     
+        }
+        
+        $queryBuilder->execute ()->fetchAll ();
             
-            // process record
+        // process records
+        foreach ($records as $record) {
             $this->process($record);
-                
-        } else {
-            
-            // get all records
-            $records = $queryBuilder->select ('*')
-            ->from ($this->table)
-            ->execute ()
-            ->fetchAll ();
-            
-            // process single records
-            foreach ($records as $record) {
-                $this->process($record);
-            }
         }
         
         return true;
@@ -176,18 +162,14 @@ class FlexFormService
     }
     
     /**
-     * Check if flexform of given record is valid
+     * Validate flexform of given record
      * 
-     * @param array $fullRecord
+     * @param array $record
      * @return bool
      */
     private function isValid (array $record) : bool
     {
-        // get cleaned flexform for record
-        $cleanedFlexFormXML = $this->getCleanedFlexform($record);
-        
-        // return true|false based on comparison
-        return ($cleanedFlexFormXML === $record[$this->fieldName]);
+        return ($this->getCleanedFlexform($record) === $record[$this->fieldName]);
     }
     
     /**
