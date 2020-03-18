@@ -82,83 +82,74 @@ class FlexFormService
      */
     public function cleanupFlexForms ($recordUid = null) : bool
     {
+        // define return flag
+        $return = true;
+
         // init new querybuilder
         $queryBuilder = $this->connection->getQueryBuilderForTable ($this->table);
         
         // set up querybuilder
-        $records = $queryBuilder->select ('*')
-            ->from ($this->table)
+        $queryBuilder->select ('*')
+            ->from ($this->table);
         
         // if a record uid is given
         if ($recordUid) {
             $queryBuilder->where (
                 $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid, \PDO::PARAM_INT))
-                );     
+            );
         }
-        
-        $queryBuilder->execute ()->fetchAll ();
+
+        $records = $queryBuilder->execute ()->fetchAll ();
             
         // process records
         foreach ($records as $record) {
-            $this->process($record);
-        }
-        
-        return true;
-    }
-    
-    /**
-     * Process record
-     * - check if field:pi_flexform is given
-     * - check if flexform is valid
-     * - update record with cleaned flexform
-     * - drop a warning on update fail
-     *
-     * @param array $record
-     * @return void
-     */
-    private function process (array $record) : void
-    {
-        // check if the defined field exists in the record
-        if ($record[$this->fieldName]) {
-            
-            // check if flexform is valid
-            if (!$this->isValid($record)) {
-                
-                // init querybilder
-                $queryBuilder = $this->connection->getQueryBuilderForTable ($this->table);
-                
-                // update record
-                $result = $queryBuilder
-                ->update ($this->table)
-                ->where (
-                    $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($record['uid']))
-                    )
-                    ->set ($this->fieldName, $this->getCleanedFlexform($record))
-                    ->execute ();
-                
-                // if something went wrong, drop a warning
-                if (!$result) {
-                    
-                    /** @var \TYPO3\CMS\Core\Messaging\FlashMessage $message */
-                    $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessage::class,
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'messages.hook.warning.message',
-                            'spl_cleanup_tools'
+
+            // check field
+            if ($record[$this->fieldName]) {
+
+                // check if flexform is valid
+                if (!$this->isValid($record)) {
+
+                    // init new querybilder
+                    $queryBuilder = $this->connection->getQueryBuilderForTable($this->table);
+
+                    // update record
+                    $result = $queryBuilder
+                        ->update($this->table)
+                        ->where(
+                            $queryBuilder->expr ()->eq('uid', $queryBuilder->createNamedParameter ($record['uid']))
+                        )
+                        ->set($this->fieldName, $this->getCleanFlexform($record))
+                        ->execute();
+
+                    // if something went wrong, drop a warning
+                    if (!$result) {
+
+                        $return = false;
+
+                        /** @var \TYPO3\CMS\Core\Messaging\FlashMessage $message */
+                        $message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessage::class,
+                            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                'messages.hook.warning.message',
+                                'spl_cleanup_tools'
                             ),
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'messages.hook.warning.headline',
-                            'spl_cleanup_tools'
+                            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                'messages.hook.warning.headline',
+                                'spl_cleanup_tools'
                             ),
-                        \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING
+                            \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING
                         );
-                    
-                    /** @var \TYPO3\CMS\Core\Messaging\FlashMessageService $flashMessageService */
-                    $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
-                    $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-                    $messageQueue->addMessage($message);
+
+                        /** @var \TYPO3\CMS\Core\Messaging\FlashMessageService $flashMessageService */
+                        $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance (\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
+                        $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+                        $messageQueue->addMessage($message);
+                    }
                 }
             }
         }
+
+        return $return;
     }
     
     /**
@@ -169,7 +160,7 @@ class FlexFormService
      */
     private function isValid (array $record) : bool
     {
-        return ($this->getCleanedFlexform($record) === $record[$this->fieldName]);
+        return ($this->getCleanFlexform($record) === $record[$this->fieldName]);
     }
     
     /**
@@ -178,7 +169,7 @@ class FlexFormService
      * @param array $record
      * @return string
      */
-    private function getCleanedFlexform (array $record) : string
+    private function getCleanFlexform (array $record) : string
     {
         return $this->flexformTools->cleanFlexFormXML ($this->table, $this->fieldName, $record);
     }
