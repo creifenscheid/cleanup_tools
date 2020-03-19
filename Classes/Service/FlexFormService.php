@@ -100,7 +100,7 @@ class FlexFormService
         
         // if a record uid is given
         if ($recordUid) {
-            $queryBuilder->where (
+            $queryBuilder->andWhere (
                 $queryBuilder->expr ()->eq ('uid', $queryBuilder->createNamedParameter ($recordUid, \PDO::PARAM_INT))
             );
         }
