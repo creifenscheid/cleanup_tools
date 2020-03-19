@@ -7,7 +7,7 @@
             <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]', required:'required'}" placeholder="<required>"/>
         </f:then>
         <f:else>
-            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}" />
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="number" additionalAttributes="{pattern:'[0-9.]'}"/>
         </f:else>
     </f:if>
 </div>

@@ -2,6 +2,13 @@
 
 namespace SPL\SplCleanupTools\Service;
 
+use SPL\SplCleanupTools\Domain\Model\Log;
+use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use function call_user_func_array;
+
 /**
  * *************************************************************
  *
@@ -45,14 +52,14 @@ class CleanupService
     const EXECUTION_CONTEXT_SCHEDULER = 2;
     const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
     const EXECUTION_CONTEXT_DBHOOK = 4;
-    
+
     /**
      * Execution context
-     * 
+     *
      * @var int
      */
     protected $executionContext = 0;
-    
+
     /**
      * Configuration service
      *
@@ -66,10 +73,10 @@ class CleanupService
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     protected $objectManager;
-    
+
     /**
      * Log repository
-     * 
+     *
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
@@ -80,23 +87,24 @@ class CleanupService
     public function __construct()
     {
         // init object manager
-        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         // init configuration service
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
-        
+        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+
         // init log repository
-        $this->logRepository = $this->objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
+        $this->logRepository = $this->objectManager->get(LogRepository::class);
     }
-    
+
     /**
      * Set execution context
-     * 
+     *
      * @param int $executionContext
-     * 
+     *
      * @return void
      */
-    public function setExecutionContext (int $executionContext) : void {
+    public function setExecutionContext(int $executionContext) : void
+    {
         $this->executionContext = $executionContext;
     }
 
@@ -130,29 +138,29 @@ class CleanupService
             // if parameter are given
             if ($parameters) {
                 // call method with parameter
-                $return = \call_user_func_array([$service, $method], $parameters);
+                $return = call_user_func_array([$service, $method], $parameters);
             } else {
 
                 // call method
                 $return = $service->$method();
             }
-            
+
             // write log
-            $log = new \SPL\SplCleanupTools\Domain\Model\Log();
+            $log = new Log();
             $log->setCrdate(time());
-            
+
             if ($GLOBALS['BE_USER']->user['uid']) {
                 $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
             }
-            
+
             $log->setExecutionContext($this->executionContext);
             $log->setService($serviceClass);
             $log->setMethod($method);
-            
+
             $this->logRepository->add($log);
-            
+
             /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
-            $persistenceManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
             $persistenceManager->persistAll();
         }
 

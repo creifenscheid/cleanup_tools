@@ -7,13 +7,13 @@ module.tx_splcleanuptools {
 
     settings {
         localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf
-        globalExcludes = 
+        globalExcludes =
     }
 
     services {
         SPL\SplCleanupTools\Service\FileService {
             enable = 0
-            
+
             methods {
                 # ToDo: documentation global excludes
                 excludes =
@@ -44,7 +44,7 @@ module.tx_splcleanuptools {
 
         SPL\SplCleanupTools\Service\FlexFormService {
             enable = 1
-            
+
             methods {
                 excludes = isValid
             }
@@ -64,7 +64,7 @@ module.tx_splcleanuptools {
 
         SPL\SplCleanupTools\Service\RecordService {
             enable = 0
-            
+
             methods {
                 excludes =
             }
@@ -84,7 +84,7 @@ module.tx_splcleanuptools {
 
         SPL\SplCleanupTools\Service\VersionService {
             enable = 0
-            
+
             methods {
                 excludes =
             }
@@ -103,7 +103,7 @@ module.tx_splcleanuptools {
         }
     }
 
-	#docu: fallback configuration - in case of missing type declaration but needed form field in be module
+    #docu: fallback configuration - in case of missing type declaration but needed form field in be module
     mapping {
         parameter {
             # method parameter = type declaration = form field partial

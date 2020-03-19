@@ -1,23 +1,25 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+    data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="Content">
-	<div class="spl-cleanup-tools-be-module">
-		<div class="container">
-			<div class="row">
-				<h1><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.headline"/></h1>
-				<div class="card-container">
-					<f:for each="{services}" as="service" iteration="iterator">
-						<f:for each="{service.methods}" as="method">
-							<f:render partial="Cleanup/Item" arguments="{localizationFile:localizationFile,serviceMethod:method.method,serviceName:service.name,parameters:method.parameters,lastLog:method.lastLog,daysSince:method.daysSince}" />
-						</f:for>
-					</f:for>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="spl-cleanup-tools-be-module">
+        <div class="container">
+            <div class="row">
+                <h1>
+                    <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.headline"/>
+                </h1>
+                <div class="card-container">
+                    <f:for each="{services}" as="service" iteration="iterator">
+                        <f:for each="{service.methods}" as="method">
+                            <f:render partial="Cleanup/Item" arguments="{localizationFile:localizationFile,serviceMethod:method.method,serviceName:service.name,parameters:method.parameters,lastLog:method.lastLog,daysSince:method.daysSince}"/>
+                        </f:for>
+                    </f:for>
+                </div>
+            </div>
+        </div>
+    </div>
 </f:section>
 
 </html>

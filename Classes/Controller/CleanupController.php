@@ -1,5 +1,11 @@
 <?php
+
 namespace SPL\SplCleanupTools\Controller;
+
+use SPL\SplCleanupTools\Service\CleanupService;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * *************************************************************
@@ -32,23 +38,24 @@ namespace SPL\SplCleanupTools\Controller;
  * Class CleanupController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
-class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
+class CleanupController extends BaseController
 {
     /**
      *
      * @var \SPL\SplCleanupTools\Service\CleanupService
      */
     protected $cleanupService;
-    
+
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
-        $this->cleanupService->setExecutionContext(\SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
+        $this->cleanupService = GeneralUtility::makeInstance(CleanupService::class);
+        $this->cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 
     /**
@@ -56,7 +63,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
      *
      * @return void
      */
-    public function indexAction(): void
+    public function indexAction() : void
     {
         // assign services to the view
         $this->view->assignMultiple([
@@ -73,7 +80,7 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function cleanupAction(): void
+    public function cleanupAction() : void
     {
         // get arguments from request
         $arguments = $this->request->getArguments();
@@ -85,25 +92,23 @@ class CleanupController extends \SPL\SplCleanupTools\Controller\BaseController
             $serviceMethodName = $arguments['serviceMethod'];
             $serviceMethodParameter = $arguments['parameters'];
 
-            $result = $this->cleanupService->processMethod($serviceMethodName,$serviceMethodParameter);
-            
+            $result = $this->cleanupService->processMethod($serviceMethodName, $serviceMethodParameter);
+
             if ($result) {
                 $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message','SplCleanupTools',[$serviceMethodName]),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline','SplCleanupTools'),
-                    \TYPO3\CMS\Core\Messaging\FlashMessage::OK
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$serviceMethodName]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
+                    FlashMessage::OK
+                );
+            } else {
+                $this->addFlashMessage(
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$serviceMethodName]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
+                    FlashMessage::ERROR
                 );
             }
-            
-            else {
-                $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message','SplCleanupTools',[$serviceMethodName]),
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline','SplCleanupTools'),
-                    \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
-                    );
-            }
-            
-            $this->forward('index', 'Cleanup','SplCleanupTools');
+
+            $this->forward('index', 'Cleanup', 'SplCleanupTools');
         }
     }
 }

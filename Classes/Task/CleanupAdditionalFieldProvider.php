@@ -2,6 +2,14 @@
 
 namespace SPL\SplCleanupTools\Task;
 
+use SPL\SplCleanupTools\Service\ConfigurationService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
+use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
+use TYPO3\CMS\Scheduler\Task\AbstractTask;
+use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
+
 /**
  * *************************************************************
  *
@@ -35,7 +43,7 @@ namespace SPL\SplCleanupTools\Task;
  * @package SPL\SplCleanupTools\Task
  * @author  Christian Reifenscheid
  */
-class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
+class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 {
     /**
      * Cleanup method
@@ -50,28 +58,28 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      * @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService
      */
     protected $configurationService;
-    
+
     /**
      * Task name
      *
      * @var string
      */
     protected $cleanupMethodTaskName = 'scheduler_cleanuptools_cleanupmethod';
-    
+
     /**
      * Localization file
      *
      * @var string
      */
     protected $localizationFile = '';
-    
+
     /**
      * CleanupAdditionalFieldProvider constructor.
      */
     public function __construct()
     {
         // init configurationService
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
@@ -84,21 +92,21 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @return array A two dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
      */
-    public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
+    public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $schedulerModule)
     {
         $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
-        
+
         $additionalFields = [];
 
         // Initialize selected fields
         // Cleanup method
         if (!isset($taskInfo[$this->cleanupMethodTaskName])) {
             $taskInfo[$this->cleanupMethodTaskName] = $this->cleanupMethod;
-            if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
+            if ($currentSchedulerModuleMethod->equals(Action::EDIT)) {
                 $taskInfo[$this->cleanupMethodTaskName] = $task->getCleanupMethod();
             }
         }
-        
+
         $fieldName = 'tx_scheduler[' . $this->cleanupMethodTaskName . ']';
         $fieldValue = $taskInfo[$this->cleanupMethodTaskName];
         $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupMethodTaskName, $fieldValue);
@@ -108,7 +116,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $this->cleanupMethodTaskName
         ];
-        
+
         return $additionalFields;
     }
 
@@ -120,7 +128,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @return bool TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
-    public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule) : bool
+    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule) : bool
     {
         if ($this->configurationService->getServiceByMethod($submittedData[$this->cleanupMethodTaskName])) {
             return true;
@@ -135,7 +143,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      * @param array                                  $submittedData An array containing the data submitted by the add/edit task form
      * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task          Reference to the scheduler backend module
      */
-    public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
+    public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
         $task->setCleanupMethod($submittedData[$this->cleanupMethodTaskName]);
     }
@@ -171,8 +179,8 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
 
                 if (empty($method['parameters'])) {
                     $label = $method['method'];
-                } else  {
-                    $label = $method['method'] . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
+                } else {
+                    $label = $method['method'] . ' ' . LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
                 }
 
                 // add option to option storage

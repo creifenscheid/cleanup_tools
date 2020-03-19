@@ -1,5 +1,9 @@
 <?php
+
 namespace SPL\SplCleanupTools\Controller;
+
+use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 /**
  * *************************************************************
@@ -32,39 +36,40 @@ namespace SPL\SplCleanupTools\Controller;
  * Class HistoryController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
-class HistoryController extends \SPL\SplCleanupTools\Controller\BaseController
+class HistoryController extends BaseController
 {
     /**
      * Log repository
-     * 
+     *
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
     /**
      * Inject log repository
-     * 
+     *
      * @param \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function injectLogRepository (\SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository) {
+    public function injectLogRepository(LogRepository $logRepository)
+    {
         $this->logRepository = $logRepository;
     }
-    
+
     /**
      * action index
      *
      * @return void
      */
-    public function indexAction(): void
+    public function indexAction() : void
     {
         // define query settings
-        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
-        $querySettings->setRespectStoragePage(FALSE);
+        $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(false);
         // set query settings
         $this->logRepository->setDefaultQuerySettings($querySettings);
-        
+
         // assign to the view
         $this->view->assignMultiple([
             'localizationFile' => $this->localizationFile,

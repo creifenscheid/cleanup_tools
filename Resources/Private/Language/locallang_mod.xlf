@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z" product-name="spl_cleanup_tools">
+    <file source-language="en" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
+          product-name="spl_cleanup_tools">
         <header/>
         <body>
-        	<!-- EXECUTION CONTEXTS -->
+            <!-- EXECUTION CONTEXTS -->
             <trans-unit id="tx_splcleanuptools.general.executioncontext.0">
                 <source>BE module</source>
             </trans-unit>
@@ -19,7 +20,7 @@
             <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
-            
+
             <!-- STATES -->
             <trans-unit id="tx_splcleanuptools.general.state.error">
                 <source>error</source>
@@ -27,122 +28,124 @@
             <trans-unit id="tx_splcleanuptools.general.state.ok">
                 <source>ok</source>
             </trans-unit>
-			
-			<!-- LABEL -->
-			<trans-unit id="label.yes">
-				<source>Yes, please.</source>
-			</trans-unit>
-			<trans-unit id="label.no">
-				<source>No, thank you.</source>
-			</trans-unit>
+
+            <!-- LABEL -->
+            <trans-unit id="label.yes">
+                <source>Yes, please.</source>
+            </trans-unit>
+            <trans-unit id="label.no">
+                <source>No, thank you.</source>
+            </trans-unit>
 
             <!-- MISC -->
             <trans-unit id="tx_splcleanuptools.general.inExectionContext">
                 <source>in "%s" context</source>
             </trans-unit>
-            
+
             <!-- BE MODULE -->
-			<trans-unit id="mlang_tabs_tab">
-				<source>Cleanup Tools</source>
-			</trans-unit>
-			<trans-unit id="mlang_labels_tabdescr">
-				<source>Cleanup Tools</source>
-			</trans-unit>
-			<trans-unit id="module.headline">
-				<source>Cleanup Tools</source>
-			</trans-unit>
-			<trans-unit id="module.menu.cleanup">
-				<source>Cleanup</source>
-			</trans-unit>
-			<trans-unit id="module.menu.history">
-				<source>History</source>
-			</trans-unit>
-			<trans-unit id="module.lastLog.days">
-				<source>executed %s days ago</source>
-			</trans-unit>
-			<trans-unit id="module.lastLog.yesterday">
-				<source>executed yesterday</source>
-			</trans-unit>
-			<trans-unit id="module.lastLog.today">
-				<source>executed today, %s</source>
-			</trans-unit>
-			<trans-unit id="module.lastLog.user">
-				<source>by</source>
-			</trans-unit>
-			<trans-unit id="module.notProcessed">
-				<source>not executed so far</source>
-			</trans-unit>
-			<trans-unit id="module.submit">
-				<source>Clean up</source>
-			</trans-unit>
+            <trans-unit id="mlang_tabs_tab">
+                <source>Cleanup Tools</source>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>Cleanup Tools</source>
+            </trans-unit>
+            <trans-unit id="module.headline">
+                <source>Cleanup Tools</source>
+            </trans-unit>
+            <trans-unit id="module.menu.cleanup">
+                <source>Cleanup</source>
+            </trans-unit>
+            <trans-unit id="module.menu.history">
+                <source>History</source>
+            </trans-unit>
+            <trans-unit id="module.lastLog.days">
+                <source>executed %s days ago</source>
+            </trans-unit>
+            <trans-unit id="module.lastLog.yesterday">
+                <source>executed yesterday</source>
+            </trans-unit>
+            <trans-unit id="module.lastLog.today">
+                <source>executed today, %s</source>
+            </trans-unit>
+            <trans-unit id="module.lastLog.user">
+                <source>by</source>
+            </trans-unit>
+            <trans-unit id="module.notProcessed">
+                <source>not executed so far</source>
+            </trans-unit>
+            <trans-unit id="module.submit">
+                <source>Clean up</source>
+            </trans-unit>
 
-			<!-- HISTORY MODULE -->
-			<trans-unit id="module.history.headline">
-				<source>History</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.date">
-				<source>Date</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.service">
-				<source>Service</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.method">
-				<source>Method</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.user">
-				<source>User</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.executionContext">
-				<source>Execution context</source>
-			</trans-unit>
-			<trans-unit id="module.history.th.state">
-				<source>State</source>
-			</trans-unit>
+            <!-- HISTORY MODULE -->
+            <trans-unit id="module.history.headline">
+                <source>History</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.date">
+                <source>Date</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.service">
+                <source>Service</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.method">
+                <source>Method</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.user">
+                <source>User</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.executionContext">
+                <source>Execution context</source>
+            </trans-unit>
+            <trans-unit id="module.history.th.state">
+                <source>State</source>
+            </trans-unit>
 
-			<!-- TASKS -->
-			<trans-unit id="tasks.cleanup.title">
-				<source>Cleanup Tools</source>
-			</trans-unit>
-			<trans-unit id="tasks.cleanup.description">
-				<source>Various tools to cleanup your TYPO3.</source>
-			</trans-unit>
-			<trans-unit id="tasks.cleanup.fields.cleanupmethod">
-				<source>Which cleanup method shall be executed?</source>
-			</trans-unit>
-			<trans-unit id="tasks.cleanup.information">
-				<source>Configured method:</source>
-			</trans-unit>
-			<trans-unit id="tasks.cleanup.parameter">
-				<source>(parameters are set with typoscript)</source>
-			</trans-unit>
-			
-			<!-- DRAW ITEM HOOK -->
-			<trans-unit id="drawitemhook.message">
-				<source>The flexform of this element is not valid and needs to be cleaned up.</source>
-			</trans-unit>
+            <!-- TASKS -->
+            <trans-unit id="tasks.cleanup.title">
+                <source>Cleanup Tools</source>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.description">
+                <source>Various tools to cleanup your TYPO3.</source>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.fields.cleanupmethod">
+                <source>Which cleanup method shall be executed?</source>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.information">
+                <source>Configured method:</source>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.parameter">
+                <source>(parameters are set with typoscript)</source>
+            </trans-unit>
 
-			<!-- FLASH MESSAGES -->
-			<trans-unit id="messages.error.headline">
-				<source>Oops</source>
-			</trans-unit>
-			<trans-unit id="messages.error.message">
-				<source>Execution of method "%s" was not successfull.</source>
-			</trans-unit>
-			<trans-unit id="messages.error.message.no-method">
-				<source>No method was set.</source>
-			</trans-unit>
-			<trans-unit id="messages.success.headline">
-				<source>Yeah</source>
-			</trans-unit>
-			<trans-unit id="messages.success.message">
-				<source>Method "%s" has been executed.</source>
-			</trans-unit>
-			<trans-unit id="messages.hook.warning.headline">
-				<source>Watch out</source>
-			</trans-unit>
-			<trans-unit id="message.hook.warning.message">
-				<source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
-			</trans-unit>
+            <!-- DRAW ITEM HOOK -->
+            <trans-unit id="drawitemhook.message">
+                <source>The flexform of this element is not valid and needs to be cleaned up.</source>
+            </trans-unit>
+
+            <!-- FLASH MESSAGES -->
+            <trans-unit id="messages.error.headline">
+                <source>Oops</source>
+            </trans-unit>
+            <trans-unit id="messages.error.message">
+                <source>Execution of method "%s" was not successfull.</source>
+            </trans-unit>
+            <trans-unit id="messages.error.message.no-method">
+                <source>No method was set.</source>
+            </trans-unit>
+            <trans-unit id="messages.success.headline">
+                <source>Yeah</source>
+            </trans-unit>
+            <trans-unit id="messages.success.message">
+                <source>Method "%s" has been executed.</source>
+            </trans-unit>
+            <trans-unit id="messages.hook.warning.headline">
+                <source>Watch out</source>
+            </trans-unit>
+            <trans-unit id="message.hook.warning.message">
+                <source>The flexform optimizer had some problems while updating the flexform field with the cleaned
+                    flexform. Your changes are saved, but the flexform might be not well formed.
+                </source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

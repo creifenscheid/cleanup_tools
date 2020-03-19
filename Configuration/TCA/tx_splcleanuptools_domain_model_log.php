@@ -16,11 +16,11 @@ return [
         'versioningWS' => false,
         'searchFields' => 'crdate,cruser_id,execution_context,service,method,state'
     ],
-    
+
     'interface' => [
         'showRecordFieldList' => 'crdate,cruser_id,execution_context,service,method,state'
     ],
-    
+
     'types' => [
         '0' => [
             'showitem' => '
@@ -29,7 +29,7 @@ return [
             '
         ],
     ],
-    
+
     'palettes' => [
         'creation' => [
             'showitem' => 'crdate,cruser_id',
@@ -38,7 +38,7 @@ return [
             'showitem' => 'state,execution_context,--linebreak--,service,method',
         ],
     ],
-    
+
     'columns' => [
         'crdate' => [
             'exclude' => true,
@@ -50,7 +50,7 @@ return [
                 'readOnly' => true
             ]
         ],
-        
+
         'cruser_id' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.cruser_id',
@@ -61,7 +61,7 @@ return [
                 'readOnly' => true
             ]
         ],
-        
+
         'execution_context' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.execution_context',
@@ -78,7 +78,7 @@ return [
                 'readOnly' => true
             ]
         ],
-        
+
         'service' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.service',
@@ -87,7 +87,7 @@ return [
                 'readOnly' => true
             ]
         ],
-        
+
         'method' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.method',
@@ -96,7 +96,7 @@ return [
                 'readOnly' => true
             ]
         ],
-        
+
         'state' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.state',

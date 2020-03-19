@@ -2,6 +2,12 @@
 
 namespace SPL\SplCleanupTools\Task;
 
+use SPL\SplCleanupTools\Service\CleanupService;
+use SPL\SplCleanupTools\Service\ConfigurationService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Scheduler\Task\AbstractTask;
+
 /**
  * *************************************************************
  *
@@ -35,7 +41,7 @@ namespace SPL\SplCleanupTools\Task;
  * @package SPL\SplCleanupTools\Task
  * @author  Christian Reifenscheid
  */
-class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
+class CleanupTask extends AbstractTask
 {
     /**
      * @var string
@@ -52,11 +58,11 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function execute() : bool
     {
         /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanupService::class);
-        $cleanupService->setExecutionContext(\SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_SCHEDULER);
+        $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
+        $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_SCHEDULER);
 
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
         // get method configuration
         $methodConfiguration = $configurationService->getMethodConfiguration($this->cleanupMethod);
@@ -103,9 +109,9 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function getAdditionalInformation() : string
     {
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
-        
-        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->cleanupMethod;
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+
+        return LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->cleanupMethod;
     }
 
     /**

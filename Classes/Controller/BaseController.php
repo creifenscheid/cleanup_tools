@@ -1,5 +1,10 @@
 <?php
+
 namespace SPL\SplCleanupTools\Controller;
+
+use SPL\SplCleanupTools\Service\ConfigurationService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * *************************************************************
@@ -32,28 +37,29 @@ namespace SPL\SplCleanupTools\Controller;
  * Class BaseController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
-class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class BaseController extends ActionController
 {
     /**
-     * 
+     *
      * @var \SPL\SplCleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
-    
+
     /**
      * Localization file
      *
      * @var string
      */
     protected $localizationFile = '';
-    
+
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+    public function __construct()
+    {
+        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 }

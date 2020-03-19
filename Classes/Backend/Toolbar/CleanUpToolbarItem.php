@@ -1,5 +1,14 @@
 <?php
+
 namespace SPL\SplCleanupTools\Backend\Toolbar;
+
+use SPL\SplCleanupTools\Service\CleanupService;
+use SPL\SplCleanupTools\Service\ConfigurationService;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * *************************************************************
@@ -32,15 +41,15 @@ namespace SPL\SplCleanupTools\Backend\Toolbar;
  * Class CleanUpToolbarItem
  *
  * @package SPL\SplCleanupTools\Backend\Toolbar
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
-class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
+class CleanUpToolbarItem implements ToolbarItemInterface
 {
     /**
      * @var array
      */
     protected $cleanupMethods = [];
-    
+
     /**
      * @var string
      */
@@ -51,29 +60,30 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
-        
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+
         $this->localizationFile = $configurationService->getLocalizationFile();
 
-        /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder **/
-        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
+        /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
         $toolbarItems = $configurationService->getServicesByAdditionalUsage('toolbar');
-        
+
         foreach ($toolbarItems as $service => $methods) {
-            
+
             foreach ($methods as $method) {
-                
-                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => $method['method'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
-                
+
+                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => $method['method'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
+
                 $this->cleanupMethods[] = [
-                    'title' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':label.'.$method['method']),
-                    'description' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':description.'.$method['method']),
+                    'title' => LocalizationUtility::translate($this->localizationFile . ':label.' . $method['method']),
+                    'description' => LocalizationUtility::translate($this->localizationFile . ':description.' . $method['method']),
                     'service' => $service,
-                    'onclickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;'
+                    'onclickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;'
                 ];
             }
         }
@@ -84,11 +94,13 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return bool TRUE if user has access, FALSE if not
      */
-    public function checkAccess() {
+    public function checkAccess()
+    {
         $backendUser = $this->getBackendUser();
         if ($backendUser->isAdmin()) {
             return true;
         }
+
         return false;
     }
 
@@ -97,9 +109,11 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return string Toolbar item HTML
      */
-    public function getItem() {
+    public function getItem()
+    {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItem.html');
         $view->assign('localizationFile', $this->localizationFile);
+
         return $view->render();
     }
 
@@ -108,7 +122,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return bool
      */
-    public function hasDropDown() {
+    public function hasDropDown()
+    {
         return true;
     }
 
@@ -117,12 +132,14 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return string Drop down HTML
      */
-    public function getDropDown() {
+    public function getDropDown()
+    {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
         $view->assignMultiple([
             'cleanupMethods' => $this->cleanupMethods,
             'localizationFile' => $this->localizationFile
         ]);
+
         return $view->render();
     }
 
@@ -131,7 +148,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return array
      */
-    public function getAdditionalAttributes() {
+    public function getAdditionalAttributes()
+    {
         return [];
     }
 
@@ -140,7 +158,8 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      *
      * @return int 0 .. 100
      */
-    public function getIndex() {
+    public function getIndex()
+    {
         return 50;
     }
 
@@ -148,17 +167,19 @@ class CleanUpToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
      * Returns a new standalone view, shorthand function
      *
      * @param string $filename Which templateFile should be used.
+     *
      * @return \TYPO3\CMS\Fluid\View\StandaloneView
      */
-    protected function getFluidTemplateObject(string $filename): \TYPO3\CMS\Fluid\View\StandaloneView
+    protected function getFluidTemplateObject(string $filename) : StandaloneView
     {
-        $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts']);
         $view->setPartialRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials']);
         $view->setTemplateRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates']);
         $view->setTemplate($filename);
 
         $view->getRequest()->setControllerExtensionName('Backend');
+
         return $view;
     }
 

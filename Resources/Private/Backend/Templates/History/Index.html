@@ -1,34 +1,48 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	data-namespace-typo3-fluid="true">
+    data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="Content">
-	<div class="spl-cleanup-tools-be-module">
-		<div class="container">
-			<div class="row">
-				<h1><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.headline" /></h1>
-				
-				<table id="spl-cleanup-tools-history-list" class="table table-striped table-hover">
-			        <thead>
-			        <tr>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.date" /></th>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.service" /></th>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.method" /></th>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.user" /></th>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.executionContext" /></th>
-			            <th><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.state" /></th>
-			        </tr>
-			        </thead>
-			        <tbody>
-				        <f:for each="{logs}" as="log">
-							<f:render partial="History/Log" arguments="{localizationFile:localizationFile,log:log}" />
-						</f:for>
-			        </tbody>
-			    </table>
-			</div>
-		</div>
-	</div>
+    <div class="spl-cleanup-tools-be-module">
+        <div class="container">
+            <div class="row">
+                <h1>
+                    <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.headline"/>
+                </h1>
+
+                <table id="spl-cleanup-tools-history-list" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.date"/>
+                        </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.service"/>
+                        </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.method"/>
+                        </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.user"/>
+                        </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.executionContext"/>
+                        </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.state"/>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{logs}" as="log">
+                        <f:render partial="History/Log" arguments="{localizationFile:localizationFile,log:log}"/>
+                    </f:for>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </f:section>
 
 </html>

@@ -2,6 +2,15 @@
 
 namespace SPL\SplCleanupTools\Hooks;
 
+use SPL\SplCleanupTools\Service\CleanupService;
+use SPL\SplCleanupTools\Service\ConfigurationService;
+use SPL\SplCleanupTools\Service\FlexFormService;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\View\PageLayoutView;
+use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\View\StandaloneView;
+
 /**
  * *************************************************************
  *
@@ -35,7 +44,7 @@ namespace SPL\SplCleanupTools\Hooks;
  * @package SPL\SplCleanupTools\Hooks
  * @author  Christian Reifenscheid
  */
-class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
+class DrawItemHook implements PageLayoutViewDrawItemHookInterface
 {
 
     /**
@@ -50,7 +59,7 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
      * @return void
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function preProcess(\TYPO3\CMS\Backend\View\PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) : void
+    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) : void
     {
         // Admins only
         if ($GLOBALS['BE_USER']->isAdmin()) {
@@ -59,33 +68,33 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
             if ($row['pi_flexform']) {
 
                 /* @var \SPL\SplCleanupTools\Service\FlexFormService $flexFormService */
-                $flexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\FlexFormService::class);
+                $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 
                 if (!$flexFormService->isValid($row)) {
 
                     /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
-                    $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\ConfigurationService::class);
+                    $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
                     /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
-                    $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
+                    $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
                     /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-                    $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+                    $view = GeneralUtility::makeInstance(StandaloneView::class);
 
                     // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'executionContext' => \SPL\SplCleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
 
                     // assignments
                     $view->assignMultiple([
-                        'onClickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
+                        'onClickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
                         'recordUid' => $row['uid'],
                         'localizationFile' => $configurationService->getLocalizationFile()
                     ]);
 
                     // set template path
-                    $templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::resolveBackPath(PATH_site . 'typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
+                    $templateFile = GeneralUtility::resolveBackPath(PATH_site . 'typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
 
                     // set view template
                     $view->setTemplatePathAndFilename($templateFile);

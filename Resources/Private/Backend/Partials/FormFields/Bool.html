@@ -1,7 +1,13 @@
-<f:variable name="labelYes"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.yes" /></f:variable>
-<f:variable name="labelNo"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.no" /></f:variable>
+<f:variable name="labelYes">
+    <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.yes"/>
+</f:variable>
+<f:variable name="labelNo">
+    <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.no"/>
+</f:variable>
 
 <div class="form-group">
-    <label for="{serviceMethod}-{name}" class="form-check-label"><f:translate key="{localizationFile}:label.{name}"/></label>
-    <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" />
+    <label for="{serviceMethod}-{name}" class="form-check-label">
+        <f:translate key="{localizationFile}:label.{name}"/>
+    </label>
+    <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control"/>
 </div>

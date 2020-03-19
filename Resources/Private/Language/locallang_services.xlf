@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-04-01T11:55:00Z" product-name="spl_cleanup_tools">
-		<header/>
-		<body>
-			<!-- LABEL -->
-			<trans-unit id="label.cleanupFlexForms">
-				<source>FlexForms</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupMissingRelations">
-				<source>Missing relations</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupMultipleReferencedFiles">
-				<source>Multiple referenced files</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupRteImages">
-				<source>RTE images</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupMissingFiles">
-				<source>Missing files</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupLostFiles">
-				<source>Lost files</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupOrphanRecords">
-				<source>Orphan records</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupDeletedRecords">
-				<source>Deleted records</source>
-			</trans-unit>
-			<trans-unit id="label.cleanupVersions">
-				<source>Versions</source>
-			</trans-unit>
-			
-			<!-- PARAMETER -->
-			<trans-unit id="label.updateReferenceIndex">
-				<source>Update reference index</source>
-			</trans-unit>
-			<trans-unit id="label.recordUid">
-				<source>Record uid</source>
-			</trans-unit>
-			
-			<!-- DESCRIPTIONS -->
-			<trans-unit id="description.cleanupFlexForms">
-				<source>Cleanup flexforms</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupMissingRelations">
-				<source>Cleanup missing relations</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupMultipleReferencedFiles">
-				<source>Cleanup multiple referenced files</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupRteImages">
-				<source>Cleanup RTE images</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupMissingFiles">
-				<source>Cleanup missing files</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupLostFiles">
-				<source>Cleanup lost files</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupOrphanRecords">
-				<source>Cleanup orphan records</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupDeletedRecords">
-				<source>Cleanup deleted records</source>
-			</trans-unit>
-			<trans-unit id="description.cleanupVersions">
-				<source>Cleanup versions</source>
-			</trans-unit>
-		</body>
-	</file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-04-01T11:55:00Z"
+          product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+            <!-- LABEL -->
+            <trans-unit id="label.cleanupFlexForms">
+                <source>FlexForms</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupMissingRelations">
+                <source>Missing relations</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupMultipleReferencedFiles">
+                <source>Multiple referenced files</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupRteImages">
+                <source>RTE images</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupMissingFiles">
+                <source>Missing files</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupLostFiles">
+                <source>Lost files</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupOrphanRecords">
+                <source>Orphan records</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupDeletedRecords">
+                <source>Deleted records</source>
+            </trans-unit>
+            <trans-unit id="label.cleanupVersions">
+                <source>Versions</source>
+            </trans-unit>
+
+            <!-- PARAMETER -->
+            <trans-unit id="label.updateReferenceIndex">
+                <source>Update reference index</source>
+            </trans-unit>
+            <trans-unit id="label.recordUid">
+                <source>Record uid</source>
+            </trans-unit>
+
+            <!-- DESCRIPTIONS -->
+            <trans-unit id="description.cleanupFlexForms">
+                <source>Cleanup flexforms</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupMissingRelations">
+                <source>Cleanup missing relations</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupMultipleReferencedFiles">
+                <source>Cleanup multiple referenced files</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupRteImages">
+                <source>Cleanup RTE images</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupMissingFiles">
+                <source>Cleanup missing files</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupLostFiles">
+                <source>Cleanup lost files</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupOrphanRecords">
+                <source>Cleanup orphan records</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupDeletedRecords">
+                <source>Cleanup deleted records</source>
+            </trans-unit>
+            <trans-unit id="description.cleanupVersions">
+                <source>Cleanup versions</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

@@ -2,6 +2,16 @@
 
 namespace SPL\SplCleanupTools\Service;
 
+use ReflectionMethod;
+use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use function in_array;
+
 /**
  * *************************************************************
  *
@@ -35,7 +45,7 @@ namespace SPL\SplCleanupTools\Service;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
+class ConfigurationService implements SingletonInterface
 {
 
     /**
@@ -73,19 +83,19 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * Constructor
      */
     public function __construct()
-    {   
+    {
         // init object manager
-        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
         // init configurationManager
-        $configurationManager = $objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
         // init typoscript service
-        $typoscriptService = $objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
-        
+        $typoscriptService = $objectManager->get(TypoScriptService::class);
+
         // init log repository
-        $logRepository = $objectManager->get(\SPL\SplCleanupTools\Domain\Repository\LogRepository::class);
+        $logRepository = $objectManager->get(LogRepository::class);
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
@@ -95,7 +105,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 
         // loop through configured utilities
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
-        
+
             // skip service if not enabled
             if (!$serviceConfiguration['enable']) {
                 continue;
@@ -103,7 +113,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 
             // set utility information
             $this->services[$serviceClass] = [
-                'name' => end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $serviceClass)),
+                'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
                 'class' => $serviceClass
             ];
 
@@ -113,8 +123,8 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             // loop through every method
             foreach ($methods as $method) {
 
-                 // init reflection of method
-                 $reflection = new \ReflectionMethod($serviceClass, $method);
+                // init reflection of method
+                $reflection = new ReflectionMethod($serviceClass, $method);
 
                 // check method
                 if ($reflection->isPublic() && $this->checkBlacklist($method, $serviceConfiguration['methods'])) {
@@ -135,13 +145,13 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
                         'parameters' => $methodParameters,
                         'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
                     ];
-                    
+
                     // get last log of method
                     /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
                     $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
-                    
+
                     if ($lastLog) {
-                        $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate())/60/60/24);
+                        $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
                         $methodInformation['lastLog'] = $lastLog;
                     }
 
@@ -251,12 +261,12 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     private function checkBlacklist($method, $configuration) : bool
     {
         // get configured excludes
-        $methodExcludes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configuration['excludes']);
+        $methodExcludes = GeneralUtility::trimExplode(',', $configuration['excludes']);
 
         // add global excludes
-        $excludes = array_merge($methodExcludes, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$this->configuration['settings']['globalExcludes']));
+        $excludes = array_merge($methodExcludes, GeneralUtility::trimExplode(',', $this->configuration['settings']['globalExcludes']));
 
         // if method is in excludes or a magic method - return false to skip
-        return !(\in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
+        return !(in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
     }
 }

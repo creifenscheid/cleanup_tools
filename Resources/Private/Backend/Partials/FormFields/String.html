@@ -4,10 +4,10 @@
     <label for="{serviceMethod}-{name}">{f:translate(key:labelString)} [string]</label>
     <f:if condition="{mandatory}">
         <f:then>
-            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" placeholder="<required>" additionalAttributes="{required:'required'}" />
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" placeholder="<required>" additionalAttributes="{required:'required'}"/>
         </f:then>
         <f:else>
-            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" />
+            <f:form.textfield id="{serviceMethod}-{name}" class="form-control" name="parameters[{name}]" value="" type="text"/>
         </f:else>
     </f:if>
 </div>

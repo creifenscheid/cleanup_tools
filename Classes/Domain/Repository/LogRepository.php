@@ -1,5 +1,9 @@
 <?php
+
 namespace SPL\SplCleanupTools\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * *************************************************************
@@ -32,32 +36,34 @@ namespace SPL\SplCleanupTools\Domain\Repository;
  * Class LogRepository
  *
  * @package SPL\SplCleanupTools\Domain\Repository
- * @author Christian Reifenscheid
+ * @author  Christian Reifenscheid
  */
-class LogRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class LogRepository extends Repository
 {
     protected $defaultOrderings = [
-        'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
+        'crdate' => QueryInterface::ORDER_DESCENDING
     ];
-    
+
     /**
      * Persist all
      */
-    public function persistAll () {
+    public function persistAll()
+    {
         $this->persistAll();
     }
-    
+
     /**
      * Function to get logs by service and method
-     * 
+     *
      * @param string $service
      * @param string $method
      */
-    public function findByServiceAndMethod(string $service, string $method) {
+    public function findByServiceAndMethod(string $service, string $method)
+    {
         $query = $this->createQuery();
-        
-        $query->setOrderings(['crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
-        
+
+        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
+
         $query->matching(
             $query->logicalAnd(
                 [
@@ -66,7 +72,7 @@ class LogRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 ]
             )
         );
-        
+
         return $query->execute()->getFirst();
     }
 }

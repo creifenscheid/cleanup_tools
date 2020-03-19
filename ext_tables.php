@@ -1,9 +1,11 @@
 <?php
 
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 defined('TYPO3_MODE') or die();
 
 if (TYPO3_MODE === 'BE') {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+    ExtensionUtility::registerModule(
         'SPL.SplCleanupTools', // extensionName
         'tools', // mainModuleName
         'Cleanup', // subModuleName
@@ -19,7 +21,7 @@ if (TYPO3_MODE === 'BE') {
             'labels' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf',
         ] // moduleConfiguration
     );
-    
+
     // Register CSS
     $GLOBALS['TBE_STYLES']['skins']['spl_cleanup_tools'] = [
         'name' => 'Cleanup tools',
