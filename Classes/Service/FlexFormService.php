@@ -92,9 +92,6 @@ class FlexFormService
         $queryBuilder->select ('*')
             ->from ($this->table)
             ->where(
-                $queryBuilder->expr ()->neq ($this->fieldName, '')
-            )
-            ->andWhere(
                 $queryBuilder->expr ()->isNotNull($this->fieldName)
             );
         
