@@ -57,11 +57,19 @@ class ConfigurationService implements SingletonInterface
 
     /**
      * Configured services incl.
-     * existing and allowed methods
+     * method information
      *
      * @var array
      */
     protected $services = [];
+    
+    /**
+     * Services which can be performed for single elements, e.g. in hook context
+     * method information 
+     *
+     * @var array
+     */
+    protected $singleServices = [];
 
     /**
      * Configured additional usages of utilities incl.
@@ -111,14 +119,30 @@ class ConfigurationService implements SingletonInterface
                 continue;
             }
 
-            // set utility information
-            $this->services[$serviceClass] = [
-                'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
-                'class' => $serviceClass
-            ];
+            // check if execute() exists
+            if (method_exists($serviceClass, 'execute') {
+                // set service information
+                $this->services[$serviceClass] = [
+                    'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
+                    'class' => $serviceClass
+                ];
+                
+                // init reflection of method
+                $reflection = new ReflectionMethod($serviceClass, 'execute');
 
-            // get and store class methods
-            $methods = get_class_methods(new $serviceClass());
+            }
+            
+            // check if executeSingle() exists
+            if (method_exists($serviceClass, 'executeSingle') {
+                // set service information
+                $this->singleServices[$serviceClass] = [
+                    'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
+                    'class' => $serviceClass
+                ];
+                
+                // init reflection of method
+                $reflection = new ReflectionMethod($serviceClass, 'executeSingle');
+            }
 
             // loop through every method
             foreach ($methods as $method) {

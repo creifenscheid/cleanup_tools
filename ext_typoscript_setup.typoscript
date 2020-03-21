@@ -13,7 +13,7 @@ module.tx_splcleanuptools {
     services {
         SPL\SplCleanupTools\Service\CleanFlexFormsService {
         enable = 1
-        task = 1
+        enableSchedulerTask = 1
 }
 
         SPL\SplCleanupTools\Service\FlexFormService {
