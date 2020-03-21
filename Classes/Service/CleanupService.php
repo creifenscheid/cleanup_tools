@@ -63,7 +63,7 @@ class CleanupService
     /**
      * Configuration service
      *
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService
+     * @var ConfigurationService
      */
     protected $configurationService;
 
