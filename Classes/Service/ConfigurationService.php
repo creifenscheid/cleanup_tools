@@ -208,6 +208,17 @@ class ConfigurationService implements SingletonInterface
     }
 
     /**
+     * Returns single services incl.
+     * methods and configuration
+     *
+     * @return array
+     */
+    public function getAllSingleServices() : array
+    {
+        return $this->singleServices;
+    }
+    
+    /**
      * Return services for an additional usage
      *
      * @param string $usageType
@@ -223,66 +234,6 @@ class ConfigurationService implements SingletonInterface
         return null;
     }
 
-    /**
-     * Return service of given method
-     *
-     * @param string $methodName
-     *
-     * @return array|NULL
-     */
-    public function getServiceByMethod(string $methodName) : ?array
-    {
-        foreach ($this->services as $service) {
-            foreach ($service['methods'] as $method) {
-                if ($method['method'] === $methodName) {
-                    return $service;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Get configuration of method
-     *
-     * @param string $methodName
-     *
-     * @return array|null
-     */
-    public function getMethodConfiguration(string $methodName) : ?array
-    {
-        foreach ($this->services as $service) {
-            foreach ($service['methods'] as $method) {
-                if ($method['method'] === $methodName) {
-                    return $method;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Function to check if a method of a utility is blacklisted
-     *
-     * @param string $method
-     * @param array  $configuration
-     *
-     * @return bool
-     */
-    private function checkBlacklist($method, $configuration) : bool
-    {
-        // get configured excludes
-        $methodExcludes = GeneralUtility::trimExplode(',', $configuration['excludes']);
-
-        // add global excludes
-        $excludes = array_merge($methodExcludes, GeneralUtility::trimExplode(',', $this->configuration['settings']['globalExcludes']));
-
-        // if method is in excludes or a magic method - return false to skip
-        return !(in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
-    }
-    
     /**
      * Function to prepare method information of a class
      *
