@@ -47,6 +47,11 @@ use function in_array;
  */
 class ConfigurationService implements SingletonInterface
 {
+    /**
+     * Function names
+      */
+    const FUNCTION_MAIN = 'execute';
+    const FUNCTION_ELEMENT = 'executeForElement';
 
     /**
      * Module configuration
@@ -127,20 +132,20 @@ class ConfigurationService implements SingletonInterface
             }
 
             // check if execute() exists
-            if (method_exists($serviceClass, 'execute')) {
+            if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
                 
                 // set up service configuration
-                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
             } else {
                 
                 $this->errorServices[] = $serviceClass;
             }
             
             // check if executeSingle() exists
-            if (method_exists($serviceClass, 'executeForElement')) {
+            if (method_exists($serviceClass, self::FUNCTION_ELEMENT)) {
                 
                 // set up service configuration
-                $this->singleServices[$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'executeForElement', $serviceConfiguration);
+                $this->singleServices[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_ELEMENT, $serviceConfiguration);
             }
             
             // get last log of method
