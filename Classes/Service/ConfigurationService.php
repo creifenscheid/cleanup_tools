@@ -306,20 +306,23 @@ class ConfigurationService implements SingletonInterface
             
             $methodParameters = [];
 
-                    foreach ($reflection->getParameters() as $parameter) {
-                        $methodParameters[] = [
-                            'name' => $parameter->getName(),
-                            'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
-                            'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
-                        ];
-                    }
+            foreach ($reflection->getParameters() as $parameter) {
+                $methodParameters[] = [
+                    'name' => $parameter->getName(),
+                    'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
+                    'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
+                ];
+            }
 
-                    // prepare method information
-                    $methodInformation = [
-                        'method' => $method,
-                        'parameters' => $methodParameters,
+            // prepare method information
+            $methodInformation = [
+                'method' => $method,
+                'parameters' => $methodParameters,
                         'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
             ];
+            
+            // add method information to storage
+            $this->services[$serviceClass]['methods'][$method] = $methodInformation;
                     
             //go on
         }
