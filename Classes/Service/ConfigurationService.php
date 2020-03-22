@@ -122,26 +122,15 @@ class ConfigurationService implements SingletonInterface
             // check if execute() exists
             if (method_exists($serviceClass, 'execute') {
                 // set service information
-                $this->services[$serviceClass] = [
-                    'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
-                    'class' => $serviceClass
-                ];
-                
-                // init reflection of method
-                $reflection = new ReflectionMethod($serviceClass, 'execute');
+                $this->services[$serviceClass] = $this->prepareMethodInformation($serviceClass, 'execute');
 
             }
             
             // check if executeSingle() exists
             if (method_exists($serviceClass, 'executeSingle') {
+            
                 // set service information
-                $this->singleServices[$serviceClass] = [
-                    'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
-                    'class' => $serviceClass
-                ];
-                
-                // init reflection of method
-                $reflection = new ReflectionMethod($serviceClass, 'executeSingle');
+                $this->singleServices[$serviceClass] = $this->prepareMethodInformation($serviceClass, 'executeSingle');
             }
 
             // loop through every method
@@ -292,5 +281,28 @@ class ConfigurationService implements SingletonInterface
 
         // if method is in excludes or a magic method - return false to skip
         return !(in_array($method, $excludes, true) || strncmp($method, '__', 2) === 0);
+    }
+    
+    /**
+     * Function to prepare method information of a class
+     *
+     * @param string $class
+     * @param string $method
+     *
+     * @return array
+     */
+    private function prepareMethodInformation (string $class, string $method) : array
+    {
+        $methodInformation = [
+            'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
+            'class' => $serviceClass
+        ];
+                
+        // init reflection of method
+        $reflection = new ReflectionMethod($serviceClass, $method);
+        
+        //go on
+        
+        return $methodInformation;
     }
 }
