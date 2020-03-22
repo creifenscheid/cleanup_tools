@@ -301,7 +301,28 @@ class ConfigurationService implements SingletonInterface
         // init reflection of method
         $reflection = new ReflectionMethod($serviceClass, $method);
         
-        //go on
+        // check method
+        if ($reflection->isPublic() && $this->checkBlacklist($method, $serviceConfiguration['methods'])) {
+            
+            $methodParameters = [];
+
+                    foreach ($reflection->getParameters() as $parameter) {
+                        $methodParameters[] = [
+                            'name' => $parameter->getName(),
+                            'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
+                            'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
+                        ];
+                    }
+
+                    // prepare method information
+                    $methodInformation = [
+                        'method' => $method,
+                        'parameters' => $methodParameters,
+                        'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
+            ];
+                    
+            //go on
+        }
         
         return $methodInformation;
     }
