@@ -121,44 +121,15 @@ class ConfigurationService implements SingletonInterface
 
             // check if execute() exists
             if (method_exists($serviceClass, 'execute') {
-                // set service information
-                $this->services[$serviceClass] = $this->prepareMethodInformation($serviceClass, 'execute');
-
-            }
+                // set up service configuration
+                $this->services[$serviceClass]['execute'] = $this->prepareMethodInformation($serviceClass, 'execute');
             
             // check if executeSingle() exists
             if (method_exists($serviceClass, 'executeSingle') {
             
-                // set service information
-                $this->singleServices[$serviceClass] = $this->prepareMethodInformation($serviceClass, 'executeSingle');
+                // set up service configuration
+                $this->singleServices[$serviceClass]['executeSingle']= $this->prepareMethodInformation($serviceClass, 'executeSingle');
             }
-
-            // loop through every method
-            foreach ($methods as $method) {
-
-                // init reflection of method
-                $reflection = new ReflectionMethod($serviceClass, $method);
-
-                // check method
-                if ($reflection->isPublic() && $this->checkBlacklist($method, $serviceConfiguration['methods'])) {
-
-                    $methodParameters = [];
-
-                    foreach ($reflection->getParameters() as $parameter) {
-                        $methodParameters[] = [
-                            'name' => $parameter->getName(),
-                            'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
-                            'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
-                        ];
-                    }
-
-                    // prepare method information
-                    $methodInformation = [
-                        'method' => $method,
-                        'parameters' => $methodParameters,
-                        'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
-                    ];
-
                     // get last log of method
                     /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
                     $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
@@ -167,9 +138,6 @@ class ConfigurationService implements SingletonInterface
                         $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
                         $methodInformation['lastLog'] = $lastLog;
                     }
-
-                    // add method information to storage
-                    $this->services[$serviceClass]['methods'][$method] = $methodInformation;
 
                     // check additional usage configuration of utility
                     foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
@@ -271,11 +239,6 @@ class ConfigurationService implements SingletonInterface
                 'parameters' => $methodParameters,
                         'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
             ];
-            
-            // add method information to storage
-            $this->services[$serviceClass]['methods'][$method] = $methodInformation;
-                    
-            //go on
         }
         
         return $methodInformation;
