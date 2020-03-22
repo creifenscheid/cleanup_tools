@@ -111,6 +111,7 @@ class CleanupService
     /**
      * Function to initialize a utility and call the requested method
      *
+     * @param string $class
      * @param string $method
      * @param array  $parameters
      *
@@ -118,51 +119,41 @@ class CleanupService
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function processMethod(string $method, array $parameters = null) : bool
+    public function process(string $class, string $method, array $parameters = null) : bool
     {
         // define return var
         $return = false;
-
-        // get service of cleanCmd
-        $serviceConfiguration = $this->configurationService->getServiceByMethod($method);
-
-        // if a service is returned
-        if ($serviceConfiguration) {
-
-            // get service class
-            $serviceClass = $serviceConfiguration['class'];
-
-            // init service
-            $service = $this->objectManager->get($serviceClass);
-
-            // if parameter are given
-            if ($parameters) {
-                // call method with parameter
-                $return = call_user_func_array([$service, $method], $parameters);
-            } else {
-
-                // call method
-                $return = $service->$method();
-            }
-
-            // write log
-            $log = new Log();
-            $log->setCrdate(time());
-
-            if ($GLOBALS['BE_USER']->user['uid']) {
-                $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
-            }
-
-            $log->setExecutionContext($this->executionContext);
-            $log->setService($serviceClass);
-            $log->setMethod($method);
-
-            $this->logRepository->add($log);
-
-            /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
-            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
-            $persistenceManager->persistAll();
+        
+        // init service
+        $service = $this->objectManager->get($class);
+        
+        // if parameter are given
+        if ($parameters) {
+            // call method with parameter
+            $return = call_user_func_array([$service, $method], $parameters);
+        } else {
+            
+            // call method
+            $return = $service->$method();
         }
+        
+        // write log
+        $log = new Log();
+        $log->setCrdate(time());
+        
+        if ($GLOBALS['BE_USER']->user['uid']) {
+            $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+        }
+        
+        $log->setExecutionContext($this->executionContext);
+        $log->setService($class);
+        $log->setMethod($method);
+        
+        $this->logRepository->add($log);
+        
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
+        $persistenceManager = $this->objectManager->get(PersistenceManager::class);
+        $persistenceManager->persistAll();
 
         return $return;
     }

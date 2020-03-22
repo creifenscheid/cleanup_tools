@@ -12,30 +12,35 @@ module.tx_splcleanuptools {
 
     services {
         SPL\SplCleanupTools\Service\CleanFlexFormsService {
-        enable = 1
-        additionalUsage {
-            schedulerTask = 1
-            toolbar = 1
-        }
-}
-
-        SPL\SplCleanupTools\Service\FlexFormService {
-            enable = 1
-
-            methods {
-                excludes = isValid
-            }
-
-            additionalUsage {
-                toolbar {
-                    enable = 1
-                    excludes =
-                }
-
-                task {
-                    enable = 1
-                    excludes =
-                }
-            }
-        }
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+	        
+	        mapping {
+		        parameter {
+		        	pid = int
+		        	depth = int
+		        	dryRun = bool
+		        }
+	        }
+		}
+		
+        SPL\SplCleanupTools\Service\DeletedRecordsService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+		}
+		
+        SPL\SplCleanupTools\Service\FilesWithMultipleReferencesService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+		}
+	}  
 }

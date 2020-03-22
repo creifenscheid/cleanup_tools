@@ -34,11 +34,20 @@
             </trans-unit>
 
             <!-- PARAMETER -->
-            <trans-unit id="label.updateReferenceIndex">
+            <trans-unit id="label.updateRefindex">
                 <source>Update reference index</source>
             </trans-unit>
             <trans-unit id="label.recordUid">
                 <source>Record uid</source>
+            </trans-unit>
+            <trans-unit id="label.pid">
+                <source>Page uid</source>
+            </trans-unit>
+            <trans-unit id="label.depth">
+                <source>Depth</source>
+            </trans-unit>
+            <trans-unit id="label.dryRun">
+                <source>Dry run</source>
             </trans-unit>
 
             <!-- DESCRIPTIONS -->

@@ -1,25 +1,35 @@
 <f:form class="card card-size-fixed-small" action="cleanup" controller="Cleanup" method="post"
         enctype="multipart/form-data">
     <div class="card-header">
-        <f:form.hidden name="serviceMethod" value="{serviceMethod}"/>
+        <f:form.hidden name="service" value="{service.class}"/>
+        <f:form.hidden name="method" value="{service.method.name}"/>
         <div class="card-title">
-            <f:translate key="{localizationFile}:label.{serviceMethod}"/>
+            {service.name}
         </div>
-        <span>{serviceName}</span>
+        <span>{service.method.name}</span>
     </div>
     <div class="card-body">
-        <f:for each="{parameters}" as="parameter">
-            <f:if condition="{parameter.type}">
-                <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, label: parameter.label, mandatory: parameter.mandatory}"/>
+        <f:for each="{service.method.parameters}" as="parameter">
+            <f:if condition="{parameter.name} === dryRun">
+            	<f:then>
+        			<f:form.hidden name="parameters[dryRun]" value="1"/>
+            	</f:then>
+            	<f:else>
+	            	<f:if condition="{parameter.type}">
+		                <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, label: parameter.label, mandatory: parameter.mandatory}"/>
+		            </f:if>
+            	</f:else>
             </f:if>
+            
+            
         </f:for>
     </div>
     <div class="card-footer">
         <div class="item last-log text-muted">
             <div class="info-container">
-                <f:if condition="{lastLog}">
+                <f:if condition="{service.lastLog}">
                     <f:then>
-                        <f:switch expression="{daysSince}">
+                        <f:switch expression="service.{daysSince}">
                             <f:case value="0">
                                 <f:variable name="lastLogTime">
                                     <f:format.date date="{lastLog.crdate}" format="H:i"/>

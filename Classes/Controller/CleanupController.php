@@ -67,7 +67,8 @@ class CleanupController extends BaseController
     {
         // assign services to the view
         $this->view->assignMultiple([
-            'services' => $this->configurationService->getAllServices(),
+            'services' => $this->configurationService->getServices(),
+            'errorServices' => $this->configurationService->getErrorServices(),
             'localizationFile' => $this->localizationFile
         ]);
     }
@@ -86,29 +87,30 @@ class CleanupController extends BaseController
         $arguments = $this->request->getArguments();
 
         // check for required arguments
-        if ($arguments['serviceMethod']) {
+        if ($arguments['service']) {
 
-            // get service and service method from arguments
-            $serviceMethodName = $arguments['serviceMethod'];
-            $serviceMethodParameter = $arguments['parameters'];
+            // get service from arguments
+            $service = $arguments['service'];
+            $method = $arguments['method'];
+            $methodParameter = $arguments['parameters'];
 
-            $result = $this->cleanupService->processMethod($serviceMethodName, $serviceMethodParameter);
+            $result = $this->cleanupService->process($service, $method, $methodParameter);
 
             if ($result) {
                 $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$serviceMethodName]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$method]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
                     FlashMessage::OK
                 );
             } else {
                 $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$serviceMethodName]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$method]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     FlashMessage::ERROR
                 );
             }
-
-            $this->forward('index', 'Cleanup', 'SplCleanupTools');
         }
+        
+        $this->forward('index', 'Cleanup', 'SplCleanupTools');
     }
 }

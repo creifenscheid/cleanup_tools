@@ -77,6 +77,16 @@ class CleanFlexFormsService
     }
     
     /**
+     * 
+     *
+     * @param int $uid
+     * @return boolean
+     */
+    public function executeForElement (int $uid) {
+        return true;
+    }
+    
+    /**
      * Recursive traversal of page tree
      *
      * @param int $pageId

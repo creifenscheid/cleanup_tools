@@ -61,8 +61,8 @@ class FilesWithMultipleReferencesService
      * @param bool $updateRefindex
      * @param bool $dryRun
      */
-    protected function execute(bool $updateRefindex = false, bool $dryRun = true)
-    {
+    public function execute(bool $updateRefindex = false, bool $dryRun = true)
+    {   
         if ($updateRefindex) {
             $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
             $referenceIndex->updateIndex(false, false);

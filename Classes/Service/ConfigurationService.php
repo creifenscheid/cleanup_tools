@@ -64,12 +64,19 @@ class ConfigurationService implements SingletonInterface
     protected $services = [];
     
     /**
-     * Services which can be performed for single elements, e.g. in hook context
+     * Services which can be performed for single elements, e.g. in hook context incl.
      * method information 
      *
      * @var array
      */
-    protected $singleServices = [];
+    protected $elementServices = [];
+    
+    /**
+     * Services which not provide function "execute"
+     * 
+     * @var array
+     */
+    protected $errorServices = [];
 
     /**
      * Configured additional usages of utilities incl.
@@ -120,37 +127,37 @@ class ConfigurationService implements SingletonInterface
             }
 
             // check if execute() exists
-            if (method_exists($serviceClass, 'execute') {
+            if (method_exists($serviceClass, 'execute')) {
+                
                 // set up service configuration
-                $this->services[$serviceClass]['execute'] = $this->prepareMethodInformation($serviceClass, 'execute');
+                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+            } else {
+                
+                $this->errorServices[] = $serviceClass;
+            }
             
             // check if executeSingle() exists
-            if (method_exists($serviceClass, 'executeSingle') {
-            
+            if (method_exists($serviceClass, 'executeForElement')) {
+                
                 // set up service configuration
-                $this->singleServices[$serviceClass]['executeSingle']= $this->prepareMethodInformation($serviceClass, 'executeSingle');
+                $this->singleServices[$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'executeForElement', $serviceConfiguration);
             }
-                    // get last log of method
-                    /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
-                    $lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
+            
+            // get last log of method
+            /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
+            #$lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
+            
+            #if ($lastLog) {
+            #    $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
+            #    $methodInformation['lastLog'] = $lastLog;
+            #}
 
-                    if ($lastLog) {
-                        $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
-                        $methodInformation['lastLog'] = $lastLog;
-                    }
-
-                    // check additional usage configuration of utility
-                    foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $additionalUsageConfiguration) {
-                        if ((int)$additionalUsageConfiguration['enable'] === 1) {
-
-                            // check if method is blacklisted for additional usage
-                            if ($this->checkBlacklist($method, $additionalUsageConfiguration)) {
-                                $this->additionalUsages[$additionalUsageType][$serviceClass][$method] = $methodInformation;
-                            }
-                        }
-                    }
+            // check additional usage configuration of service
+            foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                if ((int)$state === 1) {
+                    $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                 }
-            }
+            }         
         }
     }
 
@@ -170,20 +177,30 @@ class ConfigurationService implements SingletonInterface
      *
      * @return array
      */
-    public function getAllServices() : array
+    public function getServices() : array
     {
         return $this->services;
     }
 
     /**
-     * Returns single services incl.
+     * Returns element services incl.
      * methods and configuration
      *
      * @return array
      */
-    public function getAllSingleServices() : array
+    public function getElementServices() : array
     {
         return $this->singleServices;
+    }
+    
+    /**
+     * Returns failed services
+     * 
+     * @return array
+     */
+    public function getErrorServices() : array
+    {
+        return $this->errorServices;
     }
     
     /**
@@ -203,44 +220,41 @@ class ConfigurationService implements SingletonInterface
     }
 
     /**
-     * Function to prepare method information of a class
+     * Function to prepare class configuration
      *
      * @param string $class
      * @param string $method
+     * @param array $configuration
      *
      * @return array
      */
-    private function prepareMethodInformation (string $class, string $method) : array
-    {
-        $methodInformation = [
-            'name' => end(GeneralUtility::trimExplode('\\', $serviceClass)),
-            'class' => $serviceClass
-        ];
-                
+    private function prepareClassConfiguration (string $class, string $method, array $configuration) : array
+    {   
         // init reflection of method
-        $reflection = new ReflectionMethod($serviceClass, $method);
+        $reflection = new ReflectionMethod($class, $method);
         
-        // check method
-        if ($reflection->isPublic() && $this->checkBlacklist($method, $serviceConfiguration['methods'])) {
-            
-            $methodParameters = [];
-
-            foreach ($reflection->getParameters() as $parameter) {
-                $methodParameters[] = [
-                    'name' => $parameter->getName(),
-                    'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($this->configuration['mapping']['parameter'][$parameter->getName()]),
-                    'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
-                ];
-            }
-
-            // prepare method information
-            $methodInformation = [
-                'method' => $method,
-                'parameters' => $methodParameters,
-                        'parameterConfiguration' => $serviceConfiguration['methods']['parameterConfigurations'][$method] ? : null
+        $name = str_replace('Service', '', end(GeneralUtility::trimExplode('\\', $class)));
+        
+        $methodParameters = [];
+        
+        foreach ($reflection->getParameters() as $parameter) {
+            $methodParameters[] = [
+                'name' => $parameter->getName(),
+                'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($configuration['mapping']['parameter'][$parameter->getName()]),
+                'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
             ];
         }
         
-        return $methodInformation;
+        // prepare method information
+        $classConfiguration = [
+            'name' => $name,
+            'class' => $class,
+            'method' => [
+                'name' => $method,
+                'parameters' => $methodParameters
+            ]
+        ];
+        
+        return $classConfiguration;
     }
 }
