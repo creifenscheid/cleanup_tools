@@ -93,6 +93,16 @@ class CleanupController extends BaseController
             $service = $arguments['service'];
             $method = $arguments['method'];
             $methodParameter = $arguments['parameters'];
+            $parameterDefaults = $arguments['defaultValues'];
+            
+            // check if parameter value is set
+            foreach($methodParameter as $parameterName => $parameterValue) {
+                // if parameter is empty
+                if (empty($parameterValue)) {
+                    // set default value
+                    $methodParameter[$parameterName] = $parameterDefaults[$parameterName] ?: null;
+                }
+            }
 
             $result = $this->cleanupService->process($service, $method, $methodParameter);
 
