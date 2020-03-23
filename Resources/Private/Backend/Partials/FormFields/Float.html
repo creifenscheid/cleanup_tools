@@ -1,6 +1,7 @@
 <f:variable name="labelFloat">{localizationFile}:label.{name}</f:variable>
 
 <div class="form-group">
+    <f:render partial="FormFields/DefaultValue" arguments="{name:name, value:default}" />
     <label for="{serviceMethod}-{name}">{f:translate(key:labelFloat)} [float]</label>
     <f:if condition="{mandatory}">
         <f:then>
