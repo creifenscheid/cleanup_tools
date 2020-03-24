@@ -243,8 +243,10 @@ class ConfigurationService implements SingletonInterface
         $methodParameters = [];
         
         foreach ($reflection->getParameters() as $parameter) {
+            $parameterName = $parameter->getName();
+            
             $parameterConfiguraton = [
-                'name' => $parameter->getName(),
+                'name' => $parameterName,
                 'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($configuration['mapping']['parameter'][$parameter->getName()]),
                 'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
             ];
@@ -253,7 +255,7 @@ class ConfigurationService implements SingletonInterface
                 $parameterConfiguraton['default'] = $parameter->getDefaultValue();
             }
 
-            $methodParameters[] = $parameterConfiguraton;
+            $methodParameters[$parameterName] = $parameterConfiguraton;
         }
         
         // prepare method information

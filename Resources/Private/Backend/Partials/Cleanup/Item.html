@@ -16,7 +16,7 @@
             	</f:then>
             	<f:else>
 	            	<f:if condition="{parameter.type}">
-		                <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, default: parameter.default, mandatory: parameter.mandatory}"/>
+		                <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, mandatory: parameter.mandatory}"/>
 		            </f:if>
             	</f:else>
             </f:if>
