@@ -147,7 +147,6 @@ class CleanupService
         
         $log->setExecutionContext($this->executionContext);
         $log->setService($class);
-        $log->setMethod($method);
         
         $this->logRepository->add($log);
         

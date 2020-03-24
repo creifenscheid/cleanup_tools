@@ -87,9 +87,6 @@
             <trans-unit id="module.history.th.service">
                 <source>Service</source>
             </trans-unit>
-            <trans-unit id="module.history.th.method">
-                <source>Method</source>
-            </trans-unit>
             <trans-unit id="module.history.th.user">
                 <source>User</source>
             </trans-unit>

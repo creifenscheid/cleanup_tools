@@ -59,13 +59,6 @@ class Log extends AbstractEntity
     protected $service = '';
 
     /**
-     * method
-     *
-     * @var string
-     */
-    protected $method = '';
-
-    /**
      * state
      *
      * @var bool
@@ -135,28 +128,6 @@ class Log extends AbstractEntity
     public function setService(string $service) : void
     {
         $this->service = $service;
-    }
-
-    /**
-     * Returns the method
-     *
-     * @return null|string
-     */
-    public function getMethod() : ?string
-    {
-        return $this->method;
-    }
-
-    /**
-     * Sets the method
-     *
-     * @param string $method
-     *
-     * @return void
-     */
-    public function setMethod($method) : void
-    {
-        $this->method = $method;
     }
 
     /**
