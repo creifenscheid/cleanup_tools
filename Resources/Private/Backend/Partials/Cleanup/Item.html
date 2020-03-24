@@ -32,7 +32,7 @@
                         <f:switch expression="service.{daysSince}">
                             <f:case value="0">
                                 <f:variable name="lastLogTime">
-                                    <f:format.date date="{lastLog.crdate}" format="H:i"/>
+                                    <f:format.date date="{service.lastLog.crdate}" format="H:i"/>
                                 </f:variable>
                                 <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.today" arguments="{0:lastLogTime}"/>
                                 <br/>
@@ -47,22 +47,20 @@
                             </f:defaultCase>
                         </f:switch>
 
-                        <f:if condition="{lastLog.cruser}">
+                        <f:if condition="{service.lastLog.cruser}">
                             <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.user"/>
 
-                            <f:if condition="{lastLog.cruser.realName}">
+                            <f:if condition="{service.lastLog.cruser.realName}">
                                 <f:then>
-                                    {lastLog.cruser.realName}<br/>
+                                    {service.lastLog.cruser.realName}<br/>
                                 </f:then>
                                 <f:else>
-                                    {lastLog.cruser.userName}<br/>
+                                    {service.lastLog.cruser.userName}<br/>
                                 </f:else>
                             </f:if>
                         </f:if>
 
-                        <f:variable name="inExecutionContext">
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.{lastLog.executionContext}"/>
-                        </f:variable>
+                        <f:variable name="inExecutionContext"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.{service.lastLog.executionContext}"/></f:variable>
                         <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.inExectionContext" arguments="{0:inExecutionContext}"/>
                     </f:then>
                     <f:else>

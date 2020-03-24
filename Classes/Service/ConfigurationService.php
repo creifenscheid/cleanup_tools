@@ -49,8 +49,13 @@ class ConfigurationService implements SingletonInterface
 {
     /**
      * Functions
-      */
+     */
     const FUNCTION_MAIN = 'execute';
+
+    /**
+     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     */
+    protected $logRepository;
 
     /**
      * Module configuration
@@ -66,10 +71,10 @@ class ConfigurationService implements SingletonInterface
      * @var array
      */
     protected $services = [];
-    
+
     /**
      * Services which not provide function "execute"
-     * 
+     *
      * @var array
      */
     protected $errorServices = [];
@@ -106,7 +111,7 @@ class ConfigurationService implements SingletonInterface
         $typoscriptService = $objectManager->get(TypoScriptService::class);
 
         // init log repository
-        $logRepository = $objectManager->get(LogRepository::class);
+        $this->logRepository = $objectManager->get(LogRepository::class);
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
@@ -124,29 +129,20 @@ class ConfigurationService implements SingletonInterface
 
             // check if execute() exists
             if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
-                
+
                 // set up service configuration
                 $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
             } else {
-                
+
                 $this->errorServices[] = $serviceClass;
             }
-            
-            // get last log of method
-            /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
-            #$lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
-            
-            #if ($lastLog) {
-            #    $methodInformation['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
-            #    $methodInformation['lastLog'] = $lastLog;
-            #}
 
             // check additional usage configuration of service
             foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
                 if ((int)$state === 1) {
                     $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                 }
-            }         
+            }
         }
     }
 
@@ -169,28 +165,29 @@ class ConfigurationService implements SingletonInterface
     {
         return $this->services;
     }
-    
+
     /**
      * Returns single service incl. configuration
      *
      * @param string $class
+     *
      * @return array
      */
     public function getService($class) : array
     {
         return $this->services[$class];
     }
-    
+
     /**
      * Returns failed services
-     * 
+     *
      * @return array
      */
     public function getErrorServices() : array
     {
         return $this->errorServices;
     }
-    
+
     /**
      * Return services for an additional usage
      *
@@ -217,18 +214,18 @@ class ConfigurationService implements SingletonInterface
      * @return array
      * @throws \ReflectionException
      */
-    private function prepareClassConfiguration (string $class, string $method, array $configuration) : array
-    {   
+    private function prepareClassConfiguration(string $class, string $method, array $configuration) : array
+    {
         // init reflection of method
         $reflection = new ReflectionMethod($class, $method);
-        
+
         $name = str_replace('Service', '', end(GeneralUtility::trimExplode('\\', $class)));
-        
+
         $methodParameters = [];
-        
+
         foreach ($reflection->getParameters() as $parameter) {
             $parameterName = $parameter->getName();
-            
+
             $parameterConfiguraton = [
                 'name' => $parameterName,
                 'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($configuration['mapping']['parameter'][$parameter->getName()]),
@@ -241,7 +238,7 @@ class ConfigurationService implements SingletonInterface
 
             $methodParameters[$parameterName] = $parameterConfiguraton;
         }
-        
+
         // prepare method information
         $classConfiguration = [
             'name' => $name,
@@ -251,7 +248,16 @@ class ConfigurationService implements SingletonInterface
                 'parameters' => $methodParameters
             ]
         ];
-        
+
+        // get last log of method
+        /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
+        $lastLog = $this->logRepository->findByService($class);
+
+        if ($lastLog) {
+            $classConfiguration['daysSince'] = round((time() - $lastLog->getCrdate()) / 60 / 60 / 24);
+            $classConfiguration['lastLog'] = $lastLog;
+        }
+
         return $classConfiguration;
     }
 }

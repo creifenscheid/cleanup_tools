@@ -56,9 +56,10 @@ class LogRepository extends Repository
      * Function to get logs by service and method
      *
      * @param string $service
-     * @param string $method
+     *
+     * @return null|object
      */
-    public function findByServiceAndMethod(string $service, string $method)
+    public function findByService(string $service) : ?object
     {
         $query = $this->createQuery();
 
@@ -67,8 +68,7 @@ class LogRepository extends Repository
         $query->matching(
             $query->logicalAnd(
                 [
-                    $query->equals('service', $service),
-                    $query->equals('method', $method)
+                    $query->equals('service', $service)
                 ]
             )
         );
