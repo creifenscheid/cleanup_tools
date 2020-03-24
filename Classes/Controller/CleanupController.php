@@ -90,7 +90,7 @@ class CleanupController extends BaseController
         if ($arguments['service']) {
 
             // get service from arguments
-            $service = $arguments['service'];
+            $service = $this->configurationService->getService($arguments['service']);
             $method = $arguments['method'];
             $methodParameter = $arguments['parameters'];
             
@@ -99,11 +99,11 @@ class CleanupController extends BaseController
                 // if parameter is empty
                 if (empty($parameterValue)) {
                     // set default value
-                    // ToDo: get default from config service
+                    $methodParameter[$parameterName] = $service['methods']['parameters'][$parameterName]['default'] ?: null;
                 }
             }
 
-            $result = $this->cleanupService->process($service, $method, $methodParameter);
+            $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
 
             if ($result) {
                 $this->addFlashMessage(

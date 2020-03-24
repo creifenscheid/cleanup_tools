@@ -48,10 +48,9 @@ use function in_array;
 class ConfigurationService implements SingletonInterface
 {
     /**
-     * Function names
+     * Functions
       */
     const FUNCTION_MAIN = 'execute';
-    const FUNCTION_ELEMENT = 'executeForElement';
 
     /**
      * Module configuration
@@ -67,14 +66,6 @@ class ConfigurationService implements SingletonInterface
      * @var array
      */
     protected $services = [];
-    
-    /**
-     * Services which can be performed for single elements, e.g. in hook context incl.
-     * method information 
-     *
-     * @var array
-     */
-    protected $elementServices = [];
     
     /**
      * Services which not provide function "execute"
@@ -141,13 +132,6 @@ class ConfigurationService implements SingletonInterface
                 $this->errorServices[] = $serviceClass;
             }
             
-            // check if executeSingle() exists
-            if (method_exists($serviceClass, self::FUNCTION_ELEMENT)) {
-                
-                // set up service configuration
-                $this->singleServices[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_ELEMENT, $serviceConfiguration);
-            }
-            
             // get last log of method
             /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
             #$lastLog = $logRepository->findByServiceAndMethod($serviceClass, $method);
@@ -177,8 +161,7 @@ class ConfigurationService implements SingletonInterface
     }
 
     /**
-     * Returns services incl.
-     * methods and configuration
+     * Returns all services incl. configuration
      *
      * @return array
      */
@@ -186,16 +169,16 @@ class ConfigurationService implements SingletonInterface
     {
         return $this->services;
     }
-
+    
     /**
-     * Returns element services incl.
-     * methods and configuration
+     * Returns single service incl. configuration
      *
+     * @param string $class
      * @return array
      */
-    public function getElementServices() : array
+    public function getService($class) : array
     {
-        return $this->singleServices;
+        return $this->services[$class];
     }
     
     /**
