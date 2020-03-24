@@ -108,8 +108,6 @@ class CleanupController extends BaseController
                 }
             }
 
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($methodParameter, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
-
             $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
 
             if ($result) {
