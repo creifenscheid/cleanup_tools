@@ -93,15 +93,22 @@ class CleanupController extends BaseController
             $service = $this->configurationService->getService($arguments['service']);
             $method = $arguments['method'];
             $methodParameter = $arguments['parameters'];
-            
+
             // check if parameter value is set
-            foreach($methodParameter as $parameterName => $parameterValue) {
+            foreach ($methodParameter as $parameterName => $parameterValue) {
                 // if parameter is empty
                 if (empty($parameterValue)) {
-                    // set default value
-                    $methodParameter[$parameterName] = $service['methods']['parameters'][$parameterName]['default'] ?: null;
+
+                    // set default value exists
+                    if (\array_key_exists('default', $service['method']['parameters'][$parameterName])) {
+                        $methodParameter[$parameterName] = $service['method']['parameters'][$parameterName]['default'];
+                    } else {
+                        $methodParameter[$parameterName] = null;
+                    }
                 }
             }
+
+            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($methodParameter, __CLASS__ . ':' . __FUNCTION__ . '::' . __LINE__);
 
             $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
 
@@ -119,7 +126,7 @@ class CleanupController extends BaseController
                 );
             }
         }
-        
+
         $this->forward('index', 'Cleanup', 'SplCleanupTools');
     }
 }

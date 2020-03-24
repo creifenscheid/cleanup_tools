@@ -212,9 +212,10 @@ class ConfigurationService implements SingletonInterface
      *
      * @param string $class
      * @param string $method
-     * @param array $configuration
+     * @param array  $configuration
      *
      * @return array
+     * @throws \ReflectionException
      */
     private function prepareClassConfiguration (string $class, string $method, array $configuration) : array
     {   
