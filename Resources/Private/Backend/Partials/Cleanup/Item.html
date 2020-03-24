@@ -12,7 +12,7 @@
         <f:for each="{service.method.parameters}" as="parameter">
             <f:if condition="{parameter.name} === dryRun">
             	<f:then>
-        			<f:form.hidden name="parameters[dryRun]" value="1"/>
+        			<f:form.hidden name="parameters[dryRun]" value="0" />
             	</f:then>
             	<f:else>
 	            	<f:if condition="{parameter.type}">
@@ -29,7 +29,7 @@
             <div class="info-container">
                 <f:if condition="{service.lastLog}">
                     <f:then>
-                        <f:switch expression="service.{daysSince}">
+                        <f:switch expression="{service.daysSince}">
                             <f:case value="0">
                                 <f:variable name="lastLogTime">
                                     <f:format.date date="{service.lastLog.crdate}" format="H:i"/>
@@ -42,7 +42,7 @@
                                 <br/>
                             </f:case>
                             <f:defaultCase>
-                                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.days" arguments="{0:daysSince}"/>
+                                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.days" arguments="{0:service.daysSince}"/>
                                 <br/>
                             </f:defaultCase>
                         </f:switch>
@@ -71,6 +71,7 @@
         </div>
         <div class="item button-container text-right">
             <f:form.submit name="submit" value="{f:translate(key:'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.submit')}" class="btn btn-primary"/>
+            <a href="#" class="btn btn-default" data-require="SPL/SplCleanupTools/CleanupConfirmation">Analyze database</a>
         </div>
     </div>
 </f:form>

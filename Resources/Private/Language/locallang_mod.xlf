@@ -124,7 +124,7 @@
                 <source>Oops</source>
             </trans-unit>
             <trans-unit id="messages.error.message">
-                <source>Execution of method "%s" was not successfull.</source>
+                <source>Execution of class "%s" was not successfull.</source>
             </trans-unit>
             <trans-unit id="messages.error.message.no-method">
                 <source>No method was set.</source>
@@ -133,7 +133,7 @@
                 <source>Yeah</source>
             </trans-unit>
             <trans-unit id="messages.success.message">
-                <source>Method "%s" has been executed.</source>
+                <source>Class "%s" has been executed.</source>
             </trans-unit>
             <trans-unit id="messages.hook.warning.headline">
                 <source>Watch out</source>

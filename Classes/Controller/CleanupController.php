@@ -96,15 +96,18 @@ class CleanupController extends BaseController
 
             // check if parameter value is set
             foreach ($methodParameter as $parameterName => $parameterValue) {
+                
                 // if parameter is empty
-                if (empty($parameterValue)) {
-
+                if ($parameterValue === '') {
+                    
                     // set default value exists
                     if (\array_key_exists('default', $service['method']['parameters'][$parameterName])) {
                         $methodParameter[$parameterName] = $service['method']['parameters'][$parameterName]['default'];
                     } else {
                         $methodParameter[$parameterName] = null;
                     }
+                } else {
+                    settype($methodParameter[$parameterName], $service['method']['parameters'][$parameterName]['type']);
                 }
             }
 
@@ -112,13 +115,13 @@ class CleanupController extends BaseController
 
             if ($result) {
                 $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$method]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
                     FlashMessage::OK
                 );
             } else {
                 $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$method]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     FlashMessage::ERROR
                 );

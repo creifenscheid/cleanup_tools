@@ -53,6 +53,8 @@ class CleanFlexFormsService
      * @param int $pid
      * @param int $depth
      * @param bool $dryRun
+     * 
+     * @return int|bool
      */
     public function execute(int $pid = 0, int $depth = 1000, bool $dryRun = true)
     {
@@ -68,21 +70,9 @@ class CleanFlexFormsService
         
         else if (!empty($recordsToUpdate)) {
             // Clean up records
-            $this->cleanFlexFormRecords($recordsToUpdate);
-            
-            // ToDo: All done!
-        } else {
-            // ToDo: Nothing to do - You're all set!
+            return $this->cleanFlexFormRecords($recordsToUpdate);
         }
-    }
-    
-    /**
-     * 
-     *
-     * @param int $uid
-     * @return boolean
-     */
-    public function executeForElement (int $uid) {
+        
         return true;
     }
     
@@ -211,7 +201,7 @@ class CleanFlexFormsService
      * @param array $records
      * @param bool $dryRun
      */
-    protected function cleanFlexFormRecords(array $records)
+    protected function cleanFlexFormRecords(array $records) : bool
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
         
@@ -231,7 +221,6 @@ class CleanFlexFormsService
             if ($fullRecord[$field]) {
                 $data[$table][$uid][$field] = $flexObj->cleanFlexFormXML($table, $field, $fullRecord);
             } else {
-                // ToDo: ('The field "' . $field . '" in record "' . $table . ':' . $uid . '" was not found.');
                 continue;
             }
             $dataHandler->start($data, []);
@@ -242,9 +231,11 @@ class CleanFlexFormsService
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
                 // ToDo: error($errorMessage);
-            } else {
-                // ToDo:'Updated FlexForm in record "' . $table . ':' . $uid . '"
+                
+                return false;
             }
+            
+            return true;
         }
     }
 }

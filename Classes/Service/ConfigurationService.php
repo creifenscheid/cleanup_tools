@@ -228,7 +228,7 @@ class ConfigurationService implements SingletonInterface
 
             $parameterConfiguraton = [
                 'name' => $parameterName,
-                'type' => $parameter->getType() ? ucfirst($parameter->getType()->getName()) : ucfirst($configuration['mapping']['parameter'][$parameter->getName()]),
+                'type' => $parameter->getType() ? $parameter->getType()->getName() : $configuration['mapping']['parameter'][$parameter->getName()],
                 'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
             ];
 
