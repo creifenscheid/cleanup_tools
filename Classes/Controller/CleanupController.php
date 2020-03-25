@@ -114,11 +114,23 @@ class CleanupController extends BaseController
             $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
 
             if ($result) {
-                $this->addFlashMessage(
+            
+                if (is_int($result)) {
+                
+                     $this->addFlashMessage(
+                         LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$service['class'],$result]),
+                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
+                    FlashMessage::INFO
+                );
+                
+                } else {
+                    $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
                     FlashMessage::OK
                 );
+                }
+                
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),

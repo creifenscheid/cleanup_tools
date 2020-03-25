@@ -115,11 +115,11 @@ class CleanupService
      * @param string $method
      * @param array  $parameters
      *
-     * @return bool
+     * @return int|bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function process(string $class, string $method, array $parameters = null) : bool
+    public function process(string $class, string $method, array $parameters = null)
     {
         // define return var
         $return = false;

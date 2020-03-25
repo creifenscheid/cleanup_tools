@@ -132,6 +132,12 @@
             <trans-unit id="messages.success.headline">
                 <source>Yeah</source>
             </trans-unit>
+            <trans-unit id="messages.dryrun.message">
+                <source>Class "%s" has been executed.</source>
+            </trans-unit>
+            <trans-unit id="messages.dryrun.headline">
+                <source>Yeah</source>
+            </trans-unit>
             <trans-unit id="messages.success.message">
                 <source>Class "%s" has been executed.</source>
             </trans-unit>

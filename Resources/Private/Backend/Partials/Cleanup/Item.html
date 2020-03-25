@@ -10,18 +10,9 @@
     </div>
     <div class="card-body">
         <f:for each="{service.method.parameters}" as="parameter">
-            <f:if condition="{parameter.name} === dryRun">
-            	<f:then>
-        			<f:form.hidden name="parameters[dryRun]" value="0" />
-            	</f:then>
-            	<f:else>
-	            	<f:if condition="{parameter.type}">
-		                <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, mandatory: parameter.mandatory}"/>
-		            </f:if>
-            	</f:else>
-            </f:if>
-            
-            
+            <f:if condition="{parameter.type}">
+		        <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, mandatory: parameter.mandatory}"/>
+		    </f:if>
         </f:for>
     </div>
     <div class="card-footer">
