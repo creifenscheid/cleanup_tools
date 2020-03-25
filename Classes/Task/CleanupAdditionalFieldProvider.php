@@ -46,11 +46,11 @@ use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
 class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 {
     /**
-     * Cleanup method
+     * Service to process
      *
      * @var string
      */
-    protected $cleanupMethod = '';
+    protected $serviceToProcess = '';
 
     /**
      * Configuration service
@@ -64,7 +64,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      *
      * @var string
      */
-    protected $cleanupMethodTaskName = 'scheduler_cleanuptools_cleanupmethod';
+    protected $taskName = 'scheduler_cleanuptools';
 
     /**
      * Localization file
@@ -100,21 +100,21 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 
         // Initialize selected fields
         // Cleanup method
-        if (!isset($taskInfo[$this->cleanupMethodTaskName])) {
-            $taskInfo[$this->cleanupMethodTaskName] = $this->cleanupMethod;
+        if (!isset($taskInfo[$this->taskName])) {
+            $taskInfo[$this->taskName] = $this->serviceToProcess;
             if ($currentSchedulerModuleMethod->equals(Action::EDIT)) {
-                $taskInfo[$this->cleanupMethodTaskName] = $task->getCleanupMethod();
+                $taskInfo[$this->taskName] = $task->getServiceToProcess();
             }
         }
 
-        $fieldName = 'tx_scheduler[' . $this->cleanupMethodTaskName . ']';
-        $fieldValue = $taskInfo[$this->cleanupMethodTaskName];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupMethodTaskName, $fieldValue);
-        $additionalFields[$this->cleanupMethodTaskName] = [
+        $fieldName = 'tx_scheduler[' . $this->taskName . ']';
+        $fieldValue = $taskInfo[$this->taskName];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $this->taskName, $fieldValue);
+        $additionalFields[$this->taskName] = [
             'code' => $fieldHtml,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.cleanupmethod',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $this->cleanupMethodTaskName
+            'cshLabel' => $this->taskName
         ];
 
         return $additionalFields;
@@ -130,7 +130,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationService->getServiceByMethod($submittedData[$this->cleanupMethodTaskName])) {
+        if ($this->configurationService->getService($submittedData[$this->taskName])) {
             return true;
         }
 
@@ -145,7 +145,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
-        $task->setCleanupMethod($submittedData[$this->cleanupMethodTaskName]);
+        $task->setServiceToProcess($submittedData[$this->taskName]);
     }
 
     /**
@@ -162,36 +162,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         // define storage for option groups
         $optionGroups = [];
 
-        // loop through all utilities
-        foreach ($services as $serviceClass => $serviceMethods) {
-
-            // define option storage
-            $options = [];
-
-            // loop through all methods of the current utility
-            foreach ($serviceMethods as $method) {
-                $selected = '';
-
-                // add attribute "selected" for existing field value
-                if ($fieldValue === $method['method']) {
-                    $selected = ' selected="selected"';
-                }
-
-                if (empty($method['parameters'])) {
-                    $label = $method['method'];
-                } else {
-                    $label = $method['method'] . ' ' . LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.parameter');
-                }
-
-                // add option to option storage
-                $options[] = '<option value="' . $method['method'] . '" ' . $selected . '>' . $label . '</option>';
-            }
-
-            // add option group to option group storage
-            $optionGroups[] = '<optgroup label="' . $serviceClass . '">' . implode('', $options) . '</optgroup>';
-        }
-
-        // return html for select field with option groups and options
-        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $optionGroups) . '</select>';
+        // return html for select field with options
+        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
     }
 }
