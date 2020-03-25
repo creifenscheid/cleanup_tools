@@ -96,10 +96,10 @@ class CleanupController extends BaseController
 
             // check if parameter value is set
             foreach ($methodParameter as $parameterName => $parameterValue) {
-                
+
                 // if parameter is empty
                 if ($parameterValue === '') {
-                    
+
                     // set default value exists
                     if (\array_key_exists('default', $service['method']['parameters'][$parameterName])) {
                         $methodParameter[$parameterName] = $service['method']['parameters'][$parameterName]['default'];
@@ -114,23 +114,22 @@ class CleanupController extends BaseController
             $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
 
             if ($result) {
-            
-                if (is_int($result)) {
-                
-                     $this->addFlashMessage(
-                         LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$service['class'],$result]),
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
-                    FlashMessage::INFO
-                );
-                
+
+                if (\is_int($result)) {
+                    $this->addFlashMessage(
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$service['class'],$result]),
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
+                        FlashMessage::INFO
+                    );
+
                 } else {
                     $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                    FlashMessage::OK
-                );
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
+                        FlashMessage::OK
+                    );
                 }
-                
+
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),

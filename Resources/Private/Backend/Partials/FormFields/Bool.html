@@ -9,5 +9,12 @@
     <label for="{serviceMethod}-{name}" class="form-check-label">
         <f:translate key="{localizationFile}:label.{name}"/>
     </label>
-    <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control"/>
+    <f:switch expression="{default}">
+        <f:case value="true">
+            <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="1" />
+        </f:case>
+        <f:defaultCase>
+            <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="0" />
+        </f:defaultCase>
+    </f:switch>
 </div>

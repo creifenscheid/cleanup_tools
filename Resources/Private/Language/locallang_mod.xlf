@@ -133,10 +133,10 @@
                 <source>Yeah</source>
             </trans-unit>
             <trans-unit id="messages.dryrun.message">
-                <source>Class "%s" has been executed.</source>
+                <source>Class "%s" can clean up "%d" entries.</source>
             </trans-unit>
             <trans-unit id="messages.dryrun.headline">
-                <source>Yeah</source>
+                <source>Dry run executed</source>
             </trans-unit>
             <trans-unit id="messages.success.message">
                 <source>Class "%s" has been executed.</source>

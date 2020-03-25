@@ -11,7 +11,7 @@
     <div class="card-body">
         <f:for each="{service.method.parameters}" as="parameter">
             <f:if condition="{parameter.type}">
-		        <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, mandatory: parameter.mandatory}"/>
+		        <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, default: parameter.default, mandatory: parameter.mandatory}"/>
 		    </f:if>
         </f:for>
     </div>
@@ -62,7 +62,6 @@
         </div>
         <div class="item button-container text-right">
             <f:form.submit name="submit" value="{f:translate(key:'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.submit')}" class="btn btn-primary"/>
-            <a href="#" class="btn btn-default" data-require="SPL/SplCleanupTools/CleanupConfirmation">Analyze database</a>
         </div>
     </div>
 </f:form>
