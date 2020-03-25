@@ -44,8 +44,21 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
-class CleanFlexFormsService 
+class CleanFlexFormsService extends AbstractExtendedCleanupService
 {
+    /**
+     * pid
+     *
+     * @var int $pid
+     */
+    protected $pid = 0;
+    
+    /**
+     * depth
+     *
+     * @var int $depth
+     */
+    protected $depth = 1000;
     
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
@@ -56,15 +69,15 @@ class CleanFlexFormsService
      * 
      * @return int|bool
      */
-    public function execute(int $pid = 0, int $depth = 1000, bool $dryRun = true)
+    public function execute()
     {
-        $startingPoint = MathUtility::forceIntegerInRange($pid, 0);
-        $depth = MathUtility::forceIntegerInRange($depth, 0);
+        $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
+        $depth = MathUtility::forceIntegerInRange($this->depth, 0);
         
         // Find all records that should be updated
         $recordsToUpdate = $this->findAllDirtyFlexformsInPage($startingPoint, $depth);
         
-        if ($dryRun) {
+        if ($this->dryRun) {
             return count($recordsToUpdate);
         }
         
