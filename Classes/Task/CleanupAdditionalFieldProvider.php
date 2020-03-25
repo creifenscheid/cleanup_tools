@@ -157,7 +157,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        $services = $this->configurationService->getServicesByAdditionalUsage('task');
+        $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
 
         // define storage for option groups
         $optionGroups = [];
