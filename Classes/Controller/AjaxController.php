@@ -95,7 +95,10 @@ class AjaxController extends BaseScriptClass
         // get execution context from query params
         $executionContext = $queryParams['executionContext'] ? : null;
         $this->cleanupService->setExecutionContext($executionContext);
-
+        
+        // get clean class from query params
+        $class = $queryParams['class'] ? : null;
+        
         // get clean command from query params
         $method = $queryParams['method'] ? : null;
 
@@ -103,26 +106,38 @@ class AjaxController extends BaseScriptClass
         $recordUid = $queryParams['recordUid'] ? : null;
 
         // if cleanCmd is given
-        if ($method) {
+        if ($class && $method) {
 
             // process method through cleanup service
             if ($recordUid) {
-                $processResult = $this->cleanupService->processMethod($method, ['recordUid' => (int)$recordUid]);
+                $result = $this->cleanupService->process($class, $method, ['recordUid' => (int)$recordUid]);
             } else {
-                $processResult = $this->cleanupService->processMethod($method);
+                $result = $this->cleanupService->process($class, $method);
             }
 
-            if ($processResult) {
-                $return = [
-                    'status' => 'ok',
-                    'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                    'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$method])
-                ];
+            if ($result) {
+                
+                if (\is_int($result)) {
+                    $return = [
+                        'status' => 'info',
+                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
+                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$class,$result])
+                    ];
+                    
+                } else {
+                    $return = [
+                        'status' => 'ok',
+                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
+                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$class])
+                    ];
+                }
+                
+                
             } else {
                 $return = [
                     'status' => 'error',
                     'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
-                    'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$method])
+                    'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$class])
                 ];
             }
         } else {

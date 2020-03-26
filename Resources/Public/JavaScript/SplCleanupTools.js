@@ -3,11 +3,9 @@ define([
 ], function ($) {
     'use strict';
 
-    let SplCleanupToolsMethods = {};
+    let SplCleanupTools = {};
 
-    SplCleanupToolsMethods.process = function (uri, recordUid = null) {
-        console.log(uri);
-
+    SplCleanupTools.process = function (uri, recordUid = null) {
         $.ajax({
             url: uri,
             method: 'post',
@@ -23,6 +21,8 @@ define([
                         }
 
                     }
+                } else if (response.status === 'info'){
+                	top.TYPO3.Notification.info(response.headline, response.message, 0);
                 } else {
                     top.TYPO3.Notification.error(response.headline, response.message);
                 }
@@ -34,7 +34,7 @@ define([
     };
 
     // expose to global
-    TYPO3.SplCleanupToolsMethods = SplCleanupToolsMethods;
+    TYPO3.SplCleanupTools = SplCleanupTools;
 
-    return SplCleanupToolsMethods;
+    return SplCleanupTools;
 });

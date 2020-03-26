@@ -5,32 +5,14 @@
         <header/>
         <body>
             <!-- LABEL -->
-            <trans-unit id="label.cleanupFlexForms">
+            <trans-unit id="label.CleanFlexForms">
                 <source>FlexForms</source>
             </trans-unit>
-            <trans-unit id="label.cleanupMissingRelations">
-                <source>Missing relations</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupMultipleReferencedFiles">
-                <source>Multiple referenced files</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupRteImages">
-                <source>RTE images</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupMissingFiles">
-                <source>Missing files</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupLostFiles">
-                <source>Lost files</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupOrphanRecords">
-                <source>Orphan records</source>
-            </trans-unit>
-            <trans-unit id="label.cleanupDeletedRecords">
+            <trans-unit id="label.DeletedRecords">
                 <source>Deleted records</source>
             </trans-unit>
-            <trans-unit id="label.cleanupVersions">
-                <source>Versions</source>
+            <trans-unit id="label.FilesWithMultipleReferences">
+                <source>Multiple referenced files</source>
             </trans-unit>
 
             <!-- PARAMETER -->
@@ -51,32 +33,14 @@
             </trans-unit>
 
             <!-- DESCRIPTIONS -->
-            <trans-unit id="description.cleanupFlexForms">
+            <trans-unit id="description.CleanFlexForms">
                 <source>Cleanup flexforms</source>
             </trans-unit>
-            <trans-unit id="description.cleanupMissingRelations">
-                <source>Cleanup missing relations</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupMultipleReferencedFiles">
-                <source>Cleanup multiple referenced files</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupRteImages">
-                <source>Cleanup RTE images</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupMissingFiles">
-                <source>Cleanup missing files</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupLostFiles">
-                <source>Cleanup lost files</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupOrphanRecords">
-                <source>Cleanup orphan records</source>
-            </trans-unit>
-            <trans-unit id="description.cleanupDeletedRecords">
+            <trans-unit id="description.DeletedRecords">
                 <source>Cleanup deleted records</source>
             </trans-unit>
-            <trans-unit id="description.cleanupVersions">
-                <source>Cleanup versions</source>
+            <trans-unit id="description.FilesWithMultipleReferences">
+                <source>Cleanup multiple referenced files</source>
             </trans-unit>
         </body>
     </file>

@@ -48,7 +48,7 @@ class CleanUpToolbarItem implements ToolbarItemInterface
     /**
      * @var array
      */
-    protected $cleanupMethods = [];
+    protected $cleanupServices = [];
 
     /**
      * @var string
@@ -73,19 +73,16 @@ class CleanUpToolbarItem implements ToolbarItemInterface
 
         $toolbarItems = $configurationService->getServicesByAdditionalUsage('toolbar');
 
-        foreach ($toolbarItems as $service => $methods) {
+        foreach ($toolbarItems as $service) {
 
-            foreach ($methods as $method) {
-
-                $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => $method['method'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
-
-                $this->cleanupMethods[] = [
-                    'title' => LocalizationUtility::translate($this->localizationFile . ':label.' . $method['method']),
-                    'description' => LocalizationUtility::translate($this->localizationFile . ':description.' . $method['method']),
-                    'service' => $service,
-                    'onclickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;'
-                ];
-            }
+            $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => $service['class'], 'method' => $configurationService::FUNCTION_MAIN, 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
+            
+            $this->cleanupServices[] = [
+                'title' => LocalizationUtility::translate($this->localizationFile . ':label.' . $service['name']),
+                'description' => LocalizationUtility::translate($this->localizationFile . ':description.' . $service['name']),
+                'class' => $service['class'],
+                'onclickCode' => 'TYPO3.SplCleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;'
+            ];
         }
     }
 
@@ -136,7 +133,7 @@ class CleanUpToolbarItem implements ToolbarItemInterface
     {
         $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
         $view->assignMultiple([
-            'cleanupMethods' => $this->cleanupMethods,
+            'cleanupServices' => $this->cleanupServices,
             'localizationFile' => $this->localizationFile
         ]);
 

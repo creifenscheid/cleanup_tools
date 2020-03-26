@@ -1,22 +1,28 @@
 <html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupToolsMethods'}"/>
+<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupTools'}"/>
 
 <h3 class="dropdown-headline">
     <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.headline"/>
 </h3>
 <hr>
 <div class="dropdown-table">
-    <f:for each="{cleanupMethods}" as="cleanupMethod">
+    <f:for each="{cleanupServices}" as="cleanupService" iteration="iterator">
         <div class="dropdown-table-row">
-            <a href="#" class="toolbar-spl-cleanup-tools" onclick="{cleanupMethod.onclickCode}">
+            <a href="#" class="toolbar-spl-cleanup-tools" onclick="{cleanupService.onclickCode}">
                 <div class="dropdown-table-column dropdown-table-column-top dropdown-table-text">
-                    {cleanupMethod.title}
+                    {cleanupService.title}
                     <br>
-                    <small class="text-muted">{cleanupMethod.description}</small>
-                    <small class="text-muted"><i>{cleanupMethod.utility}</i></small>
+                    <small class="text-muted">{cleanupService.description}</small>
+                    <small class="text-muted"><i>{cleanupService.class}</i></small>
                 </div>
             </a>
         </div>
+        
+        <f:if condition="{iterator.isLast}">
+	        <f:else>
+	        	<hr />
+	        </f:else>
+        </f:if>
     </f:for>
 </div>
 
