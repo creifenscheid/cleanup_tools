@@ -47,7 +47,7 @@ class CleanupTask extends AbstractTask
      * @var string
      */
     protected $serviceToProcess = '';
-
+    
     /**
      * Execute function
      *
@@ -60,11 +60,15 @@ class CleanupTask extends AbstractTask
         /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
         $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
         $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_SCHEDULER);
-
-        // process method through cleanup service
-        return $cleanupService->process($this->serviceToProcess, $ConfigurationService::FUNCTION_MAIN);
+        
+        /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        
+        // process
+        $cleanupService->setDryRun(false);
+        return $cleanupService->process($this->serviceToProcess, $configurationService::FUNCTION_MAIN);
     }
-
+    
     /**
      * Returns the service to process
      *
@@ -74,7 +78,7 @@ class CleanupTask extends AbstractTask
     {
         return $this->serviceToProcess;
     }
-
+    
     /**
      * Sets the service to process
      *
@@ -86,7 +90,7 @@ class CleanupTask extends AbstractTask
     {
         $this->serviceToProcess = $serviceToProcess;
     }
-
+    
     /**
      * This method returns the selected table as additional information
      *
@@ -96,7 +100,7 @@ class CleanupTask extends AbstractTask
     {
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-
+        
         return LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
     }
 }

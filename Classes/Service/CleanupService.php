@@ -59,6 +59,13 @@ class CleanupService
      * @var int
      */
     protected $executionContext = 0;
+    
+    /**
+     * Dry run
+     * 
+     * @var bool
+     */
+    protected $dryRun = true;
 
     /**
      * Configuration service
@@ -109,6 +116,18 @@ class CleanupService
     }
 
     /**
+     * Set dry run
+     * 
+     * @param boolean $dryRun
+     * 
+     * @return void
+     */
+    public function setDryRun($dryRun) : void
+    {
+        $this->dryRun = $dryRun;
+    }
+
+    /**
      * Function to initialize a utility and call the requested method
      *
      * @param string $class
@@ -139,6 +158,9 @@ class CleanupService
             // call method
             $return = $service->$method();
         } else {
+            
+            // set dry run
+            $service->setDryRun($this->dryRun);
             
             // call method
             $return = $service->$method();

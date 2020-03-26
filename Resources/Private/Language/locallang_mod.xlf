@@ -104,14 +104,11 @@
             <trans-unit id="tasks.cleanup.description">
                 <source>Various tools to cleanup your TYPO3.</source>
             </trans-unit>
-            <trans-unit id="tasks.cleanup.fields.cleanupmethod">
-                <source>Which cleanup method shall be executed?</source>
+            <trans-unit id="tasks.cleanup.fields.serviceToProcess">
+                <source>Which service shall be executed?</source>
             </trans-unit>
             <trans-unit id="tasks.cleanup.information">
-                <source>Configured method:</source>
-            </trans-unit>
-            <trans-unit id="tasks.cleanup.parameter">
-                <source>(parameters are set with typoscript)</source>
+                <source>Configured service:</source>
             </trans-unit>
 
             <!-- DRAW ITEM HOOK -->

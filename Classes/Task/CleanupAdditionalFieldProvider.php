@@ -51,28 +51,28 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      * @var string
      */
     protected $serviceToProcess = '';
-
+    
     /**
      * Configuration service
      *
      * @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService
      */
     protected $configurationService;
-
+    
     /**
      * Task name
      *
      * @var string
      */
-    protected $taskName = 'scheduler_cleanuptools';
-
+    protected $cleanupTaskName = 'scheduler_cleanuptools';
+    
     /**
      * Localization file
      *
      * @var string
      */
     protected $localizationFile = '';
-
+    
     /**
      * CleanupAdditionalFieldProvider constructor.
      */
@@ -82,7 +82,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
-
+    
     /**
      * Gets additional fields to render in the form to add/edit a task
      *
@@ -95,31 +95,30 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $schedulerModule)
     {
         $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
-
+        
         $additionalFields = [];
-
+        
         // Initialize selected fields
-        // Cleanup method
-        if (!isset($taskInfo[$this->taskName])) {
-            $taskInfo[$this->taskName] = $this->serviceToProcess;
+        if (!isset($taskInfo[$this->cleanupTaskName])) {
+            $taskInfo[$this->cleanupTaskName] = $this->serviceToProcess;
             if ($currentSchedulerModuleMethod->equals(Action::EDIT)) {
-                $taskInfo[$this->taskName] = $task->getServiceToProcess();
+                $taskInfo[$this->cleanupTaskName] = $task->getServiceToProcess();
             }
         }
-
-        $fieldName = 'tx_scheduler[' . $this->taskName . ']';
-        $fieldValue = $taskInfo[$this->taskName];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $this->taskName, $fieldValue);
-        $additionalFields[$this->taskName] = [
+        
+        $fieldName = 'tx_scheduler[' . $this->cleanupTaskName . ']';
+        $fieldValue = $taskInfo[$this->cleanupTaskName];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupTaskName, $fieldValue);
+        $additionalFields[$this->cleanupTaskName] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.cleanupmethod',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $this->taskName
+            'cshLabel' => $this->cleanupTaskName
         ];
-
+        
         return $additionalFields;
     }
-
+    
     /**
      * Validates the additional fields' values
      *
@@ -130,13 +129,13 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationService->getService($submittedData[$this->taskName])) {
+        if ($this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
             return true;
         }
-
+        
         return false;
     }
-
+    
     /**
      * Takes care of saving the additional fields' values in the task's object
      *
@@ -145,10 +144,12 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
-        $task->setServiceToProcess($submittedData[$this->taskName]);
+        $task->setServiceToProcess($submittedData[$this->cleanupTaskName]);
     }
-
+    
     /**
+     * Build select field with configured services
+     * 
      * @param $fieldName
      * @param $fieldId
      * @param $fieldValue
@@ -158,11 +159,25 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
         $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
-
-        // define storage for option groups
-        $optionGroups = [];
-
-        // return html for select field with options
+        
+        // define option storage
+        $options = [];
+        
+        // loop through all utilities
+        foreach ($services as $serviceClass) {
+            
+            $selected = '';
+            
+            // add attribute "selected" for existing field value
+            if ($fieldValue === $serviceClass['class']) {
+                $selected = ' selected="selected"';
+            }
+            
+            // add option to option storage
+            $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
+        }
+        
+        // return html for select field with option groups and options
         return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
     }
 }
