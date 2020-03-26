@@ -33,7 +33,7 @@ namespace SPL\SplCleanupTools\Service;
  * Class AbstractExtendedCleanupService
  *
  * @packagee SPL\SplCleanupTools\Service
- * @author  Christian Reifenscheid
+ * @author   Christian Reifenscheid
  */
 abstract class AbstractExtendedCleanupService extends AbstractCleanupService
 {
@@ -42,5 +42,5 @@ abstract class AbstractExtendedCleanupService extends AbstractCleanupService
      *
      * @param int $uid
      */
-    abstract public function executeForElement (int $uid);
+    abstract public function executeForElement(int $uid);
 }

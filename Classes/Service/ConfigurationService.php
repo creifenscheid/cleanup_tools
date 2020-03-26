@@ -216,24 +216,22 @@ class ConfigurationService implements SingletonInterface
      */
     private function prepareClassConfiguration(string $class, string $method, array $configuration) : array
     {
-        // init reflection of method
-        $reflection = new ReflectionMethod($class, $method);
+        // init reflection of class
+        $reflection = new \ReflectionClass($class);
 
         $name = str_replace('Service', '', end(GeneralUtility::trimExplode('\\', $class)));
 
         $methodParameters = [];
 
-        foreach ($reflection->getParameters() as $parameter) {
-            $parameterName = $parameter->getName();
-
+        foreach ($reflection->getDefaultProperties() as $parameterName => $defaultValue) {
             $parameterConfiguraton = [
                 'name' => $parameterName,
-                'type' => $parameter->getType() ? $parameter->getType()->getName() : $configuration['mapping']['parameter'][$parameter->getName()],
-                'mandatory' => $parameter->isdefaultvalueavailable() ? false : true
+                'type' => \gettype($defaultValue) ? $configuration['mapping']['parameter'][$parameterName] : \gettype($defaultValue),
+                'mandatory' => $defaultValue === null
             ];
 
-            if ($parameter->isDefaultValueAvailable()) {
-                $parameterConfiguraton['default'] = $parameter->getDefaultValue();
+            if ($defaultValue !== null) {
+                $parameterConfiguraton['default'] = $defaultValue;
             }
 
             $methodParameters[$parameterName] = $parameterConfiguraton;

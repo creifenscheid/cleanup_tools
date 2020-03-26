@@ -33,24 +33,36 @@ namespace SPL\SplCleanupTools\Service;
  * Class AbstractCleanupService
  *
  * @packagee SPL\SplCleanupTools\Service
- * @author  Christian Reifenscheid
+ * @author   Christian Reifenscheid
  */
 abstract class AbstractCleanupService
 {
+    /**
+     * Execute cleanup process
+     */
+    abstract public function execute();
+
     /*
      * dry run
      */
     protected $dryRun = true;
-    
+
     /**
-     * Execute cleanup process
+     * Returns dry run
+     *
+     * @return bool
      */
-    abstract public function execute ();
-    
+    public function getDryRun() : bool
+    {
+        return $this->dryRun;
+    }
+
     /**
      * Sets dry run
+     *
+     * @param bool $dryRun
      */
-    public function setDryRun (bool $dryRun) : void
+    public function setDryRun(bool $dryRun) : void
     {
         $this->dryRun = $dryRun;
     }

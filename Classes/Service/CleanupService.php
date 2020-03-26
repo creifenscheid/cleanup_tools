@@ -129,8 +129,15 @@ class CleanupService
         
         // if parameter are given
         if ($parameters) {
-            // call method with parameter
-            $return = call_user_func_array([$service, $method], $parameters);
+
+            // set parameter
+            foreach($parameters as $parameter => $value) {
+                $setter = 'set'.ucfirst($parameter);
+                $service->$setter($value);
+            }
+
+            // call method
+            $return = $service->$method();
         } else {
             
             // call method
