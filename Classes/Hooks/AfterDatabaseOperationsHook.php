@@ -65,7 +65,11 @@ class AfterDatabaseOperationsHook
             $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_DBHOOK);
 
             // process method through cleanup utility
-            return $cleanupService->processMethod('cleanupFlexForms', ['recordUid' => (int)$recordUid]);
+            // disable dry run
+            $cleanupService->setDryRun(false);
+            
+            // process
+            return $cleanupService->process(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class, \SPL\SplCleanupTools\Service\ConfigurationService::FUNCTION_MAIN,['recordUid' => (int)$recordUid]);
         }
 
         return false;
