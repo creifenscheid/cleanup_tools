@@ -15,7 +15,18 @@
                 <source>Multiple referenced files</source>
             </trans-unit>
 
-            <!-- PARAMETER -->
+            <!-- DESCRIPTIONS -->
+            <trans-unit id="description.CleanFlexForms">
+                <source>Check flexforms</source>
+            </trans-unit>
+            <trans-unit id="description.DeletedRecords">
+                <source>Check deleted records</source>
+            </trans-unit>
+            <trans-unit id="description.FilesWithMultipleReferences">
+                <source>Check multiple referenced files</source>
+            </trans-unit>
+            
+           <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">
                 <source>Update reference index</source>
             </trans-unit>
@@ -30,18 +41,7 @@
             </trans-unit>
             <trans-unit id="label.dryRun">
                 <source>Dry run</source>
-            </trans-unit>
-
-            <!-- DESCRIPTIONS -->
-            <trans-unit id="description.CleanFlexForms">
-                <source>Cleanup flexforms</source>
-            </trans-unit>
-            <trans-unit id="description.DeletedRecords">
-                <source>Cleanup deleted records</source>
-            </trans-unit>
-            <trans-unit id="description.FilesWithMultipleReferences">
-                <source>Cleanup multiple referenced files</source>
-            </trans-unit>
+            </trans-unit> 
         </body>
     </file>
 </xliff>

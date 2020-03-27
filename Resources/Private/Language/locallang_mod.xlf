@@ -135,6 +135,12 @@
             <trans-unit id="messages.dryrun.headline">
                 <source>Dry run executed</source>
             </trans-unit>
+            <trans-unit id="messages.error-services.message">
+                <source>In the following services, the execute function is missing: %s.</source>
+            </trans-unit>
+            <trans-unit id="messages.error-services.headline">
+                <source>Watch out</source>
+            </trans-unit>
             <trans-unit id="messages.success.message">
                 <source>Class "%s" has been executed.</source>
             </trans-unit>

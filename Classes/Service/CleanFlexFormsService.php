@@ -46,7 +46,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class CleanFlexFormsService extends AbstractCleanupService
+class CleanFlexFormsService extends AbstractExtendedCleanupService
 {
     /**
      * pid
@@ -84,6 +84,16 @@ class CleanFlexFormsService extends AbstractCleanupService
             }
         }
 
+        return true;
+    }
+    
+    /**
+     * Execute for defined element
+     *
+     * @param int $uid
+     */
+    public function executeForElement(int $uid)
+    {
         return true;
     }
 
