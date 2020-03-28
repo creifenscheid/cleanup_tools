@@ -51,7 +51,6 @@ class ConfigurationService implements SingletonInterface
      * Functions
      */
     const FUNCTION_MAIN = 'execute';
-    const FUNCTION_ELEMENT = 'executeForElement';
 
     /**
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
@@ -72,13 +71,6 @@ class ConfigurationService implements SingletonInterface
      * @var array
      */
     protected $services = [];
-    
-    /**
-     * Services which can executed for single elements
-     *
-     * @var array
-     */
-    protected $elementServices = [];
 
     /**
      * Services which not provide function "execute"
@@ -145,12 +137,6 @@ class ConfigurationService implements SingletonInterface
                 $this->errorServices[] = $serviceClass;
             }
             
-            // check if executeForElement() exists
-            if (method_exists($serviceClass, self::FUNCTION_ELEMENT)) {
-
-                // set up service configuration
-                $this->elementServices[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_ELEMENT, $serviceConfiguration);
-            }
 
             // check additional usage configuration of service
             foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {

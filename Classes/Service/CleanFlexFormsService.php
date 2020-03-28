@@ -46,7 +46,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * @package SPL\SplCleanupTools\Service
  * @author  Christian Reifenscheid
  */
-class CleanFlexFormsService extends AbstractExtendedCleanupService
+class CleanFlexFormsService extends AbstractCleanupService
 {
     /**
      * pid
