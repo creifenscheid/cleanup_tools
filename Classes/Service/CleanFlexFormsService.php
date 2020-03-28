@@ -92,7 +92,17 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param int $uid
      */
-    public function executeForElement(int $uid)
+    public function executeByUid(int $uid)
+    {
+        return true;
+    }
+    
+    /**
+     * Validate given data
+     *
+     * @param array $data
+     */
+    public function isValid (array $data) : bool
     {
         return true;
     }

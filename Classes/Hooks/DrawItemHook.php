@@ -84,7 +84,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => '\SPL\SplCleanupTools\Service\CleanFlexFormsService', 'method' => 'executeForElement', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => '\SPL\SplCleanupTools\Service\CleanFlexFormsService', 'method' => 'executeByUid', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
 
                     // assignments
                     $view->assignMultiple([
