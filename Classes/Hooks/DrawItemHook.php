@@ -67,10 +67,10 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
             // check if field:pi_flexform is set
             if ($row['pi_flexform']) {
 
-                /* @var \SPL\SplCleanupTools\Service\FlexFormService $flexFormService */
-                $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+                /* @var \SPL\SplCleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
+                $cleanFlexFormService = GeneralUtility::makeInstance(CleanFlexFormsService::class);
 
-                if (!$flexFormService->isValid($row)) {
+                if (!$cleanFlexFormService->isValid($row)) {
 
                     /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
                     $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
@@ -84,7 +84,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['method' => 'cleanupFlexForms', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => '\SPL\SplCleanupTools\Service\CleanFlexFormsService', 'method' => 'executeForElement', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
 
                     // assignments
                     $view->assignMultiple([
