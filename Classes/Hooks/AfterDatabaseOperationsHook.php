@@ -69,7 +69,7 @@ class AfterDatabaseOperationsHook
             $cleanupService->setDryRun(false);
             
             // process
-            return $cleanupService->process(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class, \SPL\SplCleanupTools\Service\ConfigurationService::FUNCTION_MAIN,['recordUid' => (int)$recordUid]);
+            return $cleanupService->process(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class, \SPL\SplCleanupTools\Service\ConfigurationService::FUNCTION_ELEMENT,['recordUid' => (int)$recordUid]);
         }
 
         return false;
