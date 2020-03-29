@@ -1,10 +1,8 @@
 <?php
-
 namespace SPL\SplCleanupTools\Hooks;
 
 use SPL\SplCleanupTools\Service\CleanupService;
 use SPL\SplCleanupTools\Service\ConfigurationService;
-use SPL\SplCleanupTools\Service\FlexFormService;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
@@ -42,7 +40,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  * Class NewContentElementPreviewRenderer
  *
  * @package SPL\SplCleanupTools\Hooks
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class DrawItemHook implements PageLayoutViewDrawItemHookInterface
 {
@@ -50,16 +48,21 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
     /**
      * Adjust the preview rendering of a elements with flexforms
      *
-     * @param \TYPO3\CMS\Backend\View\PageLayoutView $parentObject  Calling parent object
-     * @param bool                                   $drawItem      Whether to draw the item using the default functionality
-     * @param string                                 $headerContent Header content
-     * @param string                                 $itemContent   Item content
-     * @param array                                  $row           Record row of tt_content
-     *
+     * @param \TYPO3\CMS\Backend\View\PageLayoutView $parentObject
+     *            Calling parent object
+     * @param bool $drawItem
+     *            Whether to draw the item using the default functionality
+     * @param string $headerContent
+     *            Header content
+     * @param string $itemContent
+     *            Item content
+     * @param array $row
+     *            Record row of tt_content
+     *            
      * @return void
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) : void
+    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
     {
         // Admins only
         if ($GLOBALS['BE_USER']->isAdmin()) {
@@ -68,7 +71,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
             if ($row['pi_flexform']) {
 
                 /* @var \SPL\SplCleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
-                $cleanFlexFormService = GeneralUtility::makeInstance(CleanFlexFormsService::class);
+                $cleanFlexFormService = GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class);
 
                 if (!$cleanFlexFormService->isValid($row)) {
 
@@ -81,14 +84,19 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
                     $view = GeneralUtility::makeInstance(StandaloneView::class);
 
-                    // set format
+                        // set format
                     $view->setFormat('html');
 
-                    $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => '\SPL\SplCleanupTools\Service\CleanFlexFormsService', 'method' => 'executeByUid', 'recordUid' => $row['uid'], 'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK]);
+                    $uri = (string) $uriBuilder->buildUriFromRoute('splcleanuptools_ajax', [
+                        'class' => 'SPL\SplCleanupTools\Service\CleanFlexFormsService',
+                        'method' => 'executeByUid',
+                        'recordUid' => $row['uid'],
+                        'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK
+                    ]);
 
                     // assignments
                     $view->assignMultiple([
-                        'onClickCode' => 'TYPO3.SplCleanupToolsMethods.process(' . GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
+                        'onClickCode' => 'TYPO3.SplCleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
                         'recordUid' => $row['uid'],
                         'localizationFile' => $configurationService->getLocalizationFile()
                     ]);
