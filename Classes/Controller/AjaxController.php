@@ -107,7 +107,7 @@ class AjaxController extends BaseScriptClass
 
         // if cleanCmd is given
         if ($class && $method) {
-
+            
             // process method through cleanup service
             if ($recordUid) {
                 $result = $this->cleanupService->process($class, $method, ['recordUid' => (int)$recordUid]);

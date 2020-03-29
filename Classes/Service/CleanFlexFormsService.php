@@ -61,6 +61,13 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @var int $depth
      */
     protected $depth = 1000;
+    
+    /**
+     * recordUid
+     * 
+     * @var integer
+     */
+    protected $recordUid = 0;
 
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
@@ -92,7 +99,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param int $uid
      */
-    public function executeByUid(int $uid)
+    public function executeByUid()
     {
         return true;
     }
@@ -104,7 +111,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function isValid (array $data) : bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -312,5 +319,27 @@ class CleanFlexFormsService extends AbstractCleanupService
     public function setDepth(int $depth) : void
     {
         $this->depth = $depth;
+    }
+    
+    /**
+     * Returns recordUid
+     *
+     * @return int
+     */
+    public function getRecordUid() : int
+    {
+        return $this->recordUid;
+    }
+    
+    /**
+     * Sets recordUid
+     *
+     * @param int $recordUid
+     *
+     * @return void
+     */
+    public function setRecordUid(int $recordUid) : void
+    {
+        $this->recordUid = $recordUid;
     }
 }
