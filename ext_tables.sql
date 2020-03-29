@@ -6,3 +6,11 @@ CREATE TABLE tx_splcleanuptools_domain_model_log (
 	service varchar(255) DEFAULT NULL,
 	state tinyint(1) DEFAULT '0'
 );
+
+#
+# Table structure for table 'tx_splcleanuptools_domain_model_log_message'
+#
+CREATE TABLE tx_splcleanuptools_domain_model_log_message (
+	log int(11) DEFAULT '0' NOT NULL,
+	message text
+);

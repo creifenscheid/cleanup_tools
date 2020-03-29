@@ -33,6 +33,17 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log.state">
                 <source>State</source>
             </trans-unit>
+            
+            <!-- LOG MESSAGE -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message">
+                <source>Log message</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message.log">
+                <source>Log</source>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message.message">
+                <source>Message</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
