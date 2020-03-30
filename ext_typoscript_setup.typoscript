@@ -1,3 +1,15 @@
+config.tx_extbase {
+    persistence {
+        classes {
+            SPL\SplCleanupTools\Domain\Model\LogMessage {
+                mapping {
+                    tableName  = tx_splcleanuptools_domain_model_log_message
+                }
+            }
+        }
+    }
+}
+
 module.tx_splcleanuptools {
     view {
         templateRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Templates/

@@ -85,6 +85,13 @@ class Log extends AbstractEntity
      * @var \TYPO3\CMS\Beuser\Domain\Model\BackendUser
      */
     protected $cruser;
+    
+    /**
+     * Messages
+     *
+     * @var string
+     */
+    protected $messages;
 
     /**
      * Returns execution_context
@@ -210,5 +217,30 @@ class Log extends AbstractEntity
         $beUserRepository = $objectManager->get(BackendUserRepository::class);
 
         return $beUserRepository->findByUid($this->getCruserId());
+    }
+    
+    /**
+     * Return messages
+     *
+     * @return string
+     */
+    public function getMessages () : string
+    {
+        $dataMapper = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class);
+        $tableName = $dataMapper->getDataMap($className)->getTableName();
+        
+        return $this->messages;
+    }
+    
+    /**
+     * Set messages
+     *
+     * @var string $messages
+     *
+     * @return void
+     */
+    public function setMessages (string $messages) : void
+    {
+        $this->messages = $messages;
     }
 }

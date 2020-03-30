@@ -96,6 +96,20 @@ return [
                 'type' => 'check',
                 'readOnly' => true
             ]
+        ],
+        
+        'messages' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.messages',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_splcleanuptools_domain_model_log_message',
+                'foreign_field' => 'log',
+                'appearance' => [
+                     'collapseAll' => 1,
+                     'expandSingle' => 1,
+                ]
+            ]
         ]
     ]
 ];
