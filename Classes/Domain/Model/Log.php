@@ -222,14 +222,22 @@ class Log extends AbstractEntity
     /**
      * Return messages
      *
-     * @return string
+     * @return array
      */
-    public function getMessages () : string
+    public function getMessages () : array
     {
         $dataMapper = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class);
         $tableName = $dataMapper->getDataMap($className)->getTableName();
         
-        return $this->messages;
+         $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
+         
+         $result = $queryBuilder->select(*)
+             ->from($tableName)
+             ->where($queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($this->messages, Connection::PARAM_INT_ARRAY))
+             ->execute()
+             ->fetchAll();
+        
+        return $result;
     }
     
     /**
