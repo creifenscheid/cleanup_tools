@@ -2,10 +2,10 @@
 
 return [
     'ctrl' => [
-        'hideTable' => true,
+        #'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message',
-        'label' => 'log',
-        'label_alt' => 'message, execution_context',
+        'label' => 'message',
+        'label_alt' => 'log',
         'label_alt_force' => 1,
         'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log_message.svg',
         'sortby' => 'crdate',
@@ -28,7 +28,7 @@ return [
     ],
 
     'columns' => [
-
+        
         'log' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.log',

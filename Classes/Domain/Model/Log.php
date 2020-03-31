@@ -87,11 +87,28 @@ class Log extends AbstractEntity
     protected $cruser;
     
     /**
-     * Messages
+     * messages
      *
-     * @var string
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\LogMessage>
+     * @cascade remove
      */
     protected $messages;
+    
+    /**
+     * __construct
+     */
+    public function __construct()
+    {
+        $this->initStorageObjects();
+    }
+    
+    /**
+     * @return void
+     */
+    protected function initStorageObjects() : void
+    {
+        $this->messages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 
     /**
      * Returns execution_context
@@ -218,36 +235,44 @@ class Log extends AbstractEntity
 
         return $beUserRepository->findByUid($this->getCruserId());
     }
-    
-    /**
-     * Return messages
-     *
-     * @return array
-     */
-    public function getMessages () : array
-    {
-        $dataMapper = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class);
-        $tableName = $dataMapper->getDataMap($className)->getTableName();
-        
-         $queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
-         
-         $result = $queryBuilder->select(*)
-             ->from($tableName)
-             ->where($queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($this->messages, Connection::PARAM_INT_ARRAY))
-             ->execute()
-             ->fetchAll();
-        
-        return $result;
-    }
-    
-    /**
-     * Set messages
-     *
-     * @var string $messages
+
+    /*
+     * Add a message
      *
      * @return void
      */
-    public function setMessages (string $messages) : void
+    public function addMessage(\SPL\SplCleanupTools\Domain\Model\LogMessage $message): void
+    {
+        $this->messages->attach($message);
+    }
+
+    /*
+     * Remove a message
+     *
+     * @return void
+     */
+    public function removeMessage(\SPL\SplCleanupTools\Domain\Model\LogMessage $messageToRemove): void
+    {
+        $this->messages->detach($messageToRemove);
+    }
+
+    /*
+     * Returns the messages
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getMessages(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->messages;
+    }
+    
+    /**
+     * Sets the messages
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $messages
+     * @return void
+     */
+    public function setMessages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $messages) : void
     {
         $this->messages = $messages;
     }

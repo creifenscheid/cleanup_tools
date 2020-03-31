@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'hideTable' => true,
+        #'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'service',
         'label_alt' => 'crdate, execution_context',
@@ -14,11 +14,11 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'crdate,cruser_id,execution_context,service,state'
+        'searchFields' => 'crdate,cruser_id,execution_context,service,state,messages'
     ],
 
     'interface' => [
-        'showRecordFieldList' => 'crdate,cruser_id,execution_context,service,state'
+        'showRecordFieldList' => 'crdate,cruser_id,execution_context,service,state,messages'
     ],
 
     'types' => [
@@ -26,6 +26,7 @@ return [
             'showitem' => '
                 --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model.general.palettes.creation;creation,
                 --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.palettes.logData;logData,
+                --div--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.tab.messages,messages,
             '
         ],
     ],
@@ -99,16 +100,11 @@ return [
         ],
         
         'messages' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.messages',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_splcleanuptools_domain_model_log_message',
-                'foreign_field' => 'log',
-                'appearance' => [
-                     'collapseAll' => 1,
-                     'expandSingle' => 1,
-                ]
+                'foreign_field' => 'log'
             ]
         ]
     ]

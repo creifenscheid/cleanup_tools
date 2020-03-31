@@ -11,6 +11,11 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log.palettes.logData">
                 <source>Log data</source>
             </trans-unit>
+            
+            <!-- TABS -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log.tab.messages">
+                <source>Messages</source>
+            </trans-unit>
 
             <!-- GENERAL -->
             <trans-unit id="tx_splcleanuptools_domain_model.general.crdate">
