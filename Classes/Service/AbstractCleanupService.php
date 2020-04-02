@@ -44,8 +44,17 @@ abstract class AbstractCleanupService
 
     /*
      * dry run
+     *
+     * @var boolean
      */
     protected $dryRun = true;
+    
+    /**
+     * log
+     *
+     * @var \SPL\SplCleanupTools\Domain\Model\Log
+     */
+    protected $log;
 
     /**
      * Returns dry run
@@ -65,5 +74,37 @@ abstract class AbstractCleanupService
     public function setDryRun(bool $dryRun) : void
     {
         $this->dryRun = $dryRun;
+    }
+    
+    /**
+     * Returns log
+     *
+     * @return \SPL\SplCleanupTools\Domain\Model\Log
+     */
+    public function getLog() : \SPL\SplCleanupTools\Domain\Model\Log
+    {
+        return $this->log;
+    }
+    
+    /**
+     * Sets log
+     *
+     * @param \SPL\SplCleanupTools\Domain\Model\Log $log
+     * @return void
+     */
+    public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log) : void
+    {
+        $this->log = $log;
+    }
+    
+    protected function addMessage(string $message) : void
+    {
+        // create new message
+        $message = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+        $message->setLog($this->log);
+        $message->setMessage($message);
+        
+        // add message to log
+        $this->log->addMessage($message);
     }
 }

@@ -146,6 +146,20 @@ class CleanupService
         // init service
         $service = $this->objectManager->get($class);
         
+        // write log
+        $log = new Log();
+        $log->setCrdate(time());
+        
+        if ($GLOBALS['BE_USER']->user['uid']) {
+            $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+        }
+        
+        $log->setExecutionContext($this->executionContext);
+        $log->setService($class);
+        
+        // hand over log to service
+        $service->setLog($log);
+        
         // if parameter are given
         if ($parameters) {
 
@@ -166,18 +180,8 @@ class CleanupService
             $return = $service->$method();
         }
         
-        // write log
-        $log = new Log();
-        $log->setCrdate(time());
-        
-        if ($GLOBALS['BE_USER']->user['uid']) {
-            $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
-        }
-        
-        $log->setExecutionContext($this->executionContext);
-        $log->setService($class);
-        
-        $this->logRepository->add($log);
+        // get updated log from service and add to repository
+        $this->logRepository->add($service->getLog());
         
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
         $persistenceManager = $this->objectManager->get(PersistenceManager::class);
