@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        #'hideTable' => true,
+        'hideTable' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'service',
         'label_alt' => 'crdate, execution_context',
