@@ -1,13 +1,7 @@
 <?php
-
 namespace SPL\SplCleanupTools\Domain\Model;
 
-use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
-use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * *************************************************************
@@ -40,63 +34,64 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * Class LogMessage
  *
  * @package SPL\SplCleanupTools\Domain\Model
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class LogMessage extends AbstractEntity
 {
+
     /**
      * Log
      *
      * @var \SPL\SplCleanupTools\Domain\Model\Log
      */
     protected $log;
-    
+
     /**
      * Message
      *
      * @var string
      */
     protected $message = '';
-    
+
     /**
      * Returns log
      *
      * @return \SPL\SplCleanupTools\Domain\Model\Log
      */
-    public function getLog () : \SPL\SplCleanupTools\Domain\Model\Log
+    public function getLog(): \SPL\SplCleanupTools\Domain\Model\Log
     {
         return $this->log;
     }
-    
+
     /**
      * Set log
      *
      * @var \SPL\SplCleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog (\SPL\SplCleanupTools\Domain\Model\Log $log) : void
+    public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }
-    
+
     /**
      * Message
      *
      * @return string
      */
-    public function getMessage () : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    
+
     /**
      * Message
      *
      * @var string $message
      * @return void
      */
-    public function setMessage (string $message) : void
+    public function setMessage(string $message): void
     {
-        $this->message = message;
+        $this->message = $message;
     }
 }

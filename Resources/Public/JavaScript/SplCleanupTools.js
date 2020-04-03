@@ -32,6 +32,21 @@ define([
             }
         });
     };
+    
+    SplCleanupTools.toggleMessage = function (element) {
+    	const elementObject = $(element);
+    	const toggleGroup = elementObject.attr('data-group');
+
+    	if (elementObject.hasClass('expanded')) {
+    		elementObject.removeClass('expanded');
+    		elementObject.attr('aria-expanded', 'false');
+    		$('.log-message-group-' + toggleGroup).hide();
+    	} else {
+    		elementObject.addClass('expanded');
+    		elementObject.attr('aria-expanded', 'true');
+    		$('.log-message-group-' + toggleGroup).show();
+    	}
+    }
 
     // expose to global
     TYPO3.SplCleanupTools = SplCleanupTools;

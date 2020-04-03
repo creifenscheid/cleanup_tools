@@ -65,7 +65,7 @@ class CleanupController extends BaseController
      */
     public function indexAction() : void
     {
-        if (!empty($this->cleanupService->getErrorServices())) {
+        if (!empty($this->configurationService->getErrorServices())) {
             $this->addFlashMessage(
                 LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [implode(',',$this->cleanupService->getErrorServices())]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),

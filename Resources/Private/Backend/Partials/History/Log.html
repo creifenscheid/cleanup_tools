@@ -21,21 +21,25 @@
             </f:else>
         </f:if>
     </td>
+    <td>
+    	<f:if condition="{log.messages}">
+    		<f:then>
+    			<button aria-label="{f:translate(key:'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.history.togglebutton')}" class="toggle-button" data-group="{log.uid}" aria-expanded="false" onclick="TYPO3.SplCleanupTools.toggleMessage(this)">
+    				<span class="icon"><core:icon identifier="actions-move-down" size="small" /></span>
+    			</button>
+    		</f:then>
+    		<f:else>
+    		-
+    		</f:else>
+    	</f:if>
+    </td>
 </tr>
 
 <f:if condition="{log.messages}">
-    <tr>
-        <td colspan="5">
-            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.messages.headline" />
-        </td>
-    </tr>
     <f:for each="{log.messages}" as="message" iteration="iterator">
-        <tr>
-            <td>
-                {iterator.cycle}.
-            </td>
-            <td colspan="4">
-                {message.message}
+        <tr class="log-message log-message-group-{log.uid}">
+            <td colspan="6">
+               #{iterator.cycle} | {message.message}
             </td>
         </tr>
     </f:for>

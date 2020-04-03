@@ -97,14 +97,19 @@ abstract class AbstractCleanupService
         $this->log = $log;
     }
     
+    /**
+     * Create and add logMessage object
+     * 
+     * @param string $message
+     */
     protected function addMessage(string $message) : void
     {
         // create new message
-        $message = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
-        $message->setLog($this->log);
-        $message->setMessage($message);
+        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+        $newLogMessage->setLog($this->log);
+        $newLogMessage->setMessage($message);
         
         // add message to log
-        $this->log->addMessage($message);
+        $this->log->addMessage($newLogMessage);
     }
 }

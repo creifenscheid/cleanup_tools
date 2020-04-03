@@ -4,7 +4,10 @@
 <f:layout name="Default"/>
 
 <f:section name="Content">
-    <div class="spl-cleanup-tools-be-module">
+	
+	<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupTools'}"/>
+
+    <div class="spl-cleanup-tools-be-module history">
         <div class="container">
             <div class="row">
                 <h1>
@@ -29,12 +32,18 @@
                         <th>
                             <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.state"/>
                         </th>
+                        <th>
+                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.messages"/>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <f:for each="{logs}" as="log">
-                        <f:render partial="History/Log" arguments="{localizationFile:localizationFile,log:log}"/>
-                    </f:for>
+                    <f:widget.paginate objects="{logs}" as="paginatedLogs" configuration="{itemsPerPage: 15, insertAbove: 1, insertBelow: 0, maximumNumberOfLinks: 3}">
+                    	<f:for each="{paginatedLogs}" as="log">
+	                        <f:render partial="History/Log" arguments="{localizationFile:localizationFile,log:log}"/>
+	                    </f:for>
+                    </f:widget.paginate>
+                    
                     </tbody>
                 </table>
             </div>

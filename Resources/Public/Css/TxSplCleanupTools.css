@@ -38,6 +38,27 @@
         position: absolute;
         bottom: 0;
         right: 0; }
+.spl-cleanup-tools-be-module.history .f3-widget-paginator {
+  list-style-type: none;
+  width: 100%;
+  display: flex;
+  padding: 0; }
+  .spl-cleanup-tools-be-module.history .f3-widget-paginator li {
+    margin-right: 10px; }
+    .spl-cleanup-tools-be-module.history .f3-widget-paginator li.current {
+      font-weight: bold; }
+    .spl-cleanup-tools-be-module.history .f3-widget-paginator li:last-of-type {
+      margin-right: 0; }
+.spl-cleanup-tools-be-module.history .toggle-button {
+  background: none;
+  border: none; }
+  .spl-cleanup-tools-be-module.history .toggle-button.expanded .icon {
+    transform: rotate(90deg); }
+.spl-cleanup-tools-be-module.history .log-message {
+  display: none;
+  background-color: white; }
+  .spl-cleanup-tools-be-module.history .log-message td {
+    border-top: 0; }
 
 .spl-cleanup-tools-draw-item-hook .display-flex {
   display: flex; }
@@ -51,5 +72,3 @@
 .spl-cleanup-tools-draw-item-hook .btn-splcleanuptools {
   background-color: white;
   border-color: #f5c6cb; }
-
-/*# sourceMappingURL=TxSplCleanupTools.css.map */

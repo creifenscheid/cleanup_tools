@@ -76,6 +76,12 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function execute()
     {
+        $this->addMessage('das');
+        $this->addMessage('ist');
+        $this->addMessage('ein');
+        $this->addMessage('test');
+        
+        
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 

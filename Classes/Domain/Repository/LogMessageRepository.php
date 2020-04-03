@@ -1,6 +1,8 @@
 <?php
-
 namespace SPL\SplCleanupTools\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * *************************************************************
@@ -33,10 +35,11 @@ namespace SPL\SplCleanupTools\Domain\Repository;
  * Class LogMessageRepository
  *
  * @package SPL\SplCleanupTools\Domain\Repository
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class LogMessageRepository extends Repository
 {
+
     protected $defaultOrderings = [
         'crdate' => QueryInterface::ORDER_DESCENDING
     ];

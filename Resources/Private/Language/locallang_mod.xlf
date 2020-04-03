@@ -96,7 +96,7 @@
             <trans-unit id="module.history.th.state">
                 <source>State</source>
             </trans-unit>
-            <trans-unit id="module.history.messages.headline">
+            <trans-unit id="module.history.th.messages">
                 <source>Messages</source>
             </trans-unit>
 
@@ -154,6 +154,11 @@
                 <source>The flexform optimizer had some problems while updating the flexform field with the cleaned
                     flexform. Your changes are saved, but the flexform might be not well formed.
                 </source>
+            </trans-unit>
+
+            <!-- ARIA -->
+            <trans-unit id="aria.history.togglebutton">
+                <source>Show/hide log messages.</source>
             </trans-unit>
         </body>
     </file>

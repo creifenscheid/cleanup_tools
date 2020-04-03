@@ -60,4 +60,45 @@
             }
         }
     }
+   
+   &.history {
+   	    .f3-widget-paginator {
+   	    	list-style-type: none;
+   	    	width: 100%;
+   	    	display: flex;
+   	    	padding: 0;
+   	    	
+   	    	li {
+   	    		margin-right: 10px;
+   	    		
+   	    		&.current {
+   	    			font-weight: bold;
+   	    		}
+   	    		
+   	    		&:last-of-type {
+   	    			margin-right: 0;
+   	    		}
+   	    	}
+   	    }
+   	
+   		.toggle-button {
+   			background: none;
+   			border: none;
+   			
+   			&.expanded {
+   				.icon {
+   					transform: rotate(90deg);
+   				}
+   			}
+   		}
+   	
+   	    .log-message {
+   	    	display: none;
+   	    	background-color: white;
+   	    	
+   	    	td {
+   	    		border-top: 0;
+   	    	}
+   	    }
+   }
 }
