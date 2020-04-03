@@ -96,6 +96,9 @@
             <trans-unit id="module.history.th.state">
                 <source>State</source>
             </trans-unit>
+            <trans-unit id="module.history.messages.headline">
+                <source>Messages</source>
+            </trans-unit>
 
             <!-- TASKS -->
             <trans-unit id="tasks.cleanup.title">

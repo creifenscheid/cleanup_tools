@@ -22,3 +22,21 @@
         </f:if>
     </td>
 </tr>
+
+<f:if condition="{log.messages}">
+    <tr>
+        <td colspan="5">
+            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.messages.headline" />
+        </td>
+    </tr>
+    <f:for each="{log.messages}" as="message" iteration="iterator">
+        <tr>
+            <td>
+                {iterator.cycle}.
+            </td>
+            <td colspan="4">
+                {message.message}
+            </td>
+        </tr>
+    </f:for>
+</f:if>
