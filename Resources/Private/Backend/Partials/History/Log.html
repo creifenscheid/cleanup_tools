@@ -46,7 +46,16 @@
     <f:for each="{log.messages}" as="message" iteration="iterator">
         <tr class="log-message log-message-group-{log.uid}">
             <td colspan="7">
-               #{iterator.cycle} | {message.message}
+                #{iterator.cycle} | 
+            
+                <f:if condition="{message.localLangKey}">
+                    <f:then>
+                        <f:translate key="{localizationFile}:{message.localLangKey}" arguments="{message.localLangArguments}" />
+                    </f:then>
+                    <f:else>
+                        {message.message}
+                    </f:else>
+                </f:if>
             </td>
         </tr>
     </f:for>
