@@ -55,6 +55,12 @@
             <trans-unit id="tx_splcleanuptools_domain_model_log_message.message">
                 <source>Message</source>
             </trans-unit>
+            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_key“>
+                <source>Localization key</source>
+            </trans-unit>
+            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_arguments“>
+                <source>Localization arguments</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

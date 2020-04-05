@@ -14,5 +14,7 @@ CREATE TABLE tx_splcleanuptools_domain_model_log (
 #
 CREATE TABLE tx_splcleanuptools_domain_model_log_message (
 	log int(11) DEFAULT '0' NOT NULL,
-	message text
+	message text,
+	local_lang_key varchar(255) DEFAULT NULL,
+	local_lang_arguments mediumtext
 );

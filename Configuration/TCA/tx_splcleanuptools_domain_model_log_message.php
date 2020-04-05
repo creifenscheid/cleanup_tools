@@ -14,16 +14,16 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'log,message'
+        'searchFields' => 'log,message,local_lang_key,local_lang_arguments'
     ],
 
     'interface' => [
-        'showRecordFieldList' => 'log,message'
+        'showRecordFieldList' => 'log,message,local_lang_key,local_lang_arguments'
     ],
 
     'types' => [
         '0' => [
-            'showitem' => 'log,message'
+            'showitem' => 'log,message,local_lang_key,local_lang_arguments'
         ],
     ],
 
@@ -43,6 +43,26 @@ return [
         'message' => [
             'exclude' => true,
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.message',
+            'config' => [
+                'default' => 1,
+                'type' => 'text',
+                'readOnly' => true
+            ]
+        ],
+
+        'local_lang_key' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.local_lang_key',
+            'config' => [
+                'default' => 1,
+                'type' => 'input',
+                'readOnly' => true
+            ]
+        ],
+
+        'local_lang_arguments' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.local_lang_arguments',
             'config' => [
                 'default' => 1,
                 'type' => 'text',
