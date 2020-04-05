@@ -130,6 +130,12 @@ class CleanupController extends BaseController
                         FlashMessage::INFO
                     );
 
+                } else if (\is_string($result)) {
+                    $this->addFlashMessage(
+                        $result,
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.completed.headline', 'SplCleanupTools'),
+                        FlashMessage::INFO
+                    );
                 } else {
                     $this->addFlashMessage(
                         LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
