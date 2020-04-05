@@ -18,7 +18,7 @@ It provides the following features:
 - backend module to run services
 - history module to take a look on previous runs 
 - toolbar to run services in dry-run mode
-- scheduler task to run services
+- scheduler task
 - drawItem hook to run cleanFlexFormsService
 - afterDatabaseOperations hook to run cleanFlexFormsService
 
