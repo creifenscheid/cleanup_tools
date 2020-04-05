@@ -112,4 +112,25 @@ abstract class AbstractCleanupService
         // add message to log
         $this->log->addMessage($newLogMessage);
     }
+    
+    /**
+     * Create and add logMessage object with localization key
+     * 
+     * @param string $key
+     * @param null|array $arguments
+     */
+    protected function addMessage(string $key, array $arguments = null) : void
+    {
+        // create new message
+        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+        $newLogMessage->setLog($this->log);
+        $newLogMessage->setLocalLangKey($key);
+        
+        if ($arguments) {
+            $newLogMessage->setLocalLangArguments($arguments);
+        }
+        
+        // add message to log
+        $this->log->addMessage($newLogMessage);
+    }
 }
