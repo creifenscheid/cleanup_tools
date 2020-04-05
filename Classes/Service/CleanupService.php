@@ -157,7 +157,11 @@ class CleanupService
         $log->setExecutionContext($this->executionContext);
         $log->setService($class);
         
-        // hand over log to service
+        if ($parameters) {
+            $log->setParameters($parameters);
+        }
+        
+        // set log in service
         $service->setLog($log);
         
         // if parameter are given

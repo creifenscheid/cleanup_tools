@@ -59,11 +59,11 @@ class Log extends AbstractEntity
     protected $service = '';
     
     /**
-     * parameter
+     * parameters
      *
      * @var string
      */
-    protected $parameter = '';
+    protected $parameters = '';
 
     /**
      * state
@@ -162,25 +162,25 @@ class Log extends AbstractEntity
     }
     
     /**
-     * Returns the parameter
+     * Returns the parameters
      *
      * @return array
      */
-    public function getParameter() : array
+    public function getParameters() : array
     {
-        return unserialize($this->parameter);
+        return unserialize($this->parameters);
     }
 
     /**
-     * Sets the parameter
+     * Sets the parameters
      *
-     * @param array $parameter
+     * @param array $parameters
      *
      * @return void
      */
-    public function setParameter(array $parameter) : void
+    public function setParameters(array $parameters) : void
     {
-        $this->parameter = serialize($parameter);
+        $this->parameters = serialize($parameters);
     }
 
     /**
