@@ -119,7 +119,7 @@ abstract class AbstractCleanupService
      * @param string $key
      * @param null|array $arguments
      */
-    protected function addMessage(string $key, array $arguments = null) : void
+    protected function addLLLMessage(string $key, array $arguments = null) : void
     {
         // create new message
         $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
