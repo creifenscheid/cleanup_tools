@@ -87,6 +87,9 @@
             <trans-unit id="module.history.th.service">
                 <source>Service</source>
             </trans-unit>
+            <trans-unit id=„module.history.th.parameter“>
+                <source>Parameter</source>
+            </trans-unit>
             <trans-unit id="module.history.th.user">
                 <source>User</source>
             </trans-unit>

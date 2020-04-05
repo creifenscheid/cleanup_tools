@@ -14,7 +14,7 @@ return [
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioningWS' => false,
-        'searchFields' => 'crdate,cruser_id,execution_context,service,state,messages'
+        'searchFields' => 'crdate,cruser_id,execution_context,service,parameter,state,messages'
     ],
 
     'interface' => [
@@ -36,7 +36,7 @@ return [
             'showitem' => 'crdate,cruser_id',
         ],
         'logData' => [
-            'showitem' => 'state,execution_context,--linebreak--,service',
+            'showitem' => 'state,execution_context,--linebreak--,service,--linebreak--,parameter',
         ],
     ],
 
@@ -85,6 +85,15 @@ return [
             'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.service',
             'config' => [
                 'type' => 'input',
+                'readOnly' => true
+            ]
+        ],
+        
+        'parameter' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.parameter',
+            'config' => [
+                'type' => 'text',
                 'readOnly' => true
             ]
         ],

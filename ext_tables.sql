@@ -4,6 +4,7 @@
 CREATE TABLE tx_splcleanuptools_domain_model_log (
 	execution_context tinyint(1) DEFAULT '0',
 	service varchar(255) DEFAULT NULL,
+	parameter text,
 	state tinyint(1) DEFAULT '0',
 	messages int(11) DEFAULT '0' NOT NULL
 );

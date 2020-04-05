@@ -6,6 +6,13 @@
         {log.service}
     </td>
     <td>
+        <f:for each="{log.parameter}" as="parameter">
+            <p>
+                {parameter}
+            </p>
+        </f:for>
+    </td>
+    <td>
         {log.cruser.userName}
     </td>
     <td>
@@ -38,7 +45,7 @@
 <f:if condition="{log.messages}">
     <f:for each="{log.messages}" as="message" iteration="iterator">
         <tr class="log-message log-message-group-{log.uid}">
-            <td colspan="6">
+            <td colspan="7">
                #{iterator.cycle} | {message.message}
             </td>
         </tr>
