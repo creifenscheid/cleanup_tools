@@ -38,24 +38,34 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * Class DeletedRecordsService
  * Force-deletes all records in the database which have a deleted=1 flag
- * Originally taken from: \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
+ * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
-class DeletedRecordsService
+class DeletedRecordsService extend AbstractCleanupService
 {
     /**
-     * Find and permanently delete records which are marked as deleted
+     * pid
      *
-     * @param int $pid
-     * @param int $depth
-     * @param bool $dryRun
+     * @var int
      */
-    public function execute(int $pid = 0, int $depth = 1000, bool $dryRun = true)
+    protected $pid = 0;
+    
+    /**
+     * depth
+     *
+     * @var int
+     */
+    protected $depth = 1000;
+
+    /**
+     * Find and permanently delete records which are marked as deleted
+     */
+    public function execute()
     {
-        $startingPoint = MathUtility::forceIntegerInRange($pid, 0);
-        $depth = MathUtility::forceIntegerInRange($depth, 0);
+        $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
+        $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 
         // find all records that should be deleted
         $deletedRecords = $this->findAllFlaggedRecordsInPage($startingPoint, $depth);
@@ -71,9 +81,7 @@ class DeletedRecordsService
         }
 
         // actually permanently delete them
-        $this->deleteRecords($deletedRecords);
-
-        // ToDo: 'All done!
+        return $this->deleteRecords($deletedRecords);
     }
 
     /**
@@ -238,9 +246,11 @@ class DeletedRecordsService
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $dataHandler->start([], []);
 
+        $errorOccured = false;
+        
         // Loop through all tables and their records
         foreach ($deletedRecords as $table => $list) {
-            // ToDo:Ausgabe 'Flushing ' . count($list) . ' deleted records from table "' . $table . '"');
+            $this->addMessage('Flushing ' . count($list) . ' deleted records from table "' . $table . '"');
             
             foreach ($list as $uid) {
                 // Notice, we are deleting pages with no regard to subpages/subrecords - we do this since they
@@ -250,11 +260,17 @@ class DeletedRecordsService
                 // Return errors if any:
                 if (!empty($dataHandler->errorLog)) {
                     $errorMessage = array_merge(['DataHandler reported an error'], $dataHandler->errorLog);
-                    // ToDo:Ausgabe $errorMessage
-                } elseif (!$io->isQuiet()) {
-                    // ToDo:Ausgabe 'Permanently deleted record "' . $table . ':' . $uid . '".'
+                    $this->addMessage(errorMessage);
+                    $errorOccured = true;
                 }
             }
         }
+        
+        // id an error occured
+        if ($errorOccured) {
+            return false;
+        }
+        
+        return true;
     }
 }
