@@ -50,7 +50,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
-class FilesWithMultipleReferencesService
+class FilesWithMultipleReferencesService extend AbstractCleanupService
 {
     /**
      * updateRefindex

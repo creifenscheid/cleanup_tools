@@ -246,7 +246,7 @@ class DeletedRecordsService extend AbstractCleanupService
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $dataHandler->start([], []);
 
-        $errorOccured = false;
+        $errorOccurred = false;
         
         // Loop through all tables and their records
         foreach ($deletedRecords as $table => $list) {
@@ -261,13 +261,13 @@ class DeletedRecordsService extend AbstractCleanupService
                 if (!empty($dataHandler->errorLog)) {
                     $errorMessage = array_merge(['DataHandler reported an error'], $dataHandler->errorLog);
                     $this->addMessage(errorMessage);
-                    $errorOccured = true;
+                    $errorOccurred = true;
                 }
             }
         }
         
         // id an error occured
-        if ($errorOccured) {
+        if ($errorOccurred) {
             return false;
         }
         
