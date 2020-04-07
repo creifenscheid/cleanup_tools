@@ -45,7 +45,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 /**
  * Class FilesWithMultipleReferencesService
  * Finds files within uploads/ which are used multiple times by relations within the database
- * Originally taken from: \TYPO3\CMS\Lowlevel\Command\FilesWithMultipleReferencesCommand::class
+ * @see \TYPO3\CMS\Lowlevel\Command\FilesWithMultipleReferencesCommand::class
  *
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
@@ -53,17 +53,21 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 class FilesWithMultipleReferencesService
 {
     /**
+     * updateRefindex
+     *
+     * @var bool
+     */
+    protected $updateRefindex = false;
+
+    /**
      * Executes the command to
      * - optionally update the reference index (to have clean data)
      * - find files within the reference index which are referenced more than once
      * - copy these files if --dry-run is not set and update the references accordingly
-     *
-     * @param bool $updateRefindex
-     * @param bool $dryRun
      */
-    public function execute(bool $updateRefindex = false, bool $dryRun = true)
+    public function execute()
     {   
-        if ($updateRefindex) {
+        if ($this->updateRefindex) {
             $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
             $referenceIndex->updateIndex(false, false);
         }
@@ -76,11 +80,11 @@ class FilesWithMultipleReferencesService
         }
 
         else if (count($doubleFiles)) {
-            $this->copyMultipleReferencedFiles($doubleFiles);
-            // ToDo:Ausgabe Cleaned up ' . count($doubleFiles) . ' files which have been referenced multiple times.'
-        } else {
-            // ToDo:Ausgabe  'Nothing to do, no files found which are referenced more than once.'
+            return $this->copyMultipleReferencedFiles($doubleFiles);
         }
+        
+        $this->addMessage('No files which have been referenced multiple times found.');
+        return true;
     }
 
     /**
@@ -140,6 +144,9 @@ class FilesWithMultipleReferencesService
         $fileFunc = GeneralUtility::makeInstance(BasicFileUtility::class);
         $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
 
+        $errorOcurred = false;
+        $totalCounter = 0;
+        
         foreach ($multipleReferencesToFiles as $fileName => $usages) {
             $absoluteFileName = GeneralUtility::getFileAbsFileName($fileName);
             if ($absoluteFileName && @is_file($absoluteFileName)) {
@@ -153,17 +160,31 @@ class FilesWithMultipleReferencesService
                         if (@is_file($newName)) {
                             $error = $referenceIndex->setReferenceValue($hash, PathUtility::basename($newName));
                             if ($error) {
-                                // ToDo:Ausgabe 'ReferenceIndex::setReferenceValue() reported "' . $error . '"'
+                                $this->addMessage('ReferenceIndex::setReferenceValue() reported "' . $error . '"');
+                                $errorOcurred = true;
                             }
                         } else {
-                            // ToDo:Ausgabe 'File "' . $newName . '" could not be created.'
+                            $this->addMessage('File "' . $newName . '" could not be created.');
+                            $errorOcurred = true;
                         }
                     }
                 }
             } else {
-                // ToDo:Ausgabe 'File "' . $absoluteFileName . '" was not found.'
+                $this->addMessage('File "' . $absoluteFileName . '" was not found.');
             }
         }
+        
+        if($errorOccurred) {
+            return false;
+        }
+        
+        if ($totalCounter !== count($multipleReferencesToFiles)) {
+            return 'Cleaned up ' . totalCounter . ' of ' . count($multipleReferencesToFiles) . ' files which have been referenced multiple times.';
+        }
+        
+        $this->addMessage('Cleaned up ' . count($multipleReferencesToFiles) . ' files which have been referenced multiple times.');
+        
+        return true;
     }
 
     /**
