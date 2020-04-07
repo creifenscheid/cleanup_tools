@@ -146,6 +146,9 @@ class CleanupService
         // init service
         $service = $this->objectManager->get($class);
         
+        // set up reflection
+        $reflection = new \ReflectionClass($service);
+        
         // write log
         $log = new Log();
         $log->setCrdate(time());
@@ -169,8 +172,30 @@ class CleanupService
 
             // set parameter
             foreach($parameters as $parameter => $value) {
-                $setter = 'set'.ucfirst($parameter);
-                $service->$setter($value);
+                $propertyReflection = $reflection->getProperty($parameter);
+                
+                if ($propertyReflection->isPublic()) {
+                    $service->$parameter = $value;
+                } else {
+                    $setter = 'set'.ucfirst($parameter);
+                    
+                    if(method_exists($service, $setter)) {
+                        $service->$setter($value);
+                    } else {
+                    
+                        $message = 'Property '.$parameter.' is not public and no setter is given.';
+                    
+                        // create new message
+                        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+                        $newLogMessage->setLog($log);
+                        $newLogMessage->setMessage($message);
+        
+                        // add message to log
+                        $log->addMessage($newLogMessage);
+                        
+                        return false;
+                    }
+                }
             }
 
             // call method
