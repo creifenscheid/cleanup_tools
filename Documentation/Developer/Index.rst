@@ -24,9 +24,10 @@ What you get:
 Every registered service has to provide a function named „execute“. Otherwise your service is not added to the backend module or any other execution context.
 
 3. Setting up your service
-If your service requires configurable parameters to run, e.g. depth or pageId, be sure to define them as class vars. If you don’t provide default values, the fields are mandatory in the backend module, otherwise they are optional. 
+If your service requires configurable parameters to run, e.g. depth or pageId, be sure to define them as propertied. If you don’t provide default values, the fields are mandatory in the backend module, otherwise they are optional. 
+Make sure that your properties are either public or can be changed by a corresponding setter.
 
-All class vars are parsed to setup up the service form in the backend module dynamically. 
+All properties are parsed to setup up the service form in the backend module dynamically. 
 The corresponding form field is based on the var type definition.
  
 Possible return types:
