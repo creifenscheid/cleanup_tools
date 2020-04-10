@@ -101,7 +101,19 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function executeByUid()
     {
-        return true;
+        GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+    
+        $queryBuilder->select('*')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->isNotNull('pi_flexform')
+            )->andWhere(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT))
+            );
+
+        $records = $queryBuilder->execute()->fetchAll();
+        
+        return $this->cleanFlexFormRecords($records);
     }
     
     /**
@@ -111,7 +123,11 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function isValid (array $data) : bool
     {
-        return false;
+        $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
+        
+        $cleanFlexForm = $flexObj->cleanFlexFormXML('tt_content', 'pi_flexform', $data);
+        
+        return ($cleanFlexForm === $data['pi_flexform']);
     }
 
     /**
@@ -251,6 +267,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         $dataHandler->bypassAccessCheckForRecords = true;
 
         // Loop through all tables and their records
+        $errorOccurred = false;
         foreach ($records as $recordIdentifier => $fullRecord) {
             [$table, $uid, $field] = explode(':', $recordIdentifier);
             // Clean XML now
@@ -268,13 +285,16 @@ class CleanFlexFormsService extends AbstractCleanupService
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
 
-                // ToDo: error($errorMessage);
-
-                return false;
+                $this->addMessage($errorMessage);
+                $errorOccurred = true;
             }
-
-            return true;
         }
+        
+        if ($errorOccurred) {
+            return false;
+        }
+        
+        return true;
     }
 
     /**
