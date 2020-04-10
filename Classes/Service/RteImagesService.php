@@ -270,6 +270,8 @@ class RteImagesService extends AbstractCleanupService
     protected function copyMultipleReferencedRteImages(array $multipleReferencedImages)
     {
         $fileProcObj = GeneralUtility::makeInstance(BasicFileUtility::class);
+        
+        $errorOccurred = false;
         foreach ($multipleReferencedImages as $fileName => $fileInfo) {
             // Traverse all records using the file
             $c = 0;
@@ -290,31 +292,39 @@ class RteImagesService extends AbstractCleanupService
                         $copyDestName = PathUtility::dirnameDuringBootstrap($origDestName) . '/RTEmagicC_' . substr(PathUtility::basenameDuringBootstrap($origDestName), 10) . '.' . $pI['extension'];
                         if (!@is_file($copyDestName) && !@is_file($origDestName) && $origDestName === GeneralUtility::getFileAbsFileName($origDestName) && $copyDestName === GeneralUtility::getFileAbsFileName($copyDestName)) {
                             $this->addMessage('Copying file ' . PathUtility::basenameDuringBootstrap($fileName) . ' for record ' . $recordID . ' to ' . PathUtility::basenameDuringBootstrap($copyDestName));
-                            if (!$dryRun) {
-                                // Making copies
-                                GeneralUtility::upload_copy_move(Environment::getPublicPath() . '/' . $fileInfo['original'], $origDestName);
-                                GeneralUtility::upload_copy_move(Environment::getPublicPath() . '/' . $fileName, $copyDestName);
-                                clearstatcache();
-                                if (@is_file($copyDestName)) {
-                                    $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
-                                    $error = $referenceIndex->setReferenceValue($hash, PathUtility::stripPathSitePrefix($copyDestName));
-                                    if ($error) {
-                                        $io->error('ReferenceIndex::setReferenceValue() reported "' . $error . '"');
-                                    }
-                                } else {
-                                    $io->error('File "' . $copyDestName . '" could not be created.');
+                            // Making copies
+                            GeneralUtility::upload_copy_move(Environment::getPublicPath() . '/' . $fileInfo['original'], $origDestName);
+                            GeneralUtility::upload_copy_move(Environment::getPublicPath() . '/' . $fileName, $copyDestName);
+                            clearstatcache();
+                            if (@is_file($copyDestName)) {
+                                $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
+                                $error = $referenceIndex->setReferenceValue($hash, PathUtility::stripPathSitePrefix($copyDestName));
+                                if ($error) {
+                                    $this->addMessage('ReferenceIndex::setReferenceValue() reported "' . $error . '"');
+                                    $errorOccured = true;
                                 }
+                            } else {
+                                    $this->addMessage('File "' . $copyDestName . '" could not be created.');
+                                    $errorOccured = true;
                             }
                         } else {
-                            $io->error('Could not construct new unique names for file.');
+                            $this->addMessage('Could not construct new unique names for file.');
+                            $errorOccured = true;
                         }
                     } else {
-                        $io->error('Maybe directory of file was not within "uploads/"?');
+                        $this->addMessage('Maybe directory of file was not within "uploads/"?');
+                        $errorOccured = true;
                     }
                 }
                 $c++;
             }
         }
+        
+        if ($errorOccurred) {
+            return false;
+        }
+        
+        return true;
     }
 
     /**
