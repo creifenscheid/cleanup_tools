@@ -36,7 +36,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  */
 
 /**
- * Class CleanupController
+ * Class CleanupTask
  *
  * @package SPL\SplCleanupTools\Task
  * @author  Christian Reifenscheid
