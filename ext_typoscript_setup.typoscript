@@ -25,6 +25,7 @@ module.tx_splcleanuptools {
     services {
         SPL\SplCleanupTools\Service\CleanFlexFormsService {
 	        enable = 1
+	        excludePropertiesInModule = recordUid
 	        additionalUsage {
 	            schedulerTask = 1
 	            toolbar = 1
