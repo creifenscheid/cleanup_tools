@@ -36,6 +36,11 @@ module.tx_splcleanuptools {
 		        	depth = int
 		        	dryRun = bool
 		        }
+		SPL\SplCleanupTools\Service\DeletedRecordsService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 0
+	            toolbar = 1
 	        }
 		}
 	}
