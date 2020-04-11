@@ -43,7 +43,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
-class DeletedRecordsService extend AbstractCleanupService
+class DeletedRecordsService extends AbstractCleanupService
 {
     /**
      * pid

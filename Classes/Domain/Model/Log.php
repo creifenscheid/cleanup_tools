@@ -168,7 +168,11 @@ class Log extends AbstractEntity
      */
     public function getParameters() : array
     {
-        return unserialize($this->parameters);
+        if (unserialize($this->parameters)) {
+            return unserialize($this->parameters);
+        }
+        
+        return [];
     }
 
     /**

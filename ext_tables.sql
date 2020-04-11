@@ -4,7 +4,7 @@
 CREATE TABLE tx_splcleanuptools_domain_model_log (
 	execution_context tinyint(1) DEFAULT '0',
 	service varchar(255) DEFAULT NULL,
-	parameters text,
+	parameters text DEFAULT '' NOT NULL,
 	state tinyint(1) DEFAULT '0',
 	messages int(11) DEFAULT '0' NOT NULL
 );
@@ -16,5 +16,5 @@ CREATE TABLE tx_splcleanuptools_domain_model_log_message (
 	log int(11) DEFAULT '0' NOT NULL,
 	message text,
 	local_lang_key varchar(255) DEFAULT NULL,
-	local_lang_arguments mediumtext
+	local_lang_arguments mediumtext DEFAULT '' NOT NULL
 );

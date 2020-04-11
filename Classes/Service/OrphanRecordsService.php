@@ -54,7 +54,7 @@ class OrphanRecordsService extends AbstractCleanupService
      * Executes the command to find records not attached to the pagetree
      * and permanently delete these records
      */
-    protected function execute(
+    protected function execute() {
 
         // find all records that should be deleted
         $allRecords = $this->findAllConnectedRecordsInPage(0, 10000);

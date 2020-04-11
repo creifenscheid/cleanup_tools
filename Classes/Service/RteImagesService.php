@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\File\BasicFileUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
-*************************************************************
+/*************************************************************
  *
  * Copyright notice
  *
@@ -240,7 +240,7 @@ class RteImagesService extends AbstractCleanupService
      * @param bool $dryRun if set, the files are just displayed, but not deleted
      * @param SymfonyStyle $io the IO object for output
      */
-    protected function deleteLostFiles(array $lostFiles
+    protected function deleteLostFiles(array $lostFiles)
     {
         foreach ($lostFiles as $lostFile) {
             $absoluteFileName = GeneralUtility::getFileAbsFileName($lostFile);

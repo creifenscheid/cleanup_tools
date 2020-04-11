@@ -87,7 +87,7 @@
             <trans-unit id="module.history.th.service">
                 <source>Service</source>
             </trans-unit>
-            <trans-unit id=„module.history.th.parameter“>
+            <trans-unit id="module.history.th.parameter">
                 <source>Parameter</source>
             </trans-unit>
             <trans-unit id="module.history.th.user">
@@ -141,7 +141,7 @@
             <trans-unit id="messages.dryrun.headline">
                 <source>Dry run executed</source>
             </trans-unit>
-            <trans-unit id=„messages.completed.headline“>
+            <trans-unit id="messages.completed.headline">
                 <source>Execution completed</source>
             </trans-unit>
             <trans-unit id="messages.error-services.message">

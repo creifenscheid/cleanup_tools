@@ -40,7 +40,7 @@ module.tx_splcleanuptools {
 		}
 		
         SPL\SplCleanupTools\Service\DeletedRecordsService {
-	        enable = 1
+	        enable = 0
 	        additionalUsage {
 	            schedulerTask = 1
 	            toolbar = 1
@@ -48,7 +48,7 @@ module.tx_splcleanuptools {
 		}
 		
         SPL\SplCleanupTools\Service\FilesWithMultipleReferencesService {
-	        enable = 1
+	        enable = 0
 	        additionalUsage {
 	            schedulerTask = 1
 	            toolbar = 1

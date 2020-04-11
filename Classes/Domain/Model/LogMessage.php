@@ -137,7 +137,11 @@ class LogMessage extends AbstractEntity
      */
     public function getLocalLangArguments() : array
     {
-        return unserialize($this->localLangArguments);
+        if (unserialize($this->localLangArguments)) {
+            return unserialize($this->localLangArguments);
+        }
+        
+        return [];
     }
     
     /**
