@@ -76,4 +76,15 @@ class HistoryController extends BaseController
             'logs' => $this->logRepository->findAll()
         ]);
     }
+    
+    /**
+     * Action to mark logs and messages as deleted based on given time
+     *
+     * @param int $olderThen - Mark all entries with a >crdate as deleted
+     * @param bool $dropAlreadyDeleted - Deleted all entries marked as deleted
+     */
+    public function cleanupAction (int $olderThen, bool $dropAlreadyDeleted) : void
+    {
+        
+    }
 }
