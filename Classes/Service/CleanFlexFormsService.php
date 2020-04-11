@@ -40,14 +40,13 @@ use PDO;
 /**
  * Class CleanFlexFormsService
  * Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value
- * Originally taken from: \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
+ * @see \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
 class CleanFlexFormsService extends AbstractCleanupService
 {
-
     /**
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
@@ -70,6 +69,72 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @var integer
      */
     protected $recordUid = 0;
+    
+    /**
+     * Returns pid
+     *
+     * @return int
+     */
+    public function getPid(): int
+    {
+        return $this->pid;
+    }
+    
+    /**
+     * Sets pid
+     *
+     * @param int $pid
+     *
+     * @return void
+     */
+    public function setPid(int $pid): void
+    {
+        $this->pid = $pid;
+    }
+    
+    /**
+     * Returns depth
+     *
+     * @return int
+     */
+    public function getDepth(): int
+    {
+        return $this->depth;
+    }
+    
+    /**
+     * Sets depth
+     *
+     * @param int $depth
+     *
+     * @return void
+     */
+    public function setDepth(int $depth): void
+    {
+        $this->depth = $depth;
+    }
+    
+    /**
+     * Returns recordUid
+     *
+     * @return int
+     */
+    public function getRecordUid(): int
+    {
+        return $this->recordUid;
+    }
+    
+    /**
+     * Sets recordUid
+     *
+     * @param int $recordUid
+     *
+     * @return void
+     */
+    public function setRecordUid(int $recordUid): void
+    {
+        $this->recordUid = $recordUid;
+    }
 
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
@@ -77,7 +142,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @return int|bool
      */
     public function execute()
-    {
+    {   
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 
@@ -308,71 +373,5 @@ class CleanFlexFormsService extends AbstractCleanupService
         }
 
         return true;
-    }
-
-    /**
-     * Returns pid
-     *
-     * @return int
-     */
-    public function getPid(): int
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Sets pid
-     *
-     * @param int $pid
-     *
-     * @return void
-     */
-    public function setPid(int $pid): void
-    {
-        $this->pid = $pid;
-    }
-
-    /**
-     * Returns depth
-     *
-     * @return int
-     */
-    public function getDepth(): int
-    {
-        return $this->depth;
-    }
-
-    /**
-     * Sets depth
-     *
-     * @param int $depth
-     *
-     * @return void
-     */
-    public function setDepth(int $depth): void
-    {
-        $this->depth = $depth;
-    }
-
-    /**
-     * Returns recordUid
-     *
-     * @return int
-     */
-    public function getRecordUid(): int
-    {
-        return $this->recordUid;
-    }
-
-    /**
-     * Sets recordUid
-     *
-     * @param int $recordUid
-     *
-     * @return void
-     */
-    public function setRecordUid(int $recordUid): void
-    {
-        $this->recordUid = $recordUid;
     }
 }
