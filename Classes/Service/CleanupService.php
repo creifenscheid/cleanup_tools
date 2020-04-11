@@ -209,6 +209,10 @@ class CleanupService
             $return = $service->$method();
         }
         
+        if (!$return) {
+            $log->setState(false);
+        }
+        
         // get updated log from service and add to repository
         $this->logRepository->add($service->getLog());
         

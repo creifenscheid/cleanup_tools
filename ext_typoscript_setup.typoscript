@@ -38,21 +38,5 @@ module.tx_splcleanuptools {
 		        }
 	        }
 		}
-		
-        SPL\SplCleanupTools\Service\DeletedRecordsService {
-	        enable = 0
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-		
-        SPL\SplCleanupTools\Service\FilesWithMultipleReferencesService {
-	        enable = 0
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-	}  
+	}
 }

@@ -125,9 +125,9 @@ class CleanupController extends BaseController
 
                 if (\is_int($result)) {
                     $this->addFlashMessage(
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$service['class'],$result]),
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
-                        FlashMessage::INFO
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.message', 'SplCleanupTools', [$service['class'],$result]),
+                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.headline', 'SplCleanupTools'),
+                        FlashMessage::WARNING
                     );
 
                 } else if (\is_string($result)) {

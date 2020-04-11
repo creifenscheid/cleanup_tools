@@ -70,7 +70,7 @@ class Log extends AbstractEntity
      *
      * @var bool
      */
-    protected $state = 1;
+    protected $state = true;
 
     /**
      * crdate

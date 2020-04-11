@@ -135,11 +135,11 @@
             <trans-unit id="messages.success.headline">
                 <source>Yeah</source>
             </trans-unit>
-            <trans-unit id="messages.dryrun.message">
-                <source>Class "%s" can clean up "%d" entries.</source>
+            <trans-unit id="messages.warning.message">
+                <source>While executing class "%s" "%d" errors occurred. See history module for further information.</source>
             </trans-unit>
-            <trans-unit id="messages.dryrun.headline">
-                <source>Dry run executed</source>
+            <trans-unit id="messages.warning.headline">
+                <source>Attention</source>
             </trans-unit>
             <trans-unit id="messages.completed.headline">
                 <source>Execution completed</source>
