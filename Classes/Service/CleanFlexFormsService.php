@@ -62,13 +62,6 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @var int $depth
      */
     protected $depth = 1000;
-
-    /**
-     * Setting record uid to perform clean up process for this specific element
-     *
-     * @var integer
-     */
-    protected $recordUid = 0;
     
     /**
      * Returns pid
@@ -113,28 +106,6 @@ class CleanFlexFormsService extends AbstractCleanupService
     {
         $this->depth = $depth;
     }
-    
-    /**
-     * Returns recordUid
-     *
-     * @return int
-     */
-    public function getRecordUid(): int
-    {
-        return $this->recordUid;
-    }
-    
-    /**
-     * Sets recordUid
-     *
-     * @param int $recordUid
-     *
-     * @return void
-     */
-    public function setRecordUid(int $recordUid): void
-    {
-        $this->recordUid = $recordUid;
-    }
 
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
@@ -168,9 +139,9 @@ class CleanFlexFormsService extends AbstractCleanupService
     /**
      * Execute for defined element
      *
-     * @param int $uid
+     * @param int $recordUid
      */
-    public function executeByUid()
+    public function executeByUid(int $recordUid)
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 
@@ -181,9 +152,9 @@ class CleanFlexFormsService extends AbstractCleanupService
             ->where($queryBuilder->expr()
             ->isNotNull('pi_flexform'))
             ->andWhere($queryBuilder->expr()
-            ->eq('uid', $queryBuilder->createNamedParameter($this->recordUid, PDO::PARAM_INT)));
+            ->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT)));
 
-        $records['tt_content:' . $this->recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
+            $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
 
         return $this->cleanFlexFormRecords($records);
     }
