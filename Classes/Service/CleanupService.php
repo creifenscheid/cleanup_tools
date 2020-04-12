@@ -52,13 +52,25 @@ class CleanupService
     const EXECUTION_CONTEXT_SCHEDULER = 2;
     const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
     const EXECUTION_CONTEXT_DBHOOK = 4;
+    
+    
+    // Execution mode
+    const USE_CLASS_PROPERTIES = 0;
+    const USE_METHOD_PARAMETERS = 1;
 
     /**
      * Execution context
      *
      * @var int
      */
-    protected $executionContext = 0;
+    protected $executionContext = self::EXECUTION_CONTEXT_BEMODULE;
+    
+    /**
+     * Execution mode
+     *
+     * @var int
+     */
+    protected $executionMode = self::USE_CLASS_PROPERTIES;
     
     /**
      * Dry run
@@ -113,6 +125,18 @@ class CleanupService
     public function setExecutionContext(int $executionContext) : void
     {
         $this->executionContext = $executionContext;
+    }
+    
+    /**
+     * Set execution mode
+     *
+     * @param int $executionMode
+     *
+     * @return void
+     */
+    public function setExecutionMode(int $executionMode) : void
+    {
+        $this->executionMode = $executionMode;
     }
 
     /**
