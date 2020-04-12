@@ -30,7 +30,8 @@ Cleanup Tools
    `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
    license
 
-This extension ports command line functions of core extension 'lowlevel' into the backend to clean up your TYPO3 installation.
+This extension provides the possbility to implement cleanup services easily.
+Inspired by commands of core extension "low level"
 
 **TYPO3**
 
