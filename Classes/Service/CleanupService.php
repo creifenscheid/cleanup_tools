@@ -56,7 +56,7 @@ class CleanupService
     
     // Execution mode
     const USE_CLASS_PROPERTIES = 0;
-    const USE_METHOD_PARAMETERS = 1;
+    const USE_METHOD_PROPERTIES = 1;
 
     /**
      * Execution context

@@ -63,6 +63,9 @@ class AfterDatabaseOperationsHook
             /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
             $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
             $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_DBHOOK);
+            
+            // set execution mode
+            $cleanupService->setExecutionMode(CleanupService::USE_METHOD_PROPERTIES);
 
             // process method through cleanup utility
             // disable dry run

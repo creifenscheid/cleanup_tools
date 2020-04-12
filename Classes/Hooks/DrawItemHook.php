@@ -91,7 +91,8 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                         'class' => 'SPL\SplCleanupTools\Service\CleanFlexFormsService',
                         'method' => 'executeByUid',
                         'recordUid' => $row['uid'],
-                        'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK
+                        'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK,
+                        'executionMode' =>CleanupService::USE_METHOD_PROPERTIES
                     ]);
 
                     // assignments
