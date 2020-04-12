@@ -92,14 +92,20 @@ class AjaxController extends BaseScriptClass
         // get query params
         $queryParams = $request->getQueryParams();
 
-        // get execution context from query params
-        $executionContext = $queryParams['executionContext'] ? : null;
-        $this->cleanupService->setExecutionContext($executionContext);
+        // get execution context
+        if ($queryParams['executionContext']) {
+            $this->cleanupService->setExecutionContext($queryParams['executionContext']);
+        }
         
-        // get clean class from query params
+        // get execution mode
+        if ($queryParams['executionMode']) {
+            $this->cleanupService->setExecutionMode($queryParams['executionMode']);
+        }
+        
+        // get clean class
         $class = $queryParams['class'] ? : null;
         
-        // get clean command from query params
+        // get clean command
         $method = $queryParams['method'] ? : null;
 
         // get record uid if a specific record shall be cleaned
