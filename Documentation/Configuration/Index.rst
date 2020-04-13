@@ -11,52 +11,181 @@ Target group: **Developers, Integrators**
 
 After installation, no configuration is required to make the extension work.
 
-Extension configuration
-=======================
-The extension configuration is used to enable/disable the following options:
-- Toolbar item: Extend TYPO3 toolbar with cleanup tools (default: enabled)
-- AfterDatabaseOperations hook: Clean up flexform of content element after database operations (default: disabled)
-- DrawItem-Hook: Show hint and cleanup button in content elements if their flexform is not valid (default: enabled)
+.. _extensionConfiguration:
 
-TypoScript configuration
-========================
-The extension comes along with TypoScript which is included by default, so there is no static template to include.
+Extension Configuration
+-----------------------
 
+Properties
+~~~~~~~~~~
 
-Settings
-********
+enableToolbarItem
+"""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         enableToolbarItem
+
+    Data type
+         boolean (default: true)
+
+    Description
+         Extend TYPO3 toolbar with cleanup tools in dry-run mode
+
+enableAfterDatabaseOperationsHook
+"""""""""""""""""""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         enableAfterDatabaseOperationsHook
+
+    Data type
+         boolean (default: false)
+
+    Description
+         Clean up flexform of a content element after database operations
+
+enableDrawItemHook
+""""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         enableDrawItemHook
+
+    Data type
+         boolean (default: true)
+
+    Description
+         Show hint and cleanup button in content elements if their flexform is not valid
+
+.. _typoscriptConfiguration:
+
+TypoScript Configuration
+------------------------
+
+TypoScript is included by default, no static template is needed.
+
+Service configuration
+~~~~~~~~~~~~~~~~~~~~~
+   
 .. code-block:: typoscript
+
    module.tx_splcleanuptools {
-      settings {
-        localizationFile =
-        globalExcludes =
-      }
+       services {
+           SPL\SplCleanupTools\Service\CleanFlexFormsService {
+               enable = 1
+               additionalUsage {
+                   schedulerTask = 1
+                   toolbar = 1
+               }
+       
+               mapping {
+                 parameter {
+                     pid = int
+                     depth = int
+                     dryRun = bool
+                 }
+              }
+           }
+       }
    }
 
-+-----------------------+-------------------------------------------------------------------------------------------------------+
-| localizationFile      |  Translation file for service related labels, e.g. in BE module or in the toolbar                     |
-+-----------------------+-------------------------------------------------------------------------------------------------------+
-| globalExcludes        |  Functions that are globally excluded from direct use, e.g. helper function, base function etc.       |
-+-----------------------+-------------------------------------------------------------------------------------------------------+
+Properties
+~~~~~~~~~~
 
-.. _configuration-typoscript:
+enable
+""""""
 
-TypoScript Reference
-====================
+.. container:: table-row
 
-Possible subsections: Reference of TypoScript options.
-The construct below show the recommended structure for
-TypoScript properties listing and description.
+    Property
+         enable
 
-When detailing data types or standard TypoScript
-features, don't hesitate to cross-link to the TypoScript
-Reference as shown below.
+    Data type
+         boolean
 
+    Description
+         (De)activate service
 
-See `Hyperlinks & Cross-Referencing <https://docs.typo3.org/typo3cms/HowToDocument/WritingReST/Hyperlinks.html>`
-for information about how to use cross-references.
+additionalUsage
+"""""""""""""""
 
-See the :file:`Settings.cgf` file for the declaration of cross-linking keys.
-You can add more keys besides tsref.
+.. container:: table-row
 
+    Property
+         additionalUsage
 
+    Data type
+         array
+
+    Description
+         Settings of further usages
+
+additionalUsage.schedulerTask
+"""""""""""""""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         additionalUsage.schedulerTask
+
+    Data type
+         boolean
+
+    Description
+         (De)activate service in scheduler task
+
+additionalUsage.toolbar
+"""""""""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         additionalUsage.toolbar
+
+    Data type
+         boolean
+
+    Description
+         (De)activate service in toolbar
+
+mapping
+"""""""
+
+.. container:: table-row
+
+    Property
+         mapping
+
+    Data type
+         array
+
+    Description
+         fallback configuration of parameter types, if no type can be determined
+
+Example
+~~~~~~~
+   
+.. code-block:: typoscript
+
+   module.tx_splcleanuptools {
+       services {
+           Vendor\MyExtension\Service\MyService {
+               enable = 1
+               additionalUsage {
+                   schedulerTask = 0
+                   toolbar = 0
+               }
+       
+               mapping {
+                 parameter {
+                     myFirstVar = integer
+                     mySecondVar = boolean
+                 }
+              }
+           }
+       }
+   }
