@@ -136,33 +136,17 @@
             <trans-unit id="messages.error.message.no-method">
                 <source>No method was set.</source>
             </trans-unit>
-            <trans-unit id="messages.success.headline">
-                <source>Yeah</source>
-            </trans-unit>
-            <trans-unit id="messages.warning.message">
-                <source>While executing class "%s" "%d" errors occurred. See history module for further information.</source>
-            </trans-unit>
-            <trans-unit id="messages.warning.headline">
-                <source>Attention</source>
-            </trans-unit>
-            <trans-unit id="messages.completed.headline">
-                <source>Execution completed</source>
-            </trans-unit>
             <trans-unit id="messages.error-services.message">
                 <source>In the following services, the execute function is missing: %s.</source>
             </trans-unit>
             <trans-unit id="messages.error-services.headline">
                 <source>Watch out</source>
             </trans-unit>
-            <trans-unit id="messages.success.message">
-                <source>Class "%s" has been executed.</source>
-            </trans-unit>
             <trans-unit id="messages.hook.warning.headline">
                 <source>Watch out</source>
             </trans-unit>
             <trans-unit id="message.hook.warning.message">
-                <source>The flexform optimizer had some problems while updating the flexform field with the cleaned
-                    flexform. Your changes are saved, but the flexform might be not well formed.
+                <source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.
                 </source>
             </trans-unit>
 

@@ -120,24 +120,9 @@ class AjaxController extends BaseScriptClass
             } else {
                 $result = $this->cleanupService->process($class, $method);
             }
-
+            
             if ($result) {
-                
-                if (\is_int($result)) {
-                    $return = [
-                        'status' => 'info',
-                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
-                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$class,$result])
-                    ];
-                    
-                } else {
-                    $return = [
-                        'status' => 'ok',
-                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$class])
-                    ];
-                }
-                
+                // todo extract information from returned flash message and generste flyout
                 
             } else {
                 $return = [

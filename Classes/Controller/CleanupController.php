@@ -119,39 +119,22 @@ class CleanupController extends BaseController
                 }
             }
 
-            $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
-
-            if ($result) {
-
-                if (\is_int($result)) {
-                    $this->addFlashMessage(
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.message', 'SplCleanupTools', [$service['class'],$result]),
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.headline', 'SplCleanupTools'),
-                        FlashMessage::WARNING
-                    );
-
-                } else if (\is_string($result)) {
-                    $this->addFlashMessage(
-                        $result,
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.completed.headline', 'SplCleanupTools'),
-                        FlashMessage::INFO
-                    );
-                } else {
-                    $this->addFlashMessage(
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                        FlashMessage::OK
-                    );
-                }
-
+            $return = $this->cleanupService->process($service['class'], $method, $methodParameter);
+            
+            if ($return) {
+                
+                // render flash message
+                $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
+$messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+$messageQueue->addMessage($resultMessage);
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     FlashMessage::ERROR
                 );
+
             }
-        }
 
         $this->forward('index', 'Cleanup', 'SplCleanupTools');
     }

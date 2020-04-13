@@ -164,9 +164,6 @@ class CleanupService
      */
     public function process(string $class, string $method, array $parameters = null)
     {
-        // define return var
-        $return = false;
-        
         // init service
         $service = $this->objectManager->get($class);
         
@@ -198,6 +195,9 @@ class CleanupService
                 // call method with parameter
                 $return = call_user_func_array([$service, $method], $parameters);
             } else {
+                // flag to handle if method can be run
+                $runMethod = true;
+            
                 // set parameter
                 foreach($parameters as $parameter => $value) {
                     $propertyReflection = $reflection->getProperty($parameter);
@@ -221,13 +221,16 @@ class CleanupService
                             // add message to log
                             $log->addMessage($newLogMessage);
                             
-                            return false;
+                            $return = false;
+                            $runMethod = false;
                         }
                     }
                 }
                 
                 // call method
-                $return = $service->$method();
+                if ($runMethod) {
+                    $return = $service->$method();
+                }
             }
         } else {
             
@@ -238,6 +241,7 @@ class CleanupService
             $return = $service->$method();
         }
         
+        // todo if !return or message:ERROR
         if (!$return) {
             $log->setState(false);
         }
