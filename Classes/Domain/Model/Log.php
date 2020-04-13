@@ -70,7 +70,7 @@ class Log extends AbstractEntity
      *
      * @var bool
      */
-    protected $state = 1;
+    protected $state = true;
 
     /**
      * crdate
@@ -168,7 +168,11 @@ class Log extends AbstractEntity
      */
     public function getParameters() : array
     {
-        return unserialize($this->parameters);
+        if (unserialize($this->parameters)) {
+            return unserialize($this->parameters);
+        }
+        
+        return [];
     }
 
     /**

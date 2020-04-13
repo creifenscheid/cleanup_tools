@@ -42,6 +42,9 @@
             <trans-unit id="label.dryRun">
                 <source>Dry run</source>
             </trans-unit> 
+            <trans-unit id="test">
+                <source>in "%s" context</source>
+            </trans-unit> 
         </body>
     </file>
 </xliff>

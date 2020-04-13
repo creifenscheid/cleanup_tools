@@ -227,9 +227,14 @@ class ConfigurationService implements SingletonInterface
         foreach ($reflection->getDefaultProperties() as $parameterName => $defaultValue) {
             $parameterConfiguraton = [
                 'name' => $parameterName,
-                'type' => \gettype($defaultValue) ? $configuration['mapping']['parameter'][$parameterName] : \gettype($defaultValue),
-                'mandatory' => $defaultValue === null
+                'mandatory' => ($defaultValue === null)
             ];
+            
+            if (\gettype($defaultValue) && \gettype($defaultValue) !== 'NULL') {
+                $parameterConfiguraton['type'] = \gettype($defaultValue);
+            } else if ($configuration['mapping']['parameter'][$parameterName]) {
+                $parameterConfiguraton['type'] = $configuration['mapping']['parameter'][$parameterName];
+            }
 
             if ($defaultValue !== null) {
                 $parameterConfiguraton['default'] = $defaultValue;

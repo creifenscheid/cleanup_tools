@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use function call_user_func_array;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -52,13 +53,25 @@ class CleanupService
     const EXECUTION_CONTEXT_SCHEDULER = 2;
     const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
     const EXECUTION_CONTEXT_DBHOOK = 4;
+    
+    
+    // Execution mode
+    const USE_CLASS_PROPERTIES = 0;
+    const USE_METHOD_PROPERTIES = 1;
 
     /**
      * Execution context
      *
      * @var int
      */
-    protected $executionContext = 0;
+    protected $executionContext = self::EXECUTION_CONTEXT_BEMODULE;
+    
+    /**
+     * Execution mode
+     *
+     * @var int
+     */
+    protected $executionMode = self::USE_CLASS_PROPERTIES;
     
     /**
      * Dry run
@@ -114,6 +127,18 @@ class CleanupService
     {
         $this->executionContext = $executionContext;
     }
+    
+    /**
+     * Set execution mode
+     *
+     * @param int $executionMode
+     *
+     * @return void
+     */
+    public function setExecutionMode(int $executionMode) : void
+    {
+        $this->executionMode = $executionMode;
+    }
 
     /**
      * Set dry run
@@ -140,9 +165,6 @@ class CleanupService
      */
     public function process(string $class, string $method, array $parameters = null)
     {
-        // define return var
-        $return = false;
-        
         // init service
         $service = $this->objectManager->get($class);
         
@@ -169,37 +191,48 @@ class CleanupService
         
         // if parameter are given
         if ($parameters) {
-
-            // set parameter
-            foreach($parameters as $parameter => $value) {
-                $propertyReflection = $reflection->getProperty($parameter);
-                
-                if ($propertyReflection->isPublic()) {
-                    $service->$parameter = $value;
-                } else {
-                    $setter = 'set'.ucfirst($parameter);
+            
+            if ($this->executionMode === self::USE_METHOD_PROPERTIES) {
+                // call method with parameter
+                $return = call_user_func_array([$service, $method], $parameters);
+            } else {
+                // flag to handle if method can be run
+                $runMethod = true;
+            
+                // set parameter
+                foreach($parameters as $parameter => $value) {
+                    $propertyReflection = $reflection->getProperty($parameter);
                     
-                    if(method_exists($service, $setter)) {
-                        $service->$setter($value);
+                    if ($propertyReflection->isPublic()) {
+                        $service->$parameter = $value;
                     } else {
-                    
-                        $message = 'Property '.$parameter.' is not public and no setter is given.';
-                    
-                        // create new message
-                        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
-                        $newLogMessage->setLog($log);
-                        $newLogMessage->setMessage($message);
-        
-                        // add message to log
-                        $log->addMessage($newLogMessage);
+                        $setter = 'set'.ucfirst($parameter);
                         
-                        return false;
+                        if(method_exists($service, $setter)) {
+                            $service->$setter($value);
+                        } else {
+                            
+                            $message = 'Property '.$parameter.' is not public and no setter is given.';
+                            
+                            // create new message
+                            $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+                            $newLogMessage->setLog($log);
+                            $newLogMessage->setMessage($message);
+                            
+                            // add message to log
+                            $log->addMessage($newLogMessage);
+                            
+                            $return = false;
+                            $runMethod = false;
+                        }
                     }
                 }
+                
+                // call method
+                if ($runMethod) {
+                    $return = $service->$method();
+                }
             }
-
-            // call method
-            $return = $service->$method();
         } else {
             
             // set dry run
@@ -207,6 +240,10 @@ class CleanupService
             
             // call method
             $return = $service->$method();
+        }
+        
+        if (!$return || ($return instanceof FlashMessage && $return->getSeverity() === FlashMessage::ERROR)) {
+            $log->setState(false);
         }
         
         // get updated log from service and add to repository

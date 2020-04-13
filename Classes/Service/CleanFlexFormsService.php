@@ -1,15 +1,15 @@
 <?php
-declare(strict_types=1);
-
+declare(strict_types = 1);
 namespace SPL\SplCleanupTools\Service;
 
-use PDO;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use PDO;
 
 /**
  * *************************************************************
@@ -41,41 +41,80 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * Class CleanFlexFormsService
  * Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value
- * Originally taken from: \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
+ * @see \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanFlexFormsService extends AbstractCleanupService
 {
     /**
-     * pid
+     * Setting start page in page tree.
+     * Default is the page tree root, 0 (zero)
      *
      * @var int $pid
      */
     protected $pid = 0;
 
     /**
-     * depth
+     * Setting traversal depth.
+     * 0 (zero) will only analyze start page (see --pid), 1 will traverse one level of subpages etc.
      *
      * @var int $depth
      */
     protected $depth = 1000;
     
     /**
-     * recordUid
-     * 
-     * @var integer
+     * Returns pid
+     *
+     * @return int
      */
-    protected $recordUid = 0;
+    public function getPid(): int
+    {
+        return $this->pid;
+    }
+    
+    /**
+     * Sets pid
+     *
+     * @param int $pid
+     *
+     * @return void
+     */
+    public function setPid(int $pid): void
+    {
+        $this->pid = $pid;
+    }
+    
+    /**
+     * Returns depth
+     *
+     * @return int
+     */
+    public function getDepth(): int
+    {
+        return $this->depth;
+    }
+    
+    /**
+     * Sets depth
+     *
+     * @param int $depth
+     *
+     * @return void
+     */
+    public function setDepth(int $depth): void
+    {
+        $this->depth = $depth;
+    }
 
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
      *
-     * @return int|bool
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage 
      */
-    public function execute()
-    {
+    public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage
+    {   
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 
@@ -83,63 +122,69 @@ class CleanFlexFormsService extends AbstractCleanupService
         $recordsToUpdate = $this->findAllDirtyFlexformsInPage($startingPoint, $depth);
 
         if ($this->dryRun) {
-            return count($recordsToUpdate);
-        } else {
-            if (!empty($recordsToUpdate)) {
-                // Clean up records
-                return $this->cleanFlexFormRecords($recordsToUpdate);
-            }
+            $message = 'Found ' . count($recordsToUpdate) . ' records with wrong FlexForms information.';
+            $this->addMessage($message);
+            return $this->createFlashMessage(FlashMessage::INFO, $message);
         }
 
-        return true;
+        if (! empty($recordsToUpdate)) {
+            // Clean up the records now
+            return $this->cleanFlexFormRecords($recordsToUpdate);
+        } else {
+            $message = 'Nothing to do - You\'re all set!';
+            $this->addMessage($message);
+            return $this->createFlashMessage(FlashMessage::OK, $message);
+        }
     }
-    
+
     /**
      * Execute for defined element
      *
-     * @param int $uid
+     * @param int $recordUid
      */
-    public function executeByUid()
+    public function executeByUid(int $recordUid)
     {
-        GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-    
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+
+        $records = [];
+
         $queryBuilder->select('*')
             ->from('tt_content')
-            ->where(
-                $queryBuilder->expr()->isNotNull('pi_flexform')
-            )->andWhere(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT))
-            );
+            ->where($queryBuilder->expr()
+            ->isNotNull('pi_flexform'))
+            ->andWhere($queryBuilder->expr()
+            ->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT)));
 
-        $records = $queryBuilder->execute()->fetchAll();
-        
+            $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
+
         return $this->cleanFlexFormRecords($records);
     }
-    
+
     /**
      * Validate given data
      *
      * @param array $data
      */
-    public function isValid (array $data) : bool
+    public function isValid(array $data): bool
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
-        
         $cleanFlexForm = $flexObj->cleanFlexFormXML('tt_content', 'pi_flexform', $data);
-        
         return ($cleanFlexForm === $data['pi_flexform']);
     }
 
     /**
      * Recursive traversal of page tree
      *
-     * @param int   $pageId              Page root id
-     * @param int   $depth               Depth
-     * @param array $dirtyFlexFormFields the list of all previously found flexform fields
-     *
+     * @param int $pageId
+     *            Page root id
+     * @param int $depth
+     *            Depth
+     * @param array $dirtyFlexFormFields
+     *            the list of all previously found flexform fields
+     *            
      * @return array
      */
-    protected function findAllDirtyFlexformsInPage(int $pageId, int $depth, array $dirtyFlexFormFields = []) : array
+    protected function findAllDirtyFlexformsInPage(int $pageId, int $depth, array $dirtyFlexFormFields = []): array
     {
         if ($pageId > 0) {
             $dirtyFlexFormFields = $this->compareAllFlexFormsInRecord('pages', $pageId, $dirtyFlexFormFields);
@@ -156,7 +201,7 @@ class CleanFlexFormsService extends AbstractCleanupService
                 $result = $queryBuilder->select('uid')
                     ->from($tableName)
                     ->where($queryBuilder->expr()
-                        ->eq('pid', $queryBuilder->createNamedParameter($pageId, PDO::PARAM_INT)))
+                    ->eq('pid', $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)))
                     ->execute();
 
                 while ($rowSub = $result->fetch()) {
@@ -166,7 +211,7 @@ class CleanFlexFormsService extends AbstractCleanupService
                     $versions = BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
                     if (is_array($versions)) {
                         foreach ($versions as $verRec) {
-                            if (!$verRec['_CURRENT_VERSION']) {
+                            if (! $verRec['_CURRENT_VERSION']) {
                                 // Traverse flexforms
                                 $dirtyFlexFormFields = $this->compareAllFlexFormsInRecord($tableName, $verRec['uid'], $dirtyFlexFormFields);
                             }
@@ -178,7 +223,7 @@ class CleanFlexFormsService extends AbstractCleanupService
 
         // Find subpages
         if ($depth > 0) {
-            $depth--;
+            $depth --;
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 
             $queryBuilder->getRestrictions()->removeAll();
@@ -186,7 +231,7 @@ class CleanFlexFormsService extends AbstractCleanupService
             $result = $queryBuilder->select('uid')
                 ->from('pages')
                 ->where($queryBuilder->expr()
-                    ->eq('pid', $queryBuilder->createNamedParameter($pageId, PDO::PARAM_INT)))
+                ->eq('pid', $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)))
                 ->orderBy('sorting')
                 ->execute();
 
@@ -199,13 +244,12 @@ class CleanFlexFormsService extends AbstractCleanupService
             $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
             if (is_array($versions)) {
                 foreach ($versions as $verRec) {
-                    if (!$verRec['_CURRENT_VERSION']) {
+                    if (! $verRec['_CURRENT_VERSION']) {
                         $dirtyFlexFormFields = $this->findAllDirtyFlexformsInPage($verRec['uid'], $depth, $dirtyFlexFormFields);
                     }
                 }
             }
         }
-
         return $dirtyFlexFormFields;
     }
 
@@ -213,13 +257,16 @@ class CleanFlexFormsService extends AbstractCleanupService
      * Check a specific record on all TCA columns if they are FlexForms and if the FlexForm values
      * don't match to the newly defined ones.
      *
-     * @param string $tableName           Table name
-     * @param int    $uid                 UID of record in processing
-     * @param array  $dirtyFlexFormFields the existing FlexForm fields
-     *
+     * @param string $tableName
+     *            Table name
+     * @param int $uid
+     *            UID of record in processing
+     * @param array $dirtyFlexFormFields
+     *            the existing FlexForm fields
+     *            
      * @return array the updated list of dirty FlexForm fields
      */
-    protected function compareAllFlexFormsInRecord(string $tableName, int $uid, array $dirtyFlexFormFields = []) : array
+    protected function compareAllFlexFormsInRecord(string $tableName, int $uid, array $dirtyFlexFormFields = []): array
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
         foreach ($GLOBALS['TCA'][$tableName]['columns'] as $columnName => $columnConfiguration) {
@@ -230,7 +277,7 @@ class CleanFlexFormsService extends AbstractCleanupService
                 $fullRecord = $queryBuilder->select('*')
                     ->from($tableName)
                     ->where($queryBuilder->expr()
-                        ->eq('uid', $queryBuilder->createNamedParameter($uid, PDO::PARAM_INT)))
+                    ->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)))
                     ->execute()
                     ->fetch();
 
@@ -243,7 +290,6 @@ class CleanFlexFormsService extends AbstractCleanupService
                 }
             }
         }
-
         return $dirtyFlexFormFields;
     }
 
@@ -252,9 +298,9 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param array $records
      *
-     * @return bool
+     * @return FlashMessage
      */
-    protected function cleanFlexFormRecords(array $records) : bool
+    protected function cleanFlexFormRecords(array $records): FlashMessage
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
 
@@ -266,15 +312,18 @@ class CleanFlexFormsService extends AbstractCleanupService
         // Setting this option allows to also update deleted records (or records on deleted pages) within DataHandler
         $dataHandler->bypassAccessCheckForRecords = true;
 
+        // error counter
+        $errors = 0;
+
         // Loop through all tables and their records
-        $errorOccurred = false;
         foreach ($records as $recordIdentifier => $fullRecord) {
-            [$table, $uid, $field] = explode(':', $recordIdentifier);
+            list ($table, $uid, $field) = explode(':', $recordIdentifier);
             // Clean XML now
             $data = [];
             if ($fullRecord[$field]) {
                 $data[$table][$uid][$field] = $flexObj->cleanFlexFormXML($table, $field, $fullRecord);
             } else {
+                $this->addMessage('The field "' . $field . '" in record "' . $table . ':' . $uid . '" was not found.');
                 continue;
             }
             $dataHandler->start($data, []);
@@ -284,82 +333,18 @@ class CleanFlexFormsService extends AbstractCleanupService
                 $errorMessage = array_merge([
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
-
                 $this->addMessage($errorMessage);
-                $errorOccurred = true;
+                $errors++;
+            } else {
+                $this->addMessage('Updated FlexForm in record "' . $table . ':' . $uid . '".');
             }
         }
-        
-        if ($errorOccurred) {
-            return false;
+
+        if ($errors > 0) {
+            $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
+            return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
         
-        return true;
-    }
-
-    /**
-     * Returns pid
-     *
-     * @return int
-     */
-    public function getPid() : int
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Sets pid
-     *
-     * @param int $pid
-     *
-     * @return void
-     */
-    public function setPid(int $pid) : void
-    {
-        $this->pid = $pid;
-    }
-
-    /**
-     * Returns depth
-     *
-     * @return int
-     */
-    public function getDepth() : int
-    {
-        return $this->depth;
-    }
-
-    /**
-     * Sets depth
-     *
-     * @param int $depth
-     *
-     * @return void
-     */
-    public function setDepth(int $depth) : void
-    {
-        $this->depth = $depth;
-    }
-    
-    /**
-     * Returns recordUid
-     *
-     * @return int
-     */
-    public function getRecordUid() : int
-    {
-        return $this->recordUid;
-    }
-    
-    /**
-     * Sets recordUid
-     *
-     * @param int $recordUid
-     *
-     * @return void
-     */
-    public function setRecordUid(int $recordUid) : void
-    {
-        $this->recordUid = $recordUid;
+        return $this->createFlashMessage();
     }
 }

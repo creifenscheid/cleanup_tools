@@ -10,22 +10,31 @@ define([
             url: uri,
             method: 'post',
             success: function (response) {
-                if (response.status === 'ok') {
-                    top.TYPO3.Notification.success(response.headline, response.message);
-
-                    if (recordUid) {
-                        const hideElementOnSuccess = $('.hide-on-success-' + recordUid);
-
-                        if (hideElementOnSuccess.length) {
-                            hideElementOnSuccess.hide();
-                        }
-
-                    }
-                } else if (response.status === 'info'){
-                	top.TYPO3.Notification.info(response.headline, response.message, 0);
-                } else {
-                    top.TYPO3.Notification.error(response.headline, response.message);
-                }
+            	switch (response.severity) {
+            		case '-2':
+          	  			top.TYPO3.Notification.notice(response.headline, response.message);
+          	  			break;
+            		case '-1':
+            			top.TYPO3.Notification.info(response.headline, response.message);
+            			break;
+            		case '1':
+            			top.TYPO3.Notification.warning(response.headline, response.message);
+            			break;
+            		case '2':
+            			top.TYPO3.Notification.error(response.headline, response.message);
+            			break;
+            		case '0':
+            			top.TYPO3.Notification.success(response.headline, response.message);
+            			
+            			if (recordUid) {
+            				const hideElementOnSuccess = $('.hide-on-success-' + recordUid);
+            				
+            				if (hideElementOnSuccess.length) {
+            					hideElementOnSuccess.hide();
+            				}
+            			}
+            			break;
+            	}
             },
             error: function () {
                 top.TYPO3.Notification.error('Something went wrong', 'Unfortunately, the ajax call failed.');

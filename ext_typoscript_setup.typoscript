@@ -32,27 +32,11 @@ module.tx_splcleanuptools {
 	        
 	        mapping {
 		        parameter {
-		        	pid = int
-		        	depth = int
-		        	dryRun = bool
+		        	pid = integer
+		        	depth = integer
+		        	dryRun = boolean
 		        }
 	        }
 		}
-		
-        SPL\SplCleanupTools\Service\DeletedRecordsService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-		
-        SPL\SplCleanupTools\Service\FilesWithMultipleReferencesService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-	}  
+	}
 }
