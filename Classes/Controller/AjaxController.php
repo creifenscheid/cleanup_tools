@@ -9,6 +9,7 @@ use SPL\SplCleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Backend\Module\BaseScriptClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -122,18 +123,22 @@ class AjaxController extends BaseScriptClass
             }
             
             if ($result) {
-                // todo extract information from returned flash message and generste flyout
+                $return = [
+                    'severity' => (string)$result->getSeverity(),
+                    'headline' => $result->getTitle(),
+                    'message' => $result->getMessage()
+                ];
                 
             } else {
                 $return = [
-                    'status' => 'error',
+                    'severity' => (string)FlashMessage::ERROR,
                     'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$class])
                 ];
             }
         } else {
             $return = [
-                'status' => 'error',
+                'severity' => (string)FlashMessage::ERROR,
                 'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                 'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'SplCleanupTools')
             ];

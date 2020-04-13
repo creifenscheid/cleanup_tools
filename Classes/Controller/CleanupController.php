@@ -68,7 +68,7 @@ class CleanupController extends BaseController
         if (!empty($this->configurationService->getErrorServices())) {
             $this->addFlashMessage(
                 LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [implode(',',$this->cleanupService->getErrorServices())]),
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),
+                LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),
                 FlashMessage::WARNING
             );
 
@@ -122,20 +122,20 @@ class CleanupController extends BaseController
             $return = $this->cleanupService->process($service['class'], $method, $methodParameter);
             
             if ($return) {
-                
-                // render flash message
-                $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
-$messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-$messageQueue->addMessage($resultMessage);
+                $this->addFlashMessage(
+                    $return->getMessage(),
+                    $return->getTitle(),
+                    $return->getSeverity()
+                );
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     FlashMessage::ERROR
                 );
-
             }
 
-        $this->forward('index', 'Cleanup', 'SplCleanupTools');
+            $this->forward('index', 'Cleanup', 'SplCleanupTools');
+        }
     }
 }

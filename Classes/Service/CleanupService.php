@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use function call_user_func_array;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -241,8 +242,7 @@ class CleanupService
             $return = $service->$method();
         }
         
-        // todo if !return or message:ERROR
-        if (!$return) {
+        if (!$return || ($return instanceof FlashMessage && $return->getSeverity() === FlashMessage::ERROR)) {
             $log->setState(false);
         }
         

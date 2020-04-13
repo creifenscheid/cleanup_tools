@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use PDO;
 
 /**
@@ -110,9 +111,9 @@ class CleanFlexFormsService extends AbstractCleanupService
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
      *
-     * @return int|bool
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage 
      */
-    public function execute()
+    public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage
     {   
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
@@ -123,7 +124,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         if ($this->dryRun) {
             $message = 'Found ' . count($recordsToUpdate) . ' records with wrong FlexForms information.';
             $this->addMessage($message);
-            return $message;
+            return $this->createFlashMessage(FlashMessage::INFO, $message);
         }
 
         if (! empty($recordsToUpdate)) {
@@ -132,7 +133,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         } else {
             $message = 'Nothing to do - You\'re all set!';
             $this->addMessage($message);
-            return $message;
+            return $this->createFlashMessage(FlashMessage::OK, $message);
         }
     }
 
@@ -297,9 +298,9 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param array $records
      *
-     * @return bool
+     * @return FlashMessage
      */
-    protected function cleanFlexFormRecords(array $records): bool
+    protected function cleanFlexFormRecords(array $records): FlashMessage
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
 
@@ -328,21 +329,22 @@ class CleanFlexFormsService extends AbstractCleanupService
             $dataHandler->start($data, []);
             $dataHandler->process_datamap();
             // Return errors if any:
-            if (! empty($dataHandler->errorLog)) {
+            if (!empty($dataHandler->errorLog)) {
                 $errorMessage = array_merge([
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
                 $this->addMessage($errorMessage);
-                $errors ++;
+                $errors++;
             } else {
                 $this->addMessage('Updated FlexForm in record "' . $table . ':' . $uid . '".');
             }
         }
 
         if ($errors > 0) {
-            return $errors;
+            $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
+            return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-
-        return true;
+        
+        return $this->createFlashMessage();
     }
 }

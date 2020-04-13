@@ -4,6 +4,7 @@ namespace SPL\SplCleanupTools\Hooks;
 
 use SPL\SplCleanupTools\Service\CleanupService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -48,11 +49,11 @@ class AfterDatabaseOperationsHook
      * @param integer $recordUid
      * @param array   $fields
      *
-     * @return bool
+     * @return bool|FlashMessage
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function processDatamap_afterDatabaseOperations($status, $table, $recordUid, $fields) : bool
+    public function processDatamap_afterDatabaseOperations($status, $table, $recordUid, $fields)
     {
         // define field to check on
         $fieldName = 'pi_flexform';
