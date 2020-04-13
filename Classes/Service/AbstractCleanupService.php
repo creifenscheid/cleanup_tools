@@ -2,6 +2,8 @@
 
 namespace SPL\SplCleanupTools\Service;
 
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 /**
  * *************************************************************
  *
@@ -39,8 +41,10 @@ abstract class AbstractCleanupService
 {
     /**
      * Execute cleanup process
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    abstract public function execute();
+    abstract public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage;
 
     /*
      * dry run
@@ -132,5 +136,27 @@ abstract class AbstractCleanupService
         
         // add message to log
         $this->log->addMessage($newLogMessage);
+    }
+    
+    /**
+     * Create flash messsage object 
+     *
+     * @param int $severityLevel
+     * @param string $message
+     * @param null|string $headline
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
+     */
+    protected function createFlashMessage (int $severityLevel, string $message, $headline = null) : \TYPO3\CMS\Core\Messaging\FlashMessage
+    {
+        // define headline
+        $headline = $headline ? : LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'SplCleanupTools')
+        
+        // initialize and return flash message object
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessage::class,
+   $message,
+   $headline,
+   $severityLevel
+);
     }
 }
