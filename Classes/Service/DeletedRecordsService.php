@@ -3,12 +3,11 @@ declare(strict_types = 1);
 namespace SPL\SplCleanupTools\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use PDO;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -130,7 +129,7 @@ class DeletedRecordsService extends AbstractCleanupService
             
             $message = 'Found ' . $totalAmountOfRecords . ' records in ' . $totalAmountOfTables . ' database tables ready to be deleted.';
             $this->addMessage($message);
-            return $message;
+            return $this->createFlashMessage(FlashMessage::INFO, $message);
         } else {
             // actually permanently delete them
             return $this->deleteRecords($deletedRecords);
@@ -320,9 +319,10 @@ class DeletedRecordsService extends AbstractCleanupService
         }
         
         if ($errors > 0) {
-            return $errors;
+            $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
+            return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
         
-        return true;
+        return $this->createFlashMessage();
     }
 }
