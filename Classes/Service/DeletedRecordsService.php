@@ -108,8 +108,10 @@ class DeletedRecordsService extends AbstractCleanupService
     
     /**
      * Executes the command to find and permanently delete records which are marked as deleted
+     * 
+     * @return FlashMessage
      */
-    public function execute()
+    public function execute() : FlashMessage
     {
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         
