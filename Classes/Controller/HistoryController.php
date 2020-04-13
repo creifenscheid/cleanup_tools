@@ -80,10 +80,10 @@ class HistoryController extends BaseController
     /**
      * Action to mark logs and messages as deleted based on given time
      *
-     * @param int $olderThen - Mark all entries with a >crdate as deleted
+     * @param string $logLifetime - Mark all entries with a >crdate as deleted
      * @param bool $dropAlreadyDeleted - Deleted all entries marked as deleted
      */
-    public function cleanupAction (int $olderThen, bool $dropAlreadyDeleted) : void
+    public function cleanupAction (string $logLifetime, bool $dropAlreadyDeleted) : void
     {
         
     }

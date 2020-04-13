@@ -47,6 +47,13 @@ class CleanupHistoryTask extends AbstractTask
     protected $dropAlreadyDeleted = true;
     
     /**
+     * Lifetime of log entries
+     *
+     * @var string
+     */
+    protected $logLifetime = '1 year';
+    
+    /**
      * Execute function
      *
      * @return bool
@@ -78,5 +85,27 @@ class CleanupHistoryTask extends AbstractTask
     public function setDropAlreadyDeleted(bool $dropAlreadyDeleted) : void
     {
         $this->dropAlreadyDeleted = $dropAlreadyDeleted;
+    }
+    
+    /**
+     * Return log lifetime
+     *
+     * @return string
+     */
+    public function getLogLifetime () : string
+    {
+        return $this->logLifetime;
+    }
+    
+    
+    /**
+     * Set log lifetime
+     *
+     * @param string $logLifetime
+     * @return void
+     */
+    public function setLogLifetime (string $logLifetime) : void
+    {
+        $this->logLifetime = $logLifetime;
     }
 }

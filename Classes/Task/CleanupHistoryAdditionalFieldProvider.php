@@ -51,6 +51,13 @@ class CleanupHistoryAdditionalFieldProvider extends AbstractAdditionalFieldProvi
     protected $dropAlreadyDeleted = true;
     
     /**
+     * Log lifetime
+     *
+     * @var string
+     */
+    protected $logLifetime = '1 year';
+    
+    /**
      * Task name
      *
      * @var string
