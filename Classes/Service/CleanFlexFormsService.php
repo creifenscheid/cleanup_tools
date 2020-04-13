@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use PDO;
 
 /**
@@ -40,14 +41,13 @@ use PDO;
 /**
  * Class CleanFlexFormsService
  * Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value
- * Originally taken from: \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
+ * @see \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
  * @author Christian Reifenscheid
  */
 class CleanFlexFormsService extends AbstractCleanupService
 {
-
     /**
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
@@ -63,21 +63,58 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @var int $depth
      */
     protected $depth = 1000;
-
+    
     /**
-     * Setting record uid to perform clean up process for this specific element
+     * Returns pid
      *
-     * @var integer
+     * @return int
      */
-    protected $recordUid = 0;
+    public function getPid(): int
+    {
+        return $this->pid;
+    }
+    
+    /**
+     * Sets pid
+     *
+     * @param int $pid
+     *
+     * @return void
+     */
+    public function setPid(int $pid): void
+    {
+        $this->pid = $pid;
+    }
+    
+    /**
+     * Returns depth
+     *
+     * @return int
+     */
+    public function getDepth(): int
+    {
+        return $this->depth;
+    }
+    
+    /**
+     * Sets depth
+     *
+     * @param int $depth
+     *
+     * @return void
+     */
+    public function setDepth(int $depth): void
+    {
+        $this->depth = $depth;
+    }
 
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
      *
-     * @return int|bool
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage 
      */
-    public function execute()
-    {
+    public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage
+    {   
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 
@@ -87,7 +124,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         if ($this->dryRun) {
             $message = 'Found ' . count($recordsToUpdate) . ' records with wrong FlexForms information.';
             $this->addMessage($message);
-            return $message;
+            return $this->createFlashMessage(FlashMessage::INFO, $message);
         }
 
         if (! empty($recordsToUpdate)) {
@@ -96,16 +133,16 @@ class CleanFlexFormsService extends AbstractCleanupService
         } else {
             $message = 'Nothing to do - You\'re all set!';
             $this->addMessage($message);
-            return $message;
+            return $this->createFlashMessage(FlashMessage::OK, $message);
         }
     }
 
     /**
      * Execute for defined element
      *
-     * @param int $uid
+     * @param int $recordUid
      */
-    public function executeByUid()
+    public function executeByUid(int $recordUid)
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 
@@ -116,9 +153,9 @@ class CleanFlexFormsService extends AbstractCleanupService
             ->where($queryBuilder->expr()
             ->isNotNull('pi_flexform'))
             ->andWhere($queryBuilder->expr()
-            ->eq('uid', $queryBuilder->createNamedParameter($this->recordUid, PDO::PARAM_INT)));
+            ->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT)));
 
-        $records['tt_content:' . $this->recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
+            $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
 
         return $this->cleanFlexFormRecords($records);
     }
@@ -261,9 +298,9 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param array $records
      *
-     * @return bool
+     * @return FlashMessage
      */
-    protected function cleanFlexFormRecords(array $records): bool
+    protected function cleanFlexFormRecords(array $records): FlashMessage
     {
         $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
 
@@ -292,87 +329,22 @@ class CleanFlexFormsService extends AbstractCleanupService
             $dataHandler->start($data, []);
             $dataHandler->process_datamap();
             // Return errors if any:
-            if (! empty($dataHandler->errorLog)) {
+            if (!empty($dataHandler->errorLog)) {
                 $errorMessage = array_merge([
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
                 $this->addMessage($errorMessage);
-                $errors ++;
+                $errors++;
             } else {
                 $this->addMessage('Updated FlexForm in record "' . $table . ':' . $uid . '".');
             }
         }
 
         if ($errors > 0) {
-            return $errors;
+            $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
+            return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-
-        return true;
-    }
-
-    /**
-     * Returns pid
-     *
-     * @return int
-     */
-    public function getPid(): int
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Sets pid
-     *
-     * @param int $pid
-     *
-     * @return void
-     */
-    public function setPid(int $pid): void
-    {
-        $this->pid = $pid;
-    }
-
-    /**
-     * Returns depth
-     *
-     * @return int
-     */
-    public function getDepth(): int
-    {
-        return $this->depth;
-    }
-
-    /**
-     * Sets depth
-     *
-     * @param int $depth
-     *
-     * @return void
-     */
-    public function setDepth(int $depth): void
-    {
-        $this->depth = $depth;
-    }
-
-    /**
-     * Returns recordUid
-     *
-     * @return int
-     */
-    public function getRecordUid(): int
-    {
-        return $this->recordUid;
-    }
-
-    /**
-     * Sets recordUid
-     *
-     * @param int $recordUid
-     *
-     * @return void
-     */
-    public function setRecordUid(int $recordUid): void
-    {
-        $this->recordUid = $recordUid;
+        
+        return $this->createFlashMessage();
     }
 }

@@ -9,52 +9,79 @@ Developer Corner
 
 Target group: **Developers**
 
-This is your opportunity to pass on information to other developers who may be using your extension.
+Developing your own service
+---------------------------
 
-Use this section to provide examples of code or detail any information that would be deemed relevant to a developer.
+1. Extend \\SPL\\SplCleanupTools\\Services\\AbstractCleanupService
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You may wish to explain how a certain feature was implemented or detail any changes that might of been 
-made to the extension.
+What you get:
 
-.. _developer-hooks:
+* class var $dryRun (default: true)
+* class var $log
+* method addMessage() to create a log message which is added to the log entry of each run
+* method addLLLMessage() to create a log messsge based on a localization key
 
-Hooks
-=====
+2. Set up required execute function with your needs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Possible hook examples. Input parameters are:
+Every registered service has to provide a function named „execute“. Otherwise your service is not added to the backend module or any other execution context.
 
-+----------------+---------------+---------------------------------+
-| Parameter      | Data type     | Description                     |
-+================+===============+=================================+
-| $table         | string        | Name of the table               |
-+----------------+---------------+---------------------------------+
-| $field         | string        | Name of the field               |
-+----------------+---------------+---------------------------------+
+3. Setting up your service
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use parameter :code:`$table` to retrieve the table name...
+If your service requires configurable parameters to run, e.g. depth or pageId, be sure to define them as class property. If you don’t provide default values, the fields are mandatory in the backend module, otherwise they are optional. 
+Make sure that your properties are either public or can be set by a corresponding setter.
 
-.. _developer-api:
+All properties are parsed to set up the service form in the backend module automatically. 
+The corresponding form field is based on the var type definition.
 
-API
-===
+The return has to be a flash message object.
+This can be easly done by using the method "createFlashMessage()".
+You can set the severity level, a message and a headline.
+All these are optional, by default a success message is created.
 
-How to use the API...
+4. Example
+~~~~~~~~~~
 
 .. code-block:: php
 
-   $stuff = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-      '\\Foo\\Bar\\Utility\\Stuff'
-   );
-   $stuff->do();
+   <?php
+   namespace Vendor\MyExtension\Service;
 
-or some other language:
+   class MyService extends \SPL\SplCleanupTools\Service\AbstractCleanupService
+   {
+        /**
+         * my first class var
+         *
+         * @var int
+         */
+        public $myFirstVar = 1000;
+   		
+        /**
+         * my second class var
+         * 
+         * @var bool
+         */
+        proteted $mySecondVar = true;
+        
+        /**
+         * Setter
+         */
+        public function setMySecondVar (bool $mySecondVar) {
+            $this->mySecondVar = $mySecondVar;
+        }
+   		
+        /**
+         * Execute function
+         */
+        public function execute() {
+            // insert your magic here
+            return $this->createFlashMessage([FlashMessage::INFO], [$message], [$headline]);
+        }
+   }
 
-.. code-block:: javascript
-   :linenos:
-   :emphasize-lines: 2-4
+Register your own service
+-------------------------
 
-   $(document).ready(
-      function () {
-         doStuff();
-      }
-   );
+Service registration is done with typoscript (see :ref:`typoscriptConfiguration`)

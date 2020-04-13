@@ -68,7 +68,7 @@ class CleanupController extends BaseController
         if (!empty($this->configurationService->getErrorServices())) {
             $this->addFlashMessage(
                 LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [implode(',',$this->cleanupService->getErrorServices())]),
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),
+                LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),
                 FlashMessage::WARNING
             );
 
@@ -119,31 +119,14 @@ class CleanupController extends BaseController
                 }
             }
 
-            $result = $this->cleanupService->process($service['class'], $method, $methodParameter);
-
-            if ($result) {
-
-                if (\is_int($result)) {
-                    $this->addFlashMessage(
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.message', 'SplCleanupTools', [$service['class'],$result]),
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.warning.headline', 'SplCleanupTools'),
-                        FlashMessage::WARNING
-                    );
-
-                } else if (\is_string($result)) {
-                    $this->addFlashMessage(
-                        $result,
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.completed.headline', 'SplCleanupTools'),
-                        FlashMessage::INFO
-                    );
-                } else {
-                    $this->addFlashMessage(
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$service['class']]),
-                        LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                        FlashMessage::OK
-                    );
-                }
-
+            $return = $this->cleanupService->process($service['class'], $method, $methodParameter);
+            
+            if ($return) {
+                $this->addFlashMessage(
+                    $return->getMessage(),
+                    $return->getTitle(),
+                    $return->getSeverity()
+                );
             } else {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),
@@ -151,8 +134,8 @@ class CleanupController extends BaseController
                     FlashMessage::ERROR
                 );
             }
-        }
 
-        $this->forward('index', 'Cleanup', 'SplCleanupTools');
+            $this->forward('index', 'Cleanup', 'SplCleanupTools');
+        }
     }
 }

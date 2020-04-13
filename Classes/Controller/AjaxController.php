@@ -9,6 +9,7 @@ use SPL\SplCleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Backend\Module\BaseScriptClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -92,14 +93,20 @@ class AjaxController extends BaseScriptClass
         // get query params
         $queryParams = $request->getQueryParams();
 
-        // get execution context from query params
-        $executionContext = $queryParams['executionContext'] ? : null;
-        $this->cleanupService->setExecutionContext($executionContext);
+        // get execution context
+        if ($queryParams['executionContext']) {
+            $this->cleanupService->setExecutionContext($queryParams['executionContext']);
+        }
         
-        // get clean class from query params
+        // get execution mode
+        if ($queryParams['executionMode']) {
+            $this->cleanupService->setExecutionMode($queryParams['executionMode']);
+        }
+        
+        // get clean class
         $class = $queryParams['class'] ? : null;
         
-        // get clean command from query params
+        // get clean command
         $method = $queryParams['method'] ? : null;
 
         // get record uid if a specific record shall be cleaned
@@ -114,35 +121,24 @@ class AjaxController extends BaseScriptClass
             } else {
                 $result = $this->cleanupService->process($class, $method);
             }
-
+            
             if ($result) {
-                
-                if (\is_int($result)) {
-                    $return = [
-                        'status' => 'info',
-                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.headline', 'SplCleanupTools'),
-                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.dryrun.message', 'SplCleanupTools', [$class,$result])
-                    ];
-                    
-                } else {
-                    $return = [
-                        'status' => 'ok',
-                        'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.headline', 'SplCleanupTools'),
-                        'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools', [$class])
-                    ];
-                }
-                
+                $return = [
+                    'severity' => (string)$result->getSeverity(),
+                    'headline' => $result->getTitle(),
+                    'message' => $result->getMessage()
+                ];
                 
             } else {
                 $return = [
-                    'status' => 'error',
+                    'severity' => (string)FlashMessage::ERROR,
                     'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                     'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$class])
                 ];
             }
         } else {
             $return = [
-                'status' => 'error',
+                'severity' => (string)FlashMessage::ERROR,
                 'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
                 'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'SplCleanupTools')
             ];
