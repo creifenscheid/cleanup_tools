@@ -52,13 +52,25 @@ class CleanupService
     const EXECUTION_CONTEXT_SCHEDULER = 2;
     const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
     const EXECUTION_CONTEXT_DBHOOK = 4;
+    
+    
+    // Execution mode
+    const USE_CLASS_PROPERTIES = 0;
+    const USE_METHOD_PROPERTIES = 1;
 
     /**
      * Execution context
      *
      * @var int
      */
-    protected $executionContext = 0;
+    protected $executionContext = self::EXECUTION_CONTEXT_BEMODULE;
+    
+    /**
+     * Execution mode
+     *
+     * @var int
+     */
+    protected $executionMode = self::USE_CLASS_PROPERTIES;
     
     /**
      * Dry run
@@ -113,6 +125,18 @@ class CleanupService
     public function setExecutionContext(int $executionContext) : void
     {
         $this->executionContext = $executionContext;
+    }
+    
+    /**
+     * Set execution mode
+     *
+     * @param int $executionMode
+     *
+     * @return void
+     */
+    public function setExecutionMode(int $executionMode) : void
+    {
+        $this->executionMode = $executionMode;
     }
 
     /**
@@ -169,37 +193,42 @@ class CleanupService
         
         // if parameter are given
         if ($parameters) {
-
-            // set parameter
-            foreach($parameters as $parameter => $value) {
-                $propertyReflection = $reflection->getProperty($parameter);
-                
-                if ($propertyReflection->isPublic()) {
-                    $service->$parameter = $value;
-                } else {
-                    $setter = 'set'.ucfirst($parameter);
+            
+            if ($this->executionMode === self::USE_METHOD_PROPERTIES) {
+                // call method with parameter
+                $return = call_user_func_array([$service, $method], $parameters);
+            } else {
+                // set parameter
+                foreach($parameters as $parameter => $value) {
+                    $propertyReflection = $reflection->getProperty($parameter);
                     
-                    if(method_exists($service, $setter)) {
-                        $service->$setter($value);
+                    if ($propertyReflection->isPublic()) {
+                        $service->$parameter = $value;
                     } else {
-                    
-                        $message = 'Property '.$parameter.' is not public and no setter is given.';
-                    
-                        // create new message
-                        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
-                        $newLogMessage->setLog($log);
-                        $newLogMessage->setMessage($message);
-        
-                        // add message to log
-                        $log->addMessage($newLogMessage);
+                        $setter = 'set'.ucfirst($parameter);
                         
-                        return false;
+                        if(method_exists($service, $setter)) {
+                            $service->$setter($value);
+                        } else {
+                            
+                            $message = 'Property '.$parameter.' is not public and no setter is given.';
+                            
+                            // create new message
+                            $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+                            $newLogMessage->setLog($log);
+                            $newLogMessage->setMessage($message);
+                            
+                            // add message to log
+                            $log->addMessage($newLogMessage);
+                            
+                            return false;
+                        }
                     }
                 }
+                
+                // call method
+                $return = $service->$method();
             }
-
-            // call method
-            $return = $service->$method();
         } else {
             
             // set dry run
