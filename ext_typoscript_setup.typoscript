@@ -19,7 +19,8 @@ module.tx_splcleanuptools {
 
     settings {
         localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf
-        globalExcludes =
+        # comma separated list of time spans
+        logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
     }
 
     services {

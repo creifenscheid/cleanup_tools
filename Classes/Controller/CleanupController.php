@@ -77,7 +77,8 @@ class CleanupController extends BaseController
         // assign services to the view
         $this->view->assignMultiple([
             'services' => $this->configurationService->getServices(),
-            'localizationFile' => $this->localizationFile
+            'localizationFile' => $this->localizationFile,
+            'logLifetimeOptions' => $this->configurationService->getLogLifetimeOptions()
         ]);
     }
 
