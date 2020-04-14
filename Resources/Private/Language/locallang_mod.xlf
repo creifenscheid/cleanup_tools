@@ -102,6 +102,15 @@
             <trans-unit id="module.history.th.messages">
                 <source>Messages</source>
             </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime">
+                <source>Delete logs older then:</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.dropAlreadyDeleted">
+                <source>Drop entries marked as deleted</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.submit">
+                <source>Clean up</source>
+            </trans-unit>
 
             <!-- TASKS -->
             <trans-unit id="tasks.cleanup.title">

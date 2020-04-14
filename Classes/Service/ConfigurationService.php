@@ -126,7 +126,12 @@ class ConfigurationService implements SingletonInterface
         $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
         
         // set log lifetime options from typoscript config
-        $this->logLifetimeOptions = this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', this->configuration['settings']['logLifetimeOptions'] : [];
+        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        if ($logLifetimeOptions) {
+            foreach($logLifetimeOptions as $logLifetimeOption) {
+                $this->logLifetimeOptions[$logLifetimeOption] = $logLifetimeOption;
+            }
+        }
 
         // loop through configured utilities
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {

@@ -59,6 +59,26 @@
   background-color: white; }
   .spl-cleanup-tools-be-module.history .log-message td {
     border-top: 0; }
+.spl-cleanup-tools-be-module.history .cleanup-history-form {
+  justify-content: space-between;
+  background-color: #ededed;
+  padding: 10px 20px; }
+  .spl-cleanup-tools-be-module.history .cleanup-history-form,
+  .spl-cleanup-tools-be-module.history .cleanup-history-form .form-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0; }
+  .spl-cleanup-tools-be-module.history .cleanup-history-form .form-group {
+    padding-right: 25px; }
+    .spl-cleanup-tools-be-module.history .cleanup-history-form .form-group:last-of-type {
+      padding-right: 0; }
+    .spl-cleanup-tools-be-module.history .cleanup-history-form .form-group label {
+      width: 100%;
+      margin-bottom: 0; }
+      .spl-cleanup-tools-be-module.history .cleanup-history-form .form-group label.form-check-label {
+        margin-left: 10px; }
 
 .spl-cleanup-tools-draw-item-hook .display-flex {
   display: flex; }

@@ -99,6 +99,38 @@
    	    	td {
    	    		border-top: 0;
    	    	}
-   	    }
+		}
+   	   
+   	   .cleanup-history-form {
+	   	   	justify-content: space-between;
+	   	   	background-color: #ededed;
+	   	   	padding: 10px 20px;
+	   	   	
+	   	   	&,
+	   	   	.form-group {
+	   	   		display: flex;
+   	   			justify-content: flex-start;
+   	   			align-items: center;
+   	   			width: 100%;
+   	   			margin-bottom: 0;
+	   	   	}
+	   	   
+	   	   .form-group {
+    			padding-right: 25px;
+    			
+    			&:last-of-type {
+    				padding-right: 0;
+    			}
+    		
+    			label {
+    				width: 100%;
+    				margin-bottom: 0;
+    				
+    				&.form-check-label {
+    					margin-left: 10px;
+    				}
+    			}
+	   	   }
+   	   }
    }
 }

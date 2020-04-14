@@ -51,15 +51,20 @@
                 </table>
             </div>
             <div class="row">
-                <f:form class="cleanup-history-form" action="cleanup" controller="History">
-                    <f:form.select />
-                    <f:form.checkbox name="dropAlreadyDeletef" value="Xxx" />
-                    <f:form.button>Clear</f:form.button>
-                    
+                <f:form name="history-cleanup" class="cleanup-history-form" action="cleanup" controller="History">
+                	<div class="form-group">
+				    	<label for="log-lifetime-select"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.logLiftime" /></label>
+                    	<f:form.select name="logLifetime" id="log-lifetime-select" class="form-control input-sm" options="{logLifetimeOptions}" />
+					</div>
+					<div class="form-group">
+				    	<f:form.checkbox name="dropAlreadyDeleted" id="drop-already-deleted-checkbox" value="1" />
+					    <label class="form-check-label" for="drop-already-deleted-checkbox"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.dropAlreadyDeleted" /></label>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-danger"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.submit" /></button>
+                	</div>
                 </f:form>
             </div>
-        </div>
-    </div>
 </f:section>
 
 </html>
