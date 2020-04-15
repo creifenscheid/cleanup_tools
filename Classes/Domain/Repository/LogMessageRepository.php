@@ -37,19 +37,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @package SPL\SplCleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
-class LogMessageRepository extends Repository
+class LogMessageRepository extends BaseRespository
 {
-
-    protected $defaultOrderings = [
-        'crdate' => QueryInterface::ORDER_DESCENDING
-    ];
-
-    /**
-     * Persist all
-     */
-    public function persistAll()
-    {
-        $this->persistAll();
-    }
+    
 }
 

@@ -3,7 +3,11 @@
 namespace SPL\SplCleanupTools\Controller;
 
 use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use SPL\SplCleanupTools\Domain\Repository\LogMessageRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * *************************************************************
@@ -46,7 +50,14 @@ class HistoryController extends BaseController
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
-
+    
+    /**
+     * LogMessage repository
+     *
+     * @var \SPL\SplCleanupTools\Domain\Repository\LogMessageRepository
+     */
+    protected $logMessageRepository;
+    
     /**
      * Inject log repository
      *
@@ -55,6 +66,16 @@ class HistoryController extends BaseController
     public function injectLogRepository(LogRepository $logRepository)
     {
         $this->logRepository = $logRepository;
+    }
+    
+    /**
+     * Inject logMesage repository
+     *
+     * @param \SPL\SplCleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository
+     */
+    public function injectLogMessageRepository(LogMessageRepository $logMessageRepository)
+    {
+        $this->logMessageRepository = $logMessageRepository;
     }
 
     /**
@@ -86,6 +107,55 @@ class HistoryController extends BaseController
      */
     public function cleanupAction (string $logLifetime, bool $dropAlreadyDeleted) : void
     {
+        if ($dropAlreadyDeleted) {
+            $deletedLogs = $this->logRepository->findDeleted();
+            
+            if ($deletedLogs) {
+                // set up the data handler instance
+                $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+                $dataHandler->start([], []);
+                
+                foreach ($deletedLogs as $deletedLog) {
+                    $dataHandler->deleteRecord('tx_splcleanuptools_domain_model_log', $deletedLog->getUid(), true, true);
+                }
+            }
+            
+            $deletedLogMessages = $this->logMessageRepository->findDeleted();
+            
+            if ($deletedLogMessages) {
+                // set up the data handler instance
+                $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+                $dataHandler->start([], []);
+                
+                foreach ($deletedLogMessages as $deletedLogMessage) {
+                    $dataHandler->deleteRecord('tx_splcleanuptools_domain_model_log_message', $deletedLogMessage->getUid(), true, true);
+                }
+            }
+        }
         
+        // create timestamp of log lifetime
+        $logLifetime = strtotime('-'.$logLifetime);
+        
+        // get all logs older then
+        $logsToDelete = $this->logRepository->findOlderThen($logLifetime);
+        
+        // mark log as deleted
+        if($logsToDelete) {
+            foreach($logsToDelete as $logToDelete) {
+                $this->logRepository->remove($logToDelete);
+            }
+        }
+        
+        // get all log messagess older then
+        $logMessagesToDelete = $this->logMessageRepository->findOlderThen($logLifetime);
+        
+        // mark log messages as deleted
+        if($logMessagesToDelete) {
+            foreach($logMessagesToDelete as $logMessageToDelete) {
+                $this->logMessageRepository->remove($logMessageToDelete);
+            }
+        }
+        
+        $this->redirect('index', 'History', 'SplCleanupTools');
     }
 }
