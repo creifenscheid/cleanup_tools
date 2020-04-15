@@ -2,13 +2,11 @@
 
 namespace SPL\SplCleanupTools\Task;
 
-use SPL\SplCleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * *************************************************************
@@ -38,50 +36,33 @@ use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
  */
 
 /**
- * Class CleanupAdditionalFieldProvider
+ * Class CleanupHistoryAdditionalFieldProvider
  *
  * @package SPL\SplCleanupTools\Task
  * @author  Christian Reifenscheid
  */
-class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
+class CleanupHistoryAdditionalFieldProvider extends AbstractAdditionalFieldProvider
 {
     /**
-     * Service to process
+     * Drop already deleted
+     *
+     * @var bool
+     */
+    protected $dropAlreadyDeleted = true;
+    
+    /**
+     * Log lifetime
      *
      * @var string
      */
-    protected $serviceToProcess = '';
-    
-    /**
-     * Configuration service
-     *
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService
-     */
-    protected $configurationService;
+    protected $logLifetime = '1 year';
     
     /**
      * Task name
      *
      * @var string
      */
-    protected $cleanupTaskName = 'scheduler_cleanuptools';
-    
-    /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-    
-    /**
-     * CleanupAdditionalFieldProvider constructor.
-     */
-    public function __construct()
-    {
-        // init configurationService
-        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
-    }
+    protected $taskName = 'scheduler_cleanuphistory';
     
     /**
      * Gets additional fields to render in the form to add/edit a task
@@ -99,21 +80,21 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         $additionalFields = [];
         
         // Initialize selected fields
-        if (!isset($taskInfo[$this->cleanupTaskName])) {
-            $taskInfo[$this->cleanupTaskName] = $this->serviceToProcess;
+        if (!isset($taskInfo[$this->taskName])) {
+            $taskInfo[$this->taskName] = $this->dropAlreadyDeleted;
             if ($currentSchedulerModuleMethod->equals(Action::EDIT)) {
-                $taskInfo[$this->cleanupTaskName] = $task->getServiceToProcess();
+                $taskInfo[$this->taskName] = $task->dropAlreadyDeleted();
             }
         }
         
-        $fieldName = 'tx_scheduler[' . $this->cleanupTaskName . ']';
-        $fieldValue = $taskInfo[$this->cleanupTaskName];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupTaskName, $fieldValue);
-        $additionalFields[$this->cleanupTaskName] = [
+        $fieldName = 'tx_scheduler[' . $this->taskName . ']';
+        $fieldValue = $taskInfo[$this->taskName];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $this->taskName, $fieldValue);
+        $additionalFields[$this->taskName] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
+            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanuphistory.fields.dropAlreadyDeletef',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $this->cleanupTaskName
+            'cshLabel' => $this->taskName
         ];
         
         return $additionalFields;
@@ -129,11 +110,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule) : bool
     {
-        if ($this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
-            return true;
-        }
-        
-        return false;
+        return true;
     }
     
     /**
@@ -144,7 +121,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
-        $task->setServiceToProcess($submittedData[$this->cleanupTaskName]);
+        $task->dropAlreadyDeleted($submittedData[$this->taskName]);
     }
     
     /**
@@ -158,26 +135,10 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue) : string
     {
-        $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
+        $options = '<option value="1">' . LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.yes', 'SplCleanupTools') . '</option>';
         
-        // define option storage
-        $options = [];
+        $options .= '<option value="0">' . LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:label.no', 'SplCleanupTools') . '</option>';
         
-        // loop through all utilities
-        foreach ($services as $serviceClass) {
-            
-            $selected = '';
-            
-            // add attribute "selected" for existing field value
-            if ($fieldValue === $serviceClass['class']) {
-                $selected = ' selected="selected"';
-            }
-            
-            // add option to option storage
-            $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
-        }
-        
-        // return html for select field with option groups and options
-        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
+        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">'.$options.'</select>';
     }
 }

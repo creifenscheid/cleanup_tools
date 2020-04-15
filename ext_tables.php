@@ -13,7 +13,7 @@ if (TYPO3_MODE === 'BE') {
         [
             'Cleanup' => 'index,cleanup',
             'Ajax' => 'main',
-            'History' => 'index'
+            'History' => 'index,cleanup'
         ], // controllerActions
         [
             'access' => 'admin',

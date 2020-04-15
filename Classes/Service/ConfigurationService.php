@@ -80,8 +80,7 @@ class ConfigurationService implements SingletonInterface
     protected $errorServices = [];
 
     /**
-     * Configured additional usages of utilities incl.
-     * existing and allowed methods
+     * Configured additional usages of services 
      *
      * @var array
      */
@@ -93,6 +92,13 @@ class ConfigurationService implements SingletonInterface
      * @var string
      */
     protected $localizationFile = '';
+    
+    /**
+     * log lifetime options
+     *
+     * @var array
+     */
+    protected $logLifetimeOptions = [];
 
 
     /**
@@ -116,8 +122,16 @@ class ConfigurationService implements SingletonInterface
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
 
-        // set localization from ts configuration
+        // set localization from typoscript configuration
         $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
+        
+        // set log lifetime options from typoscript config
+        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        if ($logLifetimeOptions) {
+            foreach($logLifetimeOptions as $logLifetimeOption) {
+                $this->logLifetimeOptions[$logLifetimeOption] = $logLifetimeOption;
+            }
+        }
 
         // loop through configured utilities
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
@@ -156,6 +170,16 @@ class ConfigurationService implements SingletonInterface
     {
         return $this->localizationFile;
     }
+    
+    /**
+     * Returns log lifetime options
+     *
+     * @return array
+     */
+     public function getLogLifetimeOptions() : array
+     {
+         return $this->logLifetimeOptions;
+     }
 
     /**
      * Returns all services incl. configuration

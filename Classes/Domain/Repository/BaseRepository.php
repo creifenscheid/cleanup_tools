@@ -38,31 +38,45 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @package SPL\SplCleanupTools\Domain\Repository
  * @author  Christian Reifenscheid
  */
-class LogRepository extends BaseRespository
+class BaseRespository extends Repository
 {
+    protected $defaultOrderings = [
+        'crdate' => QueryInterface::ORDER_DESCENDING
+    ];
+    
+    /**
+     * Persist all
+     */
+    public function persistAll()
+    {
+        $this->persistAll();
+    }
 
     /**
-     * Function to get logs by service and method
+     * Returns deleted entries
      *
-     * @param string $service
-     *
-     * @return null|object
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      */
-    public function findByService(string $service) : ?object
-    {
+    public function findDeleted () {
         $query = $this->createQuery();
-
-        $query->setOrderings(['crdate' => QueryInterface::ORDER_DESCENDING]);
-
-        $query->matching(
-            $query->logicalAnd(
-                [
-                    $query->equals('service', $service)
-                ]
-            )
-        );
-
-        return $query->execute()->getFirst();
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->matching($query->equals('deleted', 1));
+        
+        return $query->execute();
+    }
+    
+    /**
+     * Returns entries older then
+     *
+     * @param int $lifetime
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     */
+    public function findOlderThen (int $lifetime) {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->matching($query->lessThan('crdate', $lifetime));
+        
+        return $query->execute();
     }
 }
 
