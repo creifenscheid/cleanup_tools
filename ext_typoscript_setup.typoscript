@@ -30,13 +30,14 @@ module.tx_splcleanuptools {
 	            schedulerTask = 1
 	            toolbar = 1
 	        }
+		}
 	        
-	        mapping {
-		        parameter {
-		        	pid = integer
-		        	depth = integer
-		        	dryRun = boolean
-		        }
+	        
+		SPL\SplCleanupTools\Service\DeletedRecordsService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 0
+	            toolbar = 1
 	        }
 		}
 	}
