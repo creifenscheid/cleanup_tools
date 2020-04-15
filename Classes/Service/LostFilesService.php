@@ -74,6 +74,66 @@ class LostFilesService extends AbstractCleanupService
     protected $updateRefindex = false;
 
     /**
+     * Return exclude
+     * 
+     * @return string
+     */
+    public function getExclude()
+    {
+        return $this->exclude;
+    }
+
+    /**
+     * Set exclude
+     * 
+     * @param string $exclude
+     */
+    public function setExclude($exclude)
+    {
+        $this->exclude = $exclude;
+    }
+
+    /**
+     * Return custom paths
+     * 
+     * @return string
+     */
+    public function getCustomPath()
+    {
+        return $this->customPath;
+    }
+
+    /**
+     * Set custom paths
+     * 
+     * @param string $customPath
+     */
+    public function setCustomPath($customPath)
+    {
+        $this->customPath = $customPath;
+    }
+
+    /**
+     * Return updateRefindex
+     * 
+     * @return boolean
+     */
+    public function isUpdateRefindex()
+    {
+        return $this->updateRefindex;
+    }
+
+    /**
+     * Set updateRefindex
+     * 
+     * @param boolean $updateRefindex
+     */
+    public function setUpdateRefindex($updateRefindex)
+    {
+        $this->updateRefindex = $updateRefindex;
+    }
+
+    /**
      * Executes the command to
      * - optionally update the reference index (to have clean data)
      * - find files within uploads/* which are not connected to the reference index
@@ -126,8 +186,7 @@ class LostFilesService extends AbstractCleanupService
     protected function updateReferenceIndex()
     {
         $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
-        // Todo: check second parameter
-        $referenceIndex->updateIndex(false, !$io->isQuiet());
+        $referenceIndex->updateIndex(false);
     }
 
     /**

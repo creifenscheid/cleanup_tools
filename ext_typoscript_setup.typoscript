@@ -31,8 +31,23 @@ module.tx_splcleanuptools {
 	        }
 		}
 	        
-	        
 		SPL\SplCleanupTools\Service\DeletedRecordsService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 0
+	            toolbar = 1
+	        }
+		} 
+	        
+		SPL\SplCleanupTools\Service\LostFilesService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 0
+	            toolbar = 1
+	        }
+		}
+	        
+		SPL\SplCleanupTools\Service\OrphanRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 0

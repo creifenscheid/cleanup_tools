@@ -57,7 +57,7 @@ class OrphanRecordsService extends AbstractCleanupService
      *
      * @return FlashMessage
      */
-    protected function execute() : FlashMessage
+    public function execute() : FlashMessage
     {
         // find all records that should be deleted
         $allRecords = $this->findAllConnectedRecordsInPage(0, 10000);
