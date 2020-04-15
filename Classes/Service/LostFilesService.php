@@ -43,7 +43,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  */
 
 /**
- * Class DeletedRecordsService
+ * Class LostFilesService
  * Finds files within uploads/ which are not needed anymore
  * @see \TYPO3\CMS\Lowlevel\Command\LostFilesCommand::class
  *
@@ -78,7 +78,7 @@ class LostFilesService extends AbstractCleanupService
      * - optionally update the reference index (to have clean data)
      * - find files within uploads/* which are not connected to the reference index
      * - remove these files if --dry-run is not set
-     *
+     * @return FlashMessage
      */
     public function execute() : FlashMessage
     {
