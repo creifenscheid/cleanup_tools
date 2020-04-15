@@ -4,28 +4,6 @@
           product-name="spl_cleanup_tools">
         <header/>
         <body>
-            <!-- LABEL -->
-            <trans-unit id="label.CleanFlexForms">
-                <source>FlexForms</source>
-            </trans-unit>
-            <trans-unit id="label.DeletedRecords">
-                <source>Deleted records</source>
-            </trans-unit>
-            <trans-unit id="label.FilesWithMultipleReferences">
-                <source>Multiple referenced files</source>
-            </trans-unit>
-
-            <!-- DESCRIPTIONS -->
-            <trans-unit id="description.CleanFlexForms">
-                <source>Check flexforms</source>
-            </trans-unit>
-            <trans-unit id="description.DeletedRecords">
-                <source>Check deleted records</source>
-            </trans-unit>
-            <trans-unit id="description.FilesWithMultipleReferences">
-                <source>Check multiple referenced files</source>
-            </trans-unit>
-            
            <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">
                 <source>Update reference index</source>
@@ -41,10 +19,13 @@
             </trans-unit>
             <trans-unit id="label.dryRun">
                 <source>Dry run</source>
-            </trans-unit> 
-            <trans-unit id="test">
-                <source>in "%s" context</source>
-            </trans-unit> 
+            </trans-unit>
+            <trans-unit id="label.exclude">
+                <source>Paths that should be excluded</source>
+            </trans-unit>
+            <trans-unit id="label.customPath">
+                <source>Paths to process (default: uploads)</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
