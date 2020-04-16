@@ -67,5 +67,7 @@ Inspired by commands of core extension "low level"
    Introduction/Index
    Configuration/Index
    Developer/Index
+   WhatsNext/Index
+   ChangeLog/Index
    Sitemap
 
