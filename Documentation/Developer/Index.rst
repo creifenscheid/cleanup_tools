@@ -41,7 +41,34 @@ This can be easly done by using the method "createFlashMessage()".
 You can set the severity level, a message and a headline.
 All these are optional, by default a success message is created.
 
-4. Example
+On calling a cleanup service, a log entity is created and passed automatically to the called service.
+With the following methods, log messages can be added to the log:
+
+* addMessage(string $message) - adds a log message with the given message to the log
+* addLLLMessage(string $key, array $arguments) - adds a log message based on localization key, arguments are optional
+   
+4. Localization
+~~~~~~~~~~~~~~~
+
+Service related localizations are set in locallang_services.xlf.
+
+You can create your own localization file to implement your service.
+Therefor:
+
+* create your localization file
+* include localization nodes for all configured services
+* set your localization file in typoscript
+
+.. code-block:: typoscript
+
+   module.tx_splcleanuptools {
+       settings {
+           localizationFile = LLL:EXT:MyExtension/Resources/Private/Language/locallang_custom_services.xlf
+       }
+   }
+
+
+5. Example
 ~~~~~~~~~~
 
 .. code-block:: php
