@@ -8,6 +8,7 @@ use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Core\Environment;
 
 /**
  * *************************************************************
@@ -103,7 +104,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     ]);
 
                     // set template path
-                    $templateFile = GeneralUtility::resolveBackPath(PATH_site . 'typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
+                    $templateFile = GeneralUtility::resolveBackPath(Environment::getPublicPath() . '/typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
 
                     // set view template
                     $view->setTemplatePathAndFilename($templateFile);

@@ -97,7 +97,7 @@ class Log extends AbstractEntity
      * messages
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\LogMessage>
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $messages;
     
