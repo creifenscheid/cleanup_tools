@@ -24,7 +24,7 @@ return [
     'types' => [
         '0' => [
             'showitem' => 'log,message,local_lang_key,local_lang_arguments'
-        ],
+        ]
     ],
 
     'columns' => [

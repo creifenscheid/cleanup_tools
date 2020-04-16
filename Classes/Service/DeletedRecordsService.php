@@ -5,9 +5,9 @@ namespace SPL\SplCleanupTools\Service;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -39,6 +39,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Class DeletedRecordsService
  * Force-deletes all records in the database which have a deleted=1 flag
+ *
  * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
@@ -46,6 +47,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  */
 class DeletedRecordsService extends AbstractCleanupService
 {
+
     /**
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
@@ -53,7 +55,7 @@ class DeletedRecordsService extends AbstractCleanupService
      * @var int $pid
      */
     protected $pid = 0;
-    
+
     /**
      * Setting traversal depth.
      * 0 (zero) will only analyze start page (see --pid), 1 will traverse one level of subpages etc.
@@ -61,7 +63,7 @@ class DeletedRecordsService extends AbstractCleanupService
      * @var int $depth
      */
     protected $depth = 1000;
-    
+
     /**
      * Returns pid
      *
@@ -71,7 +73,7 @@ class DeletedRecordsService extends AbstractCleanupService
     {
         return $this->pid;
     }
-    
+
     /**
      * Sets pid
      *
@@ -83,7 +85,7 @@ class DeletedRecordsService extends AbstractCleanupService
     {
         $this->pid = $pid;
     }
-    
+
     /**
      * Returns depth
      *
@@ -93,7 +95,7 @@ class DeletedRecordsService extends AbstractCleanupService
     {
         return $this->depth;
     }
-    
+
     /**
      * Sets depth
      *
@@ -105,164 +107,139 @@ class DeletedRecordsService extends AbstractCleanupService
     {
         $this->depth = $depth;
     }
-    
+
     /**
      * Executes the command to find and permanently delete records which are marked as deleted
-     * 
+     *
      * @return FlashMessage
      */
-    public function execute() : FlashMessage
+    public function execute(): FlashMessage
     {
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
-        
+
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
-        
+
         // find all records that should be deleted
         $deletedRecords = $this->findAllFlaggedRecordsInPage($startingPoint, $depth);
-        
+
         if ($this->dryRun) {
             $totalAmountOfTables = count($deletedRecords);
             $totalAmountOfRecords = 0;
             foreach ($deletedRecords as $tableName => $itemsInTable) {
                 $totalAmountOfRecords += count($itemsInTable);
-                
+
                 $this->addMessage('Found ' . count($itemsInTable) . ' deleted records in table "' . $tableName . '".');
             }
-            
+
             $message = 'Found ' . $totalAmountOfRecords . ' records in ' . $totalAmountOfTables . ' database tables ready to be deleted.';
             $this->addMessage($message);
             return $this->createFlashMessage(FlashMessage::INFO, $message);
         } else {
             // actually permanently delete them
             return $this->deleteRecords($deletedRecords);
-        } 
+        }
     }
-    
+
     /**
      * Recursive traversal of page tree to fetch all records marekd as "deleted",
      * via option $GLOBALS[TCA][$tableName][ctrl][delete]
      * This also takes deleted versioned records into account.
      *
-     * @param int $pageId the uid of the pages record (can also be 0)
-     * @param int $depth The current depth of levels to go down
-     * @param array $deletedRecords the records that are already marked as deleted (used when going recursive)
-     *
+     * @param int $pageId
+     *            the uid of the pages record (can also be 0)
+     * @param int $depth
+     *            The current depth of levels to go down
+     * @param array $deletedRecords
+     *            the records that are already marked as deleted (used when going recursive)
+     *            
      * @return array the modified $deletedRecords array
      */
     protected function findAllFlaggedRecordsInPage(int $pageId, int $depth, array $deletedRecords = []): array
     {
         /** @var QueryBuilder $queryBuilderForPages */
-        $queryBuilderForPages = GeneralUtility::makeInstance(ConnectionPool::class)
-        ->getQueryBuilderForTable('pages');
+        $queryBuilderForPages = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
         $queryBuilderForPages->getRestrictions()->removeAll();
-        
-        $pageId = (int)$pageId;
+
+        $pageId = (int) $pageId;
         if ($pageId > 0) {
-            $queryBuilderForPages
-            ->select('uid', 'deleted')
-            ->from('pages')
-            ->where(
-                $queryBuilderForPages->expr()->andX(
-                    $queryBuilderForPages->expr()->eq(
-                        'uid',
-                        $queryBuilderForPages->createNamedParameter($pageId, \PDO::PARAM_INT)
-                        ),
-                    $queryBuilderForPages->expr()->neq('deleted', 0)
-                    )
-                )
+            $queryBuilderForPages->select('uid', 'deleted')
+                ->from('pages')
+                ->where($queryBuilderForPages->expr()
+                ->andX($queryBuilderForPages->expr()
+                ->eq('uid', $queryBuilderForPages->createNamedParameter($pageId, \PDO::PARAM_INT)), $queryBuilderForPages->expr()
+                ->neq('deleted', 0)))
                 ->execute();
-                $rowCount = $queryBuilderForPages
-                ->count('uid')
+            $rowCount = $queryBuilderForPages->count('uid')
                 ->execute()
                 ->fetchColumn(0);
-                // Register if page itself is deleted
-                if ($rowCount > 0) {
-                    $deletedRecords['pages'][$pageId] = $pageId;
-                }
+            // Register if page itself is deleted
+            if ($rowCount > 0) {
+                $deletedRecords['pages'][$pageId] = $pageId;
+            }
         }
-        
+
         $databaseTables = $this->getTablesWithDeletedFlags();
         // Traverse tables of records that belongs to page
         foreach ($databaseTables as $tableName => $deletedField) {
             // Select all records belonging to page
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable($tableName);
-            
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+
             $queryBuilder->getRestrictions()->removeAll();
-            
-            $result = $queryBuilder
-            ->select('uid', $deletedField)
-            ->from($tableName)
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)
-                    )
-                )
+
+            $result = $queryBuilder->select('uid', $deletedField)
+                ->from($tableName)
+                ->where($queryBuilder->expr()
+                ->eq('pid', $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)))
                 ->execute();
-                
-                while ($recordOnPage = $result->fetch()) {
-                    // Register record as deleted
-                    if ($recordOnPage[$deletedField]) {
-                        $deletedRecords[$tableName][$recordOnPage['uid']] = $recordOnPage['uid'];
-                    }
-                    // Add any versions of those records
-                    $versions = BackendUtility::selectVersionsOfRecord(
-                        $tableName,
-                        $recordOnPage['uid'],
-                        'uid,t3ver_wsid,t3ver_count,' . $deletedField,
-                        null,
-                        true
-                        ) ?: [];
-                        if (is_array($versions)) {
-                            foreach ($versions as $verRec) {
-                                // Mark as deleted
-                                if (!$verRec['_CURRENT_VERSION'] && $verRec[$deletedField]) {
-                                    $deletedRecords[$tableName][$verRec['uid']] = $verRec['uid'];
-                                }
-                            }
-                        }
+
+            while ($recordOnPage = $result->fetch()) {
+                // Register record as deleted
+                if ($recordOnPage[$deletedField]) {
+                    $deletedRecords[$tableName][$recordOnPage['uid']] = $recordOnPage['uid'];
                 }
-        }
-        
-        // Find subpages to root ID and go recursive
-        if ($depth > 0) {
-            $depth--;
-            $result = $queryBuilderForPages
-            ->select('uid')
-            ->from('pages')
-            ->where(
-                $queryBuilderForPages->expr()->eq('pid', $pageId)
-                )
-                ->orderBy('sorting')
-                ->execute();
-                
-                while ($subPage = $result->fetch()) {
-                    $deletedRecords = $this->findAllFlaggedRecordsInPage($subPage['uid'], $depth, $deletedRecords);
-                }
-        }
-        
-        // Add any versions of the page
-        if ($pageId > 0) {
-            $versions = BackendUtility::selectVersionsOfRecord(
-                'pages',
-                $pageId,
-                'uid,t3ver_oid,t3ver_wsid,t3ver_count',
-                null,
-                true
-                ) ?: [];
+                // Add any versions of those records
+                $versions = BackendUtility::selectVersionsOfRecord($tableName, $recordOnPage['uid'], 'uid,t3ver_wsid,t3ver_count,' . $deletedField, null, true) ?: [];
                 if (is_array($versions)) {
                     foreach ($versions as $verRec) {
-                        if (!$verRec['_CURRENT_VERSION']) {
-                            $deletedRecords = $this->findAllFlaggedRecordsInPage($verRec['uid'], $depth, $deletedRecords);
+                        // Mark as deleted
+                        if (! $verRec['_CURRENT_VERSION'] && $verRec[$deletedField]) {
+                            $deletedRecords[$tableName][$verRec['uid']] = $verRec['uid'];
                         }
                     }
                 }
+            }
         }
-        
+
+        // Find subpages to root ID and go recursive
+        if ($depth > 0) {
+            $depth --;
+            $result = $queryBuilderForPages->select('uid')
+                ->from('pages')
+                ->where($queryBuilderForPages->expr()
+                ->eq('pid', $pageId))
+                ->orderBy('sorting')
+                ->execute();
+
+            while ($subPage = $result->fetch()) {
+                $deletedRecords = $this->findAllFlaggedRecordsInPage($subPage['uid'], $depth, $deletedRecords);
+            }
+        }
+
+        // Add any versions of the page
+        if ($pageId > 0) {
+            $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true) ?: [];
+            if (is_array($versions)) {
+                foreach ($versions as $verRec) {
+                    if (! $verRec['_CURRENT_VERSION']) {
+                        $deletedRecords = $this->findAllFlaggedRecordsInPage($verRec['uid'], $depth, $deletedRecords);
+                    }
+                }
+            }
+        }
+
         return $deletedRecords;
     }
-    
+
     /**
      * Fetches all tables registered in the TCA with a deleted
      * and that are not pages (which are handled separately)
@@ -280,11 +257,12 @@ class DeletedRecordsService extends AbstractCleanupService
         ksort($tables);
         return $tables;
     }
-    
+
     /**
      * Deletes records via DataHandler
      *
-     * @param array $deletedRecords two level array with tables and uids
+     * @param array $deletedRecords
+     *            two level array with tables and uids
      */
     protected function deleteRecords(array $deletedRecords)
     {
@@ -295,14 +273,14 @@ class DeletedRecordsService extends AbstractCleanupService
             // To delete sub pages first assuming they are accumulated from top of page tree.
             $deletedRecords['pages'] = array_reverse($_pages);
         }
-        
+
         // set up the data handler instance
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $dataHandler->start([], []);
-        
+
         // error counter
         $errors = 0;
-        
+
         // Loop through all tables and their records
         foreach ($deletedRecords as $table => $list) {
             $this->addMessage('Flushing ' . count($list) . ' deleted records from table "' . $table . '"');
@@ -312,19 +290,21 @@ class DeletedRecordsService extends AbstractCleanupService
                 // under a deleted page...)
                 $dataHandler->deleteRecord($table, $uid, true, true);
                 // Return errors if any:
-                if (!empty($dataHandler->errorLog)) {
-                    $errorMessage = array_merge(['DataHandler reported an error'], $dataHandler->errorLog);
+                if (! empty($dataHandler->errorLog)) {
+                    $errorMessage = array_merge([
+                        'DataHandler reported an error'
+                    ], $dataHandler->errorLog);
                     $this->addMessage($errorMessage);
-                    $errors++;
+                    $errors ++;
                 }
             }
         }
-        
+
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
             return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-        
+
         return $this->createFlashMessage();
     }
 }

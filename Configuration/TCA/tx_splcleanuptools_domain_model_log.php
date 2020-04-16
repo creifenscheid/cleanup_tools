@@ -28,7 +28,7 @@ return [
                 --palette--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.palettes.logData;logData,
                 --div--;LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log.tab.messages,messages,
             '
-        ],
+        ]
     ],
 
     'palettes' => [
@@ -37,7 +37,7 @@ return [
         ],
         'logData' => [
             'showitem' => 'state,execution_context,--linebreak--,service,--linebreak--,parameters',
-        ],
+        ]
     ],
 
     'columns' => [

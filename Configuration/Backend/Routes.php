@@ -1,5 +1,4 @@
 <?php
-
 return [
     'splcleanuptools_ajax' => [
         'path' => '/splcleanuptools/ajax',

@@ -6,9 +6,9 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use PDO;
 
 /**
@@ -16,7 +16,7 @@ use PDO;
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -41,6 +41,7 @@ use PDO;
 /**
  * Class CleanFlexFormsService
  * Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value
+ *
  * @see \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
@@ -48,6 +49,7 @@ use PDO;
  */
 class CleanFlexFormsService extends AbstractCleanupService
 {
+
     /**
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
@@ -63,7 +65,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      * @var int $depth
      */
     protected $depth = 1000;
-    
+
     /**
      * Returns pid
      *
@@ -73,7 +75,7 @@ class CleanFlexFormsService extends AbstractCleanupService
     {
         return $this->pid;
     }
-    
+
     /**
      * Sets pid
      *
@@ -85,7 +87,7 @@ class CleanFlexFormsService extends AbstractCleanupService
     {
         $this->pid = $pid;
     }
-    
+
     /**
      * Returns depth
      *
@@ -95,7 +97,7 @@ class CleanFlexFormsService extends AbstractCleanupService
     {
         return $this->depth;
     }
-    
+
     /**
      * Sets depth
      *
@@ -111,10 +113,10 @@ class CleanFlexFormsService extends AbstractCleanupService
     /**
      * Find and update records with FlexForms where the values do not match the datastructures
      *
-     * @return \TYPO3\CMS\Core\Messaging\FlashMessage 
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage
-    {   
+    public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage
+    {
         $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
         $depth = MathUtility::forceIntegerInRange($this->depth, 0);
 
@@ -155,7 +157,7 @@ class CleanFlexFormsService extends AbstractCleanupService
             ->andWhere($queryBuilder->expr()
             ->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT)));
 
-            $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
+        $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
 
         return $this->cleanFlexFormRecords($records);
     }
@@ -329,12 +331,12 @@ class CleanFlexFormsService extends AbstractCleanupService
             $dataHandler->start($data, []);
             $dataHandler->process_datamap();
             // Return errors if any:
-            if (!empty($dataHandler->errorLog)) {
+            if (! empty($dataHandler->errorLog)) {
                 $errorMessage = array_merge([
                     'DataHandler reported an error'
                 ], $dataHandler->errorLog);
                 $this->addMessage($errorMessage);
-                $errors++;
+                $errors ++;
             } else {
                 $this->addMessage('Updated FlexForm in record "' . $table . ':' . $uid . '".');
             }
@@ -344,7 +346,7 @@ class CleanFlexFormsService extends AbstractCleanupService
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
             return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-        
+
         return $this->createFlashMessage();
     }
 }

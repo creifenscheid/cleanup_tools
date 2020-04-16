@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Task;
 
 use SPL\SplCleanupTools\Service\CleanupService;
@@ -39,15 +38,17 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  * Class CleanupTask
  *
  * @package SPL\SplCleanupTools\Task
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanupTask extends AbstractTask
 {
+
     /**
+     *
      * @var string
      */
     protected $serviceToProcess = '';
-    
+
     /**
      * Execute function
      *
@@ -55,30 +56,30 @@ class CleanupTask extends AbstractTask
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function execute() : bool
+    public function execute(): bool
     {
         /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
         $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
         $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_SCHEDULER);
-        
+
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-        
+
         // process
         $cleanupService->setDryRun(false);
         return $cleanupService->process($this->serviceToProcess, $configurationService::FUNCTION_MAIN);
     }
-    
+
     /**
      * Returns the service to process
      *
      * @return string
      */
-    public function getServiceToProcess() : string
+    public function getServiceToProcess(): string
     {
         return $this->serviceToProcess;
     }
-    
+
     /**
      * Sets the service to process
      *
@@ -86,21 +87,21 @@ class CleanupTask extends AbstractTask
      *
      * @return void
      */
-    public function setServiceToProcess(string $serviceToProcess) : void
+    public function setServiceToProcess(string $serviceToProcess): void
     {
         $this->serviceToProcess = $serviceToProcess;
     }
-    
+
     /**
      * This method returns the selected table as additional information
      *
      * @return string Information to display
      */
-    public function getAdditionalInformation() : string
+    public function getAdditionalInformation(): string
     {
         /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
-        
+
         return LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
     }
 }

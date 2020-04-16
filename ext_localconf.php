@@ -1,34 +1,26 @@
 <?php
-
 use SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem;
 use SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook;
 use SPL\SplCleanupTools\Hooks\DrawItemHook;
 use SPL\SplCleanupTools\Task\CleanupAdditionalFieldProvider;
 use SPL\SplCleanupTools\Task\CleanupTask;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 defined('TYPO3_MODE') or die();
 
 // Register icons
-$iconRegistry = GeneralUtility::makeInstance(
-    IconRegistry::class
-);
+$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
-$iconRegistry->registerIcon(
-    'tx-splcleanuptools-icon',
-    SvgIconProvider::class,
-    ['source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_icon.svg']
-);
+$iconRegistry->registerIcon('tx-splcleanuptools-icon', SvgIconProvider::class, [
+    'source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_icon.svg'
+]);
 
-
-$iconRegistry->registerIcon(
-    'tx-splcleanuptools-restore',
-    SvgIconProvider::class,
-    ['source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_restore.svg']
-);
+$iconRegistry->registerIcon('tx-splcleanuptools-restore', SvgIconProvider::class, [
+    'source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_restore.svg'
+]);
 
 // get extension configuration
 $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('spl_cleanup_tools');

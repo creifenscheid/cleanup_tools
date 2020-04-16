@@ -52,14 +52,14 @@ class LogMessage extends AbstractEntity
      * @var string
      */
     protected $message = '';
-    
+
     /**
      * Local lang key
      *
      * @var string
      */
     protected $localLangKey = '';
-    
+
     /**
      * Local lang arguments
      *
@@ -108,49 +108,49 @@ class LogMessage extends AbstractEntity
     {
         $this->message = $message;
     }
-    
+
     /**
      * Return local lang key
      *
      * @return string
      */
-    public function getLocalLangKey() : string
+    public function getLocalLangKey(): string
     {
         return $this->localLangKey;
     }
-    
+
     /**
      * Set local lang key
      *
      * @param string $localLangKey
      * @return void
      */
-    public function setLocalLangKey(string $localLangKey) : void
+    public function setLocalLangKey(string $localLangKey): void
     {
         $this->localLangKey = $localLangKey;
     }
-    
+
     /**
      * Return local lang arguments
      *
      * @return array
      */
-    public function getLocalLangArguments() : array
+    public function getLocalLangArguments(): array
     {
         if (unserialize($this->localLangArguments)) {
             return unserialize($this->localLangArguments);
         }
-        
+
         return [];
     }
-    
+
     /**
      * Set local lang arguments
      *
      * @param array $localLangArguments
      * @return void
      */
-    public function setLocalLangArguments(array $localLangArguments) : void
+    public function setLocalLangArguments(array $localLangArguments): void
     {
         $this->localLangArguments = serialize($localLangArguments);
     }

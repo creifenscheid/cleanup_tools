@@ -6,16 +6,16 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SPL\SplCleanupTools\Service\CleanupService;
 use SPL\SplCleanupTools\Service\ConfigurationService;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *

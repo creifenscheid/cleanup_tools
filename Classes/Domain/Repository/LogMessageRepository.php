@@ -1,15 +1,12 @@
 <?php
 namespace SPL\SplCleanupTools\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -39,6 +36,5 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class LogMessageRepository extends BaseRespository
 {
-    
 }
 

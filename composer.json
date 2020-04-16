@@ -10,5 +10,6 @@
 		"typo3/cms" : {
 			"extension-key" : "spl_cleanup_tools"
 		}
-	}
+	},
+	"minimum-stability" : "alpha"
 }
