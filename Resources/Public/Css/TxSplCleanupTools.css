@@ -11,6 +11,11 @@
     margin-bottom: 2px; }
 .spl-cleanup-tools-be-module .card-body {
   padding: 1rem; }
+  .spl-cleanup-tools-be-module .card-body .service-description {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+    color: rgba(0, 0, 0, 0.5); }
   .spl-cleanup-tools-be-module .card-body label {
     font-weight: normal; }
 .spl-cleanup-tools-be-module .card-footer {

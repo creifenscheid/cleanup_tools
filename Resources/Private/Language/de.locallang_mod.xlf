@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
+          product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+            <!-- EXECUTION CONTEXTS -->
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.0">
+                <source>BE module</source>
+                <target>Backend-Modul</target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.1">
+                <source>Toolbar</source>
+                <target>Werkzeugleiste</target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.2">
+                <source>Scheduler</source>
+                <target>Planer</target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.3">
+                <source>Content item</source>
+                <target>Inhaltselement</target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
+                <source>After database operation</source>
+                <target>DB-Hook</target>
+            </trans-unit>
+
+            <!-- STATES -->
+            <trans-unit id="tx_splcleanuptools.general.state.error">
+                <source>error</source>
+                <target>fehlgeschlagen</target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools.general.state.ok">
+                <source>ok</source>
+                <target>ok</target>
+            </trans-unit>
+
+            <!-- LABEL -->
+            <trans-unit id="label.yes">
+                <source>Yes, please.</source>
+                <target>Ja, bitte.</target>
+            </trans-unit>
+            <trans-unit id="label.no">
+                <source>No, thank you.</source>
+                <target>Nein, danke.</target>
+            </trans-unit>
+
+            <!-- MISC -->
+            <trans-unit id="tx_splcleanuptools.general.inExectionContext">
+                <source>in "%s" context</source>
+                <target>in "%s"-Kontext</target>
+            </trans-unit>
+
+            <!-- BE MODULE -->
+            <trans-unit id="mlang_tabs_tab">
+                <source>Cleanup Tools</source>
+                <target>Cleanup-Tools</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>Cleanup Tools</source>
+                <target>Cleanup-Tools</target>
+            </trans-unit>
+            <trans-unit id="module.headline">
+                <source>Cleanup Tools</source>
+                <target>Cleanup-Tools</target>
+            </trans-unit>
+            <trans-unit id="module.menu.cleanup">
+                <source>Cleanup</source>
+                <target>Cleanup</target>
+            </trans-unit>
+            <trans-unit id="module.menu.history">
+                <source>History</source>
+                <target>Rückblick</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.days">
+                <source>executed %s days ago</source>
+                <target>vor %s Tagen ausgeführt</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.yesterday">
+                <source>executed yesterday</source>
+                <target>gestern ausgeführt</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.today">
+                <source>executed today, %s</source>
+                <target>heute um %s ausgeführt</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.user">
+                <source>by</source>
+                <target>von</target>
+            </trans-unit>
+            <trans-unit id="module.notProcessed">
+                <source>not executed so far</source>
+                <target>bisher nicht ausgeführt</target>
+            </trans-unit>
+            <trans-unit id="module.submit">
+                <source>Clean up</source>
+                <target>Ausführen</target>
+            </trans-unit>
+
+            <!-- HISTORY MODULE -->
+            <trans-unit id="module.history.headline">
+                <source>History</source>
+                <target>Rückblick</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.date">
+                <source>Date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.service">
+                <source>Service</source>
+                <target>Service</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.parameter">
+                <source>Parameter</source>
+                <target>Parameter</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.user">
+                <source>User</source>
+                <target>Nutzer</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.executionContext">
+                <source>Execution context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.state">
+                <source>State</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.messages">
+                <source>Messages</source>
+                <target>Nachrichten</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime">
+                <source>Delete logs older then:</source>
+                <target>Log-Einträge löschen, die älter sind als:</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.dropAlreadyDeleted">
+                <source>Drop entries marked as deleted</source>
+                <target>Bisher gelöschte Log-Einträge final löschen</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.submit">
+                <source>Clean up</source>
+                <target>Ausführen</target>
+            </trans-unit>
+
+            <!-- TASKS -->
+            <trans-unit id="tasks.cleanup.title">
+                <source>Cleanup Tools</source>
+                <target>Cleanup-Tools</target>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.description">
+                <source>Various tools to cleanup your TYPO3.</source>
+                <target>Unterschiedlichste Werkzeuge zur Bereining der TYPO3-Installation</target>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.fields.serviceToProcess">
+                <source>Which service shall be executed?</source>
+                <target>Welcher Service soll ausgeführt werden?</target>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.information">
+                <source>Configured service:</source>
+                <target>Konfigurierter Service</target>
+            </trans-unit>
+
+            <!-- DRAW ITEM HOOK -->
+            <trans-unit id="drawitemhook.message">
+                <source>The flexform of this element is not valid and needs to be cleaned up.</source>
+                <target>Die FlexForm des Elementes ist nicht valide und sollte bereinigt werden</target>
+            </trans-unit>
+
+            <!-- FLASH MESSAGES -->
+            <trans-unit id="messages.fallback.headline">
+                <source>CleanupTools says</source>
+                <target>CleanupTools sagt:</target>
+            </trans-unit>
+            <trans-unit id="messages.error.headline">
+                <source>Oops</source>
+                <target>Huch</target>
+            </trans-unit>
+            <trans-unit id="messages.error.message">
+                <source>Execution of class "%s" was not successfull.</source>
+                <target>Das Ausgühren des Service "%s" war nicht erfolgreich.</target>
+            </trans-unit>
+            <trans-unit id="messages.success.message">
+                <source>Execution was successfull.</source>
+                <target>Die Ausführung war erfolgreich.</target>
+            </trans-unit>
+            <trans-unit id="messages.error.message.no-method">
+                <source>No method was set.</source>
+                <target>Es wurde keine Methode konfiguriert.</target>
+            </trans-unit>
+            <trans-unit id="messages.error-services.message">
+                <source>In the following services, the execute function is missing: %s.</source>
+                <target>In den folgenden Servicen fehlt die "execute"-Funktion</target>
+            </trans-unit>
+            <trans-unit id="messages.error-services.headline">
+                <source>Watch out</source>
+                <target>Achtung</target>
+            </trans-unit>
+            <trans-unit id="messages.hook.warning.headline">
+                <source>Watch out</source>
+                <target>Achtung</target>
+            </trans-unit>
+            <trans-unit id="message.hook.warning.message">
+                <source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.
+                </source>
+                <target>Bei der Bereinigung der FlexForm kam es zu Problemen. Änderungen wurden gespeichert, jedoch besteht die Möglichkeit einer nicht validen FlexForm.</target>
+            </trans-unit>
+
+            <!-- ARIA -->
+            <trans-unit id="aria.history.togglebutton">
+                <source>Show/hide log messages.</source>
+                <target>Anzeigen/Ausblenden von Lig-Nachrichten.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

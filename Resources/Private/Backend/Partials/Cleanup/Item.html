@@ -6,12 +6,15 @@
         <div class="card-title">
             {service.name}
         </div>
-        <span>{service.method.name}</span>
     </div>
     <div class="card-body">
+	    <div class="service-description text-muted">
+	    	<f:translate key="{localizationFile}:description.{service.name}" />
+	    </div>
         <f:for each="{service.method.parameters}" as="parameter">
             <f:if condition="{parameter.type}">
-		        <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile,serviceMethod: serviceMethod, name: parameter.name, default: parameter.default, mandatory: parameter.mandatory}"/>
+            	<f:variable name="serviceName"><f:format.case mode="lower">{service.name}</f:format.case></f:variable>
+		        <f:render partial="FormFields/{parameter.type}" arguments="{localizationFile: localizationFile, service: serviceName, name: parameter.name, default: parameter.default, mandatory: parameter.mandatory}"/>
 		    </f:if>
         </f:for>
     </div>

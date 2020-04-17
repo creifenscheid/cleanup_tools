@@ -17,6 +17,12 @@
     }
 
     .card-body {
+    	.service-description {
+    		padding-bottom: $spacing*2;
+    		margin-bottom: $spacing*2;
+    		border-bottom: 1px solid #ccc;
+    	}
+    	
         padding: $spacing;
 
         label {
