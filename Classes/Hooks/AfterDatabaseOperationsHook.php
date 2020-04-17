@@ -1,17 +1,17 @@
 <?php
-
 namespace SPL\SplCleanupTools\Hooks;
 
 use SPL\SplCleanupTools\Service\CleanupService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use SPL\SplCleanupTools\Service\CleanFlexFormsService;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -37,17 +37,18 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * Class AfterDatabaseOperationsHook
  *
  * @package SPL\SplCleanupTools\Hooks
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class AfterDatabaseOperationsHook
 {
+
     /**
      * processDatamap_afterDatabaseOperations
      *
-     * @param string  $status
-     * @param string  $table
+     * @param string $status
+     * @param string $table
      * @param integer $recordUid
-     * @param array   $fields
+     * @param array $fields
      *
      * @return bool|FlashMessage
      * @throws \TYPO3\CMS\Extbase\Object\Exception
@@ -64,16 +65,18 @@ class AfterDatabaseOperationsHook
             /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
             $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
             $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_DBHOOK);
-            
+
             // set execution mode
             $cleanupService->setExecutionMode(CleanupService::USE_METHOD_PROPERTIES);
 
             // process method through cleanup utility
             // disable dry run
             $cleanupService->setDryRun(false);
-            
+
             // process
-            return $cleanupService->process(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class, 'executeByUid',['recordUid' => (int)$recordUid]);
+            return $cleanupService->process(CleanFlexFormsService::class, 'executeByUid', [
+                'recordUid' => (int) $recordUid
+            ]);
         }
 
         return false;

@@ -1,8 +1,6 @@
 <?php
-
 namespace SPL\SplCleanupTools\Service;
 
-use ReflectionMethod;
 use SPL\SplCleanupTools\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
@@ -10,14 +8,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use function in_array;
+use \ReflectionClass;
+use \ReflectionException;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -43,16 +42,18 @@ use function in_array;
  * Class ConfigurationService
  *
  * @package SPL\SplCleanupTools\Service
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class ConfigurationService implements SingletonInterface
 {
+
     /**
      * Functions
      */
     const FUNCTION_MAIN = 'execute';
 
     /**
+     *
      * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
@@ -80,7 +81,7 @@ class ConfigurationService implements SingletonInterface
     protected $errorServices = [];
 
     /**
-     * Configured additional usages of services 
+     * Configured additional usages of services
      *
      * @var array
      */
@@ -92,14 +93,13 @@ class ConfigurationService implements SingletonInterface
      * @var string
      */
     protected $localizationFile = '';
-    
+
     /**
      * log lifetime options
      *
      * @var array
      */
     protected $logLifetimeOptions = [];
-
 
     /**
      * Constructor
@@ -123,12 +123,12 @@ class ConfigurationService implements SingletonInterface
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
 
         // set localization from typoscript configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ? : 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
-        
+        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
+
         // set log lifetime options from typoscript config
         $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
         if ($logLifetimeOptions) {
-            foreach($logLifetimeOptions as $logLifetimeOption) {
+            foreach ($logLifetimeOptions as $logLifetimeOption) {
                 $this->logLifetimeOptions[$logLifetimeOption] = $logLifetimeOption;
             }
         }
@@ -137,7 +137,7 @@ class ConfigurationService implements SingletonInterface
         foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
 
             // skip service if not enabled
-            if (!$serviceConfiguration['enable']) {
+            if (! $serviceConfiguration['enable']) {
                 continue;
             }
 
@@ -150,11 +150,10 @@ class ConfigurationService implements SingletonInterface
 
                 $this->errorServices[] = $serviceClass;
             }
-            
 
             // check additional usage configuration of service
             foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                if ((int)$state === 1) {
+                if ((int) $state === 1) {
                     $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                 }
             }
@@ -166,39 +165,41 @@ class ConfigurationService implements SingletonInterface
      *
      * @return string
      */
-    public function getLocalizationFile() : string
+    public function getLocalizationFile(): string
     {
         return $this->localizationFile;
     }
-    
+
     /**
      * Returns log lifetime options
      *
      * @return array
      */
-     public function getLogLifetimeOptions() : array
-     {
-         return $this->logLifetimeOptions;
-     }
+    public function getLogLifetimeOptions(): array
+    {
+        return $this->logLifetimeOptions;
+    }
 
     /**
-     * Returns all services incl. configuration
+     * Returns all services incl.
+     * configuration
      *
      * @return array
      */
-    public function getServices() : array
+    public function getServices(): array
     {
         return $this->services;
     }
 
     /**
-     * Returns single service incl. configuration
+     * Returns single service incl.
+     * configuration
      *
      * @param string $class
      *
      * @return array
      */
-    public function getService($class) : array
+    public function getService($class): array
     {
         return $this->services[$class];
     }
@@ -208,7 +209,7 @@ class ConfigurationService implements SingletonInterface
      *
      * @return array
      */
-    public function getErrorServices() : array
+    public function getErrorServices(): array
     {
         return $this->errorServices;
     }
@@ -220,7 +221,7 @@ class ConfigurationService implements SingletonInterface
      *
      * @return array|NULL
      */
-    public function getServicesByAdditionalUsage(string $usageType) : ?array
+    public function getServicesByAdditionalUsage(string $usageType): ?array
     {
         if ($this->additionalUsages[$usageType]) {
             return $this->additionalUsages[$usageType];
@@ -234,15 +235,15 @@ class ConfigurationService implements SingletonInterface
      *
      * @param string $class
      * @param string $method
-     * @param array  $configuration
+     * @param array $configuration
      *
      * @return array
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    private function prepareClassConfiguration(string $class, string $method, array $configuration) : array
+    private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
         // init reflection of class
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
 
         $name = str_replace('Service', '', end(GeneralUtility::trimExplode('\\', $class)));
 
@@ -253,7 +254,7 @@ class ConfigurationService implements SingletonInterface
                 'name' => $parameterName,
                 'mandatory' => ($defaultValue === null)
             ];
-            
+
             if (\gettype($defaultValue) && \gettype($defaultValue) !== 'NULL') {
                 $parameterConfiguraton['type'] = \gettype($defaultValue);
             } else if ($configuration['mapping']['parameter'][$parameterName]) {

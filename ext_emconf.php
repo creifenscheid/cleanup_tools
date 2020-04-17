@@ -4,7 +4,7 @@
  *
  *  Copyright notice
  *
- *  (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ *  (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  *  All rights reserved
  *

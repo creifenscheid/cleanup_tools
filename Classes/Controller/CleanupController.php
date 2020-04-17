@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Controller;
 
 use SPL\SplCleanupTools\Service\CleanupService;
@@ -12,7 +11,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -38,10 +37,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * Class CleanupController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanupController extends BaseController
 {
+
     /**
      *
      * @var \SPL\SplCleanupTools\Service\CleanupService
@@ -63,17 +63,14 @@ class CleanupController extends BaseController
      *
      * @return void
      */
-    public function indexAction() : void
+    public function indexAction(): void
     {
-        if (!empty($this->configurationService->getErrorServices())) {
-            $this->addFlashMessage(
-                LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [implode(',',$this->cleanupService->getErrorServices())]),
-                LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'),
-                FlashMessage::WARNING
-            );
-
+        if (! empty($this->configurationService->getErrorServices())) {
+            $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [
+                implode(',', $this->cleanupService->getErrorServices())
+            ]), LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'), FlashMessage::WARNING);
         }
-        
+
         // assign services to the view
         $this->view->assignMultiple([
             'services' => $this->configurationService->getServices(),
@@ -89,7 +86,7 @@ class CleanupController extends BaseController
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function cleanupAction() : void
+    public function cleanupAction(): void
     {
         // get arguments from request
         $arguments = $this->request->getArguments();
@@ -120,19 +117,13 @@ class CleanupController extends BaseController
             }
 
             $return = $this->cleanupService->process($service['class'], $method, $methodParameter);
-            
+
             if ($return) {
-                $this->addFlashMessage(
-                    $return->getMessage(),
-                    $return->getTitle(),
-                    $return->getSeverity()
-                );
+                $this->addFlashMessage($return->getMessage(), $return->getTitle(), $return->getSeverity());
             } else {
-                $this->addFlashMessage(
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$service['class']]),
-                    LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
-                    FlashMessage::ERROR
-                );
+                $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [
+                    $service['class']
+                ]), LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'), FlashMessage::ERROR);
             }
 
             $this->forward('index', 'Cleanup', 'SplCleanupTools');

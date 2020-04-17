@@ -1,21 +1,19 @@
 <?php
-
 namespace SPL\SplCleanupTools\Service;
 
 use SPL\SplCleanupTools\Domain\Model\Log;
 use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use function call_user_func_array;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -41,22 +39,27 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * Class CleanupService
  *
  * @package SPL\SplCleanupTools\Service
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanupService
 {
+
     /**
      * Execution contexts
      */
     const EXECUTION_CONTEXT_BEMODULE = 0;
+
     const EXECUTION_CONTEXT_TOOLBAR = 1;
+
     const EXECUTION_CONTEXT_SCHEDULER = 2;
+
     const EXECUTION_CONTEXT_DRAWITEMHOOK = 3;
+
     const EXECUTION_CONTEXT_DBHOOK = 4;
-    
-    
+
     // Execution mode
     const USE_CLASS_PROPERTIES = 0;
+
     const USE_METHOD_PROPERTIES = 1;
 
     /**
@@ -65,17 +68,17 @@ class CleanupService
      * @var int
      */
     protected $executionContext = self::EXECUTION_CONTEXT_BEMODULE;
-    
+
     /**
      * Execution mode
      *
      * @var int
      */
     protected $executionMode = self::USE_CLASS_PROPERTIES;
-    
+
     /**
      * Dry run
-     * 
+     *
      * @var bool
      */
     protected $dryRun = true;
@@ -123,11 +126,11 @@ class CleanupService
      *
      * @return void
      */
-    public function setExecutionContext(int $executionContext) : void
+    public function setExecutionContext(int $executionContext): void
     {
         $this->executionContext = $executionContext;
     }
-    
+
     /**
      * Set execution mode
      *
@@ -135,19 +138,19 @@ class CleanupService
      *
      * @return void
      */
-    public function setExecutionMode(int $executionMode) : void
+    public function setExecutionMode(int $executionMode): void
     {
         $this->executionMode = $executionMode;
     }
 
     /**
      * Set dry run
-     * 
+     *
      * @param boolean $dryRun
-     * 
+     *
      * @return void
      */
-    public function setDryRun($dryRun) : void
+    public function setDryRun($dryRun): void
     {
         $this->dryRun = $dryRun;
     }
@@ -157,7 +160,7 @@ class CleanupService
      *
      * @param string $class
      * @param string $method
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return int|bool
      * @throws \TYPO3\CMS\Extbase\Object\Exception
@@ -167,88 +170,91 @@ class CleanupService
     {
         // init service
         $service = $this->objectManager->get($class);
-        
+
         // set up reflection
         $reflection = new \ReflectionClass($service);
-        
+
         // write log
         $log = new Log();
         $log->setCrdate(time());
-        
+
         if ($GLOBALS['BE_USER']->user['uid']) {
             $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
         }
-        
+
         $log->setExecutionContext($this->executionContext);
         $log->setService($class);
-        
+
         if ($parameters) {
             $log->setParameters($parameters);
         }
-        
+
         // set log in service
         $service->setLog($log);
-        
+
         // if parameter are given
         if ($parameters) {
-            
+
             if ($this->executionMode === self::USE_METHOD_PROPERTIES) {
                 // call method with parameter
-                $return = call_user_func_array([$service, $method], $parameters);
+                $return = call_user_func_array([
+                    $service,
+                    $method
+                ], $parameters);
             } else {
                 // flag to handle if method can be run
                 $runMethod = true;
-            
+
                 // set parameter
-                foreach($parameters as $parameter => $value) {
+                foreach ($parameters as $parameter => $value) {
                     $propertyReflection = $reflection->getProperty($parameter);
-                    
+
                     if ($propertyReflection->isPublic()) {
                         $service->$parameter = $value;
                     } else {
-                        $setter = 'set'.ucfirst($parameter);
-                        
-                        if(method_exists($service, $setter)) {
+                        $setter = 'set' . ucfirst($parameter);
+
+                        if (method_exists($service, $setter)) {
                             $service->$setter($value);
                         } else {
-                            
-                            $message = 'Property '.$parameter.' is not public and no setter is given.';
-                            
+
+                            $message = 'Property ' . $parameter . ' is not public and no setter is given.';
+
                             // create new message
                             $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
                             $newLogMessage->setLog($log);
                             $newLogMessage->setMessage($message);
-                            
+
                             // add message to log
                             $log->addMessage($newLogMessage);
-                            
+
                             $return = false;
                             $runMethod = false;
                         }
                     }
                 }
-                
+
                 // call method
                 if ($runMethod) {
                     $return = $service->$method();
                 }
             }
         } else {
-            
+
             // set dry run
             $service->setDryRun($this->dryRun);
-            
+
             // call method
             $return = $service->$method();
         }
-        
-        if (!$return || ($return instanceof FlashMessage && $return->getSeverity() === FlashMessage::ERROR)) {
+
+        if (! $return || ($return instanceof FlashMessage && $return->getSeverity() === FlashMessage::ERROR)) {
             $log->setState(false);
         }
-        
+
         // get updated log from service and add to repository
         $this->logRepository->add($service->getLog());
-        
+
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
         $persistenceManager = $this->objectManager->get(PersistenceManager::class);
         $persistenceManager->persistAll();

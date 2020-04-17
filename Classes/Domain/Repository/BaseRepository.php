@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -10,7 +9,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -36,14 +35,15 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * Class LogRepository
  *
  * @package SPL\SplCleanupTools\Domain\Repository
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class BaseRespository extends Repository
 {
+
     protected $defaultOrderings = [
         'crdate' => QueryInterface::ORDER_DESCENDING
     ];
-    
+
     /**
      * Persist all
      */
@@ -57,25 +57,27 @@ class BaseRespository extends Repository
      *
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      */
-    public function findDeleted () {
+    public function findDeleted()
+    {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->matching($query->equals('deleted', 1));
-        
+
         return $query->execute();
     }
-    
+
     /**
      * Returns entries older then
      *
      * @param int $lifetime
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
      */
-    public function findOlderThen (int $lifetime) {
+    public function findOlderThen(int $lifetime)
+    {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->matching($query->lessThan('crdate', $lifetime));
-        
+
         return $query->execute();
     }
 }

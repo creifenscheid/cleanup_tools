@@ -2,24 +2,18 @@
 declare(strict_types = 1);
 namespace SPL\SplCleanupTools\Service;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -44,6 +38,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Class OrphanRecordsService
  * Finds (and fixes) all records that have an invalid / deleted page ID
+ *
  * @see \TYPO3\CMS\Lowlevel\Command\OrphanRecordsCommand::class
  *
  * @package SPL\SplCleanupTools\Service
@@ -51,13 +46,14 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  */
 class OrphanRecordsService extends AbstractCleanupService
 {
+
     /**
      * Executes the command to find records not attached to the pagetree
      * and permanently delete these records
      *
      * @return FlashMessage
      */
-    public function execute() : FlashMessage
+    public function execute(): FlashMessage
     {
         // find all records that should be deleted
         $allRecords = $this->findAllConnectedRecordsInPage(0, 10000);
@@ -65,28 +61,27 @@ class OrphanRecordsService extends AbstractCleanupService
         // Find orphans
         $orphans = [];
         foreach (array_keys($GLOBALS['TCA']) as $tableName) {
-            $idList = [0];
-            if (is_array($allRecords[$tableName]) && !empty($allRecords[$tableName])) {
+            $idList = [
+                0
+            ];
+            if (is_array($allRecords[$tableName]) && ! empty($allRecords[$tableName])) {
                 $idList = $allRecords[$tableName];
             }
             // Select all records that are NOT connected
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-                ->getQueryBuilderForTable($tableName);
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
-            $result = $queryBuilder
-                ->select('uid')
+            $result = $queryBuilder->select('uid')
                 ->from($tableName)
-                ->where(
-                    $queryBuilder->expr()->notIn(
-                        'uid',
-                        // do not use named parameter here as the list can get too long
-                        array_map('intval', $idList)
-                    )
-                )
+                ->where($queryBuilder->expr()
+                ->notIn('uid', 
+                // do not use named parameter here as the list can get too long
+                array_map('intval', $idList)))
                 ->orderBy('uid')
                 ->execute();
 
-            $rowCount = $queryBuilder->count('uid')->execute()->fetchColumn(0);
+            $rowCount = $queryBuilder->count('uid')
+                ->execute()
+                ->fetchColumn(0);
             if ($rowCount) {
                 $orphans[$tableName] = [];
                 while ($orphanRecord = $result->fetch()) {
@@ -120,10 +115,13 @@ class OrphanRecordsService extends AbstractCleanupService
      * via option $GLOBALS[TCA][$tableName][ctrl][delete]
      * This also takes deleted versioned records into account.
      *
-     * @param int $pageId the uid of the pages record (can also be 0)
-     * @param int $depth The current depth of levels to go down
-     * @param array $allRecords the records that are already marked as deleted (used when going recursive)
-     *
+     * @param int $pageId
+     *            the uid of the pages record (can also be 0)
+     * @param int $depth
+     *            The current depth of levels to go down
+     * @param array $allRecords
+     *            the records that are already marked as deleted (used when going recursive)
+     *            
      * @return array the modified $deletedRecords array
      */
     protected function findAllConnectedRecordsInPage(int $pageId, int $depth, array $allRecords = []): array
@@ -136,20 +134,14 @@ class OrphanRecordsService extends AbstractCleanupService
         foreach (array_keys($GLOBALS['TCA']) as $tableName) {
             if ($tableName !== 'pages') {
                 // Select all records belonging to page:
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-                    ->getQueryBuilderForTable($tableName);
+                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
                 $queryBuilder->getRestrictions()->removeAll();
 
-                $result = $queryBuilder
-                    ->select('uid')
+                $result = $queryBuilder->select('uid')
                     ->from($tableName)
-                    ->where(
-                        $queryBuilder->expr()->eq(
-                            'pid',
-                            $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)
-                        )
-                    )
+                    ->where($queryBuilder->expr()
+                    ->eq('pid', $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)))
                     ->execute();
 
                 while ($rowSub = $result->fetch()) {
@@ -158,7 +150,7 @@ class OrphanRecordsService extends AbstractCleanupService
                     $versions = BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
                     if (is_array($versions)) {
                         foreach ($versions as $verRec) {
-                            if (!$verRec['_CURRENT_VERSION']) {
+                            if (! $verRec['_CURRENT_VERSION']) {
                                 $allRecords[$tableName][$verRec['uid']] = $verRec['uid'];
                             }
                         }
@@ -168,26 +160,20 @@ class OrphanRecordsService extends AbstractCleanupService
         }
         // Find subpages to root ID and traverse (only when rootID is not a version or is a branch-version):
         if ($depth > 0) {
-            $depth--;
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-                ->getQueryBuilderForTable('pages');
+            $depth --;
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 
             $queryBuilder->getRestrictions()->removeAll();
 
-            $result = $queryBuilder
-                ->select('uid')
+            $result = $queryBuilder->select('uid')
                 ->from('pages')
-                ->where(
-                    $queryBuilder->expr()->eq(
-                        'pid',
-                        $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)
-                    )
-                )
+                ->where($queryBuilder->expr()
+                ->eq('pid', $queryBuilder->createNamedParameter($pageId, \PDO::PARAM_INT)))
                 ->orderBy('sorting')
                 ->execute();
 
             while ($row = $result->fetch()) {
-                $allRecords = $this->findAllConnectedRecordsInPage((int)$row['uid'], $depth, $allRecords);
+                $allRecords = $this->findAllConnectedRecordsInPage((int) $row['uid'], $depth, $allRecords);
             }
         }
 
@@ -196,8 +182,8 @@ class OrphanRecordsService extends AbstractCleanupService
             $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
             if (is_array($versions)) {
                 foreach ($versions as $verRec) {
-                    if (!$verRec['_CURRENT_VERSION']) {
-                        $allRecords = $this->findAllConnectedRecordsInPage((int)$verRec['uid'], $depth, $allRecords);
+                    if (! $verRec['_CURRENT_VERSION']) {
+                        $allRecords = $this->findAllConnectedRecordsInPage((int) $verRec['uid'], $depth, $allRecords);
                     }
                 }
             }
@@ -208,7 +194,8 @@ class OrphanRecordsService extends AbstractCleanupService
     /**
      * Deletes records via DataHandler
      *
-     * @param array $orphanedRecords two level array with tables and uids
+     * @param array $orphanedRecords
+     *            two level array with tables and uids
      */
     protected function deleteRecords(array $orphanedRecords)
     {
@@ -224,7 +211,7 @@ class OrphanRecordsService extends AbstractCleanupService
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         // error counter
         $errors = 0;
-        
+
         $dataHandler->start([], []);
 
         // Loop through all tables and their records
@@ -236,21 +223,23 @@ class OrphanRecordsService extends AbstractCleanupService
                 // under a deleted page...)
                 $dataHandler->deleteRecord($table, $uid, true, true);
                 // Return errors if any:
-                if (!empty($dataHandler->errorLog)) {
-                    $errorMessage = array_merge(['DataHandler reported an error'], $dataHandler->errorLog);
+                if (! empty($dataHandler->errorLog)) {
+                    $errorMessage = array_merge([
+                        'DataHandler reported an error'
+                    ], $dataHandler->errorLog);
                     $this->addMessage($errorMessage);
-                    $errors++;
-                    } else {
+                    $errors ++;
+                } else {
                     $this->addMessage('Permanently deleted orphaned record "' . $table . ':' . $uid . '".');
                 }
             }
         }
-        
+
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
             return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-        
+
         return $this->createFlashMessage();
     }
 }

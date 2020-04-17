@@ -2,25 +2,19 @@
 declare(strict_types = 1);
 namespace SPL\SplCleanupTools\Service;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\ReferenceIndex;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -45,6 +39,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Class LostFilesService
  * Finds files within uploads/ which are not needed anymore
+ *
  * @see \TYPO3\CMS\Lowlevel\Command\LostFilesCommand::class
  *
  * @package SPL\SplCleanupTools\Service
@@ -52,20 +47,23 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  */
 class LostFilesService extends AbstractCleanupService
 {
+
     /**
-     * Comma-separated list of paths that should be excluded, e.g. "uploads/pics,uploads/media"
+     * Comma-separated list of paths that should be excluded, e.g.
+     * "uploads/pics,uploads/media"
      *
      * @var string
      */
     protected $exclude = '';
-    
+
     /**
-     * Comma separated list of paths to process. Example: "fileadmin/[path1],fileadmin/[path2],...", if not passed, uploads/ will be used by default.
+     * Comma separated list of paths to process.
+     * Example: "fileadmin/[path1],fileadmin/[path2],...", if not passed, uploads/ will be used by default.
      *
      * @var string
      */
     protected $customPath = '';
-    
+
     /**
      * Setting this option automatically updates the reference index
      *
@@ -75,7 +73,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Return exclude
-     * 
+     *
      * @return string
      */
     public function getExclude()
@@ -85,7 +83,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Set exclude
-     * 
+     *
      * @param string $exclude
      */
     public function setExclude($exclude)
@@ -95,7 +93,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Return custom paths
-     * 
+     *
      * @return string
      */
     public function getCustomPath()
@@ -105,7 +103,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Set custom paths
-     * 
+     *
      * @param string $customPath
      */
     public function setCustomPath($customPath)
@@ -115,7 +113,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Return updateRefindex
-     * 
+     *
      * @return boolean
      */
     public function isUpdateRefindex()
@@ -125,7 +123,7 @@ class LostFilesService extends AbstractCleanupService
 
     /**
      * Set updateRefindex
-     * 
+     *
      * @param boolean $updateRefindex
      */
     public function setUpdateRefindex($updateRefindex)
@@ -138,23 +136,24 @@ class LostFilesService extends AbstractCleanupService
      * - optionally update the reference index (to have clean data)
      * - find files within uploads/* which are not connected to the reference index
      * - remove these files if --dry-run is not set
+     *
      * @return FlashMessage
      */
-    public function execute() : FlashMessage
+    public function execute(): FlashMessage
     {
         if ($this->updateRefIndex) {
             $this->updateReferenceIndex();
         }
 
         // Find the lost files
-        if (!empty($this->exclude)) {
+        if (! empty($this->exclude)) {
             $excludedPaths = GeneralUtility::trimExplode(',', $this->exclude, true);
         } else {
             $excludedPaths = [];
         }
 
         // Use custom-path
-        if (!empty($this->customPath)) {
+        if (! empty($this->customPath)) {
             $customPaths = $this->customPath;
         }
 
@@ -163,9 +162,8 @@ class LostFilesService extends AbstractCleanupService
         if (count($lostFiles)) {
             if ($this->dryRun) {
                 $message = 'Found ' . count($lostFiles) . ' lost files, ready to be deleted.';
-            $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::INFO, $message);
-                
+                $this->addMessage($message);
+                return $this->createFlashMessage(FlashMessage::INFO, $message);
             } else {
                 // Delete them
                 return $this->deleteLostFiles($lostFiles);
@@ -192,8 +190,10 @@ class LostFilesService extends AbstractCleanupService
     /**
      * Find lost files in uploads/ or custom folder
      *
-     * @param array $excludedPaths list of paths to be excluded, can be uploads/pics/
-     * @param string $customPaths list of paths to be checked instead of uploads/
+     * @param array $excludedPaths
+     *            list of paths to be excluded, can be uploads/pics/
+     * @param string $customPaths
+     *            list of paths to be checked instead of uploads/
      * @return array an array of files (relative to Environment::getPublicPath()) that are not connected
      */
     protected function findLostFiles($excludedPaths = [], $customPaths = ''): array
@@ -202,11 +202,10 @@ class LostFilesService extends AbstractCleanupService
 
         // Get all files
         $files = [];
-        if (!empty($customPaths)) {
+        if (! empty($customPaths)) {
             $customPaths = GeneralUtility::trimExplode(',', $customPaths, true);
             foreach ($customPaths as $customPath) {
-                if (false === realpath(Environment::getPublicPath() . '/' . $customPath)
-                    || !GeneralUtility::isFirstPartOfStr(realpath(Environment::getPublicPath() . '/' . $customPath), realpath(Environment::getPublicPath()))) {
+                if (false === realpath(Environment::getPublicPath() . '/' . $customPath) || ! GeneralUtility::isFirstPartOfStr(realpath(Environment::getPublicPath() . '/' . $customPath), realpath(Environment::getPublicPath()))) {
                     throw new \Exception('The path: "' . $customPath . '" is invalid', 1450086736);
                 }
                 $files = GeneralUtility::getAllFilesAndFoldersInPath($files, Environment::getPublicPath() . '/' . $customPath);
@@ -217,14 +216,13 @@ class LostFilesService extends AbstractCleanupService
 
         $files = GeneralUtility::removePrefixPathFromList($files, Environment::getPublicPath() . '/');
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('sys_refindex');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_refindex');
 
         // Traverse files and for each, look up if its found in the reference index.
         foreach ($files as $key => $value) {
 
             // First, allow "index.html", ".htaccess" files since they are often used for good reasons
-            if (substr($value, -11) === '/index.html' || substr($value, -10) === '/.htaccess') {
+            if (substr($value, - 11) === '/index.html' || substr($value, - 10) === '/.htaccess') {
                 continue;
             }
 
@@ -246,27 +244,18 @@ class LostFilesService extends AbstractCleanupService
             }
 
             // Looking for a reference from a field which is NOT a soft reference (thus, only fields with a proper TCA/Flexform configuration)
-            $queryBuilder
-                ->select('hash')
+            $queryBuilder->select('hash')
                 ->from('sys_refindex')
-                ->where(
-                    $queryBuilder->expr()->eq(
-                        'ref_table',
-                        $queryBuilder->createNamedParameter('_FILE', \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'ref_string',
-                        $queryBuilder->createNamedParameter($value, \PDO::PARAM_STR)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        'softref_key',
-                        $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
-                    )
-                )
+                ->where($queryBuilder->expr()
+                ->eq('ref_table', $queryBuilder->createNamedParameter('_FILE', \PDO::PARAM_STR)), $queryBuilder->expr()
+                ->eq('ref_string', $queryBuilder->createNamedParameter($value, \PDO::PARAM_STR)), $queryBuilder->expr()
+                ->eq('softref_key', $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)))
                 ->orderBy('sorting', 'DESC')
                 ->execute();
 
-            $rowCount = $queryBuilder->count('hash')->execute()->fetchColumn(0);
+            $rowCount = $queryBuilder->count('hash')
+                ->execute()
+                ->fetchColumn(0);
             // We conclude that the file is lost
             if ($rowCount === 0) {
                 $lostFiles[] = $value;
@@ -279,30 +268,31 @@ class LostFilesService extends AbstractCleanupService
     /**
      * Removes given files from the uploads/ folder
      *
-     * @param array $lostFiles Contains the lost files found
+     * @param array $lostFiles
+     *            Contains the lost files found
      */
     protected function deleteLostFiles(array $lostFiles)
     {
         // error counter
         $errors = 0;
-        
+
         foreach ($lostFiles as $lostFile) {
             $absoluteFileName = GeneralUtility::getFileAbsFileName($lostFile);
-            
+
             if ($absoluteFileName && @is_file($absoluteFileName)) {
                 unlink($absoluteFileName);
                 $this->addMessage('Permanently deleted file record "' . $absoluteFileName . '".');
             } else {
                 $this->addMessage('File "' . $absoluteFileName . '" was not found!');
-                $errors++;
+                $errors ++;
             }
         }
-        
+
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
             return $this->createFlashMessage(FlashMessage::WARNING, $message);
         }
-        
+
         return $this->createFlashMessage();
     }
 }

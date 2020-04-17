@@ -1,16 +1,18 @@
 <?php
-
 namespace SPL\SplCleanupTools\Service;
 
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use SPL\SplCleanupTools\Domain\Model\Log;
+use SPL\SplCleanupTools\Domain\Model\LogMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -36,16 +38,17 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * Class AbstractCleanupService
  *
  * @packagee SPL\SplCleanupTools\Service
- * @author   Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 abstract class AbstractCleanupService
 {
+
     /**
      * Execute cleanup process
      *
-     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
+     * @return FlashMessage
      */
-    abstract public function execute() : \TYPO3\CMS\Core\Messaging\FlashMessage;
+    abstract public function execute(): FlashMessage;
 
     /*
      * dry run
@@ -53,11 +56,11 @@ abstract class AbstractCleanupService
      * @var boolean
      */
     protected $dryRun = true;
-    
+
     /**
      * log
      *
-     * @var \SPL\SplCleanupTools\Domain\Model\Log
+     * @var Log
      */
     protected $log;
 
@@ -66,7 +69,7 @@ abstract class AbstractCleanupService
      *
      * @return bool
      */
-    public function getDryRun() : bool
+    public function getDryRun(): bool
     {
         return $this->dryRun;
     }
@@ -76,71 +79,71 @@ abstract class AbstractCleanupService
      *
      * @param bool $dryRun
      */
-    public function setDryRun(bool $dryRun) : void
+    public function setDryRun(bool $dryRun): void
     {
         $this->dryRun = $dryRun;
     }
-    
+
     /**
      * Returns log
      *
-     * @return \SPL\SplCleanupTools\Domain\Model\Log
+     * @return Log
      */
-    public function getLog() : \SPL\SplCleanupTools\Domain\Model\Log
+    public function getLog(): Log
     {
         return $this->log;
     }
-    
+
     /**
      * Sets log
      *
-     * @param \SPL\SplCleanupTools\Domain\Model\Log $log
+     * @param Log $log
      * @return void
      */
-    public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log) : void
+    public function setLog(Log $log): void
     {
         $this->log = $log;
     }
-    
+
     /**
      * Create and add logMessage object
-     * 
+     *
      * @param string $message
      */
-    protected function addMessage(string $message) : void
+    protected function addMessage(string $message): void
     {
         // create new message
-        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+        $newLogMessage = new LogMessage();
         $newLogMessage->setLog($this->log);
         $newLogMessage->setMessage($message);
-        
+
         // add message to log
         $this->log->addMessage($newLogMessage);
     }
-    
+
     /**
      * Create and add logMessage object with localization key
-     * 
+     *
      * @param string $key
      * @param null|array $arguments
      */
-    protected function addLLLMessage(string $key, array $arguments = null) : void
+    protected function addLLLMessage(string $key, array $arguments = null): void
     {
         // create new message
-        $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
+        $newLogMessage = new LogMessage();
         $newLogMessage->setLog($this->log);
         $newLogMessage->setLocalLangKey($key);
-        
+
         if ($arguments) {
             $newLogMessage->setLocalLangArguments($arguments);
         }
-        
+
         // add message to log
         $this->log->addMessage($newLogMessage);
     }
-    
+
     /**
-     * Create flash messsage object 
+     * Create flash messsage object
      *
      * @param int $severity
      * @param null|string $message
@@ -148,19 +151,15 @@ abstract class AbstractCleanupService
      *
      * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function createFlashMessage(int $severity = FlashMessage::OK, string $message = null, $headline = null) : \TYPO3\CMS\Core\Messaging\FlashMessage
+    protected function createFlashMessage(int $severity = FlashMessage::OK, string $message = null, $headline = null): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // define headline
-        $headline = $headline ? : LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'SplCleanupTools');
-        
+        $headline = $headline ?: LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'SplCleanupTools');
+
         // define message
-        $message = $message ? : LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools');
-        
+        $message = $message ?: LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools');
+
         // initialize and return flash message object
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(FlashMessage::class,
-            $message,
-            $headline,
-            $severity
-        );
+        return GeneralUtility::makeInstance(FlashMessage::class, $message, $headline, $severity);
     }
 }

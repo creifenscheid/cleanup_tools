@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Controller;
 
 use SPL\SplCleanupTools\Service\ConfigurationService;
@@ -11,7 +10,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -37,10 +36,11 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * Class BaseController
  *
  * @package SPL\SplCleanupTools\Controller
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class BaseController extends ActionController
 {
+
     /**
      *
      * @var \SPL\SplCleanupTools\Service\ConfigurationService

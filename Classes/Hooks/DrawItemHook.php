@@ -6,15 +6,17 @@ use SPL\SplCleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use SPL\SplCleanupTools\Service\CleanFlexFormsService;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -71,9 +73,9 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
             if ($row['pi_flexform']) {
 
                 /* @var \SPL\SplCleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
-                $cleanFlexFormService = GeneralUtility::makeInstance(\SPL\SplCleanupTools\Service\CleanFlexFormsService::class);
+                $cleanFlexFormService = GeneralUtility::makeInstance(CleanFlexFormsService::class);
 
-                if (!$cleanFlexFormService->isValid($row)) {
+                if (! $cleanFlexFormService->isValid($row)) {
 
                     /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
                     $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
@@ -84,7 +86,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
                     $view = GeneralUtility::makeInstance(StandaloneView::class);
 
-                        // set format
+                    // set format
                     $view->setFormat('html');
 
                     $uri = (string) $uriBuilder->buildUriFromRoute('splcleanuptools_ajax', [
@@ -92,7 +94,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                         'method' => 'executeByUid',
                         'recordUid' => $row['uid'],
                         'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK,
-                        'executionMode' =>CleanupService::USE_METHOD_PROPERTIES
+                        'executionMode' => CleanupService::USE_METHOD_PROPERTIES
                     ]);
 
                     // assignments
@@ -103,7 +105,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                     ]);
 
                     // set template path
-                    $templateFile = GeneralUtility::resolveBackPath(PATH_site . 'typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
+                    $templateFile = GeneralUtility::resolveBackPath(Environment::getPublicPath() . '/typo3conf/ext/spl_cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
 
                     // set view template
                     $view->setTemplatePathAndFilename($templateFile);

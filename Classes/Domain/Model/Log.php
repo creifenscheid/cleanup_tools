@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Domain\Model;
 
 use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
@@ -7,14 +6,13 @@ use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -40,10 +38,11 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * Class Log
  *
  * @package SPL\SplCleanupTools\Domain\Model
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class Log extends AbstractEntity
 {
+
     /**
      * execution_context
      *
@@ -57,7 +56,7 @@ class Log extends AbstractEntity
      * @var string
      */
     protected $service = '';
-    
+
     /**
      * parameters
      *
@@ -92,15 +91,15 @@ class Log extends AbstractEntity
      * @var \TYPO3\CMS\Beuser\Domain\Model\BackendUser
      */
     protected $cruser;
-    
+
     /**
      * messages
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\LogMessage>
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $messages;
-    
+
     /**
      * __construct
      */
@@ -108,11 +107,12 @@ class Log extends AbstractEntity
     {
         $this->initStorageObjects();
     }
-    
+
     /**
+     *
      * @return void
      */
-    protected function initStorageObjects() : void
+    protected function initStorageObjects(): void
     {
         $this->messages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
@@ -122,7 +122,7 @@ class Log extends AbstractEntity
      *
      * @return int
      */
-    public function getExecutionContext() : int
+    public function getExecutionContext(): int
     {
         return $this->executionContext;
     }
@@ -134,7 +134,7 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setExecutionContext(int $executionContext) : void
+    public function setExecutionContext(int $executionContext): void
     {
         $this->executionContext = $executionContext;
     }
@@ -144,7 +144,7 @@ class Log extends AbstractEntity
      *
      * @return string
      */
-    public function getService() : string
+    public function getService(): string
     {
         return $this->service;
     }
@@ -156,22 +156,22 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setService(string $service) : void
+    public function setService(string $service): void
     {
         $this->service = $service;
     }
-    
+
     /**
      * Returns the parameters
      *
      * @return array
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         if (unserialize($this->parameters)) {
             return unserialize($this->parameters);
         }
-        
+
         return [];
     }
 
@@ -182,7 +182,7 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setParameters(array $parameters) : void
+    public function setParameters(array $parameters): void
     {
         $this->parameters = serialize($parameters);
     }
@@ -192,7 +192,7 @@ class Log extends AbstractEntity
      *
      * @return boolean
      */
-    public function getState() : bool
+    public function getState(): bool
     {
         return $this->state;
     }
@@ -204,7 +204,7 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setState($state) : void
+    public function setState($state): void
     {
         $this->state = $state;
     }
@@ -214,7 +214,7 @@ class Log extends AbstractEntity
      *
      * @return number
      */
-    public function getCrdate() : int
+    public function getCrdate(): int
     {
         return $this->crdate;
     }
@@ -226,7 +226,7 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setCrdate(int $crdate) : void
+    public function setCrdate(int $crdate): void
     {
         $this->crdate = $crdate;
     }
@@ -236,7 +236,7 @@ class Log extends AbstractEntity
      *
      * @return number
      */
-    public function getCruserId() : int
+    public function getCruserId(): int
     {
         return $this->cruserId;
     }
@@ -248,7 +248,7 @@ class Log extends AbstractEntity
      *
      * @return void
      */
-    public function setCruserId(int $cruserId) : void
+    public function setCruserId(int $cruserId): void
     {
         $this->cruserId = $cruserId;
     }
@@ -258,7 +258,7 @@ class Log extends AbstractEntity
      *
      * @return \TYPO3\CMS\Beuser\Domain\Model\BackendUser
      */
-    public function getCruser() : BackendUser
+    public function getCruser(): BackendUser
     {
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $beUserRepository */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
@@ -298,14 +298,14 @@ class Log extends AbstractEntity
     {
         return $this->messages;
     }
-    
+
     /**
      * Sets the messages
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $messages
      * @return void
      */
-    public function setMessages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $messages) : void
+    public function setMessages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $messages): void
     {
         $this->messages = $messages;
     }

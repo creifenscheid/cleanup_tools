@@ -6,17 +6,16 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SPL\SplCleanupTools\Service\CleanupService;
 use SPL\SplCleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Backend\Module\BaseScriptClass;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -44,7 +43,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * @package SPL\SplCleanupTools\Controller
  * @author  Christian Reifenscheid
  */
-class AjaxController extends BaseScriptClass
+class AjaxController
 {
     /**
      * Cleanup service
@@ -72,7 +71,6 @@ class AjaxController extends BaseScriptClass
      */
     public function __construct()
     {
-        parent::__construct();
         $this->cleanupService = GeneralUtility::makeInstance(CleanupService::class);
         $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();

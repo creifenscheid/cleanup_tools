@@ -1,5 +1,4 @@
 <?php
-
 namespace SPL\SplCleanupTools\Backend\Toolbar;
 
 use SPL\SplCleanupTools\Service\CleanupService;
@@ -15,7 +14,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  *
  * Copyright notice
  *
- * (c) 2019 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
  *
  * All rights reserved
  *
@@ -41,16 +40,19 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  * Class CleanUpToolbarItem
  *
  * @package SPL\SplCleanupTools\Backend\Toolbar
- * @author  Christian Reifenscheid
+ * @author Christian Reifenscheid
  */
 class CleanUpToolbarItem implements ToolbarItemInterface
 {
+
     /**
+     *
      * @var array
      */
     protected $cleanupServices = [];
 
     /**
+     *
      * @var string
      */
     protected $localizationFile = '';
@@ -75,8 +77,12 @@ class CleanUpToolbarItem implements ToolbarItemInterface
 
         foreach ($toolbarItems as $service) {
 
-            $uri = (string)$uriBuilder->buildUriFromRoute('splcleanuptools_ajax', ['class' => $service['class'], 'method' => $configurationService::FUNCTION_MAIN, 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR]);
-            
+            $uri = (string) $uriBuilder->buildUriFromRoute('splcleanuptools_ajax', [
+                'class' => $service['class'],
+                'method' => $configurationService::FUNCTION_MAIN,
+                'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR
+            ]);
+
             $this->cleanupServices[] = [
                 'title' => LocalizationUtility::translate($this->localizationFile . ':label.' . $service['name']),
                 'description' => LocalizationUtility::translate($this->localizationFile . ':description.' . $service['name']),
@@ -163,16 +169,23 @@ class CleanUpToolbarItem implements ToolbarItemInterface
     /**
      * Returns a new standalone view, shorthand function
      *
-     * @param string $filename Which templateFile should be used.
-     *
+     * @param string $filename
+     *            Which templateFile should be used.
+     *            
      * @return \TYPO3\CMS\Fluid\View\StandaloneView
      */
-    protected function getFluidTemplateObject(string $filename) : StandaloneView
+    protected function getFluidTemplateObject(string $filename): StandaloneView
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setLayoutRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts']);
-        $view->setPartialRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials']);
-        $view->setTemplateRootPaths(['EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates']);
+        $view->setLayoutRootPaths([
+            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts'
+        ]);
+        $view->setPartialRootPaths([
+            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials'
+        ]);
+        $view->setTemplateRootPaths([
+            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates'
+        ]);
         $view->setTemplate($filename);
 
         $view->getRequest()->setControllerExtensionName('Backend');
