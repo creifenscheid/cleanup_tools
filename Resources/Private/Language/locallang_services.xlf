@@ -55,6 +55,26 @@
             <trans-unit id="label.customPath">
                 <source>Paths to process (default: uploads)</source>
             </trans-unit>
+            
+            <!-- CONFIGURATION -->
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-day">
+                <source>1 day</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-week">
+                <source>1 week</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-month">
+                <source>1 month</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.3-months">
+                <source>3 months</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.6-months">
+                <source>6 months</source>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-year">
+                <source>1 year</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

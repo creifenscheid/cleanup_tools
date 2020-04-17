@@ -69,6 +69,32 @@
                 <source>Paths to process (default: uploads)</source>
                 <target>Slóð til að vinna úr (sjálfgefið: uploads)</target>
             </trans-unit>
+            
+            <!-- CONFIGURATION -->
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-day">
+                <source>1 day</source>
+                <target>1 dagur</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-week">
+                <source>1 week</source>
+                <target>1 vika</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-month">
+                <source>1 month</source>
+                <target>1 mánuður</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.3-months">
+                <source>3 months</source>
+                <target>3 mánuðir</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.6-months">
+                <source>6 months</source>
+                <target>6 mánuðir</target>
+            </trans-unit>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-year">
+                <source>1 year</source>
+                <target>1 ár</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

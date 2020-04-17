@@ -127,9 +127,10 @@ class ConfigurationService implements SingletonInterface
 
         // set log lifetime options from typoscript config
         $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        
         if ($logLifetimeOptions) {
             foreach ($logLifetimeOptions as $logLifetimeOption) {
-                $this->logLifetimeOptions[$logLifetimeOption] = $logLifetimeOption;
+                $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
             }
         }
 
