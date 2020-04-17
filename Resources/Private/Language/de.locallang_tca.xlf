@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
+          product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+            <!-- PALETTES -->
+            <trans-unit id="tx_splcleanuptools_domain_model.general.palettes.creation">
+                <source>Creation</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.palettes.logData">
+                <source>Log data</source>
+                <target></target>
+            </trans-unit>
+            
+            <!-- TABS -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log.tab.messages">
+                <source>Messages</source>
+                <target></target>
+            </trans-unit>
+
+            <!-- GENERAL -->
+            <trans-unit id="tx_splcleanuptools_domain_model.general.crdate">
+                <source>Creation date</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model.general.cruser_id">
+                <source>Created by user</source>
+                <target></target>
+            </trans-unit>
+
+            <!-- LOG -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log">
+                <source>Log</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.execution_context">
+                <source>Execution context</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.service">
+                <source>Service</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.state">
+                <source>State</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log.messages">
+                <source>Messages</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id=„tx_splcleanuptools_domain_model_log.parameters">
+                <source>Parameters</source>
+                <target></target>
+            </trans-unit>
+            
+            <!-- LOG MESSAGE -->
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message">
+                <source>Log message</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message.log">
+                <source>Log</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="tx_splcleanuptools_domain_model_log_message.message">
+                <source>Message</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_key">
+                <source>Localization key</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_arguments">
+                <source>Localization arguments</source>
+                <target></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

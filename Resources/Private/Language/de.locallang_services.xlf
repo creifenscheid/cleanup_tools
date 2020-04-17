@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-04-01T11:55:00Z"
+          product-name="spl_cleanup_tools">
+        <header/>
+        <body>
+           <!-- PARAMETER -->
+            <trans-unit id="label.updateRefindex">
+                <source>Update reference index</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.recordUid">
+                <source>Record uid</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.pid">
+                <source>Page uid</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.depth">
+                <source>Depth</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.dryRun">
+                <source>Dry run</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.exclude">
+                <source>Paths that should be excluded</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="label.customPath">
+                <source>Paths to process (default: uploads)</source>
+                <target></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
