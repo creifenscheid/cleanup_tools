@@ -11,10 +11,10 @@
     </label>
     <f:switch expression="{default}">
         <f:case value="true">
-            <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="1" />
+            <f:form.select id="{service}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="1" />
         </f:case>
         <f:defaultCase>
-            <f:form.select id="{serviceMethod}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="0" />
+            <f:form.select id="{service}-{name}" name="parameters[{name}]" options="{0: labelNo, 1: labelYes}" class="form-control" value="0" />
         </f:defaultCase>
     </f:switch>
 </div>

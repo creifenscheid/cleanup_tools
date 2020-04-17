@@ -73,22 +73,18 @@ class CleanUpToolbarItem implements ToolbarItemInterface
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
-        $toolbarItems = $configurationService->getServicesByAdditionalUsage('toolbar');
+        $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 
-        foreach ($toolbarItems as $service) {
+        foreach ($this->cleanupServices as $service => $serviceConfiguration) {
 
             $uri = (string) $uriBuilder->buildUriFromRoute('splcleanuptools_ajax', [
-                'class' => $service['class'],
+                'class' => $serviceConfiguration['class'],
                 'method' => $configurationService::FUNCTION_MAIN,
                 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
-            $this->cleanupServices[] = [
-                'title' => LocalizationUtility::translate($this->localizationFile . ':label.' . $service['name']),
-                'description' => LocalizationUtility::translate($this->localizationFile . ':description.' . $service['name']),
-                'class' => $service['class'],
-                'onclickCode' => 'TYPO3.SplCleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;'
-            ];
+            $this->cleanupServices[$service]['description'] = LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
+            $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.SplCleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
 

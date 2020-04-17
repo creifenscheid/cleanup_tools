@@ -4,24 +4,6 @@
           product-name="spl_cleanup_tools">
         <header/>
         <body>
-           <!-- LABEL -->
-            <trans-unit id="label.CleanFlexForms">
-                <source>FlexForms</source>
-                <target>FlexForms</target>
-            </trans-unit>
-            <trans-unit id="label.DeletedRecords">
-                <source>Deleted records</source>
-                <target>Gelöschte Datensätze</target>
-            </trans-unit>
-            <trans-unit id="label.LostFiles">
-                <source>Lost files</source>
-                <target>Verlorene Dateien</target>
-            </trans-unit>
-            <trans-unit id="label.OrphanRecords">
-                <source>Orphan records</source>
-                <target>Verwaiste Dateien</target>
-            </trans-unit>
-
             <!-- DESCRIPTIONS -->
             <trans-unit id="description.CleanFlexForms">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
