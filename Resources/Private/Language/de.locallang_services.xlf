@@ -7,67 +7,67 @@
            <!-- LABEL -->
             <trans-unit id="label.CleanFlexForms">
                 <source>FlexForms</source>
-                <target></target>
+                <target>FlexForms</target>
             </trans-unit>
             <trans-unit id="label.DeletedRecords">
                 <source>Deleted records</source>
-                <target></target>
+                <target>Gelöschte Datensätze</target>
             </trans-unit>
             <trans-unit id="label.LostFiles">
                 <source>Lost files</source>
-                <target></target>
+                <target>Verlorene Dateien</target>
             </trans-unit>
             <trans-unit id="label.OrphanRecords">
                 <source>Orphan records</source>
-                <target></target>
+                <target>Verwaiste Dateien</target>
             </trans-unit>
 
             <!-- DESCRIPTIONS -->
             <trans-unit id="description.CleanFlexForms">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
-                <target></target>
+                <target>Überprüft, ob TCA-Einträge mit einer FlexForm Werte enthalten, die nicht mit dem verbundenen FlexForm-Wert übereinstimmen</target>
             </trans-unit>
             <trans-unit id="description.DeletedRecords">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
-                <target></target>
+                <target>Löscht alle Datensätze in der Datenbank, die ein delete=1-Flag haben</target>
             </trans-unit>
             <trans-unit id="description.LostFiles">
                 <source>Finds files within uploads/ which are not needed anymore</source>
-                <target></target>
+                <target>Findet Dateien in uploads/, die nicht mehr benötigt werden</target>
             </trans-unit>
             <trans-unit id="description.OrphanRecords">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
-                <target></target>
+                <target>Findet (und behebt) alle Datensätze, die eine ungültige / gelöschte Seiten-ID haben</target>
             </trans-unit>
             
            <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">
                 <source>Update reference index</source>
-                <target></target>
+                <target>Referenzindex aktualisieren</target>
             </trans-unit>
             <trans-unit id="label.recordUid">
                 <source>Record uid</source>
-                <target></target>
+                <target>Element-ID</target>
             </trans-unit>
             <trans-unit id="label.pid">
                 <source>Page uid</source>
-                <target></target>
+                <target>Seiten-ID</target>
             </trans-unit>
             <trans-unit id="label.depth">
                 <source>Depth</source>
-                <target></target>
+                <target>Tiefe</target>
             </trans-unit>
             <trans-unit id="label.dryRun">
                 <source>Dry run</source>
-                <target></target>
+                <target>Trockenübung</target>
             </trans-unit>
             <trans-unit id="label.exclude">
-                <source>Paths that should be excluded</source>
-                <target></target>
+                <source>Paths that should be excluded (comma-separated)</source>
+                <target>Auszuschließende Pfade (komma-separiert)</target>
             </trans-unit>
             <trans-unit id="label.customPath">
-                <source>Paths to process (default: uploads)</source>
-                <target></target>
+                <source>Paths to process (default: uploads) (comma-separated)</source>
+                <target>Zu bereinigende Pfade (komma-separiert)</target>
             </trans-unit>
         </body>
     </file>

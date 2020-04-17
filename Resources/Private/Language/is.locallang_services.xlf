@@ -7,67 +7,67 @@
            <!-- LABEL -->
             <trans-unit id="label.CleanFlexForms">
                 <source>FlexForms</source>
-                <target></target>
+                <target>FlexForms</target>
             </trans-unit>
             <trans-unit id="label.DeletedRecords">
                 <source>Deleted records</source>
-                <target></target>
+                <target>Gögnum eytt</target>
             </trans-unit>
             <trans-unit id="label.LostFiles">
                 <source>Lost files</source>
-                <target></target>
+                <target>Týndar skrár</target>
             </trans-unit>
             <trans-unit id="label.OrphanRecords">
                 <source>Orphan records</source>
-                <target></target>
+                <target>Munaðarlaus plötur</target>
             </trans-unit>
 
             <!-- DESCRIPTIONS -->
             <trans-unit id="description.CleanFlexForms">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
-                <target></target>
+                <target>Athugar hvort TCA skrár með FlexForm innihalda gildi sem passa ekki við tengda FlexForm gildi</target>
             </trans-unit>
             <trans-unit id="description.DeletedRecords">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
-                <target></target>
+                <target>Eyðir öllum skrám í gagnagrunninum sem hefur eytt = 1 fána</target>
             </trans-unit>
             <trans-unit id="description.LostFiles">
                 <source>Finds files within uploads/ which are not needed anymore</source>
-                <target></target>
+                <target>Finnur skrár sem hafa verið hlaðið inn / sem ekki er þörf lengur</target>
             </trans-unit>
             <trans-unit id="description.OrphanRecords">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
-                <target></target>
+                <target>Finnur (og lagfærir) allar skrár sem hafa ógilt / eytt auðkenni síðu</target>
             </trans-unit>
             
            <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">
                 <source>Update reference index</source>
-                <target></target>
+                <target>Uppfæra viðmiðunarvísitölu</target>
             </trans-unit>
             <trans-unit id="label.recordUid">
                 <source>Record uid</source>
-                <target></target>
+                <target>Taktu upp uid</target>
             </trans-unit>
             <trans-unit id="label.pid">
                 <source>Page uid</source>
-                <target></target>
+                <target>Síðu uid</target>
             </trans-unit>
             <trans-unit id="label.depth">
                 <source>Depth</source>
-                <target></target>
+                <target>Dýpt</target>
             </trans-unit>
             <trans-unit id="label.dryRun">
                 <source>Dry run</source>
-                <target></target>
+                <target>Þurrt hlaup</target>
             </trans-unit>
             <trans-unit id="label.exclude">
                 <source>Paths that should be excluded</source>
-                <target></target>
+                <target>Stígar sem ætti að útiloka</target>
             </trans-unit>
             <trans-unit id="label.customPath">
                 <source>Paths to process (default: uploads)</source>
-                <target></target>
+                <target>Slóð til að vinna úr (sjálfgefið: uploads)</target>
             </trans-unit>
         </body>
     </file>

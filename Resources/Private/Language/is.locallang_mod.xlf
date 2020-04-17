@@ -1,81 +1,215 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-    <file source-language="en" target-language="is" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
           product-name="spl_cleanup_tools">
         <header/>
         <body>
-            <!-- PALETTES -->
-            <trans-unit id="tx_splcleanuptools_domain_model.general.palettes.creation">
-                <source>Creation</source>
-                <target></target>
+            <!-- EXECUTION CONTEXTS -->
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.0">
+                <source>BE module</source>
+                <target>Stuðningseiningar</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.palettes.logData">
-                <source>Log data</source>
-                <target></target>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.1">
+                <source>Toolbar</source>
+                <target>Tækjastikan</target>
             </trans-unit>
-            
-            <!-- TABS -->
-            <trans-unit id="tx_splcleanuptools_domain_model_log.tab.messages">
-                <source>Messages</source>
-                <target></target>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.2">
+                <source>Scheduler</source>
+                <target>Tímaáætlun</target>
             </trans-unit>
-
-            <!-- GENERAL -->
-            <trans-unit id="tx_splcleanuptools_domain_model.general.crdate">
-                <source>Creation date</source>
-                <target></target>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.3">
+                <source>Content item</source>
+                <target>Efnisatriði</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model.general.cruser_id">
-                <source>Created by user</source>
-                <target></target>
+            <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
+                <source>After database operation</source>
+                <target>Eftir aðgerð gagnagrunnsins</target>
             </trans-unit>
 
-            <!-- LOG -->
-            <trans-unit id="tx_splcleanuptools_domain_model_log">
-                <source>Log</source>
-                <target></target>
+            <!-- STATES -->
+            <trans-unit id="tx_splcleanuptools.general.state.error">
+                <source>error</source>
+                <target>villa</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.execution_context">
-                <source>Execution context</source>
-                <target></target>
+            <trans-unit id="tx_splcleanuptools.general.state.ok">
+                <source>ok</source>
+                <target>allt í lagi</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.service">
+
+            <!-- LABEL -->
+            <trans-unit id="label.yes">
+                <source>Yes, please.</source>
+                <target>Já endilega.</target>
+            </trans-unit>
+            <trans-unit id="label.no">
+                <source>No, thank you.</source>
+                <target>Nei takk.</target>
+            </trans-unit>
+
+            <!-- MISC -->
+            <trans-unit id="tx_splcleanuptools.general.inExectionContext">
+                <source>in "%s" context</source>
+                <target>í "%s" samhengi</target>
+            </trans-unit>
+
+            <!-- BE MODULE -->
+            <trans-unit id="mlang_tabs_tab">
+                <source>Cleanup Tools</source>
+                <target>Hreinsunarverkfæri</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>Cleanup Tools</source>
+                <target>Hreinsunarverkfæri</target>
+            </trans-unit>
+            <trans-unit id="module.headline">
+                <source>Cleanup Tools</source>
+                <target>Hreinsunarverkfæri</target>
+            </trans-unit>
+            <trans-unit id="module.menu.cleanup">
+                <source>Cleanup</source>
+                <target>Hreinsun</target>
+            </trans-unit>
+            <trans-unit id="module.menu.history">
+                <source>History</source>
+                <target>Saga</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.days">
+                <source>executed %s days ago</source>
+                <target>keyrð út fyrir %s dögum</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.yesterday">
+                <source>executed yesterday</source>
+                <target>tekinn af lífi í gær</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.today">
+                <source>executed today, %s</source>
+                <target>keyrð í dag, %s</target>
+            </trans-unit>
+            <trans-unit id="module.lastLog.user">
+                <source>by</source>
+                <target>eftir</target>
+            </trans-unit>
+            <trans-unit id="module.notProcessed">
+                <source>not executed so far</source>
+                <target>ekki framkvæmt hingað til</target>
+            </trans-unit>
+            <trans-unit id="module.submit">
+                <source>Clean up</source>
+                <target>Hreinsið upp</target>
+            </trans-unit>
+
+            <!-- HISTORY MODULE -->
+            <trans-unit id="module.history.headline">
+                <source>History</source>
+                <target>Saga</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.date">
+                <source>Date</source>
+                <target>Dagsetning</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.service">
                 <source>Service</source>
-                <target></target>
+                <target>Þjónusta</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.state">
+            <trans-unit id="module.history.th.parameter">
+                <source>Parameter</source>
+                <target>Breytir</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.user">
+                <source>User</source>
+                <target>Notandi</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.executionContext">
+                <source>Execution context</source>
+                <target>Framkvæmdarsamhengi</target>
+            </trans-unit>
+            <trans-unit id="module.history.th.state">
                 <source>State</source>
-                <target></target>
+                <target>Ríki</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log.messages">
+            <trans-unit id="module.history.th.messages">
                 <source>Messages</source>
-                <target></target>
+                <target>Skilaboð</target>
             </trans-unit>
-            <trans-unit id=„tx_splcleanuptools_domain_model_log.parameters">
-                <source>Parameters</source>
-                <target></target>
+            <trans-unit id="module.history.cleanupForm.label.logLiftime">
+                <source>Delete logs older then:</source>
+                <target>Eyða annálum eldri:</target>
             </trans-unit>
-            
-            <!-- LOG MESSAGE -->
-            <trans-unit id="tx_splcleanuptools_domain_model_log_message">
-                <source>Log message</source>
-                <target></target>
+            <trans-unit id="module.history.cleanupForm.label.dropAlreadyDeleted">
+                <source>Drop entries marked as deleted</source>
+                <target>Sendu færslur merktar sem eytt</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log_message.log">
-                <source>Log</source>
-                <target></target>
+            <trans-unit id="module.history.cleanupForm.label.submit">
+                <source>Clean up</source>
+                <target>Hreinsið upp</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools_domain_model_log_message.message">
-                <source>Message</source>
-                <target></target>
+
+            <!-- TASKS -->
+            <trans-unit id="tasks.cleanup.title">
+                <source>Cleanup Tools</source>
+                <target>Hreinsunarverkfæri</target>
             </trans-unit>
-            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_key">
-                <source>Localization key</source>
-                <target></target>
+            <trans-unit id="tasks.cleanup.description">
+                <source>Various tools to cleanup your TYPO3.</source>
+                <target>Ýmis tæki til að hreinsa TYPO3 þinn.</target>
             </trans-unit>
-            <trans-unit id=„tx_splcleanuptools_domain_model_log_message.local_lang_arguments">
-                <source>Localization arguments</source>
-                <target></target>
+            <trans-unit id="tasks.cleanup.fields.serviceToProcess">
+                <source>Which service shall be executed?</source>
+                <target>Hvaða þjónusta skal framkvæmd?</target>
+            </trans-unit>
+            <trans-unit id="tasks.cleanup.information">
+                <source>Configured service:</source>
+                <target>Stillt þjónusta:</target>
+            </trans-unit>
+
+            <!-- DRAW ITEM HOOK -->
+            <trans-unit id="drawitemhook.message">
+                <source>The flexform of this element is not valid and needs to be cleaned up.</source>
+                <target>Sveigjanleiki þessa frumefnis er ekki í gildi og þarf að hreinsa hann upp.</target>
+            </trans-unit>
+
+            <!-- FLASH MESSAGES -->
+            <trans-unit id="messages.fallback.headline">
+                <source>CleanupTools says</source>
+                <target>CleanupTools segir</target>
+            </trans-unit>
+            <trans-unit id="messages.error.headline">
+                <source>Oops</source>
+                <target>Úps</target>
+            </trans-unit>
+            <trans-unit id="messages.error.message">
+                <source>Execution of class "%s" was not successfull.</source>
+                <target>Framkvæmd bekkjarins "%s" heppnaðist ekki.</target>
+            </trans-unit>
+            <trans-unit id="messages.success.message">
+                <source>Execution was successfull.</source>
+                <target>Framkvæmdin tókst vel.</target>
+            </trans-unit>
+            <trans-unit id="messages.error.message.no-method">
+                <source>No method was set.</source>
+                <target>Engin aðferð var sett.</target>
+            </trans-unit>
+            <trans-unit id="messages.error-services.message">
+                <source>In the following services, the execute function is missing: %s.</source>
+                <target>Í eftirfarandi þjónustu vantar keyrsluaðgerðina:%s</target>
+            </trans-unit>
+            <trans-unit id="messages.error-services.headline">
+                <source>Watch out</source>
+                <target>Passaðu þig</target>
+            </trans-unit>
+            <trans-unit id="messages.hook.warning.headline">
+                <source>Watch out</source>
+                <target>Passaðu þig</target>
+            </trans-unit>
+            <trans-unit id="message.hook.warning.message">
+                <source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.</source>
+                <target>Fínstillir flexform áttu í nokkrum vandræðum við uppfærslu flexform reitsins með hreinsuðu flexforminu. Breytingar þínar eru vistaðar, en sveigjanleg form er hugsanlega ekki vel mótuð.</target>
+            </trans-unit>
+
+            <!-- ARIA -->
+            <trans-unit id="aria.history.togglebutton">
+                <source>Show/hide log messages.</source>
+                <target>Sýna / fela annálskilaboð.</target>
             </trans-unit>
         </body>
     </file>
