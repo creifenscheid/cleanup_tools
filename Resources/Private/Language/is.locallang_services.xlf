@@ -5,19 +5,19 @@
         <header/>
         <body>
             <!-- DESCRIPTIONS -->
-            <trans-unit id="description.CleanFlexForms">
+            <trans-unit id="description.CleanFlexFormsService">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
                 <target>Athugar hvort TCA skrár með FlexForm innihalda gildi sem passa ekki við tengda FlexForm gildi</target>
             </trans-unit>
-            <trans-unit id="description.DeletedRecords">
+            <trans-unit id="description.DeletedRecordsService">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
                 <target>Eyðir öllum skrám í gagnagrunninum sem hefur eytt = 1 fána</target>
             </trans-unit>
-            <trans-unit id="description.LostFiles">
+            <trans-unit id="description.LostFilesService">
                 <source>Finds files within uploads/ which are not needed anymore</source>
                 <target>Finnur skrár sem hafa verið hlaðið inn / sem ekki er þörf lengur</target>
             </trans-unit>
-            <trans-unit id="description.OrphanRecords">
+            <trans-unit id="description.OrphanRecordsService">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
                 <target>Finnur (og lagfærir) allar skrár sem hafa ógilt / eytt auðkenni síðu</target>
             </trans-unit>

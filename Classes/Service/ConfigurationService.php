@@ -246,7 +246,7 @@ class ConfigurationService implements SingletonInterface
         // init reflection of class
         $reflection = new ReflectionClass($class);
 
-        $name = str_replace('Service', '', end(GeneralUtility::trimExplode('\\', $class)));
+        $name = end(GeneralUtility::trimExplode('\\', $class));
 
         $methodParameters = [];
 

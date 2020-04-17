@@ -67,6 +67,23 @@ Therefor:
        }
    }
 
+Localization key specifications:
+
+* Service description: description.serviceName
+* Parameter form label: label.parameterName
+
+.. code-block:: xlfxml
+
+   <!-- DESCRIPTION -->
+   <trans-unit id="description.myService">
+        <source>My service can do magic</source>
+    </trans-unit>
+    
+   <!-- PARAMETER -->
+    <trans-unit id="label.myProperty">
+        <source>My property</source>
+    </trans-unit>
+
 
 5. Example
 ~~~~~~~~~~

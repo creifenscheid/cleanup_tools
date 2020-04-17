@@ -5,19 +5,19 @@
         <header/>
         <body>
             <!-- DESCRIPTIONS -->
-            <trans-unit id="description.CleanFlexForms">
+            <trans-unit id="description.CleanFlexFormsService">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
                 <target>Überprüft, ob TCA-Einträge mit einer FlexForm Werte enthalten, die nicht mit dem verbundenen FlexForm-Wert übereinstimmen</target>
             </trans-unit>
-            <trans-unit id="description.DeletedRecords">
+            <trans-unit id="description.DeletedRecordsService">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
                 <target>Löscht alle Datensätze in der Datenbank, die ein delete=1-Flag haben</target>
             </trans-unit>
-            <trans-unit id="description.LostFiles">
+            <trans-unit id="description.LostFilesService">
                 <source>Finds files within uploads/ which are not needed anymore</source>
                 <target>Findet Dateien in uploads/, die nicht mehr benötigt werden</target>
             </trans-unit>
-            <trans-unit id="description.OrphanRecords">
+            <trans-unit id="description.OrphanRecordsService">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
                 <target>Findet (und behebt) alle Datensätze, die eine ungültige / gelöschte Seiten-ID haben</target>
             </trans-unit>
