@@ -56,3 +56,31 @@ DeletedRecordsService
     
     Source
          \\TYPO3\\CMS\\Lowlevel\\Command\DeletedRecordsCommand::class
+         
+LostFilesService
+~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         LostFilesService
+
+    Description
+          Finds files within uploads/ which are not needed anymore
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\LostFilesCommand::class
+         
+OrphanRecordsService
+~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         OrphanRecordsService
+
+    Description
+          Finds (and fixes) all records that have an invalid / deleted page ID
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\OrphanRecordsCommand::class
