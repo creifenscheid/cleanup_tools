@@ -11,4 +11,10 @@ Target group: **Developers**
 
 After installation, no configuration is required to make the extension work.
 
-ToDo sitemap
+.. toctree::
+   :maxdepth: 5
+   :titlesonly:
+   :glob:
+   
+   ExtensionConfiguration
+   TypoScriptConfiguration

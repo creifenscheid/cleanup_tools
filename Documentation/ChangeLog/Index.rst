@@ -1,11 +1,11 @@
-.. inclu.de:: ../Includes.txt
+.. include:: ../Includes.txt
 
 
 .. _changelog:
 
-=============
+=========
 ChangeLog
-=============
+=========
 
 List of versions
 ================

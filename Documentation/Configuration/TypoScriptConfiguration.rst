@@ -7,7 +7,7 @@
 TypoScript Configuration
 ========================
 
-Target group: **Developers**
+Target group: **Developers, Integrators**
 
 TypoScript is included by default, no static template is needed.
 

@@ -147,16 +147,16 @@ class ConfigurationService implements SingletonInterface
 
                 // set up service configuration
                 $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
+                
+                // check additional usage configuration of service
+                foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                    if ((int) $state === 1) {
+                        $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                    }
+                 }
             } else {
 
                 $this->errorServices[] = $serviceClass;
-            }
-
-            // check additional usage configuration of service
-            foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                if ((int) $state === 1) {
-                    $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
-                }
             }
         }
     }
