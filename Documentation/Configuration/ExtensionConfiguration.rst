@@ -12,6 +12,20 @@ Target group: **Developers, Integrators**
 Properties
 ~~~~~~~~~~
 
+enableBackendModule
+"""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         enableBackendModule
+
+    Data type
+         boolean (default: true)
+
+    Description
+         (De)activate backend module
+
 enableToolbarItem
 """""""""""""""""
 

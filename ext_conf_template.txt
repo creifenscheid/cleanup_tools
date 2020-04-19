@@ -1,3 +1,6 @@
+# cat=Configuration; type=boolean; label= Enable backend module
+enableBackendModule = 1
+
 # cat=Configuration; type=boolean; label= Enable toolbar item
 enableToolbarItem = 1
 
