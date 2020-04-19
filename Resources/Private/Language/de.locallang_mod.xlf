@@ -145,6 +145,10 @@
             </trans-unit>
 
             <!-- TASKS -->
+            <trans-unit id="tasks.error.noServices">
+                <source>No services configured</source>
+                <target>Es sind keine Services konfiguriert.</target>
+            </trans-unit>
             <trans-unit id="tasks.cleanup.title">
                 <source>CleanupTools</source>
                 <target>CleanupTools</target>

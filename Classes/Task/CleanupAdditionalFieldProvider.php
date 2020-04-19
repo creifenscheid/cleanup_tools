@@ -7,6 +7,8 @@ use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
  * *************************************************************
@@ -133,8 +135,10 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool
     {
-        if ($this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
+        if ($submittedData[$this->cleanupTaskName] && $this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
             return true;
+        } else {
+            $this->addMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'SplCleanupTools'),FlashMessage::INFO);
         }
 
         return false;
@@ -168,25 +172,36 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue): string
     {
         $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
-
-        // define option storage
-        $options = [];
-
         // loop through all utilities
-        foreach ($services as $serviceClass) {
+        if ($services) {
+            
+            foreach ($services as $serviceClass) {
 
-            $selected = '';
-
-            // add attribute "selected" for existing field value
-            if ($fieldValue === $serviceClass['class']) {
-                $selected = ' selected="selected"';
+                // define option storage
+                $options = [];
+                    
+                
+                $selected = '';
+                
+                // add attribute "selected" for existing field value
+                if ($fieldValue === $serviceClass['class']) {
+                    $selected = ' selected="selected"';
+                }
+                
+                // add option to option storage
+                $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
             }
-
-            // add option to option storage
-            $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
+            
+            // return html for select field with option groups and options
+            return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
+        } else {
+            $noServices = '
+                <div>'.LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'SplCleanupTools').'</div>
+                <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
+            ';
+            
+            return $noServices;
         }
-
-        // return html for select field with option groups and options
-        return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
+        
     }
 }
