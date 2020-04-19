@@ -135,10 +135,6 @@
                 <source>Delete logs older then:</source>
                 <target>Eyða annálum eldri:</target>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.dropAlreadyDeleted">
-                <source>Drop entries marked as deleted</source>
-                <target>Sendu færslur merktar sem eytt</target>
-            </trans-unit>
             <trans-unit id="module.history.cleanupForm.label.submit">
                 <source>Clean up</source>
                 <target>Hreinsið upp</target>

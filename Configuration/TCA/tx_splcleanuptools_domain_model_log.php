@@ -3,16 +3,16 @@
 return [
     'ctrl' => [
         'hideTable' => true,
+        'adminOnly' => true,
         'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log',
         'label' => 'service',
         'label_alt' => 'crdate, execution_context',
-        'label_alt_force' => 1,
+        'label_alt_force' => true,
         'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log.svg',
         'sortby' => 'crdate',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'delete' => 'deleted',
         'versioningWS' => false,
         'searchFields' => 'crdate,cruser_id,execution_context,service,parameters,state,messages'
     ],

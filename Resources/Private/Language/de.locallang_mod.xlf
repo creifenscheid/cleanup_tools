@@ -135,10 +135,6 @@
                 <source>Delete logs older then:</source>
                 <target>Log-Einträge löschen, die älter sind als:</target>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.dropAlreadyDeleted">
-                <source>Drop entries marked as deleted</source>
-                <target>Bisher gelöschte Log-Einträge final löschen</target>
-            </trans-unit>
             <trans-unit id="module.history.cleanupForm.label.submit">
                 <source>Clean up</source>
                 <target>Ausführen</target>

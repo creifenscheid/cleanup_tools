@@ -53,20 +53,6 @@ class BaseRespository extends Repository
     }
 
     /**
-     * Returns deleted entries
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
-     */
-    public function findDeleted()
-    {
-        $query = $this->createQuery();
-        $query->getQuerySettings()->setIncludeDeleted(true);
-        $query->matching($query->equals('deleted', 1));
-
-        return $query->execute();
-    }
-
-    /**
      * Returns entries older then
      *
      * @param int $lifetime

@@ -103,37 +103,9 @@ class HistoryController extends BaseController
      *
      * @param string $logLifetime
      *            - Mark all entries with a >crdate as deleted
-     * @param bool $dropAlreadyDeleted
-     *            - Deleted all entries marked as deleted
      */
-    public function cleanupAction(string $logLifetime, bool $dropAlreadyDeleted): void
+    public function cleanupAction(string $logLifetime): void
     {
-        if ($dropAlreadyDeleted) {
-            $deletedLogs = $this->logRepository->findDeleted();
-
-            if ($deletedLogs) {
-                // set up the data handler instance
-                $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-                $dataHandler->start([], []);
-
-                foreach ($deletedLogs as $deletedLog) {
-                    $dataHandler->deleteRecord('tx_splcleanuptools_domain_model_log', $deletedLog->getUid(), true, true);
-                }
-            }
-
-            $deletedLogMessages = $this->logMessageRepository->findDeleted();
-
-            if ($deletedLogMessages) {
-                // set up the data handler instance
-                $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-                $dataHandler->start([], []);
-
-                foreach ($deletedLogMessages as $deletedLogMessage) {
-                    $dataHandler->deleteRecord('tx_splcleanuptools_domain_model_log_message', $deletedLogMessage->getUid(), true, true);
-                }
-            }
-        }
-
         // create timestamp of log lifetime
         $logLifetime = strtotime('-' . $logLifetime);
 
