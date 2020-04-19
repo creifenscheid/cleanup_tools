@@ -6,6 +6,8 @@ use SPL\SplCleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 
 /**
  * *************************************************************
@@ -67,7 +69,19 @@ class CleanupTask extends AbstractTask
 
         // process
         $cleanupService->setDryRun(false);
-        return $cleanupService->process($this->serviceToProcess, $configurationService::FUNCTION_MAIN);
+        $result = $cleanupService->process($this->serviceToProcess, $configurationService::FUNCTION_MAIN);
+        
+        if ($result) {
+            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+            $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+            $messageQueue->addMessage($result);
+            
+            if ($result->getSeverity() !== FlashMessage::ERROR) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /**
