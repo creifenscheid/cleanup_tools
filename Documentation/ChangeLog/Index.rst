@@ -16,3 +16,4 @@ List of versions
    :glob:
 
    9-0-0
+   9-0-1

@@ -28,10 +28,10 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Cleanup Tools',
     'description' => 'This extension provides tools to clean up your TYPO3 installation.',
-    'category' => 'service',
+    'category' => 'module',
     'author' => 'Christian Reifenscheid',
     'author_email' => 'christian.reifenscheid.2112@gmail.com',
-    'version' => '9.0.0',
+    'version' => '9.0.1',
     'state' => 'alpha',
     'constraints' => [
         'depends' => [
