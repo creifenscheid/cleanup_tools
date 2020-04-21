@@ -39,15 +39,6 @@ Inspired by commands of core extension "low level"
    a GNU/GPL CMS/Framework available from `typo3.org
    <https://typo3.org/>`_ .
 
-**Community Documentation:**
-
-   This documentation is community documentation for the TYPO3 extension {extension.name}
-
-   It is maintained as part of this third party extension.
-
-   If you find an error or something is missing, please:
-   `Report a Problem <https://github.com/TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual/issues/new>`__
-
 **Extension Manual**
 
    This documentation is for the TYPO3 extension <spl_cleanup_tools>.
