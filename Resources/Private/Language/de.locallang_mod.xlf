@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
     <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-02-14T11:55:00Z"
-          product-name="spl_cleanup_tools">
+          product-name="cleanup_tools">
         <header/>
         <body>
             <!-- EXECUTION CONTEXTS -->
-            <trans-unit id="tx_splcleanuptools.general.executioncontext.0">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.0">
                 <source>BE module</source>
                 <target>Backend-Modul</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.executioncontext.1">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.1">
                 <source>Toolbar</source>
                 <target>Werkzeugleiste</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.executioncontext.2">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.2">
                 <source>Scheduler</source>
                 <target>Planer</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.executioncontext.3">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.3">
                 <source>Content item</source>
                 <target>Inhaltselement</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.executioncontext.4">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
                 <target>DB-Hook</target>
             </trans-unit>
 
             <!-- STATES -->
-            <trans-unit id="tx_splcleanuptools.general.state.error">
+            <trans-unit id="tx_cleanuptools.general.state.error">
                 <source>error</source>
                 <target>fehlgeschlagen</target>
             </trans-unit>
-            <trans-unit id="tx_splcleanuptools.general.state.ok">
+            <trans-unit id="tx_cleanuptools.general.state.ok">
                 <source>ok</source>
                 <target>ok</target>
             </trans-unit>
@@ -47,27 +47,27 @@
             </trans-unit>
 
             <!-- MISC -->
-            <trans-unit id="tx_splcleanuptools.general.inExectionContext">
+            <trans-unit id="tx_cleanuptools.general.inExectionContext">
                 <source>in "%s" context</source>
                 <target>in "%s"-Kontext</target>
-            </trans-unit>
+            </ftrans-unit>
 
             <!-- BE MODULE -->
             <trans-unit id="mlang_tabs_tab">
-                <source>CleanupTools</source>
-                <target>CleanupTools</target>
+                <source>Cleanup Tools</source>
+                <target>Cleanup Tools</target>
             </trans-unit>
             <trans-unit id="mlang_labels_tabdescr">
-                <source>CleanupTools</source>
-                <target>CleanupTools</target>
+                <source>Cleanup Tools</source>
+                <target>Cleanup Tools</target>
             </trans-unit>
             <trans-unit id="module.headline">
                 <source>Cleanup Tools</source>
-                <target>Cleanup-Tools</target>
+                <target>Cleanup Tools</target>
             </trans-unit>
             <trans-unit id="module.menu.cleanup">
-                <source>CleanupTools</source>
-                <target>CleanupTools</target>
+                <source>Cleanup Tools</source>
+                <target>Cleanup Tools</target>
             </trans-unit>
             <trans-unit id="module.menu.history">
                 <source>History</source>
@@ -146,8 +146,8 @@
                 <target>Es sind keine Services konfiguriert.</target>
             </trans-unit>
             <trans-unit id="tasks.cleanup.title">
-                <source>CleanupTools</source>
-                <target>CleanupTools</target>
+                <source>Cleanup Tools</source>
+                <target>Cleanup Tools</target>
             </trans-unit>
             <trans-unit id="tasks.cleanup.description">
                 <source>Various tools to cleanup your TYPO3.</source>
