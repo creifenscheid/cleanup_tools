@@ -14,22 +14,22 @@
         {log.cruser.userName}
     </td>
     <td>
-        <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.{log.executionContext}"/>
+        <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.executioncontext.{log.executionContext}"/>
     </td>
     <td>
         <f:if condition="{log.state}">
             <f:then>
-                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.state.ok"/>
+                <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.state.ok"/>
             </f:then>
             <f:else>
-                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.state.error"/>
+                <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.state.error"/>
             </f:else>
         </f:if>
     </td>
     <td>
     	<f:if condition="{log.messages}">
     		<f:then>
-    			<button aria-label="{f:translate(key:'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.history.togglebutton')}" class="toggle-button" data-group="{log.uid}" aria-expanded="false" onclick="TYPO3.SplCleanupTools.toggleMessage(this)">
+    			<button aria-label="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.history.togglebutton')}" class="toggle-button" data-group="{log.uid}" aria-expanded="false" onclick="TYPO3.CleanupTools.toggleMessage(this)">
     				<span class="icon"><core:icon identifier="actions-move-down" size="small" /></span>
     			</button>
     		</f:then>

@@ -5,38 +5,38 @@
 
 <f:section name="Content">
 	
-	<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/SplCleanupTools/SplCleanupTools'}"/>
+	<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/CleanupTools/CleanupTools'}"/>
 
-    <div class="spl-cleanup-tools-be-module history">
+    <div class="cleanup-tools-be-module history">
         <div class="container">
             <div class="row">
                 <h1>
-                    <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.headline"/>
+                    <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.headline"/>
                 </h1>
 
-                <table id="spl-cleanup-tools-history-list" class="table table-striped table-hover">
+                <table id="cleanup-tools-history-list" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.date"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.date"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.service"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.service"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.parameter"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.parameter"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.user"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.user"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.executionContext"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.executionContext"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.state"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.state"/>
                         </th>
                         <th>
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.messages"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.messages"/>
                         </th>
                     </tr>
                     </thead>
@@ -53,7 +53,7 @@
             <div class="row">
                 <f:form name="history-cleanup" class="cleanup-history-form" action="cleanup" controller="History">
                 	<div class="form-group">
-				    	<label for="log-lifetime-select"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.logLiftime" /></label>
+				    	<label for="log-lifetime-select"><f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.logLiftime" /></label>
                     	<f:form.select name="logLifetime" id="log-lifetime-select" class="form-control input-sm">
                     		<f:for each="{logLifetimeOptions}" as="logLifetimeOption" key="key">
                     			<f:form.select.option value="{logLifetimeOption}">
@@ -63,7 +63,7 @@
                     	</f:form.select>
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-danger"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.submit" /></button>
+						<button type="submit" class="btn btn-danger"><f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.submit" /></button>
                 	</div>
                 </f:form>
             </div>

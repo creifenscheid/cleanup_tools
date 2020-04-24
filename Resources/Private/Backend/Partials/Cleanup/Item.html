@@ -32,17 +32,17 @@
                                 <br/>
                             </f:case>
                             <f:case value="1">
-                                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.yesterday"/>
+                                <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.yesterday"/>
                                 <br/>
                             </f:case>
                             <f:defaultCase>
-                                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.days" arguments="{0:service.daysSince}"/>
+                                <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.days" arguments="{0:service.daysSince}"/>
                                 <br/>
                             </f:defaultCase>
                         </f:switch>
 
                         <f:if condition="{service.lastLog.cruser}">
-                            <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.user"/>
+                            <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.user"/>
 
                             <f:if condition="{service.lastLog.cruser.realName}">
                                 <f:then>
@@ -54,17 +54,17 @@
                             </f:if>
                         </f:if>
 
-                        <f:variable name="inExecutionContext"><f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.executioncontext.{service.lastLog.executionContext}"/></f:variable>
-                        <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_splcleanuptools.general.inExectionContext" arguments="{0:inExecutionContext}"/>
+                        <f:variable name="inExecutionContext"><f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.executioncontext.{service.lastLog.executionContext}"/></f:variable>
+                        <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.inExectionContext" arguments="{0:inExecutionContext}"/>
                     </f:then>
                     <f:else>
-                        <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.notProcessed"/>
+                        <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.notProcessed"/>
                     </f:else>
                 </f:if>
             </div>
         </div>
         <div class="item button-container text-right">
-            <f:form.submit name="submit" value="{f:translate(key:'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.submit')}" class="btn btn-primary"/>
+            <f:form.submit name="submit" value="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.submit')}" class="btn btn-primary"/>
         </div>
     </div>
 </f:form>
