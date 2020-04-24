@@ -1,7 +1,7 @@
 #
-# Table structure for table 'tx_splcleanuptools_domain_model_log'
+# Table structure for table 'tx_cleanuptools_domain_model_log'
 #
-CREATE TABLE tx_splcleanuptools_domain_model_log (
+CREATE TABLE tx_cleanuptools_domain_model_log (
 	execution_context tinyint(1) DEFAULT '0',
 	service varchar(255) DEFAULT NULL,
 	parameters text DEFAULT '' NOT NULL,
@@ -10,9 +10,9 @@ CREATE TABLE tx_splcleanuptools_domain_model_log (
 );
 
 #
-# Table structure for table 'tx_splcleanuptools_domain_model_log_message'
+# Table structure for table 'tx_cleanuptools_domain_model_log_message'
 #
-CREATE TABLE tx_splcleanuptools_domain_model_log_message (
+CREATE TABLE tx_cleanuptools_domain_model_log_message (
 	log int(11) DEFAULT '0' NOT NULL,
 	message text,
 	local_lang_key varchar(255) DEFAULT NULL,

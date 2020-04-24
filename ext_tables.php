@@ -7,11 +7,11 @@ defined('TYPO3_MODE') or die();
 
 if (TYPO3_MODE === 'BE') {
     // get extension configuration
-    $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('spl_cleanup_tools');
+    $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cleanup_tools');
     
     // Register toolbar item
     if ($extensionConfiguration['enableBackendModule']) {
-        ExtensionUtility::registerModule('SPL.SplCleanupTools', // extensionName
+        ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools', // extensionName
             'tools', // mainModuleName
             'Cleanup', // subModuleName
             '', // position
@@ -22,16 +22,16 @@ if (TYPO3_MODE === 'BE') {
             ], // controllerActions
             [
                 'access' => 'admin',
-                'icon' => 'EXT:spl_cleanup_tools/ext_icon.svg',
-                'labels' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf'
+                'icon' => 'EXT:cleanup_tools/ext_icon.svg',
+                'labels' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf'
             ] // moduleConfiguration
             );
         
         // Register CSS
-        $GLOBALS['TBE_STYLES']['skins']['spl_cleanup_tools'] = [
+        $GLOBALS['TBE_STYLES']['skins']['cleanup_tools'] = [
             'name' => 'Cleanup tools',
             'stylesheetDirectories' => [
-                'css' => 'EXT:spl_cleanup_tools/Resources/Public/Css/'
+                'css' => 'EXT:cleanup_tools/Resources/Public/Css/'
             ]
         ];
     }

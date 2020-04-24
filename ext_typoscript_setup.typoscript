@@ -1,30 +1,30 @@
 config.tx_extbase {
     persistence {
         classes {
-            SPL\SplCleanupTools\Domain\Model\LogMessage {
+            ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage {
                 mapping {
-                    tableName  = tx_splcleanuptools_domain_model_log_message
+                    tableName  = tx_cleanuptools_domain_model_log_message
                 }
             }
         }
     }
 }
 
-module.tx_splcleanuptools {
+module.tx_cleanuptools {
     view {
-        templateRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Templates/
-        partialRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Partials/
-        layoutRootPaths.0 = EXT:spl_cleanup_tools/Resources/Private/Backend/Layouts/
+        templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Templates/
+        partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Partials/
+        layoutRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Layouts/
     }
 
     settings {
-        localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf
+        localizationFile = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
         # comma separated list of time spans
         logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
     }
 
     services {
-        SPL\SplCleanupTools\Service\CleanFlexFormsService {
+        ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 0
@@ -32,7 +32,7 @@ module.tx_splcleanuptools {
 	        }
 		}
 	        
-		SPL\SplCleanupTools\Service\DeletedRecordsService {
+		ChristianReifenscheid\CleanupTools\Service\DeletedRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 0
@@ -40,7 +40,7 @@ module.tx_splcleanuptools {
 	        }
 		} 
 	        
-		SPL\SplCleanupTools\Service\LostFilesService {
+		ChristianReifenscheid\CleanupTools\Service\LostFilesService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 0
@@ -48,7 +48,7 @@ module.tx_splcleanuptools {
 	        }
 		}
 	        
-		SPL\SplCleanupTools\Service\OrphanRecordsService {
+		ChristianReifenscheid\CleanupTools\Service\OrphanRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 0

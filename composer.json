@@ -1,7 +1,7 @@
 {
-	"name" : "spl/spl-cleanup-tools",
+	"name" : "christianreifenscheid/cleanup-tools",
 	"type" : "typo3-cms-extension",
-	"description" : "An extension which provides various cleanup tools for the backend",
+	"description" : "This extension provides cleanup tools and the possibility to implement cleanup services in your TYPO3 installation.",
 	"license" : "GPL-2.0-or-later",
 	"require" : {
 		"typo3/cms-core" : "^9.5"
