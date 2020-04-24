@@ -16,9 +16,9 @@ Settings
 
 .. code-block:: typoscript
 
-   module.tx_splcleanuptools {
+   module.tx_cleanuptools {
        settings {
-           localizationFile = LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf
+           localizationFile = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
         # comma separated list of time spans
         logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
        }
@@ -60,9 +60,9 @@ Service configuration
    
 .. code-block:: typoscript
 
-   module.tx_splcleanuptools {
+   module.tx_cleanuptools {
        services {
-           SPL\SplCleanupTools\Service\CleanFlexFormsService {
+           ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService {
                enable = 1
                additionalUsage {
                    schedulerTask = 1
@@ -158,7 +158,7 @@ Example
    
 .. code-block:: typoscript
 
-   module.tx_splcleanuptools {
+   module.tx_cleanuptools {
        services {
            Vendor\MyExtension\Service\MyService {
                enable = 1

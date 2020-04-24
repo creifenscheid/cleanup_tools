@@ -30,7 +30,7 @@ Cleanup Tools
    `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
    license
 
-This extension provides the possbility to implement cleanup services easily.
+This extension provides cleanup tools and the possibility to implement cleanup services in your TYPO3 installation.
 Inspired by commands of core extension "low level"
 
 **TYPO3**
@@ -41,7 +41,7 @@ Inspired by commands of core extension "low level"
 
 **Extension Manual**
 
-   This documentation is for the TYPO3 extension <spl_cleanup_tools>.
+   This documentation is for the TYPO3 extension <cleanup_tools>.
 
 
 

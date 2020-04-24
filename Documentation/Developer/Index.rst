@@ -12,7 +12,7 @@ Target group: **Developers**
 Developing your own service
 ---------------------------
 
-1. Extend \\SPL\\SplCleanupTools\\Services\\AbstractCleanupService
+1. Extend \\ChristianReifenscheid\\CleanupTools\\Services\\AbstractCleanupService
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What you get:
@@ -61,7 +61,7 @@ Therefor:
 
 .. code-block:: typoscript
 
-   module.tx_splcleanuptools {
+   module.tx_cleanuptools {
        settings {
            localizationFile = LLL:EXT:MyExtension/Resources/Private/Language/locallang_custom_services.xlf
        }
@@ -93,7 +93,7 @@ Localization key specifications:
    <?php
    namespace Vendor\MyExtension\Service;
 
-   class MyService extends \SPL\SplCleanupTools\Service\AbstractCleanupService
+   class MyService extends \ChristianReifenscheid\CleanupTools\Service\AbstractCleanupService
    {
         /**
          * my first class var
