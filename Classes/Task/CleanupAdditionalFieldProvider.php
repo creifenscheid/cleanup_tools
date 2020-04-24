@@ -1,7 +1,7 @@
 <?php
-namespace SPL\SplCleanupTools\Task;
+namespace ChristianReifenscheid\CleanupTools\Task;
 
-use SPL\SplCleanupTools\Service\ConfigurationService;
+use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
@@ -40,7 +40,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Class CleanupAdditionalFieldProvider
  *
- * @package SPL\SplCleanupTools\Task
+ * @package ChristianReifenscheid\CleanupTools\Task
  * @author Christian Reifenscheid
  */
 class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
@@ -56,7 +56,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     /**
      * Configuration service
      *
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService
+     * @var ConfigurationService $configurationService
      */
     protected $configurationService;
 
@@ -115,7 +115,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupTaskName, $fieldValue);
         $additionalFields[$this->cleanupTaskName] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $this->cleanupTaskName
         ];
@@ -138,7 +138,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         if ($submittedData[$this->cleanupTaskName] && $this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
             return true;
         } else {
-            $this->addMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'SplCleanupTools'),FlashMessage::INFO);
+            $this->addMessage(LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),FlashMessage::INFO);
         }
 
         return false;
@@ -196,7 +196,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
             return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
         } else {
             $noServices = '
-                <div>'.LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'SplCleanupTools').'</div>
+                <div>'.LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
                 <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
             ';
             

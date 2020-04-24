@@ -1,8 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Task;
+namespace ChristianReifenscheid\CleanupTools\Task;
 
-use SPL\SplCleanupTools\Service\CleanupService;
-use SPL\SplCleanupTools\Service\ConfigurationService;
+use ChristianReifenscheid\CleanupTools\Service\CleanupService;
+use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
@@ -39,7 +39,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 /**
  * Class CleanupTask
  *
- * @package SPL\SplCleanupTools\Task
+ * @package ChristianReifenscheid\CleanupTools\Task
  * @author Christian Reifenscheid
  */
 class CleanupTask extends AbstractTask
@@ -60,11 +60,11 @@ class CleanupTask extends AbstractTask
      */
     public function execute(): bool
     {
-        /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
+        /** @var CleanupService $cleanupService */
         $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
         $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_SCHEDULER);
 
-        /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+        /** @var ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
         // process
@@ -113,9 +113,9 @@ class CleanupTask extends AbstractTask
      */
     public function getAdditionalInformation(): string
     {
-        /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+        /** @var ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
-        return LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
+        return LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
     }
 }
