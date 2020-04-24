@@ -1,8 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Backend\Toolbar;
+namespace ChristianReifenscheid\CleanupTools\Backend\Toolbar;
 
-use SPL\SplCleanupTools\Service\CleanupService;
-use SPL\SplCleanupTools\Service\ConfigurationService;
+use ChristianReifenscheid\CleanupTools\Service\CleanupService;
+use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -39,7 +39,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * Class CleanupToolbarItem
  *
- * @package SPL\SplCleanupTools\Backend\Toolbar
+ * @package ChristianReifenscheid\CleanupTools\Backend\Toolbar
  * @author Christian Reifenscheid
  */
 class CleanupToolbarItem implements ToolbarItemInterface
@@ -58,14 +58,14 @@ class CleanupToolbarItem implements ToolbarItemInterface
     protected $localizationFile = '';
 
     /**
-     * CleanUpToolbarItem constructor.
+     * CleanupToolbarItem constructor.
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
     public function __construct()
     {
 
-        /** @var \SPL\SplCleanupTools\Service\ConfigurationService $configurationService */
+        /** @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService */
         $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
 
         $this->localizationFile = $configurationService->getLocalizationFile();
@@ -77,14 +77,14 @@ class CleanupToolbarItem implements ToolbarItemInterface
 
         foreach ($this->cleanupServices as $service => $serviceConfiguration) {
 
-            $uri = (string) $uriBuilder->buildUriFromRoute('splcleanuptools_ajax', [
+            $uri = (string) $uriBuilder->buildUriFromRoute('cleanuptools_ajax', [
                 'class' => $serviceConfiguration['class'],
                 'method' => $configurationService::FUNCTION_MAIN,
                 'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
             $this->cleanupServices[$service]['description'] = LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
-            $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.SplCleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;';
+            $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
 
@@ -110,7 +110,7 @@ class CleanupToolbarItem implements ToolbarItemInterface
      */
     public function getItem()
     {
-        $view = $this->getFluidTemplateObject('CleanUpToolbarItem.html');
+        $view = $this->getFluidTemplateObject('CleanupToolbarItem.html');
         $view->assign('localizationFile', $this->localizationFile);
 
         return $view->render();
@@ -133,7 +133,7 @@ class CleanupToolbarItem implements ToolbarItemInterface
      */
     public function getDropDown()
     {
-        $view = $this->getFluidTemplateObject('CleanUpToolbarItemDropDown.html');
+        $view = $this->getFluidTemplateObject('CleanupToolbarItemDropDown.html');
         $view->assignMultiple([
             'cleanupServices' => $this->cleanupServices,
             'localizationFile' => $this->localizationFile
@@ -174,13 +174,13 @@ class CleanupToolbarItem implements ToolbarItemInterface
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths([
-            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts'
+            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts'
         ]);
         $view->setPartialRootPaths([
-            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials'
+            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials'
         ]);
         $view->setTemplateRootPaths([
-            'EXT:spl_cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates'
+            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates'
         ]);
         $view->setTemplate($filename);
 
