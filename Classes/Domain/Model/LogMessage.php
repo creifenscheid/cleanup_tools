@@ -1,7 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Domain\Model;
+namespace ChristianReifenscheid\CleanupTools\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
 
 /**
  * *************************************************************
@@ -33,7 +34,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Class LogMessage
  *
- * @package SPL\SplCleanupTools\Domain\Model
+ * @package ChristianReifenscheid\SplCleanupTools\Domain\Model
  * @author Christian Reifenscheid
  */
 class LogMessage extends AbstractEntity
@@ -42,7 +43,7 @@ class LogMessage extends AbstractEntity
     /**
      * Log
      *
-     * @var \SPL\SplCleanupTools\Domain\Model\Log
+     * @var Log
      */
     protected $log;
 
@@ -70,9 +71,9 @@ class LogMessage extends AbstractEntity
     /**
      * Returns log
      *
-     * @return \SPL\SplCleanupTools\Domain\Model\Log
+     * @return Log
      */
-    public function getLog(): \SPL\SplCleanupTools\Domain\Model\Log
+    public function getLog(): Log
     {
         return $this->log;
     }
@@ -80,10 +81,10 @@ class LogMessage extends AbstractEntity
     /**
      * Set log
      *
-     * @var \SPL\SplCleanupTools\Domain\Model\Log $log
+     * @param Log $log
      * @return void
      */
-    public function setLog(\SPL\SplCleanupTools\Domain\Model\Log $log): void
+    public function setLog(Log $log): void
     {
         $this->log = $log;
     }
@@ -101,7 +102,7 @@ class LogMessage extends AbstractEntity
     /**
      * Message
      *
-     * @var string $message
+     * @param string $message
      * @return void
      */
     public function setMessage(string $message): void

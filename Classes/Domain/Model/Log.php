@@ -1,11 +1,12 @@
 <?php
-namespace SPL\SplCleanupTools\Domain\Model;
+namespace ChristianReifenscheid\CleanupTools\Domain\Model;
 
 use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
 
 /**
  * *************************************************************
@@ -37,7 +38,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 /**
  * Class Log
  *
- * @package SPL\SplCleanupTools\Domain\Model
+ * @package ChristianReifenscheid\CleanupTools\Domain\Model
  * @author Christian Reifenscheid
  */
 class Log extends AbstractEntity
@@ -272,9 +273,10 @@ class Log extends AbstractEntity
     /*
      * Add a message
      *
+     * @param LogMessage $message
      * @return void
      */
-    public function addMessage(\SPL\SplCleanupTools\Domain\Model\LogMessage $message): void
+    public function addMessage(LogMessage $message): void
     {
         $this->messages->attach($message);
     }
@@ -282,9 +284,10 @@ class Log extends AbstractEntity
     /*
      * Remove a message
      *
+     * @param LogMessage $messageToRemove
      * @return void
      */
-    public function removeMessage(\SPL\SplCleanupTools\Domain\Model\LogMessage $messageToRemove): void
+    public function removeMessage(LogMessage $messageToRemove): void
     {
         $this->messages->detach($messageToRemove);
     }

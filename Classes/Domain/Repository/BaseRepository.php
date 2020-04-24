@@ -1,5 +1,5 @@
 <?php
-namespace SPL\SplCleanupTools\Domain\Repository;
+namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -34,7 +34,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * Class LogRepository
  *
- * @package SPL\SplCleanupTools\Domain\Repository
+ * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
 class BaseRespository extends Repository

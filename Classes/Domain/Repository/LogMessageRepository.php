@@ -1,5 +1,5 @@
 <?php
-namespace SPL\SplCleanupTools\Domain\Repository;
+namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace SPL\SplCleanupTools\Domain\Repository;
 /**
  * Class LogMessageRepository
  *
- * @package SPL\SplCleanupTools\Domain\Repository
+ * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
 class LogMessageRepository extends BaseRespository
