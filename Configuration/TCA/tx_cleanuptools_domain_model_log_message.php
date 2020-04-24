@@ -4,11 +4,11 @@ return [
     'ctrl' => [
         'hideTable' => true,
         'adminOnly' => true,
-        'title' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message',
+        'title' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_cleanuptools_domain_model_log_message',
         'label' => 'message',
         'label_alt' => 'log',
         'label_alt_force' => true,
-        'iconfile' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_splcleanuptools_domain_model_log_message.svg',
+        'iconfile' => 'EXT:cleanup_tools/Resources/Public/Icons/tx_cleanuptools_domain_model_log_message.svg',
         'sortby' => 'crdate',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -31,18 +31,18 @@ return [
         
         'log' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.log',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_cleanuptools_domain_model_log_message.log',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'foreign_table' => 'tx_splcleanuptools_domain_model_log',
+                'foreign_table' => 'tx_cleanuptools_domain_model_log',
                 'readOnly' => true
             ]
         ],
 
         'message' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.message',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_cleanuptools_domain_model_log_message.message',
             'config' => [
                 'default' => 1,
                 'type' => 'text',
@@ -52,7 +52,7 @@ return [
 
         'local_lang_key' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.local_lang_key',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_cleanuptools_domain_model_log_message.local_lang_key',
             'config' => [
                 'default' => 1,
                 'type' => 'input',
@@ -62,7 +62,7 @@ return [
 
         'local_lang_arguments' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_splcleanuptools_domain_model_log_message.local_lang_arguments',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf:tx_cleanuptools_domain_model_log_message.local_lang_arguments',
             'config' => [
                 'default' => 1,
                 'type' => 'text',
