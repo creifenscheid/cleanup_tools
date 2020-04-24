@@ -1,8 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Controller;
+namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use SPL\SplCleanupTools\Domain\Repository\LogMessageRepository;
-use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository;
+use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
@@ -37,7 +37,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 /**
  * Class HistoryController
  *
- * @package SPL\SplCleanupTools\Controller
+ * @package ChristianReifenscheid\CleanupTools\Controller
  * @author Christian Reifenscheid
  */
 class HistoryController extends BaseController
@@ -46,21 +46,21 @@ class HistoryController extends BaseController
     /**
      * Log repository
      *
-     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
     /**
      * LogMessage repository
      *
-     * @var \SPL\SplCleanupTools\Domain\Repository\LogMessageRepository
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository
      */
     protected $logMessageRepository;
 
     /**
      * Inject log repository
      *
-     * @param \SPL\SplCleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
     public function injectLogRepository(LogRepository $logRepository)
     {
@@ -70,7 +70,7 @@ class HistoryController extends BaseController
     /**
      * Inject logMesage repository
      *
-     * @param \SPL\SplCleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository
      */
     public function injectLogMessageRepository(LogMessageRepository $logMessageRepository)
     {
@@ -129,6 +129,6 @@ class HistoryController extends BaseController
             }
         }
 
-        $this->redirect('index', 'History', 'SplCleanupTools');
+        $this->redirect('index', 'History', 'CleanupTools');
     }
 }

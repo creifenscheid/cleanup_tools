@@ -1,11 +1,11 @@
 <?php
 
-namespace SPL\SplCleanupTools\Controller;
+namespace ChristianReifenscheid\CleanupTools\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SPL\SplCleanupTools\Service\CleanupService;
-use SPL\SplCleanupTools\Service\ConfigurationService;
+use ChristianReifenscheid\CleanupTools\Service\CleanupService;
+use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -40,7 +40,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class AjaxController
  *
- * @package SPL\SplCleanupTools\Controller
+ * @package ChristianReifenscheid\CleanupTools\Controller
  * @author  Christian Reifenscheid
  */
 class AjaxController
@@ -48,14 +48,14 @@ class AjaxController
     /**
      * Cleanup service
      *
-     * @var \SPL\SplCleanupTools\Service\CleanupService
+     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Configuration service
      *
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService
+     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -130,15 +130,15 @@ class AjaxController
             } else {
                 $return = [
                     'severity' => (string)FlashMessage::ERROR,
-                    'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
-                    'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [$class])
+                    'headline' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
+                    'message' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'CleanupTools', [$class])
                 ];
             }
         } else {
             $return = [
                 'severity' => (string)FlashMessage::ERROR,
-                'headline' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'),
-                'message' => LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'SplCleanupTools')
+                'headline' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
+                'message' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'CleanupTools')
             ];
         }
 

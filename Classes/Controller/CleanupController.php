@@ -1,7 +1,7 @@
 <?php
-namespace SPL\SplCleanupTools\Controller;
+namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use SPL\SplCleanupTools\Service\CleanupService;
+use ChristianReifenscheid\CleanupTools\Service\CleanupService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -36,7 +36,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Class CleanupController
  *
- * @package SPL\SplCleanupTools\Controller
+ * @package ChristianReifenscheid\CleanupTools\Controller
  * @author Christian Reifenscheid
  */
 class CleanupController extends BaseController
@@ -44,7 +44,7 @@ class CleanupController extends BaseController
 
     /**
      *
-     * @var \SPL\SplCleanupTools\Service\CleanupService
+     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
@@ -66,9 +66,9 @@ class CleanupController extends BaseController
     public function indexAction(): void
     {
         if (! empty($this->configurationService->getErrorServices())) {
-            $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'SplCleanupTools', [
+            $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'CleanupTools', [
                 implode(',', $this->cleanupService->getErrorServices())
-            ]), LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'SplCleanupTools'), FlashMessage::WARNING);
+            ]), LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'CleanupTools'), FlashMessage::WARNING);
         }
 
         // assign services to the view
@@ -121,12 +121,12 @@ class CleanupController extends BaseController
             if ($return) {
                 $this->addFlashMessage($return->getMessage(), $return->getTitle(), $return->getSeverity());
             } else {
-                $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'SplCleanupTools', [
+                $this->addFlashMessage(LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'CleanupTools', [
                     $service['class']
-                ]), LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'SplCleanupTools'), FlashMessage::ERROR);
+                ]), LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'), FlashMessage::ERROR);
             }
 
-            $this->forward('index', 'Cleanup', 'SplCleanupTools');
+            $this->forward('index', 'Cleanup', 'CleanupTools');
         }
     }
 }

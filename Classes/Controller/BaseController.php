@@ -1,7 +1,7 @@
 <?php
-namespace SPL\SplCleanupTools\Controller;
+namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use SPL\SplCleanupTools\Service\ConfigurationService;
+use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -35,7 +35,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Class BaseController
  *
- * @package SPL\SplCleanupTools\Controller
+ * @package ChristianReifenscheid\CleanupTools\Controller
  * @author Christian Reifenscheid
  */
 class BaseController extends ActionController
@@ -43,7 +43,7 @@ class BaseController extends ActionController
 
     /**
      *
-     * @var \SPL\SplCleanupTools\Service\ConfigurationService
+     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
