@@ -1,10 +1,10 @@
 <?php
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use SPL\SplCleanupTools\Domain\Model\Log;
-use SPL\SplCleanupTools\Domain\Model\LogMessage;
+use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
+use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -37,7 +37,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class AbstractCleanupService
  *
- * @packagee SPL\SplCleanupTools\Service
+ * @packagee ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 abstract class AbstractCleanupService
@@ -154,10 +154,10 @@ abstract class AbstractCleanupService
     protected function createFlashMessage(int $severity = FlashMessage::OK, string $message = null, $headline = null): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // define headline
-        $headline = $headline ?: LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'SplCleanupTools');
+        $headline = $headline ?: LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'CleanupTools');
 
         // define message
-        $message = $message ?: LocalizationUtility::translate('LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'SplCleanupTools');
+        $message = $message ?: LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'CleanupTools');
 
         // initialize and return flash message object
         return GeneralUtility::makeInstance(FlashMessage::class, $message, $headline, $severity);

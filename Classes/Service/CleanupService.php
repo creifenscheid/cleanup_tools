@@ -1,8 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
-use SPL\SplCleanupTools\Domain\Model\Log;
-use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
+use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -38,7 +38,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 /**
  * Class CleanupService
  *
- * @package SPL\SplCleanupTools\Service
+ * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 class CleanupService
@@ -100,7 +100,7 @@ class CleanupService
     /**
      * Log repository
      *
-     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     * @var LogRepository
      */
     protected $logRepository;
 

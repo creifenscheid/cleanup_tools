@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -42,7 +42,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
- * @package SPL\SplCleanupTools\Service
+ * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 class DeletedRecordsService extends AbstractCleanupService

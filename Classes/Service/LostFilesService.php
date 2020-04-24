@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -42,7 +42,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\LostFilesCommand::class
  *
- * @package SPL\SplCleanupTools\Service
+ * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 class LostFilesService extends AbstractCleanupService

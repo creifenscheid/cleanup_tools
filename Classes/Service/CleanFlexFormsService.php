@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
@@ -44,7 +44,7 @@ use PDO;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\CleanFlexFormsCommand::class
  *
- * @package SPL\SplCleanupTools\Service
+ * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 class CleanFlexFormsService extends AbstractCleanupService

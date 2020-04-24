@@ -1,7 +1,8 @@
 <?php
-namespace SPL\SplCleanupTools\Service;
+namespace ChristianReifenscheid\CleanupTools\Service;
 
-use SPL\SplCleanupTools\Domain\Repository\LogRepository;
+use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
+use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -41,7 +42,7 @@ use \ReflectionException;
 /**
  * Class ConfigurationService
  *
- * @package SPL\SplCleanupTools\Service
+ * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
 class ConfigurationService implements SingletonInterface
@@ -54,7 +55,7 @@ class ConfigurationService implements SingletonInterface
 
     /**
      *
-     * @var \SPL\SplCleanupTools\Domain\Repository\LogRepository
+     * @var LogRepository
      */
     protected $logRepository;
 
@@ -120,10 +121,10 @@ class ConfigurationService implements SingletonInterface
         $this->logRepository = $objectManager->get(LogRepository::class);
 
         // get module configuration
-        $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_splcleanuptools.']);
+        $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
 
         // set localization from typoscript configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_services.xlf';
+        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
 
         // set log lifetime options from typoscript config
         $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
@@ -280,7 +281,7 @@ class ConfigurationService implements SingletonInterface
         ];
 
         // get last log of method
-        /** @var \SPL\SplCleanupTools\Domain\Model\Log $lastLog */
+        /** @var Log $lastLog */
         $lastLog = $this->logRepository->findByService($class);
 
         if ($lastLog) {
