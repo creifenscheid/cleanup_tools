@@ -1,5 +1,5 @@
 <?php
-use SPL\SplCleanupTools\Backend\Toolbar\CleanUpToolbarItem;
+use SPL\SplCleanupTools\Backend\Toolbar\CleanupToolbarItem;
 use SPL\SplCleanupTools\Hooks\AfterDatabaseOperationsHook;
 use SPL\SplCleanupTools\Hooks\DrawItemHook;
 use SPL\SplCleanupTools\Task\CleanupAdditionalFieldProvider;
@@ -27,7 +27,7 @@ $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::c
 
 // Register toolbar item
 if ($extensionConfiguration['enableToolbarItem']) {
-    $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = CleanUpToolbarItem::class;
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = CleanupToolbarItem::class;
 }
 
 // HOOK: After database operations hook

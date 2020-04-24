@@ -37,12 +37,12 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 
 /**
- * Class CleanUpToolbarItem
+ * Class CleanupToolbarItem
  *
  * @package SPL\SplCleanupTools\Backend\Toolbar
  * @author Christian Reifenscheid
  */
-class CleanUpToolbarItem implements ToolbarItemInterface
+class CleanupToolbarItem implements ToolbarItemInterface
 {
 
     /**
