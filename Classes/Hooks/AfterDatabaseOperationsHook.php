@@ -1,10 +1,10 @@
 <?php
-namespace SPL\SplCleanupTools\Hooks;
+namespace ChristianReifenscheid\CleanupTools\Hooks;
 
-use SPL\SplCleanupTools\Service\CleanupService;
+use ChristianReifenscheid\CleanupTools\Service\CleanupService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use SPL\SplCleanupTools\Service\CleanFlexFormsService;
+use ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService;
 
 /**
  * *************************************************************
@@ -36,7 +36,7 @@ use SPL\SplCleanupTools\Service\CleanFlexFormsService;
 /**
  * Class AfterDatabaseOperationsHook
  *
- * @package SPL\SplCleanupTools\Hooks
+ * @package ChristianReifenscheid\CleanupTools\Hooks
  * @author Christian Reifenscheid
  */
 class AfterDatabaseOperationsHook
@@ -62,7 +62,7 @@ class AfterDatabaseOperationsHook
         // if an content element is update in field pi_flexform
         if ($status === 'update' && $table === 'tt_content' && array_key_exists($fieldName, $fields)) {
 
-            /** @var \SPL\SplCleanupTools\Service\CleanupService $cleanupService */
+            /** @var \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService */
             $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
             $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_DBHOOK);
 
