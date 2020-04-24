@@ -3,9 +3,9 @@ define([
 ], function ($) {
     'use strict';
 
-    let SplCleanupTools = {};
+    let CleanupTools = {};
 
-    SplCleanupTools.process = function (uri, recordUid = null) {
+    CleanupTools.process = function (uri, recordUid = null) {
         $.ajax({
             url: uri,
             method: 'post',
@@ -42,7 +42,7 @@ define([
         });
     };
     
-    SplCleanupTools.toggleMessage = function (element) {
+    CleanupTools.toggleMessage = function (element) {
     	const elementObject = $(element);
     	const toggleGroup = elementObject.attr('data-group');
 
@@ -58,7 +58,7 @@ define([
     }
 
     // expose to global
-    TYPO3.SplCleanupTools = SplCleanupTools;
+    TYPO3.CleanupTools = CleanupTools;
 
-    return SplCleanupTools;
+    return CleanupTools;
 });
