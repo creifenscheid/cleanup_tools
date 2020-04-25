@@ -56,7 +56,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @var int $pid
      */
-    protected $pid = 0;
+    protected $pid;
 
     /**
      * Setting traversal depth.
@@ -64,49 +64,14 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @var int $depth
      */
-    protected $depth = 1000;
+    protected $depth;
 
     /**
-     * Returns pid
-     *
-     * @return int
+     * Constructor
      */
-    public function getPid(): int
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Sets pid
-     *
-     * @param int $pid
-     *
-     * @return void
-     */
-    public function setPid(int $pid): void
+    public function __construct(int $pid = 0, int $depth = 1000)
     {
         $this->pid = $pid;
-    }
-
-    /**
-     * Returns depth
-     *
-     * @return int
-     */
-    public function getDepth(): int
-    {
-        return $this->depth;
-    }
-
-    /**
-     * Sets depth
-     *
-     * @param int $depth
-     *
-     * @return void
-     */
-    public function setDepth(int $depth): void
-    {
         $this->depth = $depth;
     }
 

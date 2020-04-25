@@ -46,7 +46,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class OrphanRecordsService extends AbstractCleanupService
 {
-
     /**
      * Executes the command to find records not attached to the pagetree
      * and permanently delete these records

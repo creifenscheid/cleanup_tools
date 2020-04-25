@@ -54,7 +54,7 @@ class LostFilesService extends AbstractCleanupService
      *
      * @var string
      */
-    protected $exclude = '';
+    protected $exclude;
 
     /**
      * Comma separated list of paths to process.
@@ -62,72 +62,22 @@ class LostFilesService extends AbstractCleanupService
      *
      * @var string
      */
-    protected $customPath = '';
+    protected $customPath;
 
     /**
      * Setting this option automatically updates the reference index
      *
      * @var bool
      */
-    protected $updateRefindex = false;
+    protected $updateRefindex;
 
     /**
-     * Return exclude
-     *
-     * @return string
+     * Constructor
      */
-    public function getExclude()
-    {
-        return $this->exclude;
-    }
-
-    /**
-     * Set exclude
-     *
-     * @param string $exclude
-     */
-    public function setExclude($exclude)
+    public function __construct(string $exclude = '', string $customPath = '', bool $updateRefindex = false)
     {
         $this->exclude = $exclude;
-    }
-
-    /**
-     * Return custom paths
-     *
-     * @return string
-     */
-    public function getCustomPath()
-    {
-        return $this->customPath;
-    }
-
-    /**
-     * Set custom paths
-     *
-     * @param string $customPath
-     */
-    public function setCustomPath($customPath)
-    {
         $this->customPath = $customPath;
-    }
-
-    /**
-     * Return updateRefindex
-     *
-     * @return boolean
-     */
-    public function isUpdateRefindex()
-    {
-        return $this->updateRefindex;
-    }
-
-    /**
-     * Set updateRefindex
-     *
-     * @param boolean $updateRefindex
-     */
-    public function setUpdateRefindex($updateRefindex)
-    {
         $this->updateRefindex = $updateRefindex;
     }
 
