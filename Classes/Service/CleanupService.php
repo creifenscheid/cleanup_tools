@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use \ReflectionClass;
 
 /**
  * *************************************************************
@@ -172,10 +173,12 @@ class CleanupService
         $service = $this->objectManager->get($class);
 
         // set up reflection
-        $reflection = new \ReflectionClass($service);
+        //todo: del if objectmngr wrks $reflection = new \ReflectionClass($service);
+        $reflection = $this->objectManager->get(ReflectionClass::class, $service);
 
         // write log
-        $log = new Log();
+        //todo: del if objectmngr wrks $log = new Log();
+        $log = $this->objectManager->get(Log::class);
         $log->setCrdate(time());
 
         if ($GLOBALS['BE_USER']->user['uid']) {
