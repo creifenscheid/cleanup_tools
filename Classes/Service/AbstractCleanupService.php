@@ -6,6 +6,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
 use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * *************************************************************
@@ -42,6 +43,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 abstract class AbstractCleanupService
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
 
     /**
      * Execute cleanup process
@@ -104,6 +109,15 @@ abstract class AbstractCleanupService
     {
         $this->log = $log;
     }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // init object manager
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+    }
 
     /**
      * Create and add logMessage object
@@ -113,8 +127,9 @@ abstract class AbstractCleanupService
     protected function addMessage(string $message): void
     {
         // create new message
-        //todo: refsctor init
-        $newLogMessage = new LogMessage();
+        // todo: del if objectmngr wrks
+        //$newLogMessage = new LogMessage();
+        $newLogMessage = $this->objectManager->get(LogMessage::class);
         $newLogMessage->setLog($this->log);
         $newLogMessage->setMessage($message);
 
@@ -131,8 +146,10 @@ abstract class AbstractCleanupService
     protected function addLLLMessage(string $key, array $arguments = null): void
     {
         // create new message
-        // todo: regactor init
-        $newLogMessage = new LogMessage();
+        // todo: del if objectmngr wrks
+        //$newLogMessage = new LogMessage();
+        $newLogMessage = $this->objectManager->get(LogMessage::class);
+        
         $newLogMessage->setLog($this->log);
         $newLogMessage->setLocalLangKey($key);
 

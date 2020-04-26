@@ -101,6 +101,11 @@ class ConfigurationService implements SingletonInterface
      * @var array
      */
     protected $logLifetimeOptions = [];
+    
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
 
     /**
      * Constructor
@@ -108,7 +113,7 @@ class ConfigurationService implements SingletonInterface
     public function __construct()
     {
         // init object manager
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
         // init configurationManager
         $configurationManager = $objectManager->get(ConfigurationManager::class);
@@ -245,8 +250,9 @@ class ConfigurationService implements SingletonInterface
     private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
         // init reflection of class
-        // todo: refactor init
-        $reflection = new ReflectionClass($class);
+        // todo: del if objectmngr wrks
+        // $reflection = new ReflectionClass($class);
+        $reflection = $this->objectManager->get(ReflectionClass::class, $class);
 
         $name = end(GeneralUtility::trimExplode('\\', $class));
 
