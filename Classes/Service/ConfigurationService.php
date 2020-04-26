@@ -245,6 +245,7 @@ class ConfigurationService implements SingletonInterface
     private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
         // init reflection of class
+        // todo: refactor init
         $reflection = new ReflectionClass($class);
 
         $name = end(GeneralUtility::trimExplode('\\', $class));

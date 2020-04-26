@@ -113,6 +113,7 @@ abstract class AbstractCleanupService
     protected function addMessage(string $message): void
     {
         // create new message
+        //todo: refsctor init
         $newLogMessage = new LogMessage();
         $newLogMessage->setLog($this->log);
         $newLogMessage->setMessage($message);
@@ -130,6 +131,7 @@ abstract class AbstractCleanupService
     protected function addLLLMessage(string $key, array $arguments = null): void
     {
         // create new message
+        // todo: regactor init
         $newLogMessage = new LogMessage();
         $newLogMessage->setLog($this->log);
         $newLogMessage->setLocalLangKey($key);
