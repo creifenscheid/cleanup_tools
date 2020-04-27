@@ -170,11 +170,16 @@ class CleanupService
     public function process(string $class, string $method, array $parameters = null)
     {
         // init service
-        $service = $this->objectManager->get($class);
+        // todo: check
+        if ($parameters && $this->executionMode !== self::USE_METHOD_PROPERTIES) {
+            $service = $this->objectManager->get($class, $parameters);
+        } else {
+            $service = $this->objectManager->get($class);
+        }
 
         // set up reflection
         //todo: del if objectmngr wrks $reflection = new \ReflectionClass($service);
-        $reflection = $this->objectManager->get(ReflectionClass::class, $service);
+        $reflection = $this->objectManager->get(ReflectionClass::class, [$service]);
 
         // write log
         //todo: del if objectmngr wrks $log = new Log();

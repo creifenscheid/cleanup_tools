@@ -252,7 +252,7 @@ class ConfigurationService implements SingletonInterface
         // init reflection of class
         // todo: del if objectmngr wrks
         // $reflection = new ReflectionClass($class);
-        $reflection = $this->objectManager->get(ReflectionClass::class, $class);
+        $reflection = $this->objectManager->get(ReflectionClass::class, [$class]);
 
         $name = end(GeneralUtility::trimExplode('\\', $class));
 
