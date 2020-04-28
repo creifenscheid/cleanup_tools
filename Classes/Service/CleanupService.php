@@ -210,42 +210,7 @@ class CleanupService
                     $method
                 ], $parameters);
             } else {
-                // flag to handle if method can be run
-                $runMethod = true;
-
-                // set parameter
-                foreach ($parameters as $parameter => $value) {
-                    $propertyReflection = $reflection->getProperty($parameter);
-
-                    if ($propertyReflection->isPublic()) {
-                        $service->$parameter = $value;
-                    } else {
-                        $setter = 'set' . ucfirst($parameter);
-
-                        if (method_exists($service, $setter)) {
-                            $service->$setter($value);
-                        } else {
-
-                            $message = 'Property ' . $parameter . ' is not public and no setter is given.';
-
-                            // create new message
-                            $newLogMessage = new \SPL\SplCleanupTools\Domain\Model\LogMessage();
-                            $newLogMessage->setLog($log);
-                            $newLogMessage->setMessage($message);
-
-                            // add message to log
-                            $log->addMessage($newLogMessage);
-
-                            $return = false;
-                            $runMethod = false;
-                        }
-                    }
-                }
-
-                // call method
-                if ($runMethod) {
-                    $return = $service->$method();
-                }
+                $return = $service->$method();
             }
         } else {
 
