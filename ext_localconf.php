@@ -14,13 +14,16 @@ defined('TYPO3_MODE') or die();
 // Register icons
 $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
-$iconRegistry->registerIcon('tx-cleanuptools-icon', SvgIconProvider::class, [
-    'source' => 'EXT:cleanup_tools/Resources/Public/Icons/tx_cleanuptools_icon.svg'
-]);
+$icons = [
+    'tx-cleanuptools-icon' => 'EXT:cleanup_tools/Resources/Public/Icons/tx_cleanuptools_icon.svg',
+    tx-cleanuptools-restore => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_cleanuptools_restore.svg'
+];
 
-$iconRegistry->registerIcon('tx-cleanuptools-restore', SvgIconProvider::class, [
-    'source' => 'EXT:spl_cleanup_tools/Resources/Public/Icons/tx_cleanuptools_restore.svg'
-]);
+foreach ($icons as $iconKey => $pathToIcon) {
+    $iconRegistry->registerIcon($iconKey, SvgIconProvider::class, [
+        'source' => $pathToIcon
+    ]);
+}
 
 // get extension configuration
 $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cleanup_tools');

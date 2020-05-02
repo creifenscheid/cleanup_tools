@@ -11,20 +11,20 @@ if (TYPO3_MODE === 'BE') {
     
     // Register toolbar item
     if ($extensionConfiguration['enableBackendModule']) {
-        ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools', // extensionName
-            'tools', // mainModuleName
-            'Cleanup', // subModuleName
-            '', // position
+        ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools',
+            'tools', 
+            'Cleanup',
+            '',
             [
                 'Cleanup' => 'index,cleanup',
                 'Ajax' => 'main',
                 'History' => 'index,cleanup'
-            ], // controllerActions
+            ],
             [
                 'access' => 'admin',
                 'icon' => 'EXT:cleanup_tools/ext_icon.svg',
                 'labels' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf'
-            ] // moduleConfiguration
+            ]
             );
         
         // Register CSS
