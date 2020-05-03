@@ -13,6 +13,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
+        'delete' => 'deleted',
         'versioningWS' => false,
         'searchFields' => 'crdate,cruser_id,execution_context,service,parameters,state,messages'
     ],
