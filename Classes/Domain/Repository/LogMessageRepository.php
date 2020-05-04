@@ -34,7 +34,7 @@ namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
  * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
-class LogMessageRepository extends BaseRespository
+class LogMessageRepository extends BaseRepository
 {
 }
 

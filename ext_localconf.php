@@ -4,15 +4,11 @@ use ChristianReifenscheid\CleanupTools\Hooks\AfterDatabaseOperationsHook;
 use ChristianReifenscheid\CleanupTools\Hooks\DrawItemHook;
 use ChristianReifenscheid\CleanupTools\Task\CleanupAdditionalFieldProvider;
 use ChristianReifenscheid\CleanupTools\Task\CleanupTask;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Imaging\IconRegistry;
-use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 defined('TYPO3_MODE') or die();
 
 // Register icons
-$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+$iconRegistry = TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
 $icons = [
     'tx-cleanuptools-icon' => 'EXT:cleanup_tools/Resources/Public/Icons/tx_cleanuptools_icon.svg',
@@ -20,13 +16,13 @@ $icons = [
 ];
 
 foreach ($icons as $iconKey => $pathToIcon) {
-    $iconRegistry->registerIcon($iconKey, SvgIconProvider::class, [
+    $iconRegistry->registerIcon($iconKey, TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class, [
         'source' => $pathToIcon
     ]);
 }
 
 // get extension configuration
-$extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cleanup_tools');
+$extensionConfiguration = GeneralUtility::makeInstance(TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
 
 // Register toolbar item
 if ($extensionConfiguration['enableToolbarItem']) {

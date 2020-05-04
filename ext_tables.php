@@ -1,17 +1,14 @@
 <?php
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 defined('TYPO3_MODE') or die();
 
 if (TYPO3_MODE === 'BE') {
     // get extension configuration
-    $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cleanup_tools');
+    $extensionConfiguration = TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
     
     // Register toolbar item
     if ($extensionConfiguration['enableBackendModule']) {
-        ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools',
+        TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools',
             'tools', 
             'Cleanup',
             '',

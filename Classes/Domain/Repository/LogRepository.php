@@ -36,7 +36,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
-class LogRepository extends BaseRespository
+class LogRepository extends BaseRepository
 {
 
     /**

@@ -37,7 +37,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
-class BaseRespository extends Repository
+class BaseRepository extends Repository
 {
 
     protected $defaultOrderings = [
