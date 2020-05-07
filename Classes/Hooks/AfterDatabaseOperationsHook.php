@@ -1,11 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Hooks;
 
-use ChristianReifenscheid\CleanupTools\Service\CleanupService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService;
-
 /**
  * *************************************************************
  *
@@ -50,7 +45,7 @@ class AfterDatabaseOperationsHook
      * @param integer $recordUid
      * @param array $fields
      *
-     * @return bool|FlashMessage
+     * @return bool|\TYPO3\CMS\Core\Messaging\FlashMessage
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
@@ -63,18 +58,18 @@ class AfterDatabaseOperationsHook
         if ($status === 'update' && $table === 'tt_content' && array_key_exists($fieldName, $fields)) {
 
             /** @var \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService */
-            $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
-            $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_DBHOOK);
+            $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+            $cleanupService->setExecutionContext(\ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DBHOOK);
 
             // set execution mode
-            $cleanupService->setExecutionMode(CleanupService::USE_METHOD_PROPERTIES);
+            $cleanupService->setExecutionMode(\ChristianReifenscheid\CleanupTools\Service\CleanupService::USE_METHOD_PROPERTIES);
 
             // process method through cleanup utility
             // disable dry run
             $cleanupService->setDryRun(false);
 
             // process
-            return $cleanupService->process(CleanFlexFormsService::class, 'executeByUid', [
+            return $cleanupService->process(\ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService::class, 'executeByUid', [
                 'recordUid' => (int) $recordUid
             ]);
         }

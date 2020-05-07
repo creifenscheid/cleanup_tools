@@ -1,14 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
-use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use \ReflectionClass;
-
 /**
  * *************************************************************
  *
@@ -101,7 +93,7 @@ class CleanupService
     /**
      * Log repository
      *
-     * @var LogRepository
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
@@ -111,13 +103,13 @@ class CleanupService
     public function __construct()
     {
         // init object manager
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
         // init configuration service
-        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConfigurationService::class);
 
         // init log repository
-        $this->logRepository = $this->objectManager->get(LogRepository::class);
+        $this->logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
     }
 
     /**
@@ -170,20 +162,10 @@ class CleanupService
     public function process(string $class, string $method, array $parameters = null)
     {
         // init service
-        // todo: check
-        if ($parameters && $this->executionMode !== self::USE_METHOD_PROPERTIES) {
-            $service = $this->objectManager->get($class, $parameters);
-        } else {
-            $service = $this->objectManager->get($class);
-        }
-
-        // set up reflection
-        //todo: del if objectmngr wrks $reflection = new \ReflectionClass($service);
-        $reflection = $this->objectManager->get(ReflectionClass::class, [$service]);
+        $service = $this->objectManager->get($class);
 
         // write log
-        //todo: del if objectmngr wrks $log = new Log();
-        $log = $this->objectManager->get(Log::class);
+        $log = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
         $log->setCrdate(time());
 
         if ($GLOBALS['BE_USER']->user['uid']) {
@@ -210,7 +192,36 @@ class CleanupService
                     $method
                 ], $parameters);
             } else {
-                $return = $service->$method();
+                // flag to handle if method can be run
+                $runMethod = true;
+                
+                // set parameter
+                foreach ($parameters as $parameter => $value) {
+                    $setter = 'set' . ucfirst($parameter);
+                    
+                    if (method_exists($service, $setter)) {
+                        $service->$setter($value);
+                    } else {
+                        
+                        $message = 'No setter function for property ' . $parameter . ' existing.';
+                        
+                        // create new message
+                        $newLogMessage = new \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage();
+                        $newLogMessage->setLog($log);
+                        $newLogMessage->setMessage($message);
+                        
+                        // add message to log
+                        $log->addMessage($newLogMessage);
+                        
+                        $return = false;
+                        $runMethod = false;
+                    }
+                }
+                
+                // call method
+                if ($runMethod) {
+                    $return = $service->$method();
+                }
             }
         } else {
 
@@ -221,7 +232,7 @@ class CleanupService
             $return = $service->$method();
         }
 
-        if (! $return || ($return instanceof FlashMessage && $return->getSeverity() === FlashMessage::ERROR)) {
+        if (! $return || ($return instanceof \TYPO3\CMS\Core\Messaging\FlashMessage && $return->getSeverity() === \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR)) {
             $log->setState(false);
         }
 
@@ -229,7 +240,7 @@ class CleanupService
         $this->logRepository->add($service->getLog());
 
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
-        $persistenceManager = $this->objectManager->get(PersistenceManager::class);
+        $persistenceManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
         $persistenceManager->persistAll();
 
         return $return;

@@ -2,12 +2,6 @@
 declare(strict_types = 1);
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * *************************************************************
  *
@@ -50,9 +44,9 @@ class OrphanRecordsService extends AbstractCleanupService
      * Executes the command to find records not attached to the pagetree
      * and permanently delete these records
      *
-     * @return FlashMessage
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    public function execute(): FlashMessage
+    public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // find all records that should be deleted
         $allRecords = $this->findAllConnectedRecordsInPage(0, 10000);
@@ -67,7 +61,7 @@ class OrphanRecordsService extends AbstractCleanupService
                 $idList = $allRecords[$tableName];
             }
             // Select all records that are NOT connected
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+            $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
             $result = $queryBuilder->select('uid')
                 ->from($tableName)
@@ -97,7 +91,7 @@ class OrphanRecordsService extends AbstractCleanupService
             if ($this->dryRun) {
                 $message = count($orphans) . ' orphan records found.';
                 $this->addMessage($message);
-                return $this->createFlashMessage(FlashMessage::INFO, $message);
+                return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
             } else {
                 // Actually permanently delete them
                 return $this->deleteRecords($orphans);
@@ -105,7 +99,7 @@ class OrphanRecordsService extends AbstractCleanupService
         } else {
             $message = 'No orphan records found.';
             $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
         }
     }
 
@@ -133,7 +127,7 @@ class OrphanRecordsService extends AbstractCleanupService
         foreach (array_keys($GLOBALS['TCA']) as $tableName) {
             if ($tableName !== 'pages') {
                 // Select all records belonging to page:
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+                $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
                 $queryBuilder->getRestrictions()->removeAll();
 
@@ -146,7 +140,7 @@ class OrphanRecordsService extends AbstractCleanupService
                 while ($rowSub = $result->fetch()) {
                     $allRecords[$tableName][$rowSub['uid']] = $rowSub['uid'];
                     // Add any versions of those records:
-                    $versions = BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
+                    $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
                     if (is_array($versions)) {
                         foreach ($versions as $verRec) {
                             if (! $verRec['_CURRENT_VERSION']) {
@@ -160,7 +154,7 @@ class OrphanRecordsService extends AbstractCleanupService
         // Find subpages to root ID and traverse (only when rootID is not a version or is a branch-version):
         if ($depth > 0) {
             $depth --;
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages');
 
             $queryBuilder->getRestrictions()->removeAll();
 
@@ -178,7 +172,7 @@ class OrphanRecordsService extends AbstractCleanupService
 
         // Add any versions of pages
         if ($pageId > 0) {
-            $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
+            $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
             if (is_array($versions)) {
                 foreach ($versions as $verRec) {
                     if (! $verRec['_CURRENT_VERSION']) {
@@ -207,7 +201,7 @@ class OrphanRecordsService extends AbstractCleanupService
         }
 
         // set up the data handler instance
-        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         // error counter
         $errors = 0;
 
@@ -236,7 +230,7 @@ class OrphanRecordsService extends AbstractCleanupService
 
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
-            return $this->createFlashMessage(FlashMessage::WARNING, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::WARNING, $message);
         }
 
         return $this->createFlashMessage();

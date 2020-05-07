@@ -31,7 +31,7 @@ Every registered service has to provide a function named „execute“. Otherwis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your service requires configurable parameters to run, e.g. depth or pageId, be sure to define them as class property. If you don’t provide default values, the fields are mandatory in the backend module, otherwise they are optional. 
-Make sure to define a constructor who takes care of setting your class properties.
+Make sure to define setter function for each property.
 
 All properties are parsed to set up the service form in the backend module automatically. 
 The corresponding form field is based on the var type definition.
@@ -103,9 +103,9 @@ Localization key specifications:
         protected $myFirstVar;
         
         /**
-         * Constructor
+         * Set my first var
          */
-        public function __construct(int $myFirstVar = 1000)
+        public function setMyFirstVar(int $myFirstVar)
         {
             $this->myFirstVar = $myFirstVar;
         }

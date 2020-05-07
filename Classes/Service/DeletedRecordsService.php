@@ -1,13 +1,5 @@
 <?php
-declare(strict_types = 1);
 namespace ChristianReifenscheid\CleanupTools\Service;
-
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * *************************************************************
@@ -52,37 +44,46 @@ class DeletedRecordsService extends AbstractCleanupService
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
      *
-     * @var int $pid
+     * @var int
      */
-    protected $pid;
+    protected $pid = 0;
 
     /**
      * Setting traversal depth.
      * 0 (zero) will only analyze start page (see --pid), 1 will traverse one level of subpages etc.
      *
-     * @var int $depth
+     * @var int
      */
-    protected $depth;
-    
+    protected $depth = 1000;
+
     /**
-     * Constructor
+     * @param int $pid
+     * @return void
      */
-    public function __construct(int $pid = 0, int $depth = 1000)
+    public function setPid(int $pid) : void
     {
         $this->pid = $pid;
+    }
+
+    /**
+     * @param int $depth
+     * @return void
+     */
+    public function setDepth(int $depth) : void
+    {
         $this->depth = $depth;
     }
 
     /**
      * Executes the command to find and permanently delete records which are marked as deleted
      *
-     * @return FlashMessage
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    public function execute(): FlashMessage
+    public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
-        $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
+        $startingPoint = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->pid, 0);
 
-        $depth = MathUtility::forceIntegerInRange($this->depth, 0);
+        $depth = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->depth, 0);
 
         // find all records that should be deleted
         $deletedRecords = $this->findAllFlaggedRecordsInPage($startingPoint, $depth);
@@ -98,7 +99,7 @@ class DeletedRecordsService extends AbstractCleanupService
 
             $message = 'Found ' . $totalAmountOfRecords . ' records in ' . $totalAmountOfTables . ' database tables ready to be deleted.';
             $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::INFO, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
         } else {
             // actually permanently delete them
             return $this->deleteRecords($deletedRecords);
@@ -122,7 +123,7 @@ class DeletedRecordsService extends AbstractCleanupService
     protected function findAllFlaggedRecordsInPage(int $pageId, int $depth, array $deletedRecords = []): array
     {
         /** @var QueryBuilder $queryBuilderForPages */
-        $queryBuilderForPages = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilderForPages = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages');
         $queryBuilderForPages->getRestrictions()->removeAll();
 
         $pageId = (int) $pageId;
@@ -147,7 +148,7 @@ class DeletedRecordsService extends AbstractCleanupService
         // Traverse tables of records that belongs to page
         foreach ($databaseTables as $tableName => $deletedField) {
             // Select all records belonging to page
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+            $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
             $queryBuilder->getRestrictions()->removeAll();
 
@@ -163,7 +164,7 @@ class DeletedRecordsService extends AbstractCleanupService
                     $deletedRecords[$tableName][$recordOnPage['uid']] = $recordOnPage['uid'];
                 }
                 // Add any versions of those records
-                $versions = BackendUtility::selectVersionsOfRecord($tableName, $recordOnPage['uid'], 'uid,t3ver_wsid,t3ver_count,' . $deletedField, null, true) ?: [];
+                $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord($tableName, $recordOnPage['uid'], 'uid,t3ver_wsid,t3ver_count,' . $deletedField, null, true) ?: [];
                 if (is_array($versions)) {
                     foreach ($versions as $verRec) {
                         // Mark as deleted
@@ -192,7 +193,7 @@ class DeletedRecordsService extends AbstractCleanupService
 
         // Add any versions of the page
         if ($pageId > 0) {
-            $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true) ?: [];
+            $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true) ?: [];
             if (is_array($versions)) {
                 foreach ($versions as $verRec) {
                     if (! $verRec['_CURRENT_VERSION']) {
@@ -240,7 +241,7 @@ class DeletedRecordsService extends AbstractCleanupService
         }
 
         // set up the data handler instance
-        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         $dataHandler->start([], []);
 
         // error counter
@@ -267,7 +268,7 @@ class DeletedRecordsService extends AbstractCleanupService
 
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
-            return $this->createFlashMessage(FlashMessage::WARNING, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::WARNING, $message);
         }
 
         return $this->createFlashMessage();

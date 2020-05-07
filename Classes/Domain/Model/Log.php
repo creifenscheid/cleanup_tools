@@ -1,13 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Domain\Model;
 
-use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
-use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
-
 /**
  * *************************************************************
  *
@@ -41,7 +34,7 @@ use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
  * @package ChristianReifenscheid\CleanupTools\Domain\Model
  * @author Christian Reifenscheid
  */
-class Log extends AbstractEntity
+class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
@@ -96,7 +89,7 @@ class Log extends AbstractEntity
     /**
      * messages
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\SPL\SplCleanupTools\Domain\Model\LogMessage>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $messages;
@@ -259,13 +252,13 @@ class Log extends AbstractEntity
      *
      * @return \TYPO3\CMS\Beuser\Domain\Model\BackendUser
      */
-    public function getCruser(): BackendUser
+    public function getCruser(): \TYPO3\CMS\Beuser\Domain\Model\BackendUser
     {
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $beUserRepository */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
         /** @var \TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository $beUserRepository */
-        $beUserRepository = $objectManager->get(BackendUserRepository::class);
+        $beUserRepository = $objectManager->get(\TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository::class);
 
         return $beUserRepository->findByUid($this->getCruserId());
     }
@@ -273,10 +266,10 @@ class Log extends AbstractEntity
     /*
      * Add a message
      *
-     * @param LogMessage $message
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage $message
      * @return void
      */
-    public function addMessage(LogMessage $message): void
+    public function addMessage(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage $message): void
     {
         $this->messages->attach($message);
     }
@@ -284,10 +277,10 @@ class Log extends AbstractEntity
     /*
      * Remove a message
      *
-     * @param LogMessage $messageToRemove
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove
      * @return void
      */
-    public function removeMessage(LogMessage $messageToRemove): void
+    public function removeMessage(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove): void
     {
         $this->messages->detach($messageToRemove);
     }

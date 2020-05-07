@@ -2,15 +2,6 @@
 declare(strict_types = 1);
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
-use PDO;
-
 /**
  * *************************************************************
  *
@@ -54,9 +45,9 @@ class CleanFlexFormsService extends AbstractCleanupService
      * Setting start page in page tree.
      * Default is the page tree root, 0 (zero)
      *
-     * @var int $pid
+     * @var int
      */
-    protected $pid;
+    protected $pid = 0;
 
     /**
      * Setting traversal depth.
@@ -64,14 +55,23 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @var int $depth
      */
-    protected $depth;
+    protected $depth = 1000;
 
     /**
-     * Constructor
+     * @param int
+     * @return void
      */
-    public function __construct(int $pid = 0, int $depth = 1000)
+    public function setPid(int $pid) : void
     {
         $this->pid = $pid;
+    }
+
+    /**
+     * @param int $depth
+     * @return void
+     */
+    public function setDepth(int $depth) : void
+    {
         $this->depth = $depth;
     }
 
@@ -82,8 +82,8 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
-        $startingPoint = MathUtility::forceIntegerInRange($this->pid, 0);
-        $depth = MathUtility::forceIntegerInRange($this->depth, 0);
+        $startingPoint = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->pid, 0);
+        $depth = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->depth, 0);
 
         // Find all records that should be updated
         $recordsToUpdate = $this->findAllDirtyFlexformsInPage($startingPoint, $depth);
@@ -91,7 +91,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         if ($this->dryRun) {
             $message = 'Found ' . count($recordsToUpdate) . ' records with wrong FlexForms information.';
             $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::INFO, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
         }
 
         if (! empty($recordsToUpdate)) {
@@ -100,7 +100,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         } else {
             $message = 'Nothing to do - You\'re all set!';
             $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
         }
     }
 
@@ -111,7 +111,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function executeByUid(int $recordUid)
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 
         $records = [];
 
@@ -120,7 +120,7 @@ class CleanFlexFormsService extends AbstractCleanupService
             ->where($queryBuilder->expr()
             ->isNotNull('pi_flexform'))
             ->andWhere($queryBuilder->expr()
-            ->eq('uid', $queryBuilder->createNamedParameter($recordUid, PDO::PARAM_INT)));
+                ->eq('uid', $queryBuilder->createNamedParameter($recordUid, \PDO::PARAM_INT)));
 
         $records['tt_content:' . $recordUid . ':pi_flexform'] = $queryBuilder->execute()->fetch();
 
@@ -134,7 +134,7 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     public function isValid(array $data): bool
     {
-        $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
+        $flexObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
         $cleanFlexForm = $flexObj->cleanFlexFormXML('tt_content', 'pi_flexform', $data);
         return ($cleanFlexForm === $data['pi_flexform']);
     }
@@ -161,7 +161,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         foreach ($GLOBALS['TCA'] as $tableName => $tableConfiguration) {
             if ($tableName !== 'pages') {
                 // Select all records belonging to page:
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+                $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
 
                 $queryBuilder->getRestrictions()->removeAll();
 
@@ -175,7 +175,7 @@ class CleanFlexFormsService extends AbstractCleanupService
                     // Traverse flexforms
                     $dirtyFlexFormFields = $this->compareAllFlexFormsInRecord($tableName, $rowSub['uid'], $dirtyFlexFormFields);
                     // Add any versions of those records
-                    $versions = BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
+                    $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord($tableName, $rowSub['uid'], 'uid,t3ver_wsid,t3ver_count', null, true);
                     if (is_array($versions)) {
                         foreach ($versions as $verRec) {
                             if (! $verRec['_CURRENT_VERSION']) {
@@ -191,7 +191,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         // Find subpages
         if ($depth > 0) {
             $depth --;
-            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages');
 
             $queryBuilder->getRestrictions()->removeAll();
 
@@ -208,7 +208,7 @@ class CleanFlexFormsService extends AbstractCleanupService
         }
         // Add any versions of pages
         if ($pageId > 0) {
-            $versions = BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
+            $versions = \TYPO3\CMS\Backend\Utility\BackendUtility::selectVersionsOfRecord('pages', $pageId, 'uid,t3ver_oid,t3ver_wsid,t3ver_count', null, true);
             if (is_array($versions)) {
                 foreach ($versions as $verRec) {
                     if (! $verRec['_CURRENT_VERSION']) {
@@ -235,10 +235,10 @@ class CleanFlexFormsService extends AbstractCleanupService
      */
     protected function compareAllFlexFormsInRecord(string $tableName, int $uid, array $dirtyFlexFormFields = []): array
     {
-        $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
+        $flexObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
         foreach ($GLOBALS['TCA'][$tableName]['columns'] as $columnName => $columnConfiguration) {
             if ($columnConfiguration['config']['type'] === 'flex') {
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
+                $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable($tableName);
                 $queryBuilder->getRestrictions()->removeAll();
 
                 $fullRecord = $queryBuilder->select('*')
@@ -265,14 +265,14 @@ class CleanFlexFormsService extends AbstractCleanupService
      *
      * @param array $records
      *
-     * @return FlashMessage
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function cleanFlexFormRecords(array $records): FlashMessage
+    protected function cleanFlexFormRecords(array $records): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
-        $flexObj = GeneralUtility::makeInstance(FlexFormTools::class);
+        $flexObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class);
 
         // Set up the data handler instance
-        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         $dataHandler->dontProcessTransformations = true;
         $dataHandler->bypassWorkspaceRestrictions = true;
         $dataHandler->bypassFileHandling = true;
@@ -309,7 +309,7 @@ class CleanFlexFormsService extends AbstractCleanupService
 
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
-            return $this->createFlashMessage(FlashMessage::WARNING, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::WARNING, $message);
         }
 
         return $this->createFlashMessage();

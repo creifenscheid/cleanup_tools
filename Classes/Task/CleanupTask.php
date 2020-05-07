@@ -1,14 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Task;
 
-use ChristianReifenscheid\CleanupTools\Service\CleanupService;
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Scheduler\Task\AbstractTask;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
-
 /**
  * *************************************************************
  *
@@ -42,7 +34,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
  * @package ChristianReifenscheid\CleanupTools\Task
  * @author Christian Reifenscheid
  */
-class CleanupTask extends AbstractTask
+class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 {
 
     /**
@@ -61,22 +53,22 @@ class CleanupTask extends AbstractTask
     public function execute(): bool
     {
         /** @var CleanupService $cleanupService */
-        $cleanupService = GeneralUtility::makeInstance(CleanupService::class);
-        $cleanupService->setExecutionContext(CleanupService::EXECUTION_CONTEXT_SCHEDULER);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService->setExecutionContext(\ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_SCHEDULER);
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
         // process
         $cleanupService->setDryRun(false);
         $result = $cleanupService->process($this->serviceToProcess, $configurationService::FUNCTION_MAIN);
         
         if ($result) {
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+            $flashMessageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessageService::class);
             $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
             $messageQueue->addMessage($result);
             
-            if ($result->getSeverity() !== FlashMessage::ERROR) {
+            if ($result->getSeverity() !== \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR) {
                 return true;
             }
         }
@@ -114,8 +106,8 @@ class CleanupTask extends AbstractTask
     public function getAdditionalInformation(): string
     {
         /** @var ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
-        return LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
+        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
     }
 }

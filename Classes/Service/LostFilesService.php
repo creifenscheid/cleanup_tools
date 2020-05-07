@@ -2,13 +2,6 @@
 declare(strict_types = 1);
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\ReferenceIndex;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
-
 /**
  * *************************************************************
  *
@@ -54,7 +47,7 @@ class LostFilesService extends AbstractCleanupService
      *
      * @var string
      */
-    protected $exclude;
+    protected $exclude = '';
 
     /**
      * Comma separated list of paths to process.
@@ -62,22 +55,39 @@ class LostFilesService extends AbstractCleanupService
      *
      * @var string
      */
-    protected $customPath;
+    protected $customPath = '';
 
     /**
      * Setting this option automatically updates the reference index
      *
      * @var bool
      */
-    protected $updateRefindex;
+    protected $updateRefindex = false;
 
     /**
-     * Constructor
+     * @param string $exclude
+     * @return void
      */
-    public function __construct(string $exclude = '', string $customPath = '', bool $updateRefindex = false)
+    public function setExclude(string $exclude) : void
     {
         $this->exclude = $exclude;
+    }
+
+    /**
+     * @param string $customPath
+     * @return void
+     */
+    public function setCustomPath(string $customPath) : void
+    {
         $this->customPath = $customPath;
+    }
+
+    /**
+     * @param boolean $updateRefindex
+     * @return void
+     */
+    public function setUpdateRefindex(bool $updateRefindex) : void
+    {
         $this->updateRefindex = $updateRefindex;
     }
 
@@ -87,9 +97,9 @@ class LostFilesService extends AbstractCleanupService
      * - find files within uploads/* which are not connected to the reference index
      * - remove these files if --dry-run is not set
      *
-     * @return FlashMessage
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    public function execute(): FlashMessage
+    public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         if ($this->updateRefIndex) {
             $this->updateReferenceIndex();
@@ -97,7 +107,7 @@ class LostFilesService extends AbstractCleanupService
 
         // Find the lost files
         if (! empty($this->exclude)) {
-            $excludedPaths = GeneralUtility::trimExplode(',', $this->exclude, true);
+            $excludedPaths = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->exclude, true);
         } else {
             $excludedPaths = [];
         }
@@ -113,7 +123,7 @@ class LostFilesService extends AbstractCleanupService
             if ($this->dryRun) {
                 $message = 'Found ' . count($lostFiles) . ' lost files, ready to be deleted.';
                 $this->addMessage($message);
-                return $this->createFlashMessage(FlashMessage::INFO, $message);
+                return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
             } else {
                 // Delete them
                 return $this->deleteLostFiles($lostFiles);
@@ -121,7 +131,7 @@ class LostFilesService extends AbstractCleanupService
         } else {
             $message = 'Nothing to do, no lost files found';
             $this->addMessage($message);
-            return $this->createFlashMessage(FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
         }
     }
 
@@ -133,7 +143,7 @@ class LostFilesService extends AbstractCleanupService
      */
     protected function updateReferenceIndex()
     {
-        $referenceIndex = GeneralUtility::makeInstance(ReferenceIndex::class);
+        $referenceIndex = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ReferenceIndex::class);
         $referenceIndex->updateIndex(false);
     }
 
@@ -153,20 +163,20 @@ class LostFilesService extends AbstractCleanupService
         // Get all files
         $files = [];
         if (! empty($customPaths)) {
-            $customPaths = GeneralUtility::trimExplode(',', $customPaths, true);
+            $customPaths = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $customPaths, true);
             foreach ($customPaths as $customPath) {
-                if (false === realpath(Environment::getPublicPath() . '/' . $customPath) || ! GeneralUtility::isFirstPartOfStr(realpath(Environment::getPublicPath() . '/' . $customPath), realpath(Environment::getPublicPath()))) {
+                if (false === realpath(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/' . $customPath) || ! \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr(realpath(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/' . $customPath), realpath(\TYPO3\CMS\Core\Core\Environment::getPublicPath()))) {
                     throw new \Exception('The path: "' . $customPath . '" is invalid', 1450086736);
                 }
-                $files = GeneralUtility::getAllFilesAndFoldersInPath($files, Environment::getPublicPath() . '/' . $customPath);
+                $files = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath($files, \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/' . $customPath);
             }
         } else {
-            $files = GeneralUtility::getAllFilesAndFoldersInPath($files, Environment::getPublicPath() . '/uploads/');
+            $files = \TYPO3\CMS\Core\Utility\GeneralUtility::getAllFilesAndFoldersInPath($files, \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/uploads/');
         }
 
-        $files = GeneralUtility::removePrefixPathFromList($files, Environment::getPublicPath() . '/');
+        $files = \TYPO3\CMS\Core\Utility\GeneralUtility::removePrefixPathFromList($files, \TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/');
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_refindex');
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('sys_refindex');
 
         // Traverse files and for each, look up if its found in the reference index.
         foreach ($files as $key => $value) {
@@ -177,13 +187,13 @@ class LostFilesService extends AbstractCleanupService
             }
 
             // If the file is a RTEmagic-image name and if so, we allow it
-            if (preg_match('/^RTEmagic[P|C]_/', PathUtility::basenameDuringBootstrap($value))) {
+            if (preg_match('/^RTEmagic[P|C]_/', \TYPO3\CMS\Core\Utility\PathUtility::basenameDuringBootstrap($value))) {
                 continue;
             }
 
             $fileIsInExcludedPath = false;
             foreach ($excludedPaths as $exclPath) {
-                if (GeneralUtility::isFirstPartOfStr($value, $exclPath)) {
+                if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($value, $exclPath)) {
                     $fileIsInExcludedPath = true;
                     break;
                 }
@@ -227,7 +237,7 @@ class LostFilesService extends AbstractCleanupService
         $errors = 0;
 
         foreach ($lostFiles as $lostFile) {
-            $absoluteFileName = GeneralUtility::getFileAbsFileName($lostFile);
+            $absoluteFileName = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($lostFile);
 
             if ($absoluteFileName && @is_file($absoluteFileName)) {
                 unlink($absoluteFileName);
@@ -240,7 +250,7 @@ class LostFilesService extends AbstractCleanupService
 
         if ($errors > 0) {
             $message = 'While executing ' . __CLASS__ . ' ' . $errors . ' occured.';
-            return $this->createFlashMessage(FlashMessage::WARNING, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::WARNING, $message);
         }
 
         return $this->createFlashMessage();

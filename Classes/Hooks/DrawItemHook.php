@@ -1,16 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Hooks;
 
-use ChristianReifenscheid\CleanupTools\Service\CleanupService;
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\View\PageLayoutView;
-use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
-use ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService;
-
 /**
  * *************************************************************
  *
@@ -44,7 +34,7 @@ use ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService;
  * @package ChristianReifenscheid\CleanupTools\Hooks
  * @author Christian Reifenscheid
  */
-class DrawItemHook implements PageLayoutViewDrawItemHookInterface
+class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
 {
 
     /**
@@ -64,7 +54,7 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
      * @return void
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
+    public function preProcess(\TYPO3\CMS\Backend\View\PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
     {
         // Admins only
         if ($GLOBALS['BE_USER']->isAdmin()) {
@@ -72,19 +62,19 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
             // check if field:pi_flexform is set
             if ($row['pi_flexform']) {
 
-                /* @var CleanFlexFormsService $cleanFlexFormService */
-                $cleanFlexFormService = GeneralUtility::makeInstance(CleanFlexFormsService::class);
+                /* @var \ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
+                $cleanFlexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService::class);
 
                 if (! $cleanFlexFormService->isValid($row)) {
 
                     /** @var ConfigurationService $configurationService */
-                    $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+                    $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
                     /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
-                    $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+                    $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
                     /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-                    $view = GeneralUtility::makeInstance(StandaloneView::class);
+                    $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
 
                     // set format
                     $view->setFormat('html');
@@ -93,19 +83,19 @@ class DrawItemHook implements PageLayoutViewDrawItemHookInterface
                         'class' => 'ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService',
                         'method' => 'executeByUid',
                         'recordUid' => $row['uid'],
-                        'executionContext' => CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK,
-                        'executionMode' => CleanupService::USE_METHOD_PROPERTIES
+                        'executionContext' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK,
+                        'executionMode' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::USE_METHOD_PROPERTIES
                     ]);
 
                     // assignments
                     $view->assignMultiple([
-                        'onClickCode' => 'TYPO3.CleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
+                        'onClickCode' => 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
                         'recordUid' => $row['uid'],
                         'localizationFile' => $configurationService->getLocalizationFile()
                     ]);
 
                     // set template path
-                    $templateFile = GeneralUtility::resolveBackPath(Environment::getPublicPath() . '/typo3conf/ext/cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
+                    $templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::resolveBackPath(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext/cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
 
                     // set view template
                     $view->setTemplatePathAndFilename($templateFile);

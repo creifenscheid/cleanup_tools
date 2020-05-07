@@ -2,14 +2,6 @@
 
 namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use ChristianReifenscheid\CleanupTools\Service\CleanupService;
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-
 /**
  * *************************************************************
  *
@@ -71,8 +63,8 @@ class AjaxController
      */
     public function __construct()
     {
-        $this->cleanupService = GeneralUtility::makeInstance(CleanupService::class);
-        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
@@ -86,7 +78,7 @@ class AjaxController
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response) : ResponseInterface
+    public function mainAction(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response) : \Psr\Http\Message\ResponseInterface
     {
         // get query params
         $queryParams = $request->getQueryParams();
@@ -129,16 +121,16 @@ class AjaxController
                 
             } else {
                 $return = [
-                    'severity' => (string)FlashMessage::ERROR,
-                    'headline' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
-                    'message' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'CleanupTools', [$class])
+                    'severity' => (string)\TYPO3\CMS\Core\Messaging\FlashMessage::ERROR,
+                    'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
+                    'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message', 'CleanupTools', [$class])
                 ];
             }
         } else {
             $return = [
-                'severity' => (string)FlashMessage::ERROR,
-                'headline' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
-                'message' => LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'CleanupTools')
+                'severity' => (string)\TYPO3\CMS\Core\Messaging\FlashMessage::ERROR,
+                'headline' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.headline', 'CleanupTools'),
+                'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'CleanupTools')
             ];
         }
 

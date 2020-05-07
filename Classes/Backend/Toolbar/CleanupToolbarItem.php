@@ -1,14 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Backend\Toolbar;
 
-use ChristianReifenscheid\CleanupTools\Service\CleanupService;
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
-
 /**
  * *************************************************************
  *
@@ -42,7 +34,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  * @package ChristianReifenscheid\CleanupTools\Backend\Toolbar
  * @author Christian Reifenscheid
  */
-class CleanupToolbarItem implements ToolbarItemInterface
+class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
 {
 
     /**
@@ -66,12 +58,12 @@ class CleanupToolbarItem implements ToolbarItemInterface
     {
 
         /** @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService */
-        $configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
         $this->localizationFile = $configurationService->getLocalizationFile();
 
         /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
         $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 
@@ -80,11 +72,11 @@ class CleanupToolbarItem implements ToolbarItemInterface
             $uri = (string) $uriBuilder->buildUriFromRoute('cleanuptools_ajax', [
                 'class' => $serviceConfiguration['class'],
                 'method' => $configurationService::FUNCTION_MAIN,
-                'executionContext' => CleanupService::EXECUTION_CONTEXT_TOOLBAR
+                'executionContext' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
-            $this->cleanupServices[$service]['description'] = LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
-            $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . GeneralUtility::quoteJSvalue($uri) . '); return false;';
+            $this->cleanupServices[$service]['description'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
+            $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
 
@@ -170,9 +162,9 @@ class CleanupToolbarItem implements ToolbarItemInterface
      *            
      * @return \TYPO3\CMS\Fluid\View\StandaloneView
      */
-    protected function getFluidTemplateObject(string $filename): StandaloneView
+    protected function getFluidTemplateObject(string $filename): \TYPO3\CMS\Fluid\View\StandaloneView
     {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
+        $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
         $view->setLayoutRootPaths([
             'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts'
         ]);

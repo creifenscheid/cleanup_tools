@@ -1,9 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Domain\Model;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
-
 /**
  * *************************************************************
  *
@@ -37,13 +34,13 @@ use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
  * @package ChristianReifenscheid\SplCleanupTools\Domain\Model
  * @author Christian Reifenscheid
  */
-class LogMessage extends AbstractEntity
+class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
      * Log
      *
-     * @var Log
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
 
@@ -71,9 +68,9 @@ class LogMessage extends AbstractEntity
     /**
      * Returns log
      *
-     * @return Log
+     * @return \ChristianReifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): Log
+    public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
     {
         return $this->log;
     }
@@ -81,10 +78,10 @@ class LogMessage extends AbstractEntity
     /**
      * Set log
      *
-     * @param Log $log
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(Log $log): void
+    public function setLog(\ChristianReifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }

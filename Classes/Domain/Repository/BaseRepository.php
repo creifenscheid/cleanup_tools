@@ -1,9 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
 /**
  * *************************************************************
  *
@@ -37,11 +34,11 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @package ChristianReifenscheid\CleanupTools\Domain\Repository
  * @author Christian Reifenscheid
  */
-class BaseRepository extends Repository
+class BaseRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     protected $defaultOrderings = [
-        'crdate' => QueryInterface::ORDER_DESCENDING
+        'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
     ];
 
     /**

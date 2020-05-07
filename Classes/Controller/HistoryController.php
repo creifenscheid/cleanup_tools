@@ -1,12 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository;
-use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
-use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
-
 /**
  * *************************************************************
  *
@@ -62,7 +56,7 @@ class HistoryController extends BaseController
      *
      * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function injectLogRepository(LogRepository $logRepository)
+    public function injectLogRepository(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
         $this->logRepository = $logRepository;
     }
@@ -72,7 +66,7 @@ class HistoryController extends BaseController
      *
      * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository
      */
-    public function injectLogMessageRepository(LogMessageRepository $logMessageRepository)
+    public function injectLogMessageRepository(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository)
     {
         $this->logMessageRepository = $logMessageRepository;
     }
@@ -85,7 +79,7 @@ class HistoryController extends BaseController
     public function indexAction(): void
     {
         // define query settings
-        $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
+        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
         // set query settings
         $this->logRepository->setDefaultQuerySettings($querySettings);

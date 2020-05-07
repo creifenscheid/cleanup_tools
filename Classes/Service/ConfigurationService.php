@@ -1,17 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
-use ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository;
-use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\TypoScript\TypoScriptService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use \ReflectionClass;
-use \ReflectionException;
-
 /**
  * *************************************************************
  *
@@ -45,7 +34,7 @@ use \ReflectionException;
  * @package ChristianReifenscheid\CleanupTools\Service
  * @author Christian Reifenscheid
  */
-class ConfigurationService implements SingletonInterface
+class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
@@ -55,7 +44,7 @@ class ConfigurationService implements SingletonInterface
 
     /**
      *
-     * @var LogRepository
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
@@ -103,7 +92,7 @@ class ConfigurationService implements SingletonInterface
     protected $logLifetimeOptions = [];
     
     /**
-     * @var ObjectManager
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     protected $objectManager;
 
@@ -113,17 +102,17 @@ class ConfigurationService implements SingletonInterface
     public function __construct()
     {
         // init object manager
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 
         // init configurationManager
-        $configurationManager = $objectManager->get(ConfigurationManager::class);
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $configurationManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
+        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
         // init typoscript service
-        $typoscriptService = $objectManager->get(TypoScriptService::class);
+        $typoscriptService = $this->objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
 
         // init log repository
-        $this->logRepository = $objectManager->get(LogRepository::class);
+        $this->logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
@@ -132,7 +121,7 @@ class ConfigurationService implements SingletonInterface
         $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
 
         // set log lifetime options from typoscript config
-        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
         
         if ($logLifetimeOptions) {
             foreach ($logLifetimeOptions as $logLifetimeOption) {
@@ -245,16 +234,14 @@ class ConfigurationService implements SingletonInterface
      * @param array $configuration
      *
      * @return array
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
         // init reflection of class
-        // todo: del if objectmngr wrks
-        // $reflection = new ReflectionClass($class);
-        $reflection = $this->objectManager->get(ReflectionClass::class, [$class]);
+        $reflection = $this->objectManager->get(\ReflectionClass::class, $class);
 
-        $name = end(GeneralUtility::trimExplode('\\', $class));
+        $name = end(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('\\', $class));
 
         $methodParameters = [];
 

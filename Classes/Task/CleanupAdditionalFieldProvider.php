@@ -1,15 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Task;
 
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
-use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
-use TYPO3\CMS\Scheduler\Task\AbstractTask;
-use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-
 /**
  * *************************************************************
  *
@@ -43,7 +34,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * @package ChristianReifenscheid\CleanupTools\Task
  * @author Christian Reifenscheid
  */
-class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
+class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
 
     /**
@@ -56,7 +47,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     /**
      * Configuration service
      *
-     * @var ConfigurationService $configurationService
+     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -80,7 +71,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     public function __construct()
     {
         // init configurationService
-        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
@@ -96,7 +87,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      *            
      * @return array A two dimensional array, array('Identifier' => array('fieldId' => array('code' => '', 'label' => '', 'cshKey' => '', 'cshLabel' => ''))
      */
-    public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $schedulerModule)
+    public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
     {
         $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
 
@@ -105,7 +96,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
         // Initialize selected fields
         if (! isset($taskInfo[$this->cleanupTaskName])) {
             $taskInfo[$this->cleanupTaskName] = $this->serviceToProcess;
-            if ($currentSchedulerModuleMethod->equals(Action::EDIT)) {
+            if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
                 $taskInfo[$this->cleanupTaskName] = $task->getServiceToProcess();
             }
         }
@@ -133,12 +124,12 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      *            
      * @return bool TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
-    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool
+    public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule): bool
     {
         if ($submittedData[$this->cleanupTaskName] && $this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
             return true;
         } else {
-            $this->addMessage(LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),FlashMessage::INFO);
+            $this->addMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),\TYPO3\CMS\Core\Messaging\FlashMessage::INFO);
         }
 
         return false;
@@ -152,7 +143,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
      * @param \TYPO3\CMS\Scheduler\Task\AbstractTask $task
      *            Reference to the scheduler backend module
      */
-    public function saveAdditionalFields(array $submittedData, AbstractTask $task)
+    public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
         $task->setServiceToProcess($submittedData[$this->cleanupTaskName]);
     }
@@ -196,7 +187,7 @@ class CleanupAdditionalFieldProvider extends AbstractAdditionalFieldProvider
             return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
         } else {
             $noServices = '
-                <div>'.LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
+                <div>'.\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
                 <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
             ';
             

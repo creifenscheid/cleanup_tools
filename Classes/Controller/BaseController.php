@@ -1,10 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Controller;
 
-use ChristianReifenscheid\CleanupTools\Service\ConfigurationService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-
 /**
  * *************************************************************
  *
@@ -38,7 +34,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * @package ChristianReifenscheid\CleanupTools\Controller
  * @author Christian Reifenscheid
  */
-class BaseController extends ActionController
+class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
@@ -59,7 +55,7 @@ class BaseController extends ActionController
      */
     public function __construct()
     {
-        $this->configurationService = GeneralUtility::makeInstance(ConfigurationService::class);
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 }

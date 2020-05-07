@@ -1,8 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-
 /**
  * *************************************************************
  *
@@ -51,7 +49,7 @@ class LogRepository extends BaseRepository
         $query = $this->createQuery();
 
         $query->setOrderings([
-            'crdate' => QueryInterface::ORDER_DESCENDING
+            'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING
         ]);
 
         $query->matching($query->logicalAnd([

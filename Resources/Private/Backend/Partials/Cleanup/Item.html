@@ -28,7 +28,7 @@
                                 <f:variable name="lastLogTime">
                                     <f:format.date date="{service.lastLog.crdate}" format="H:i"/>
                                 </f:variable>
-                                <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.today" arguments="{0:lastLogTime}"/>
+                                <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.lastLog.today" arguments="{0:lastLogTime}"/>
                                 <br/>
                             </f:case>
                             <f:case value="1">
@@ -55,7 +55,7 @@
                         </f:if>
 
                         <f:variable name="inExecutionContext"><f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.executioncontext.{service.lastLog.executionContext}"/></f:variable>
-                        <f:translate key="LLL:EXT:spl_cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.inExectionContext" arguments="{0:inExecutionContext}"/>
+                        <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tx_cleanuptools.general.inExectionContext" arguments="{0:inExecutionContext}"/>
                     </f:then>
                     <f:else>
                         <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.notProcessed"/>

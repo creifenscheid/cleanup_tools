@@ -1,13 +1,6 @@
 <?php
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use ChristianReifenscheid\CleanupTools\Domain\Model\Log;
-use ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-
 /**
  * *************************************************************
  *
@@ -44,16 +37,16 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 abstract class AbstractCleanupService
 {
     /**
-     * @var ObjectManager
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     protected $objectManager;
 
     /**
      * Execute cleanup process
      *
-     * @return FlashMessage
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    abstract public function execute(): FlashMessage;
+    abstract public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage;
 
     /*
      * dry run
@@ -65,19 +58,9 @@ abstract class AbstractCleanupService
     /**
      * log
      *
-     * @var Log
+     * @var \ChristianReifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
-
-    /**
-     * Returns dry run
-     *
-     * @return bool
-     */
-    public function getDryRun(): bool
-    {
-        return $this->dryRun;
-    }
 
     /**
      * Sets dry run
@@ -92,9 +75,9 @@ abstract class AbstractCleanupService
     /**
      * Returns log
      *
-     * @return Log
+     * @return \ChristianReifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): Log
+    public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
     {
         return $this->log;
     }
@@ -102,10 +85,10 @@ abstract class AbstractCleanupService
     /**
      * Sets log
      *
-     * @param Log $log
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(Log $log): void
+    public function setLog(\ChristianReifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }
@@ -116,7 +99,7 @@ abstract class AbstractCleanupService
     public function __construct()
     {
         // init object manager
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
     }
 
     /**
@@ -129,7 +112,7 @@ abstract class AbstractCleanupService
         // create new message
         // todo: del if objectmngr wrks
         //$newLogMessage = new LogMessage();
-        $newLogMessage = $this->objectManager->get(LogMessage::class);
+        $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
         $newLogMessage->setLog($this->log);
         $newLogMessage->setMessage($message);
 
@@ -148,7 +131,7 @@ abstract class AbstractCleanupService
         // create new message
         // todo: del if objectmngr wrks
         //$newLogMessage = new LogMessage();
-        $newLogMessage = $this->objectManager->get(LogMessage::class);
+        $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
         
         $newLogMessage->setLog($this->log);
         $newLogMessage->setLocalLangKey($key);
@@ -170,15 +153,15 @@ abstract class AbstractCleanupService
      *
      * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function createFlashMessage(int $severity = FlashMessage::OK, string $message = null, $headline = null): \TYPO3\CMS\Core\Messaging\FlashMessage
+    protected function createFlashMessage(int $severity = \TYPO3\CMS\Core\Messaging\FlashMessage::OK, string $message = null, $headline = null): \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // define headline
-        $headline = $headline ?: LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'CleanupTools');
+        $headline = $headline ?: \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'CleanupTools');
 
         // define message
-        $message = $message ?: LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'CleanupTools');
+        $message = $message ?: \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.success.message', 'CleanupTools');
 
         // initialize and return flash message object
-        return GeneralUtility::makeInstance(FlashMessage::class, $message, $headline, $severity);
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessage::class, $message, $headline, $severity);
     }
 }
