@@ -8,21 +8,22 @@ if (TYPO3_MODE === 'BE') {
     
     // Register toolbar item
     if ($extensionConfiguration['enableBackendModule']) {
-        TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule('ChristianReifenscheid.CleanupTools',
-            'tools', 
+        TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+            'CleanupTools',
+            'tools',
             'Cleanup',
             '',
             [
-                'Cleanup' => 'index,cleanup',
-                'Ajax' => 'main',
-                'History' => 'index,cleanup'
+                \ChristianReifenscheid\CleanupTools\Controller\CleanupController::class => 'index, cleanup',
+                \ChristianReifenscheid\CleanupTools\Controller\AjaxController::class => 'main',
+                \ChristianReifenscheid\CleanupTools\Controller\HistoryController::class => 'index,cleanup'
             ],
             [
                 'access' => 'admin',
                 'icon' => 'EXT:cleanup_tools/ext_icon.svg',
                 'labels' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf'
             ]
-            );
+        );
         
         // Register CSS
         $GLOBALS['TBE_STYLES']['skins']['cleanup_tools'] = [

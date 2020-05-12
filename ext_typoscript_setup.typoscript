@@ -1,15 +1,3 @@
-config.tx_extbase {
-    persistence {
-        classes {
-            ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage {
-                mapping {
-                    tableName  = tx_cleanuptools_domain_model_log_message
-                }
-            }
-        }
-    }
-}
-
 module.tx_cleanuptools {
     view {
         templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Templates/

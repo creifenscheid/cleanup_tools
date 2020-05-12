@@ -31,11 +31,11 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'module',
     'author' => 'Christian Reifenscheid',
     'author_email' => 'christian.reifenscheid.2112@gmail.com',
-    'version' => '9.0.0',
+    'version' => '10.0.0',
     'state' => 'alpha',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99'
+            'typo3' => '10.4.0-10.4.99'
         ]
     ]
 ];
