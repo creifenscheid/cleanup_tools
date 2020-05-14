@@ -72,13 +72,12 @@ class AjaxController
      * Main action to perform toolbar request
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface      $response
      *
      * @return \Psr\Http\Message\ResponseInterface
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function mainAction(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response) : \Psr\Http\Message\ResponseInterface
+    public function mainAction(\Psr\Http\Message\ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface
     {
         // get query params
         $queryParams = $request->getQueryParams();
@@ -133,11 +132,7 @@ class AjaxController
                 'message' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error.message.no-method', 'CleanupTools')
             ];
         }
-
-        // define response body
-        $response->getBody()->write(json_encode($return));
-
-        // set and return response
-        return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
+        
+        return new \TYPO3\CMS\Core\Http\JsonResponse($return); 
     }
 }
