@@ -7,5 +7,5 @@ enableToolbarItem = 1
 # cat=Configuration; type=boolean; label= Enable cleanup after database operations
 enableAfterDatabaseOperationsHook = 0
 
-# cat=Configuration; type=boolean; label= Enable cleanup button in tt_content preview
-enableDrawItemHook = 1
+# cat=Configuration; type=boolean; label= Enable preview renderer
+enablePreviewRenderer = 1

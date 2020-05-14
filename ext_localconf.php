@@ -31,8 +31,8 @@ if ($extensionConfiguration['enableAfterDatabaseOperationsHook']) {
 }
 
 // HOOK: DrawItem
-if ($extensionConfiguration['enableDrawItemHook']) {
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] = \ChristianReifenscheid\CleanupTools\Hooks\DrawItemHook::class;
+if ($extensionConfiguration['enablePreviewRenderer']) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] = \ChristianReifenscheid\CleanupTools\Hooks\PreviewRenderer::class;
 }
 
 // TASK

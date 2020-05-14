@@ -163,7 +163,7 @@
             </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
-            <trans-unit id="drawitemhook.message">
+            <trans-unit id="previewRenderer.message">
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
                 <target>Sveigjanleiki þessa frumefnis er ekki í gildi og þarf að hreinsa hann upp.</target>
             </trans-unit>
@@ -210,6 +210,10 @@
             <trans-unit id="aria.history.togglebutton">
                 <source>Show/hide log messages.</source>
                 <target>Sýna / fela annálskilaboð.</target>
+            </trans-unit>
+            <trans-unit id="aria.previewRenderer.cleanup">
+                <source>Clean up flexform.</source>
+                <target>Hreinsaðu upp flexform.</target>
             </trans-unit>
         </body>
     </file>

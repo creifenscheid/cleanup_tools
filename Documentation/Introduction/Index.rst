@@ -20,7 +20,7 @@ It provides the following features:
 * history module to take a look on previous runs 
 * toolbar to run services in dry-run mode
 * scheduler task
-* drawItem hook to run cleanFlexFormsService
+* preview renderer to run cleanFlexFormsService
 * afterDatabaseOperations hook to run cleanFlexFormsService
 
 Cleanup services are registered in typoscript.
