@@ -15,7 +15,7 @@ module.tx_cleanuptools {
         ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService {
 	        enable = 1
 	        additionalUsage {
-	            schedulerTask = 0
+	            schedulerTask = 1
 	            toolbar = 1
 	        }
 		}
@@ -23,7 +23,7 @@ module.tx_cleanuptools {
 		ChristianReifenscheid\CleanupTools\Service\DeletedRecordsService {
 	        enable = 1
 	        additionalUsage {
-	            schedulerTask = 0
+	            schedulerTask = 1
 	            toolbar = 1
 	        }
 		} 
@@ -39,7 +39,7 @@ module.tx_cleanuptools {
 		ChristianReifenscheid\CleanupTools\Service\OrphanRecordsService {
 	        enable = 1
 	        additionalUsage {
-	            schedulerTask = 0
+	            schedulerTask = 1
 	            toolbar = 1
 	        }
 		}

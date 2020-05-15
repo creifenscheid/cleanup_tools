@@ -275,7 +275,6 @@ class CleanFlexFormsService extends AbstractCleanupService
         $dataHandler = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         $dataHandler->dontProcessTransformations = true;
         $dataHandler->bypassWorkspaceRestrictions = true;
-        $dataHandler->bypassFileHandling = true;
         // Setting this option allows to also update deleted records (or records on deleted pages) within DataHandler
         $dataHandler->bypassAccessCheckForRecords = true;
 
@@ -284,7 +283,7 @@ class CleanFlexFormsService extends AbstractCleanupService
 
         // Loop through all tables and their records
         foreach ($records as $recordIdentifier => $fullRecord) {
-            list ($table, $uid, $field) = explode(':', $recordIdentifier);
+            [$table, $uid, $field] = explode(':', $recordIdentifier);
             // Clean XML now
             $data = [];
             if ($fullRecord[$field]) {

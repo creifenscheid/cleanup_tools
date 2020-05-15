@@ -166,10 +166,10 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
         // loop through all utilities
         if ($services) {
             
+            // define option storage
+            $options = [];
+            
             foreach ($services as $serviceClass) {
-
-                // define option storage
-                $options = [];
                     
                 
                 $selected = '';
