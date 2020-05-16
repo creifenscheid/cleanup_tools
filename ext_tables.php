@@ -11,7 +11,7 @@ if (TYPO3_MODE === 'BE') {
         TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
             'CleanupTools',
             'tools',
-            'Cleanup',
+            'tx_cleanuptools',
             '',
             [
                 \ChristianReifenscheid\CleanupTools\Controller\CleanupController::class => 'index, cleanup',
