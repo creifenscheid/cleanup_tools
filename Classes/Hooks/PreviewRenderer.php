@@ -29,32 +29,32 @@ namespace ChristianReifenscheid\CleanupTools\Hooks;
  */
 
 /**
- * Class NewContentElementPreviewRenderer
+ * Class PreviewRenderer
  *
  * @package ChristianReifenscheid\CleanupTools\Hooks
  * @author Christian Reifenscheid
  */
-class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
+class PreviewRenderer implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
 {
-
     /**
      * Adjust the preview rendering of a elements with flexforms
      *
-     * @param \TYPO3\CMS\Backend\View\PageLayoutView $parentObject
-     *            Calling parent object
-     * @param bool $drawItem
-     *            Whether to draw the item using the default functionality
-     * @param string $headerContent
-     *            Header content
-     * @param string $itemContent
-     *            Item content
-     * @param array $row
-     *            Record row of tt_content
-     *            
+     * @param \TYPO3\CMS\Backend\View\PageLayoutView $parentObject Calling parent object
+     * @param bool $drawItem Whether to draw the item using the default functionality
+     * @param string $headerContent Header content
+     * @param string $itemContent Item content
+     * @param array $row Record row of tt_content
+     * 
      * @return void
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function preProcess(\TYPO3\CMS\Backend\View\PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
+    public function preProcess(
+        \TYPO3\CMS\Backend\View\PageLayoutView &$parentObject,
+        &$drawItem,
+        &$headerContent,
+        &$itemContent,
+        array &$row
+        ) : void
     {
         // Admins only
         if ($GLOBALS['BE_USER']->isAdmin()) {
@@ -65,7 +65,7 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                 /* @var \ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
                 $cleanFlexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService::class);
 
-                if (! $cleanFlexFormService->isValid($row)) {
+                if (!$cleanFlexFormService->isValid($row)) {
 
                     /** @var ConfigurationService $configurationService */
                     $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
@@ -83,7 +83,7 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                         'class' => 'ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService',
                         'method' => 'executeByUid',
                         'recordUid' => $row['uid'],
-                        'executionContext' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_DRAWITEMHOOK,
+                        'executionContext' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_PREVIEWRENDERER,
                         'executionMode' => \ChristianReifenscheid\CleanupTools\Service\CleanupService::USE_METHOD_PROPERTIES
                     ]);
 
@@ -95,12 +95,14 @@ class DrawItemHook implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHook
                     ]);
 
                     // set template path
-                    $templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::resolveBackPath(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext/cleanup_tools/Resources/Private/Backend/Templates/DrawItemHook/Index.html');
-
+                    $templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::resolveBackPath(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/typo3conf/ext/cleanup_tools/Resources/Private/Backend/Templates/PreviewRenderer/Index.html');
+                    
                     // set view template
                     $view->setTemplatePathAndFilename($templateFile);
 
-                    $headerContent .= $view->render();
+                    $itemContent = $view->render();
+                    
+                    $drawItem = false;
                 }
             }
         }

@@ -15,7 +15,7 @@
                 <source>Scheduler</source>
             </trans-unit>
             <trans-unit id="tx_cleanuptools.general.executioncontext.3">
-                <source>Content item</source>
+                <source>Preview renderer</source>
             </trans-unit>
             <trans-unit id="tx_cleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
@@ -127,7 +127,7 @@
             </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
-            <trans-unit id="drawitemhook.message">
+            <trans-unit id="previewRenderer.message">
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
             </trans-unit>
 
@@ -164,6 +164,9 @@
             <!-- ARIA -->
             <trans-unit id="aria.history.togglebutton">
                 <source>Show/hide log messages.</source>
+            </trans-unit>
+            <trans-unit id="aria.previewRenderer.cleanup">
+                <source>Clean up flexform.</source>
             </trans-unit>
         </body>
     </file>
