@@ -56,7 +56,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @var string
      */
-    protected $cleanupTaskName = 'scheduler_cleanuptools';
+    protected $taskName = 'cleanuptools_cleanuptask_';
 
     /**
      * Localization file
@@ -89,26 +89,29 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
     {
+        // field id definitions
+        $serviceToProcessId =  $this->taskName . 'serviceToProcess';
+        
         $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
 
         $additionalFields = [];
 
         // Initialize selected fields
         if (! isset($taskInfo[$this->cleanupTaskName])) {
-            $taskInfo[$this->cleanupTaskName] = $this->serviceToProcess;
+            $taskInfo[$serviceToProcessId] = $this->serviceToProcess;
             if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-                $taskInfo[$this->cleanupTaskName] = $task->getServiceToProcess();
+                $taskInfo[$serviceToProcessId] = $task->getServiceToProcess();
             }
         }
 
-        $fieldName = 'tx_scheduler[' . $this->cleanupTaskName . ']';
-        $fieldValue = $taskInfo[$this->cleanupTaskName];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $this->cleanupTaskName, $fieldValue);
-        $additionalFields[$this->cleanupTaskName] = [
+        $fieldName = 'tx_scheduler[' . $serviceToProcessId . ']';
+        $fieldValue = $taskInfo[$serviceToProcessId];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $serviceToProcessId, $fieldValue);
+        $additionalFields[$serviceToProcessId] = [
             'code' => $fieldHtml,
             'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $this->cleanupTaskName
+            'cshLabel' => $serviceToProcessId
         ];
 
         return $additionalFields;
@@ -126,7 +129,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule): bool
     {
-        if ($submittedData[$this->cleanupTaskName] && $this->configurationService->getService($submittedData[$this->cleanupTaskName])) {
+        if ($submittedData[$this->taskName . 'serviceToProcess'] && $this->configurationService->getService($submittedData[$this->taskName . 'serviceToProcess'])) {
             return true;
         } else {
             $this->addMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),\TYPO3\CMS\Core\Messaging\FlashMessage::INFO);
@@ -145,7 +148,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
-        $task->setServiceToProcess($submittedData[$this->cleanupTaskName]);
+        $task->setServiceToProcess($submittedData[$this->taskName . 'serviceToProcess']);
     }
 
     /**
@@ -186,12 +189,10 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             // return html for select field with option groups and options
             return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
         } else {
-            $noServices = '
+            return '
                 <div>'.\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
                 <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
             ';
-            
-            return $noServices;
         }
         
     }
