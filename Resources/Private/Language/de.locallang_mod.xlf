@@ -163,7 +163,7 @@
             </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
-            <trans-unit id="drawitemhook.message">
+            <trans-unit id="previewRenderer.message">
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
                 <target>Die FlexForm des Elementes ist nicht valide und sollte bereinigt werden</target>
             </trans-unit>
@@ -211,6 +211,10 @@
             <trans-unit id="aria.history.togglebutton">
                 <source>Show/hide log messages.</source>
                 <target>Anzeigen/Ausblenden von Lig-Nachrichten.</target>
+            </trans-unit>
+            <trans-unit id="aria.previewRenderer.cleanup">
+                <source>Clean up flexform.</source>
+                <target>Flexform aufräumen.</target>
             </trans-unit>
         </body>
     </file>

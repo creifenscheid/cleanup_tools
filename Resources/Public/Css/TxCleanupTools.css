@@ -110,19 +110,22 @@
   margin-left: 10px;
 }
 
-.cleanup-tools-draw-item-hook .display-flex {
+.cleanup-tools-preview-renderer {
+  margin-top: 2rem;
+}
+.cleanup-tools-preview-renderer .display-flex {
   display: flex;
 }
-.cleanup-tools-draw-item-hook .display-flex.center {
+.cleanup-tools-preview-renderer .display-flex.center {
   justify-content: space-between;
   align-items: center;
 }
-.cleanup-tools-draw-item-hook .alert-cleanuptools {
+.cleanup-tools-preview-renderer .alert-cleanuptools {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
-.cleanup-tools-draw-item-hook .btn-cleanuptools {
+.cleanup-tools-preview-renderer .btn-cleanuptools {
   background-color: white;
   border-color: #f5c6cb;
 }
