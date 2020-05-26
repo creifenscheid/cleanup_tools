@@ -1,0 +1,11 @@
+.. include:: ../../Includes.txt
+
+
+.. _10-0-0:
+
+10.0.0 - 2020/19/04
+==================
+
+Changes
+-------
+No changes - this is the inital release for TYPO3 10.
