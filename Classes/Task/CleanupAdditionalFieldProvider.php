@@ -36,14 +36,6 @@ namespace ChristianReifenscheid\CleanupTools\Task;
  */
 class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
-
-    /**
-     * Service to process
-     *
-     * @var string
-     */
-    protected $serviceToProcess = '';
-
     /**
      * Configuration service
      *
@@ -91,17 +83,17 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     {
         // field id definitions
         $serviceToProcessId =  $this->taskName . 'serviceToProcess';
-        
-        $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
 
         $additionalFields = [];
-
-        // Initialize selected fields
-        if (! isset($taskInfo[$this->cleanupTaskName])) {
-            $taskInfo[$serviceToProcessId] = $this->serviceToProcess;
-            if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-                $taskInfo[$serviceToProcessId] = $task->getServiceToProcess();
-            }
+        
+        $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
+        
+        if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::ADD)) {
+            $taskInfo[$serviceToProcessId] = '';
+        }
+        
+        if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
+            $taskInfo[$serviceToProcessId] = $task->getServiceToProcess();
         }
 
         $fieldName = 'tx_scheduler[' . $serviceToProcessId . ']';
@@ -154,12 +146,9 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     /**
      * Build select field with configured services
      *
-     * @param
-     *            $fieldName
-     * @param
-     *            $fieldId
-     * @param
-     *            $fieldValue
+     * @param   $fieldName
+     * @param   $fieldId
+     * @param   $fieldValue
      *            
      * @return string
      */
@@ -173,8 +162,6 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             $options = [];
             
             foreach ($services as $serviceClass) {
-                    
-                
                 $selected = '';
                 
                 // add attribute "selected" for existing field value

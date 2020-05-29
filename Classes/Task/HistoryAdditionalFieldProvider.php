@@ -36,21 +36,6 @@ namespace ChristianReifenscheid\CleanupTools\Task;
  */
 class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
-
-    /**
-     * Log lifetime
-     *
-     * @var string
-     */
-    protected $logLifetime = '';
-    
-    /**
-     * Drop deleted
-     *
-     * @var bool
-     */
-    protected $dropDeleted = false;
-
     /**
      * Configuration service
      *
@@ -98,29 +83,40 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     {
         // field id definitions
         $logLifetimeId =  $this->taskName . 'logLifetime';
-        
         $dropDeletedId =  $this->taskName . 'dropDeleted';
         
-        $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
-
         $additionalFields = [];
-
-        // Initialize selected fields
-        if (! isset($taskInfo[$this->cleanupTaskName])) {
-            $taskInfo[$serviceToProcessId] = $this->serviceToProcess;
-            if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-                $taskInfo[$serviceToProcessId] = $task->getServiceToProcess();
-            }
+        
+        $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
+        
+        if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::ADD)) {
+            $taskInfo[$logLifetimeId] = '';
+            $taskInfo[$dropDeletedId] = false;
         }
-
-        $fieldName = 'tx_scheduler[' . $serviceToProcessId . ']';
-        $fieldValue = $taskInfo[$serviceToProcessId];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $serviceToProcessId, $fieldValue);
-        $additionalFields[$serviceToProcessId] = [
+        
+        if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
+            $taskInfo[$logLifetimeId] = $task->getLogLifetime();
+            $taskInfo[$dropDeletedId] = $task->getDropDeleted();
+        }
+        
+        $fieldName = 'tx_scheduler[' . $logLifetimeId . ']';
+        $fieldValue = $taskInfo[$logLifetimeId];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $logLifetimeId, $fieldValue);
+        $additionalFields[$logLifetimeId] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.fields.logLifetime',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $serviceToProcessId
+            'cshLabel' => $logLifetimeId
+        ];
+        
+        $fieldName = 'tx_scheduler[' . $dropDeletedId . ']';
+        $checked = $taskInfo[$dropDeletedId] ? 'checked' : '';
+        $fieldHtml = '<input type="checkbox" id="'.$dropDeletedId.'" name="'.$fieldName.'" '.$checked.' value="1" >';
+        $additionalFields[$dropDeletedId] = [
+            'code' => $fieldHtml,
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.fields.dropDeleted',
+            'cshKey' => '_MOD_system_txschedulerM1',
+            'cshLabel' => $dropDeletedId
         ];
 
         return $additionalFields;
@@ -138,13 +134,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule): bool
     {
-        if ($submittedData[$this->taskName . 'serviceToProcess'] && $this->configurationService->getService($submittedData[$this->taskName . 'serviceToProcess'])) {
-            return true;
-        } else {
-            $this->addMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),\TYPO3\CMS\Core\Messaging\FlashMessage::INFO);
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -157,7 +147,8 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
-        $task->setServiceToProcess($submittedData[$this->taskName . 'serviceToProcess']);
+        $task->setLogLifetime($submittedData[$this->taskName . 'logLifetime']);
+        $task->setDropDeleted($submittedData[$this->taskName . 'dropDeleted'] ? : false);
     }
 
     /**
@@ -174,35 +165,27 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue): string
     {
-        $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
-        // loop through all utilities
-        if ($services) {
+        $optionValues = $this->configurationService->getLogLifetimeOptions();
+        if ($optionValues) {
             
             // define option storage
             $options = [];
             
-            foreach ($services as $serviceClass) {
+            foreach ($optionValues as $option) {
                     
-                
                 $selected = '';
                 
                 // add attribute "selected" for existing field value
-                if ($fieldValue === $serviceClass['class']) {
+                if ($fieldValue === $option) {
                     $selected = ' selected="selected"';
                 }
                 
                 // add option to option storage
-                $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
+                $options[] = '<option value="' . $option . '" ' . $selected . '>' . $option . '</option>';
             }
             
             // return html for select field with option groups and options
             return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
-        } else {
-            return '
-                <div>'.\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
-                <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
-            ';
         }
-        
     }
 }

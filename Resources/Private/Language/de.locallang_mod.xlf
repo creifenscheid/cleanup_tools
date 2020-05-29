@@ -161,6 +161,22 @@
                 <source>Configured service:</source>
                 <target>Konfigurierter Service</target>
             </trans-unit>
+            <trans-unit id="tasks.history.title">
+                <source>History cleanup</source>
+                <target>Rückblick-Bereinigung</source>
+            </trans-unit>
+            <trans-unit id="tasks.history.description">
+                <source>With this task log entries older then a defined lifetime can be deleted.</source>
+                <target>Mit diesem Task können Log-Einträge, die älter als ein definierter Zeitraum sind, entfernt werden.</source>
+            </trans-unit>
+            <trans-unit id="tasks.fields.logLifetime">
+                <source>Log lifetime</source>
+                <target>Log-Lebensdauer</source>
+            </trans-unit>
+            <trans-unit id="tasks.fields.dropDeleted">
+                <source>Drop deleted items</source>
+                <target>Entferne gelöschte Log-Einträge</source>
+            </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
             <trans-unit id="previewRenderer.message">

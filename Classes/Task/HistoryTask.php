@@ -55,7 +55,7 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function execute(): bool
     {
-        
+        return true;
     }
 
     /**

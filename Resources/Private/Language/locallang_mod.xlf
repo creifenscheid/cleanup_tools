@@ -125,6 +125,18 @@
             <trans-unit id="tasks.cleanup.information">
                 <source>Configured service:</source>
             </trans-unit>
+            <trans-unit id="tasks.history.title">
+                <source>History cleanup</source>
+            </trans-unit>
+            <trans-unit id="tasks.history.description">
+                <source>With this task log entries older then a defined lifetime can be deleted.</source>
+            </trans-unit>
+            <trans-unit id="tasks.fields.logLifetime">
+                <source>Log lifetime</source>
+            </trans-unit>
+            <trans-unit id="tasks.fields.dropDeleted">
+                <source>Drop deleted items</source>
+            </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
             <trans-unit id="previewRenderer.message">
