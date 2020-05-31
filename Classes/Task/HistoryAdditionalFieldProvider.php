@@ -83,7 +83,6 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     {
         // field id definitions
         $logLifetimeId =  $this->taskName . 'logLifetime';
-        $dropDeletedId =  $this->taskName . 'dropDeleted';
         
         $additionalFields = [];
         
@@ -91,12 +90,10 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
         
         if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::ADD)) {
             $taskInfo[$logLifetimeId] = '';
-            $taskInfo[$dropDeletedId] = false;
         }
         
         if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
             $taskInfo[$logLifetimeId] = $task->getLogLifetime();
-            $taskInfo[$dropDeletedId] = $task->getDropDeleted();
         }
         
         $fieldName = 'tx_scheduler[' . $logLifetimeId . ']';
@@ -107,16 +104,6 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.fields.logLifetime',
             'cshKey' => '_MOD_system_txschedulerM1',
             'cshLabel' => $logLifetimeId
-        ];
-        
-        $fieldName = 'tx_scheduler[' . $dropDeletedId . ']';
-        $checked = $taskInfo[$dropDeletedId] ? 'checked' : '';
-        $fieldHtml = '<input type="checkbox" id="'.$dropDeletedId.'" name="'.$fieldName.'" '.$checked.' value="1" >';
-        $additionalFields[$dropDeletedId] = [
-            'code' => $fieldHtml,
-            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.fields.dropDeleted',
-            'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $dropDeletedId
         ];
 
         return $additionalFields;
@@ -148,7 +135,6 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
         $task->setLogLifetime($submittedData[$this->taskName . 'logLifetime']);
-        $task->setDropDeleted($submittedData[$this->taskName . 'dropDeleted'] ? : false);
     }
 
     /**

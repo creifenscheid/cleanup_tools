@@ -45,13 +45,6 @@ class HistoryController extends BaseController
     protected $logRepository;
 
     /**
-     * LogMessage repository
-     *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository
-     */
-    protected $logMessageRepository;
-
-    /**
      * Inject log repository
      *
      * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
@@ -59,16 +52,6 @@ class HistoryController extends BaseController
     public function injectLogRepository(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
         $this->logRepository = $logRepository;
-    }
-
-    /**
-     * Inject logMesage repository
-     *
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository
-     */
-    public function injectLogMessageRepository(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogMessageRepository $logMessageRepository)
-    {
-        $this->logMessageRepository = $logMessageRepository;
     }
 
     /**
@@ -97,31 +80,14 @@ class HistoryController extends BaseController
      *
      * @param string $logLifetime
      *            - Mark all entries with a >crdate as deleted
+     *
+     * @return void
      */
     public function cleanupAction(string $logLifetime): void
     {
-        // create timestamp of log lifetime
-        $logLifetime = strtotime('-' . $logLifetime);
-
-        // get all logs older then
-        $logsToDelete = $this->logRepository->findOlderThen($logLifetime);
-
-        // mark log as deleted
-        if ($logsToDelete) {
-            foreach ($logsToDelete as $logToDelete) {
-                $this->logRepository->remove($logToDelete);
-            }
-        }
-
-        // get all log messagess older then
-        $logMessagesToDelete = $this->logMessageRepository->findOlderThen($logLifetime);
-
-        // mark log messages as deleted
-        if ($logMessagesToDelete) {
-            foreach ($logMessagesToDelete as $logMessageToDelete) {
-                $this->logMessageRepository->remove($logMessageToDelete);
-            }
-        }
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        
+        $cleanupService->processHistoryCleanup($logLifetime);
 
         $this->redirect('index', 'History', 'CleanupTools');
     }

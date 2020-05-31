@@ -42,11 +42,6 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     protected $logLifetime = '';
     
     /**
-     * @var bool
-     */
-    protected $dropDeleted = false;
-
-    /**
      * Execute function
      *
      * @return bool
@@ -55,7 +50,9 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function execute(): bool
     {
-        return true;
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        
+        return $cleanupService->processHistoryCleanup($this->logLifetime);
     }
 
     /**
@@ -78,27 +75,5 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function setLogLifetime (string $logLifetime): void
     {
         $this->logLifetime = $logLifetime;
-    }
-    
-    /**
-     * Returns if deleted records shall be dropped
-     *
-     * @return bool
-     */
-    public function getDropDeleted(): bool
-    {
-        return $this->dropDeleted;
-    }
-
-    /**
-     * Sets if deleted records shall be dropped
-     *
-     * @param bool $dropDeleted
-     *
-     * @return void
-     */
-    public function setDropDeleted (bool $dropDeleted): void
-    {
-        $this->dropDeleted = $dropDeleted;
     }
 }

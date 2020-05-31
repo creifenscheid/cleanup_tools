@@ -173,10 +173,6 @@
                 <source>Log lifetime</source>
                 <target>Log-Lebensdauer</source>
             </trans-unit>
-            <trans-unit id="tasks.fields.dropDeleted">
-                <source>Drop deleted items</source>
-                <target>Entferne gelöschte Log-Einträge</source>
-            </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
             <trans-unit id="previewRenderer.message">

@@ -245,4 +245,30 @@ class CleanupService
 
         return $return;
     }
+    
+    /**
+     * Deleted log entries
+    *
+    * @param string $logLifetime
+    *
+    * @return bool
+    */
+    public function processHistoryCleanup(string $logLifetime) : bool
+    {
+        // init log repository
+        $logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+    
+        // create timestamp of log lifetime
+        $logLifetime = strtotime('-' . $logLifetime);
+
+        // get all logs older then
+        $logsToDelete = $logRepository->findOlderThen($logLifetime);
+
+        // mark log as deleted
+        if ($logsToDelete) {
+            foreach ($logsToDelete as $logToDelete) {
+                $logRepository->remove($logToDelete);
+            }
+        }
+    }
 }
