@@ -162,10 +162,10 @@ class CleanupService
     public function process(string $class, string $method, array $parameters = null)
     {
         // init service
-        $service = $this->objectManager->get($class);
+        $service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($class);
 
         // write log
-        $log = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
+        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
         $log->setCrdate(time());
 
         if ($GLOBALS['BE_USER']->user['uid']) {
@@ -240,7 +240,7 @@ class CleanupService
         $this->logRepository->add($service->getLog());
 
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
-        $persistenceManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
         $persistenceManager->persistAll();
 
         return $return;
@@ -255,8 +255,9 @@ class CleanupService
     */
     public function processHistoryCleanup(string $logLifetime) : bool
     {
+        
         // init log repository
-        $logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+        $logRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
     
         // create timestamp of log lifetime
         $logLifetime = strtotime('-' . $logLifetime);
@@ -270,5 +271,11 @@ class CleanupService
                 $logRepository->remove($logToDelete);
             }
         }
+        
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
+        $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+        $persistenceManager->persistAll();
+        
+        return true;
     }
 }

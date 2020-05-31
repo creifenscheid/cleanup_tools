@@ -157,7 +157,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
             // define option storage
             $options = [];
             
-            foreach ($optionValues as $option) {
+            foreach ($optionValues as $label => $option) {
                     
                 $selected = '';
                 
@@ -167,7 +167,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 }
                 
                 // add option to option storage
-                $options[] = '<option value="' . $option . '" ' . $selected . '>' . $option . '</option>';
+                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':module.history.cleanupForm.label.logLiftime.'.$label, 'CleanupTools') . '</option>';
             }
             
             // return html for select field with option groups and options
