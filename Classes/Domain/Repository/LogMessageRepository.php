@@ -37,4 +37,3 @@ namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 class LogMessageRepository extends BaseRepository
 {
 }
-

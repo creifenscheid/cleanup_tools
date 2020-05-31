@@ -42,3 +42,9 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\ChristianReifen
     'description' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.description',
     'additionalFields' => \ChristianReifenscheid\CleanupTools\Task\CleanupAdditionalFieldProvider::class
 ];
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\ChristianReifenscheid\CleanupTools\Task\HistoryTask::class] = [
+    'extension' => 'cleanup_tools',
+    'title' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.history.title',
+    'description' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.history.description',
+    'additionalFields' => \ChristianReifenscheid\CleanupTools\Task\HistoryAdditionalFieldProvider::class
+];

@@ -29,12 +29,12 @@ namespace ChristianReifenscheid\CleanupTools\Task;
  */
 
 /**
- * Class CleanupAdditionalFieldProvider
+ * Class HistoryAdditionalFieldProvider
  *
  * @package ChristianReifenscheid\CleanupTools\Task
  * @author Christian Reifenscheid
  */
-class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
+class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
     /**
      * Configuration service
@@ -48,7 +48,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      *
      * @var string
      */
-    protected $taskName = 'cleanuptools_cleanuptask_';
+    protected $taskName = 'cleanuptools_historytask_';
 
     /**
      * Localization file
@@ -82,28 +82,28 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule)
     {
         // field id definitions
-        $serviceToProcessId =  $this->taskName . 'serviceToProcess';
-
+        $logLifetimeId =  $this->taskName . 'logLifetime';
+        
         $additionalFields = [];
         
         $currentSchedulerModuleMethod = $schedulerModule->getCurrentAction();
         
         if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::ADD)) {
-            $taskInfo[$serviceToProcessId] = '';
+            $taskInfo[$logLifetimeId] = '';
         }
         
         if ($currentSchedulerModuleMethod->equals(\TYPO3\CMS\Scheduler\Task\Enumeration\Action::EDIT)) {
-            $taskInfo[$serviceToProcessId] = $task->getServiceToProcess();
+            $taskInfo[$logLifetimeId] = $task->getLogLifetime();
         }
-
-        $fieldName = 'tx_scheduler[' . $serviceToProcessId . ']';
-        $fieldValue = $taskInfo[$serviceToProcessId];
-        $fieldHtml = $this->buildResourceSelector($fieldName, $serviceToProcessId, $fieldValue);
-        $additionalFields[$serviceToProcessId] = [
+        
+        $fieldName = 'tx_scheduler[' . $logLifetimeId . ']';
+        $fieldValue = $taskInfo[$logLifetimeId];
+        $fieldHtml = $this->buildResourceSelector($fieldName, $logLifetimeId, $fieldValue);
+        $additionalFields[$logLifetimeId] = [
             'code' => $fieldHtml,
-            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.fields.serviceToProcess',
+            'label' => 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.fields.logLifetime',
             'cshKey' => '_MOD_system_txschedulerM1',
-            'cshLabel' => $serviceToProcessId
+            'cshLabel' => $logLifetimeId
         ];
 
         return $additionalFields;
@@ -121,13 +121,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $schedulerModule): bool
     {
-        if ($submittedData[$this->taskName . 'serviceToProcess'] && $this->configurationService->getService($submittedData[$this->taskName . 'serviceToProcess'])) {
-            return true;
-        } else {
-            $this->addMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools'),\TYPO3\CMS\Core\Messaging\FlashMessage::INFO);
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -140,47 +134,44 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
      */
     public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
     {
-        $task->setServiceToProcess($submittedData[$this->taskName . 'serviceToProcess']);
+        $task->setLogLifetime($submittedData[$this->taskName . 'logLifetime']);
     }
 
     /**
      * Build select field with configured services
      *
-     * @param   $fieldName
-     * @param   $fieldId
-     * @param   $fieldValue
+     * @param
+     *            $fieldName
+     * @param
+     *            $fieldId
+     * @param
+     *            $fieldValue
      *            
      * @return string
      */
     private function buildResourceSelector($fieldName, $fieldId, $fieldValue): string
     {
-        $services = $this->configurationService->getServicesByAdditionalUsage('schedulerTask');
-        // loop through all utilities
-        if ($services) {
+        $optionValues = $this->configurationService->getLogLifetimeOptions();
+        if ($optionValues) {
             
             // define option storage
             $options = [];
             
-            foreach ($services as $serviceClass) {
+            foreach ($optionValues as $label => $option) {
+                    
                 $selected = '';
                 
                 // add attribute "selected" for existing field value
-                if ($fieldValue === $serviceClass['class']) {
+                if ($fieldValue === $option) {
                     $selected = ' selected="selected"';
                 }
                 
                 // add option to option storage
-                $options[] = '<option value="' . $serviceClass['class'] . '" ' . $selected . '>' . $serviceClass['class'] . '</option>';
+                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':module.history.cleanupForm.label.logLiftime.'.$label, 'CleanupTools') . '</option>';
             }
             
             // return html for select field with option groups and options
             return '<select class="form-control" name="' . $fieldName . '" id="' . $fieldId . '">' . implode('', $options) . '</select>';
-        } else {
-            return '
-                <div>'.\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.error.noServices', 'CleanupTools').'</div>
-                <input type="hidden" id="' . $fieldId . '" name="' . $fieldName . '" value="" />
-            ';
         }
-        
     }
 }
