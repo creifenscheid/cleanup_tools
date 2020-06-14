@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  ChristianReifenscheid\CleanupTools\:
+    resource: '../Classes/*'
+
+  widgets.dashboard.widget.cleanupInformation:
+    class: 'ChristianReifenscheid\CleanupTools\Widgets\CleanupInformationWidget'
+    arguments:
+      $view: '@dashboard.views.widget'
+      $options:
+        template: 'Widget/CleanupInformation'
+    tags:
+      - name: dashboard.widget
+        identifier: 'widgets-cleanupInformation'
+        groupNames: 'systemInfo'
+        title: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:dashboard.widget.cleanupinformation.title'
+        description: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:dashboard.widget.cleanupinformation.description'
+        iconIdentifier: 'tx-cleanuptools-widget-icon'
+        height: 'medium'
+        width: 'medium'

@@ -140,6 +140,14 @@
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
             </trans-unit>
 
+            <!-- DASHBOARD -->
+            <trans-unit id="dashboard.widget.cleanupinformation.title">
+                <source>Cleanup information</source>
+            </trans-unit>
+            <trans-unit id="dashboard.widget.cleanupinformation.description">
+                <source>Shows information in which points your typo3 installation can be cleaned up.</source>
+            </trans-unit>
+
             <!-- FLASH MESSAGES -->
             <trans-unit id="messages.fallback.headline">
                 <source>Cleanup Tools says</source>
