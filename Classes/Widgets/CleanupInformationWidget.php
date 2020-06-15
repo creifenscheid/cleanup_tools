@@ -85,8 +85,9 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
     public function renderWidgetContent(): string
     {
         $this->view->setTemplate($this->options['template']);
+        
         $this->view->assignMultiple([
-            'test' => 'content'
+            'localizationFile' => getLocalizationFile()
         ]);
         
         return $this->view->render();
