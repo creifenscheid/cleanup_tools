@@ -166,13 +166,13 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     {
         $view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
         $view->setLayoutRootPaths([
-            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Layouts'
+            'EXT:cleanup_tools/Resources/Private/ToolbarItems/Layouts'
         ]);
         $view->setPartialRootPaths([
-            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Partials'
+            'EXT:cleanup_tools/Resources/Private/ToolbarItems/Partials'
         ]);
         $view->setTemplateRootPaths([
-            'EXT:cleanup_tools/Resources/Private/Backend/ToolbarItems/Templates'
+            'EXT:cleanup_tools/Resources/Private/ToolbarItems/Templates'
         ]);
         $view->setTemplate($filename);
 

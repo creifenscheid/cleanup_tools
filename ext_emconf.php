@@ -35,7 +35,13 @@ $EM_CONF[$_EXTKEY] = [
     'state' => 'alpha',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-10.4.99'
+            'typo3' => '10.4.0-10.4.99',
+            'dashboard' => '10.4.0 - 10.4.99'
+        ]
+    ],
+    'autoload' => [
+        'psr-4' => [
+            'ChristianReifenscheid\\CleanupTools\\' => 'Classes'
         ]
     ]
 ];

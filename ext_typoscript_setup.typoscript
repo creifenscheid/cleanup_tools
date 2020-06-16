@@ -1,8 +1,8 @@
 module.tx_cleanuptools {
     view {
-        templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Templates/
-        partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Partials/
-        layoutRootPaths.0 = EXT:cleanup_tools/Resources/Private/Backend/Layouts/
+        templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Templates/
+        partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Partials/
+        layoutRootPaths.0 = EXT:cleanup_tools/Resources/Private/Layouts/
     }
 
     settings {
@@ -13,7 +13,7 @@ module.tx_cleanuptools {
 
     services {
         ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService {
-	        enable = 1
+	        enable = 1 
 	        additionalUsage {
 	            schedulerTask = 1
 	            toolbar = 1

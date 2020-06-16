@@ -20,6 +20,9 @@
             <trans-unit id="tx_cleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
+            <trans-unit id="tx_cleanuptools.general.executioncontext.5">
+                <source>Dashboard widget</source>
+            </trans-unit>
 
             <!-- STATES -->
             <trans-unit id="tx_cleanuptools.general.state.error">
@@ -138,6 +141,14 @@
             <!-- DRAW ITEM HOOK -->
             <trans-unit id="previewRenderer.message">
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
+            </trans-unit>
+
+            <!-- DASHBOARD -->
+            <trans-unit id="dashboard.widget.cleanupinformation.title">
+                <source>Cleanup information</source>
+            </trans-unit>
+            <trans-unit id="dashboard.widget.cleanupinformation.description">
+                <source>Shows information in which points your typo3 installation can be cleaned up.</source>
             </trans-unit>
 
             <!-- FLASH MESSAGES -->
