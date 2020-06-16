@@ -47,12 +47,26 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
     /**
      * @var \TYPO3\CMS\Fluid\View\StandaloneView
      */
-    private $view;
+    private $view; 
 
     /**
      * @var array
      */
     private $options;
+    
+    /**
+     * Configuration service
+     * 
+     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     */
+    private $configuationService;
+
+    /**
+     * Cleanup service
+     * 
+     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
+     */
+    private $cleanupService;
 
     /**
      * Constructor
@@ -74,6 +88,9 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
             ],
             $options
         );
+        
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
     }
 
     /**
@@ -84,10 +101,25 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      */
     public function renderWidgetContent(): string
     {
+        // define array to store results from processing services
+        $cleanupStates = [];
+        
         $this->view->setTemplate($this->options['template']);
         
+        $services = $this->configurationService->getServices();
+        
+        $this->cleanupService->setDryRun(false);
+        
+        foreach ($services as $service) {
+            
+            $returnMessage = $this->cleanupService->process($service['class'],$configurationService::FUNCTION_MAIN));
+            
+            
+        }
+        
         $this->view->assignMultiple([
-            'localizationFile' => getLocalizationFile()
+            'localizationFile' => $this->configurationService->getLocalizationFile(),
+            'cleanupStates' => $cleanupStates
         ]);
         
         return $this->view->render();
