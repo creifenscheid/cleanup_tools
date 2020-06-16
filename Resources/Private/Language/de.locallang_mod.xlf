@@ -25,6 +25,10 @@
                 <source>After database operation</source>
                 <target>DB-Hook</target>
             </trans-unit>
+            <trans-unit id="tx_cleanuptools.general.executioncontext.5">
+                <source>Dashboard widget</source>
+                <target>Dashboard-Widget</target>
+            </trans-unit>
 
             <!-- STATES -->
             <trans-unit id="tx_cleanuptools.general.state.error">

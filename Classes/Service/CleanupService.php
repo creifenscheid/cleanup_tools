@@ -47,8 +47,10 @@ class CleanupService
     const EXECUTION_CONTEXT_SCHEDULER = 2;
 
     const EXECUTION_CONTEXT_PREVIEWRENDERER = 3;
-
+    
     const EXECUTION_CONTEXT_DBHOOK = 4;
+    
+    const EXECUTION_CONTEXT_DASHBOARD = 5;
 
     // Execution mode
     const USE_CLASS_PROPERTIES = 0;

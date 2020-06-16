@@ -8,5 +8,15 @@
 
 <f:section name="main">
 
+	<div class="widget-table-wrapper">
+        <table class="widget-table">
+            <f:for each="{items}" as="item">
+                <tr>
+                    <td><strong>{item.name}:</strong></td><td>{item.information}</td>
+                </tr>
+            </f:for>
+        </table>
+    </div>
+
 </f:section>
 </html>

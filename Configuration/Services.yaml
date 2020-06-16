@@ -10,6 +10,7 @@ services:
   widgets.dashboard.widget.cleanupInformation:
     class: 'ChristianReifenscheid\CleanupTools\Widgets\CleanupInformationWidget'
     arguments:
+      $dataProvider: '@ChristianReifenscheid\CleanupTools\Widgets\Provider\CleanupServicesDataProvider'
       $view: '@dashboard.views.widget'
       $options:
         template: 'Widget/CleanupInformation'

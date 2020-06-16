@@ -20,6 +20,9 @@
             <trans-unit id="tx_cleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
+            <trans-unit id="tx_cleanuptools.general.executioncontext.5">
+                <source>Dashboard widget</source>
+            </trans-unit>
 
             <!-- STATES -->
             <trans-unit id="tx_cleanuptools.general.state.error">

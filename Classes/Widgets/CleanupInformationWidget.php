@@ -43,6 +43,11 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      * @var \TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface
      */
     private $configuration;
+    
+    /**
+     * @var \TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface
+     */
+    private $dataProvider;
 
     /**
      * @var \TYPO3\CMS\Fluid\View\StandaloneView
@@ -77,10 +82,12 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      */
     public function __construct(
         \TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface $configuration,
+        \TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface $dataProvider,
         \TYPO3\CMS\Fluid\View\StandaloneView $view,
         array $options = []
     ) {
         $this->configuration = $configuration;
+        $this->dataProvider = $dataProvider;
         $this->view = $view;
         $this->options = array_merge(
             [
@@ -101,27 +108,14 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      */
     public function renderWidgetContent(): string
     {
-        // define array to store results from processing services
-        $cleanupStates = [];
-        
+        // set template
         $this->view->setTemplate($this->options['template']);
         
-        $services = $this->configurationService->getServices();
-        
-        $this->cleanupService->setDryRun(false);
-        
-        foreach ($services as $service) {
-            
-            $returnMessage = $this->cleanupService->process($service['class'],$configurationService::FUNCTION_MAIN));
-            
-            
-        }
-        
         $this->view->assignMultiple([
-            'localizationFile' => $this->configurationService->getLocalizationFile(),
-            'cleanupStates' => $cleanupStates
+            'items' => $this->dataProvider->getItems()
         ]);
         
+        // render widget
         return $this->view->render();
     }
 }
