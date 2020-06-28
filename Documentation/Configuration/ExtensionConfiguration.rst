@@ -54,13 +54,13 @@ enableAfterDatabaseOperationsHook
     Description
          Clean up flexform of a content element after database operations
 
-enableDrawItemHook
+enablePreviewRenderer
 """"""""""""""""""
 
 .. container:: table-row
 
     Property
-         enableDrawItemHook
+         enablePreviewRenderer
 
     Data type
          boolean (default: true)

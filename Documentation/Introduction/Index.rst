@@ -22,6 +22,7 @@ It provides the following features:
 * scheduler task
 * preview renderer to run cleanFlexFormsService
 * afterDatabaseOperations hook to run cleanFlexFormsService
+* dashboard widget with dry run results of all configured services
 
 Cleanup services are registered in typoscript.
 Therefor it is possible to extend the extension with your own services easily.

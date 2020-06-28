@@ -1,7 +1,7 @@
 .. include:: ../Includes.txt
 
 
-.. _wahtsnext:
+.. _whatsnext:
 
 ============
 What's next
@@ -14,5 +14,4 @@ A list of planned features for future releases:
 
 * Backup and Restore cleaned up entries
 * Configurable hooks
-* Scheduler task to clean up history module
 * Transforming toolbar into an info module

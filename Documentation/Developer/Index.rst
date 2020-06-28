@@ -20,7 +20,7 @@ What you get:
 * class var $dryRun (default: true)
 * class var $log
 * method addMessage() to create a log message which is added to the log entry of each run
-* method addLLLMessage() to create a log messsge based on a localization key
+* method addLLLMessage() to create a log message based on a localization key
 
 2. Set up required execute function with your needs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,7 +41,7 @@ This can be easly done by using the method "createFlashMessage()".
 You can set the severity level, a message and a headline.
 All these are optional, by default a success message is created.
 
-On calling a cleanup service, a log entity is created and passed automatically to the called service.
+On calling a cleanup service, a log entity is created and passed automatically to the called service if it's not processed in dry run mode.
 With the following methods, log messages can be added to the log:
 
 * addMessage(string $message) - adds a log message with the given message to the log
