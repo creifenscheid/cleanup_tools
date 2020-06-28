@@ -79,7 +79,26 @@ abstract class AbstractCleanupService
      */
     public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
     {
-        return $this->log;
+        // if a log exists, return
+        if ($this->log) {
+            return $this->log;
+        }
+        
+        // else return new log object
+        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
+        
+        // set creation time
+        $log->setCrdate(time());
+
+        // set be user if logged in
+        if ($GLOBALS['BE_USER']->user['uid']) {
+            $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+        }
+        
+        // set new log object
+        $this->setLog($log);
+        
+        return $log;
     }
 
     /**
@@ -110,13 +129,18 @@ abstract class AbstractCleanupService
     protected function addMessage(string $message): void
     {
         if (!$this->dryRun) {
+            $log = $this->getLog();
+        
             // create new message
             $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
-            $newLogMessage->setLog($this->log);
+            $newLogMessage->setLog($log);
             $newLogMessage->setMessage($message);
 
             // add message to log
-            $this->log->addMessage($newLogMessage);
+            $log->addMessage($newLogMessage);
+            
+            // save log
+            $this->setLog($log);
         }
     }
 
@@ -129,10 +153,12 @@ abstract class AbstractCleanupService
     protected function addLLLMessage(string $key, array $arguments = null): void
     {
         if (!$this->dryRun) {
+            $log = $this->getLog();
+        
             // create new message
             $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
         
-            $newLogMessage->setLog($this->log);
+            $newLogMessage->setLog($log);
             $newLogMessage->setLocalLangKey($key);
 
             if ($arguments) {
@@ -140,7 +166,10 @@ abstract class AbstractCleanupService
             }
 
             // add message to log
-            $this->log->addMessage($newLogMessage);
+            $log->addMessage($newLogMessage);
+            
+            // save log
+            $this->setLog($log);
         }
     }
 

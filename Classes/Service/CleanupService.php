@@ -166,37 +166,19 @@ class CleanupService
         // init service
         $service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($class);
 
-        // write log if it's not a dry run
-        if (!$this->dryRun) {
-            $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
-            $log->setCrdate(time());
-
-            if ($GLOBALS['BE_USER']->user['uid']) {
-                $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
-            }
-
-            $log->setExecutionContext($this->executionContext);
-            $log->setService($class);
-
-            if ($parameters) {
-                $log->setParameters($parameters);
-            }
-
-            // set log in service
-            $service->setLog($log);
-        }
-
         // if parameter are given
         if ($parameters) {
 
             if ($this->executionMode === self::USE_METHOD_PROPERTIES) {
+            
                 // call method with parameter
                 $return = call_user_func_array([
                     $service,
                     $method
                 ], $parameters);
             } else {
-                // flag to handle if method can be run
+            
+                // flag to handle if method can be run - gets false if a property can't be set by setter function
                 $runMethod = true;
                 
                 // set parameter
@@ -207,18 +189,18 @@ class CleanupService
                         $service->$setter($value);
                     } else {
                         
+                        $headline = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.fallback.headline', 'CleanupTools');
+                        
                         $message = 'No setter function for property ' . $parameter . ' existing.';
                         
-                        // create new message
-                        $newLogMessage = new \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage();
-                        $newLogMessage->setLog($log);
-                        $newLogMessage->setMessage($message);
+                        // define return flash message
+                        $return = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessage::class, $message, $headline, \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR);
                         
-                        // add message to log
-                        $log->addMessage($newLogMessage);
-                        
-                        $return = false;
+                        // disable method processing
                         $runMethod = false;
+                        
+                        // stop setter check
+                        break;
                     }
                 }
                 
@@ -235,14 +217,37 @@ class CleanupService
             // call method
             $return = $service->$method();
         }
-
-        if (! $return || ($return instanceof \TYPO3\CMS\Core\Messaging\FlashMessage && $return->getSeverity() === \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR)) {
-            $log->setState(false);
-        }
-
-        // get updated log from service and add to repository
+        
         if (!$this->dryRun) {
-            $this->logRepository->add($service->getLog());
+            // get updated log from service
+            $log = $service->getLog();
+
+            // set process result state
+            if (! $return || ($return instanceof \TYPO3\CMS\Core\Messaging\FlashMessage && $return->getSeverity() === \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR)) {
+                $log->setState(false);
+                
+                // if message is defined during process preparation
+                if ($message) {
+                    // create new log message
+                    $newLogMessage = new \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage();
+                    $newLogMessage->setLog($log);
+                    $newLogMessage->setMessage($message);
+                }
+            }
+            
+            // set execution context
+            $log->setExecutionContext($this->executionContext);
+            
+            // set processed class
+            $log->setService($class);
+
+            // set parameters if given
+            if ($parameters) {
+                $log->setParameters($parameters);
+            }
+            
+            // add to repository
+            $this->logRepository->add($log);
         }
 
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
