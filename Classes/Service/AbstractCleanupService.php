@@ -109,15 +109,15 @@ abstract class AbstractCleanupService
      */
     protected function addMessage(string $message): void
     {
-        // create new message
-        // todo: del if objectmngr wrks
-        //$newLogMessage = new LogMessage();
-        $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
-        $newLogMessage->setLog($this->log);
-        $newLogMessage->setMessage($message);
+        if (!$this->dryRun) {
+            // create new message
+            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+            $newLogMessage->setLog($this->log);
+            $newLogMessage->setMessage($message);
 
-        // add message to log
-        $this->log->addMessage($newLogMessage);
+            // add message to log
+            $this->log->addMessage($newLogMessage);
+        }
     }
 
     /**
@@ -128,20 +128,20 @@ abstract class AbstractCleanupService
      */
     protected function addLLLMessage(string $key, array $arguments = null): void
     {
-        // create new message
-        // todo: del if objectmngr wrks
-        //$newLogMessage = new LogMessage();
-        $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+        if (!$this->dryRun) {
+            // create new message
+            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
         
-        $newLogMessage->setLog($this->log);
-        $newLogMessage->setLocalLangKey($key);
+            $newLogMessage->setLog($this->log);
+            $newLogMessage->setLocalLangKey($key);
 
-        if ($arguments) {
-            $newLogMessage->setLocalLangArguments($arguments);
+            if ($arguments) {
+                $newLogMessage->setLocalLangArguments($arguments);
+            }
+
+            // add message to log
+            $this->log->addMessage($newLogMessage);
         }
-
-        // add message to log
-        $this->log->addMessage($newLogMessage);
     }
 
     /**

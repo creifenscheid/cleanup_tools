@@ -166,23 +166,25 @@ class CleanupService
         // init service
         $service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($class);
 
-        // write log
-        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
-        $log->setCrdate(time());
+        // write log if it's not a dry run
+        if (!$this->dryRun) {
+            $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
+            $log->setCrdate(time());
 
-        if ($GLOBALS['BE_USER']->user['uid']) {
-            $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+            if ($GLOBALS['BE_USER']->user['uid']) {
+                $log->setCruserId($GLOBALS['BE_USER']->user['uid']);
+            }
+
+            $log->setExecutionContext($this->executionContext);
+            $log->setService($class);
+
+            if ($parameters) {
+                $log->setParameters($parameters);
+            }
+
+            // set log in service
+            $service->setLog($log);
         }
-
-        $log->setExecutionContext($this->executionContext);
-        $log->setService($class);
-
-        if ($parameters) {
-            $log->setParameters($parameters);
-        }
-
-        // set log in service
-        $service->setLog($log);
 
         // if parameter are given
         if ($parameters) {
@@ -239,7 +241,9 @@ class CleanupService
         }
 
         // get updated log from service and add to repository
-        $this->logRepository->add($service->getLog());
+        if (!$this->dryRun) {
+            $this->logRepository->add($service->getLog());
+        }
 
         /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
         $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
