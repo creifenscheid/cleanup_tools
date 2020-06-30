@@ -86,13 +86,6 @@ class CleanupService
     protected $configurationService;
 
     /**
-     * Object manager
-     *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * Log repository
      *
      * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
@@ -101,17 +94,17 @@ class CleanupService
 
     /**
      * Constructor
+     *
+     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct()
+    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        // init object manager
-        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-
         // init configuration service
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConfigurationService::class);
+        $this->configurationService = $configurationService;
 
         // init log repository
-        $this->logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+        $this->logRepository = $logRepository;
     }
 
     /**

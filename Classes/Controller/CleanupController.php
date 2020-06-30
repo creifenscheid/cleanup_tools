@@ -45,11 +45,13 @@ class CleanupController extends BaseController
 
     /**
      * Constructor
+     *
+     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
      */
-    public function __construct()
+    public function __construct(\ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
         parent::__construct();
-        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        $this->cleanupService = $cleanupService;
         $this->cleanupService->setExecutionContext(\ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 

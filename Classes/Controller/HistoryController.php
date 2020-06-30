@@ -43,14 +43,15 @@ class HistoryController extends BaseController
      * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
-
+    
     /**
-     * Inject log repository
+     * Constructor
      *
      * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function injectLogRepository(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
+        parent::__construct();
         $this->logRepository = $logRepository;
     }
 

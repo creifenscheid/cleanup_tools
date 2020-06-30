@@ -58,12 +58,14 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $localizationFile = '';
 
     /**
-     * CleanupAdditionalFieldProvider constructor.
+     * HistoryAdditionalFieldProvider constructor.
+     *
+     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct()
+    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         // init configurationService
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $this->configurationService = $configurationService;
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 

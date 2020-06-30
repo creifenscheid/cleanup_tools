@@ -52,18 +52,14 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     /**
      * CleanupToolbarItem constructor.
      *
+     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder
+     *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function __construct()
+    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder)
     {
-
-        /** @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
-
         $this->localizationFile = $configurationService->getLocalizationFile();
-
-        /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
-        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
 
         $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 

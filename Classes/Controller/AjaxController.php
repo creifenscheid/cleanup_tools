@@ -60,11 +60,14 @@ class AjaxController
 
     /**
      * Constructor
+     *
+     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct()
+    public function __construct(\ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService, \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
-        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $this->cleanupService = $cleanupService;
+        $this->configurationService = $configurationService;
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 

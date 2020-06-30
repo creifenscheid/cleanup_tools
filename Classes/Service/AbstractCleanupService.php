@@ -114,11 +114,13 @@ abstract class AbstractCleanupService
     
     /**
      * Constructor
+     *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
      */
-    public function __construct()
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager)
     {
         // init object manager
-        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        $this->objectManager = $objectManager;
     }
 
     /**

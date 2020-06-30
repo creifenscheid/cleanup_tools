@@ -90,29 +90,20 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * @var array
      */
     protected $logLifetimeOptions = [];
-    
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     */
-    protected $objectManager;
 
     /**
      * Constructor
+     *
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
+     * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
+     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct()
+    public function __construct(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        // init object manager
-        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-
-        // init configurationManager
-        $configurationManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager::class);
         $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
-        // init typoscript service
-        $typoscriptService = $this->objectManager->get(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
-
         // init log repository
-        $this->logRepository = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+        $this->logRepository = $logRepository;
 
         // get module configuration
         $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);

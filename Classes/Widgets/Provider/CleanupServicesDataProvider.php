@@ -47,6 +47,12 @@ class CleanupServicesDataProvider implements \TYPO3\CMS\Dashboard\Widgets\ListDa
      */
     private $cleanupService;
     
+    /**
+     * Constructor
+     *
+     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     */
     public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
         $this->configurationService = $configurationService;
