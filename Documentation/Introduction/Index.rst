@@ -72,6 +72,20 @@ LostFilesService
     Source
          \\TYPO3\\CMS\\Lowlevel\\Command\LostFilesCommand::class
          
+MissingFilesService
+~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         MissingFilesService
+
+    Description
+          Find all file references from records pointing to a missing (non-existing) file
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\MissingFilesCommand::class
+         
 OrphanRecordsService
 ~~~~~~~~~~~~~~~~~~~~~
 
