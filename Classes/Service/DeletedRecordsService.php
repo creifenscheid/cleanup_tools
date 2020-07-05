@@ -229,8 +229,10 @@ class DeletedRecordsService extends AbstractCleanupService
      *
      * @param array $deletedRecords
      *            two level array with tables and uids
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function deleteRecords(array $deletedRecords)
+    protected function deleteRecords(array $deletedRecords) : \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // Putting "pages" table in the bottom
         if (isset($deletedRecords['pages'])) {

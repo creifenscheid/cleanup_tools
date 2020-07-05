@@ -80,10 +80,6 @@ class OrphanRecordsService extends AbstractCleanupService
                 while ($orphanRecord = $result->fetch()) {
                     $orphans[$tableName][$orphanRecord['uid']] = $orphanRecord['uid'];
                 }
-
-                if (count($orphans[$tableName])) {
-                    $io->note('Found ' . count($orphans[$tableName]) . ' orphan records in table "' . $tableName . '" with following ids: ' . implode(', ', $orphans[$tableName]));
-                }
             }
         }
 
@@ -189,8 +185,10 @@ class OrphanRecordsService extends AbstractCleanupService
      *
      * @param array $orphanedRecords
      *            two level array with tables and uids
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function deleteRecords(array $orphanedRecords)
+    protected function deleteRecords(array $orphanedRecords) : \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // Putting "pages" table in the bottom
         if (isset($orphanedRecords['pages'])) {

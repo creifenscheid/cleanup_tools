@@ -230,8 +230,10 @@ class LostFilesService extends AbstractCleanupService
      *
      * @param array $lostFiles
      *            Contains the lost files found
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function deleteLostFiles(array $lostFiles)
+    protected function deleteLostFiles(array $lostFiles) : \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // error counter
         $errors = 0;
