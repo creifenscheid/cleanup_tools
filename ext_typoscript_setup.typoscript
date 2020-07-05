@@ -31,7 +31,15 @@ module.tx_cleanuptools {
 		ChristianReifenscheid\CleanupTools\Service\LostFilesService {
 	        enable = 1
 	        additionalUsage {
-	            schedulerTask = 0
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+		} 
+	        
+		ChristianReifenscheid\CleanupTools\Service\MissingFilesService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
 	            toolbar = 1
 	        }
 		}
