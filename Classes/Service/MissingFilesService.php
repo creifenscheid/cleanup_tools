@@ -3,18 +3,6 @@
 declare(strict_types=1);
 namespace ChristianReifenscheid\CleanupTools\Service;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Backend\Command\ProgressListener\ReferenceIndexProgressListener;
-use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\ReferenceIndex;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * *************************************************************
  *
@@ -142,7 +130,7 @@ class MissingFilesService extends AbstractCleanupService
     {
         $missingReferences = [];
         // Select all files in the reference table
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
             ->getQueryBuilderForTable('sys_refindex');
 
         $result = $queryBuilder
@@ -157,7 +145,7 @@ class MissingFilesService extends AbstractCleanupService
         // Traverse the references and check if the files exists
         while ($record = $result->fetch()) {
             $fileName = $this->getFileNameWithoutAnchor($record['ref_string']);
-            if (empty($record['softref_key']) && !@is_file(Environment::getPublicPath() . '/' . $fileName)) {
+            if (empty($record['softref_key']) && !@is_file(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/' . $fileName)) {
                 $missingReferences[$fileName][$record['hash']] = $this->formatReferenceIndexEntryToString($record);
             }
         }
@@ -175,7 +163,7 @@ class MissingFilesService extends AbstractCleanupService
     {
         $missingReferences = [];
         // Select all files in the reference table
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
             ->getQueryBuilderForTable('sys_refindex');
 
         $result = $queryBuilder
@@ -190,7 +178,7 @@ class MissingFilesService extends AbstractCleanupService
         // Traverse the references and check if the files exists
         while ($record = $result->fetch()) {
             $fileName = $this->getFileNameWithoutAnchor($record['ref_string']);
-            if (!@is_file(Environment::getPublicPath() . '/' . $fileName)) {
+            if (!@is_file(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/' . $fileName)) {
                 $missingReferences[] = $fileName . ' - ' . $record['hash'] . ' - ' . $this->formatReferenceIndexEntryToString($record);
             }
         }
@@ -224,7 +212,7 @@ class MissingFilesService extends AbstractCleanupService
     
         foreach ($missingManagedFiles as $fileName => $references) {
             foreach ($references as $hash => $recordReference) {
-                $sysRefObj = GeneralUtility::makeInstance(ReferenceIndex::class);
+                $sysRefObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ReferenceIndex::class);
                 $error = $sysRefObj->setReferenceValue($hash, null);
                 if ($error) {
                     $errors = true;
