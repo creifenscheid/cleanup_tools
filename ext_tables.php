@@ -18,7 +18,8 @@ defined('TYPO3_MODE') or die();
                 [
                     \ChristianReifenscheid\CleanupTools\Controller\CleanupController::class => 'index, cleanup',
                     \ChristianReifenscheid\CleanupTools\Controller\AjaxController::class => 'main',
-                    \ChristianReifenscheid\CleanupTools\Controller\HistoryController::class => 'index,cleanup'
+                    \ChristianReifenscheid\CleanupTools\Controller\HistoryController::class => 'index,cleanup',
+                    \ChristianReifenscheid\CleanupTools\Controller\InfoController::class => 'index',
                 ],
                 [
                     'access' => 'admin',

@@ -61,6 +61,9 @@
             <trans-unit id="module.menu.history">
                 <source>History</source>
             </trans-unit>
+            <trans-unit id="module.menu.info">
+                <source>Info</source>
+            </trans-unit>
             <trans-unit id="module.lastLog.days">
                 <source>executed %s days ago</source>
             </trans-unit>
@@ -110,6 +113,11 @@
             </trans-unit>
             <trans-unit id="module.history.cleanupForm.label.submit">
                 <source>Clean up</source>
+            </trans-unit>
+            
+            <!-- INFO MODULE -->
+            <trans-unit id="module.info.headline">
+                <source>Service info</source>
             </trans-unit>
 
             <!-- TASKS -->
