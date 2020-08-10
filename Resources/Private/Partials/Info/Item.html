@@ -1,0 +1,14 @@
+<div class="service">
+    <div class="headline">
+       {service.name}
+       <button aria-label="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.info.togglebutton')}" class="toggle-button" data-group="{log.uid}" aria-expanded="false" onclick="TYPO3.CleanupTools.toggleMessage(this)">
+    				<span class="icon"><core:icon identifier="actions-move-down" size="small" /></span>
+    			</button>
+    </div>
+    <div class="description">
+        <f:variable name="description">
+            
+        </f:variable>
+        {description}
+    </div>
+</div>

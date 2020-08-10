@@ -196,6 +196,9 @@
             <trans-unit id="aria.previewRenderer.cleanup">
                 <source>Clean up flexform.</source>
             </trans-unit>
+            <trans-unit id="aria.info.togglebutton">
+                <source>Show/hide description.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

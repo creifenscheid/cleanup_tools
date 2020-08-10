@@ -11,6 +11,12 @@
                 <h1>
                     <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.info.headline"/>
                 </h1>
+                
+                <div class="services">
+                    <f:for each="{services}" as="service">
+                        <f:render partial="Info/Item" arguments="{service:service}" />
+                    </f:for>
+                </div>
             </div>
 </f:section>
 
