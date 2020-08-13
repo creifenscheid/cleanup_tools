@@ -4,7 +4,7 @@
  *
  *  Copyright notice
  *
- *  (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ *  (c) 2020 C. Reifenscheid
  *
  *  All rights reserved
  *
@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Cleanup Tools',
     'description' => 'This extension provides cleanup tools and the possibility to implement cleanup services in your TYPO3 installation.',
     'category' => 'module',
-    'author' => 'Christian Reifenscheid',
+    'author' => 'C. Reifenscheid',
     'author_email' => 'christian.reifenscheid.2112@gmail.com',
     'version' => '10.0.0',
     'state' => 'alpha',
@@ -41,7 +41,7 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'ChristianReifenscheid\\CleanupTools\\' => 'Classes'
+            'creifenscheid\\CleanupTools\\' => 'Classes'
         ]
     ]
 ];

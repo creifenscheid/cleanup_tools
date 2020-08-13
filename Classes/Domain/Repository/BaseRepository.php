@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
+namespace creifenscheid\CleanupTools\Domain\Repository;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Domain\Repository;
 /**
  * Class LogRepository
  *
- * @package ChristianReifenscheid\CleanupTools\Domain\Repository
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Domain\Repository
+ * @author C. Reifenscheid
  */
 class BaseRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
