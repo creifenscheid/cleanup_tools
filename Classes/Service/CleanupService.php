@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace creifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
 /**
  * Class CleanupService
  *
- * @package ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 class CleanupService
 {
@@ -88,17 +88,17 @@ class CleanupService
     /**
      * Log repository
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \creifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
         // init configuration service
         $this->configurationService = $configurationService;
@@ -222,7 +222,7 @@ class CleanupService
                 // if message is defined during process preparation
                 if ($message) {
                     // create new log message
-                    $newLogMessage = new \ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage();
+                    $newLogMessage = new \creifenscheid\CleanupTools\Domain\Model\LogMessage();
                     $newLogMessage->setLog($log);
                     $newLogMessage->setMessage($message);
                 }
@@ -261,7 +261,7 @@ class CleanupService
     {
         
         // init log repository
-        $logRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+        $logRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
     
         // create timestamp of log lifetime
         $logLifetime = strtotime('-' . $logLifetime);

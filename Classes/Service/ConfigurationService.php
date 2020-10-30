@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace creifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
 /**
  * Class ConfigurationService
  *
- * @package ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 {
@@ -44,7 +44,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \creifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
@@ -96,9 +96,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
         $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 

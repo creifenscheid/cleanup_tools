@@ -1,5 +1,5 @@
 {
-	"name" : "christianreifenscheid/cleanup-tools",
+	"name" : "creifenscheid/cleanup-tools",
 	"type" : "typo3-cms-extension",
 	"description" : "This extension provides cleanup tools and the possibility to implement cleanup services in your TYPO3 installation.",
 	"license" : "GPL-2.0-or-later",
@@ -8,12 +8,12 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"ChristianReifenscheid\\CleanupTools\\" : "Classes/"
+			"creifenscheid\\CleanupTools\\" : "Classes/"
 		}
 	},
 	"minimum-stability" : "alpha",
 	"authors" : [{
-			"name" : "Christian Reifenscheid",
+			"name" : "C. Reifenscheid",
 			"email" : "christian.reifenscheid.2112@gmail.com"
 		}
 	]

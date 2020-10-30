@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Domain\Model;
+namespace creifenscheid\CleanupTools\Domain\Model;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Domain\Model;
 /**
  * Class LogMessage
  *
- * @package ChristianReifenscheid\SplCleanupTools\Domain\Model
- * @author Christian Reifenscheid
+ * @package creifenscheid\SplCleanupTools\Domain\Model
+ * @author C. Reifenscheid
  */
 class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
@@ -40,7 +40,7 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Log
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @var \creifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
 
@@ -68,9 +68,9 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns log
      *
-     * @return \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @return \creifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+    public function getLog(): \creifenscheid\CleanupTools\Domain\Model\Log
     {
         return $this->log;
     }
@@ -78,10 +78,10 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Set log
      *
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\Log $log
+     * @param \creifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(\ChristianReifenscheid\CleanupTools\Domain\Model\Log $log): void
+    public function setLog(\creifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }

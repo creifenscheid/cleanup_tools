@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace creifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
 /**
  * Class AbstractCleanupService
  *
- * @packagee ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @packagee creifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 abstract class AbstractCleanupService
 {
@@ -58,7 +58,7 @@ abstract class AbstractCleanupService
     /**
      * log
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @var \creifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
 
@@ -75,9 +75,9 @@ abstract class AbstractCleanupService
     /**
      * Returns log
      *
-     * @return \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @return \creifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+    public function getLog(): \creifenscheid\CleanupTools\Domain\Model\Log
     {
         // if a log exists, return
         if ($this->log) {
@@ -85,7 +85,7 @@ abstract class AbstractCleanupService
         }
         
         // else return new log object
-        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
+        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Domain\Model\Log::class);
         
         // set creation time
         $log->setCrdate(time());
@@ -104,10 +104,10 @@ abstract class AbstractCleanupService
     /**
      * Sets log
      *
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\Log $log
+     * @param \creifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(\ChristianReifenscheid\CleanupTools\Domain\Model\Log $log): void
+    public function setLog(\creifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }
@@ -134,7 +134,7 @@ abstract class AbstractCleanupService
             $log = $this->getLog();
         
             // create new message
-            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+            $newLogMessage = $this->objectManager->get(\creifenscheid\CleanupTools\Domain\Model\LogMessage::class);
             $newLogMessage->setLog($log);
             $newLogMessage->setMessage($message);
 
@@ -158,7 +158,7 @@ abstract class AbstractCleanupService
             $log = $this->getLog();
         
             // create new message
-            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+            $newLogMessage = $this->objectManager->get(\creifenscheid\CleanupTools\Domain\Model\LogMessage::class);
         
             $newLogMessage->setLog($log);
             $newLogMessage->setLocalLangKey($key);

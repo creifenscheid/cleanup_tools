@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Task;
+namespace creifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,15 +31,15 @@ namespace ChristianReifenscheid\CleanupTools\Task;
 /**
  * Class HistoryAdditionalFieldProvider
  *
- * @package ChristianReifenscheid\CleanupTools\Task
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Task
+ * @author C. Reifenscheid
  */
 class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
     /**
      * Configuration service
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -60,9 +60,9 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     /**
      * HistoryAdditionalFieldProvider constructor.
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         // init configurationService
         $this->configurationService = $configurationService;

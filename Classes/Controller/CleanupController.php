@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Controller;
+namespace creifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,28 +31,28 @@ namespace ChristianReifenscheid\CleanupTools\Controller;
 /**
  * Class CleanupController
  *
- * @package ChristianReifenscheid\CleanupTools\Controller
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Controller
+ * @author C. Reifenscheid
  */
 class CleanupController extends BaseController
 {
 
     /**
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
+     * @var \creifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
+    public function __construct(\creifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
         parent::__construct();
         $this->cleanupService = $cleanupService;
-        $this->cleanupService->setExecutionContext(\ChristianReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
+        $this->cleanupService->setExecutionContext(\creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 
     /**

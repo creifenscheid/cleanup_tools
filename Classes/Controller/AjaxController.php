@@ -1,13 +1,13 @@
 <?php
 
-namespace ChristianReifenscheid\CleanupTools\Controller;
+namespace creifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -32,22 +32,22 @@ namespace ChristianReifenscheid\CleanupTools\Controller;
 /**
  * Class AjaxController
  *
- * @package ChristianReifenscheid\CleanupTools\Controller
- * @author  Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Controller
+ * @author  C. Reifenscheid
  */
 class AjaxController
 {
     /**
      * Cleanup service
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
+     * @var \creifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Configuration service
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -61,10 +61,10 @@ class AjaxController
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService, \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\creifenscheid\CleanupTools\Service\CleanupService $cleanupService, \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         $this->cleanupService = $cleanupService;
         $this->configurationService = $configurationService;

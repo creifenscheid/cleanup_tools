@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Controller;
+namespace creifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,15 +31,15 @@ namespace ChristianReifenscheid\CleanupTools\Controller;
 /**
  * Class BaseController
  *
- * @package ChristianReifenscheid\CleanupTools\Controller
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Controller
+ * @author C. Reifenscheid
  */
 class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -53,9 +53,9 @@ class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         $this->configurationService = $configurationService;
         $this->localizationFile = $this->configurationService->getLocalizationFile();

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
-namespace ChristianReifenscheid\CleanupTools\Widgets\Provider;
+namespace creifenscheid\CleanupTools\Widgets\Provider;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -32,28 +32,28 @@ namespace ChristianReifenscheid\CleanupTools\Widgets\Provider;
 /**
  * Class CleanupServicesDataProvider
  *
- * @package ChristianReifenscheid\CleanupTools\Widgets\Provider
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Widgets\Provider
+ * @author C. Reifenscheid
  */
 class CleanupServicesDataProvider implements \TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface
 {
     /**
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
      */
     private $configurationService;
     
     /**
-     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
+     * @var \creifenscheid\CleanupTools\Service\CleanupService
      */
     private $cleanupService;
     
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \ChristianReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
+    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \creifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
         $this->configurationService = $configurationService;
         $this->cleanupService = $cleanupService;

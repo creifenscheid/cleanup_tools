@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace creifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -34,8 +34,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
- * @package ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @package creifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 class DeletedRecordsService extends AbstractCleanupService
 {
