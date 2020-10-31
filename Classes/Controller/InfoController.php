@@ -1,12 +1,13 @@
 <?php
-namespace CReifenscheid\CleanupTools\Task;
+
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 C. Reifenscheid
+ * (c) 2020 creifenscheid
  *
  * All rights reserved
  *
@@ -29,51 +30,46 @@ namespace CReifenscheid\CleanupTools\Task;
  */
 
 /**
- * Class CleanupTask
+ * Class InfoController
  *
- * @package CReifenscheid\CleanupTools\Task
- * @author C. Reifenscheid
+ * @package CReifenscheid\CleanupTools\Controller
+ * @author  C. Reifenscheid
  */
-class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
+class InfoController extends BaseController
 {
     /**
+     * Configuration service
+     *
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
+     */
+    protected $configurationService;
+
+    /**
+     * Localization file
+     *
      * @var string
      */
-    protected $logLifetime = '';
-    
+    protected $localizationFile = '';
+
     /**
-     * Execute function
+     * Constructor
      *
-     * @return bool
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function execute(): bool
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
-        
-        return $cleanupService->processHistoryCleanup($this->logLifetime);
+        parent::__construct($configurationService);
     }
 
     /**
-     * Returns the log lifetime
-     *
-     * @return string
-     */
-    public function getLogLifetime(): string
-    {
-        return $this->logLifetime;
-    }
-
-    /**
-     * Sets the log lifetime
-     *
-     * @param string $logLifetime
+     * Index action
      *
      * @return void
      */
-    public function setLogLifetime (string $logLifetime): void
+    public function indexAction(): void
     {
-        $this->logLifetime = $logLifetime;
+         $services = $this->configurationService->getServices();
+         
+         $this->view->assign('services', $services);
     }
 }

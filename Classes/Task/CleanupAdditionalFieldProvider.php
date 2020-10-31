@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Task;
 /**
  * Class CleanupAdditionalFieldProvider
  *
- * @package creifenscheid\CleanupTools\Task
+ * @package CReifenscheid\CleanupTools\Task
  * @author C. Reifenscheid
  */
 class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
@@ -39,7 +39,7 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     /**
      * Configuration service
      *
-     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -60,9 +60,9 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     /**
      * CleanupAdditionalFieldProvider constructor.
      *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         // init configurationService
         $this->configurationService = $configurationService;

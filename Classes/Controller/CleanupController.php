@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Controller;
 /**
  * Class CleanupController
  *
- * @package creifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Controller
  * @author C. Reifenscheid
  */
 class CleanupController extends BaseController
@@ -39,20 +39,21 @@ class CleanupController extends BaseController
 
     /**
      *
-     * @var \creifenscheid\CleanupTools\Service\CleanupService
+     * @var \CReifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\CleanupService $cleanupService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\CleanupService $cleanupService, \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
-        parent::__construct();
+        parent::__construct($configurationService);
         $this->cleanupService = $cleanupService;
-        $this->cleanupService->setExecutionContext(\creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
+        $this->cleanupService->setExecutionContext(\CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 
     /**

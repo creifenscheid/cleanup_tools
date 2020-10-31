@@ -40,7 +40,7 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'creifenscheid\\CleanupTools\\' => 'Classes'
+            'CReifenscheid\\CleanupTools\\' => 'Classes'
         ]
     ]
 ];

@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Task;
 /**
  * Class CleanupTask
  *
- * @package creifenscheid\CleanupTools\Task
+ * @package CReifenscheid\CleanupTools\Task
  * @author C. Reifenscheid
  */
 class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
@@ -53,11 +53,11 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function execute(): bool
     {
         /** @var CleanupService $cleanupService */
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\CleanupService::class);
-        $cleanupService->setExecutionContext(\creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_SCHEDULER);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService->setExecutionContext(\CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_SCHEDULER);
 
         /** @var ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
         // process
         $cleanupService->setDryRun(false);
@@ -106,7 +106,7 @@ class CleanupTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     public function getAdditionalInformation(): string
     {
         /** @var ConfigurationService $configurationService */
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:tasks.cleanup.information') . ' ' . $this->serviceToProcess;
     }

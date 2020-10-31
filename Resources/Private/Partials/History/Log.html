@@ -29,7 +29,7 @@
     <td>
     	<f:if condition="{log.messages}">
     		<f:then>
-    			<button aria-label="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.history.togglebutton')}" class="toggle-button" data-group="{log.uid}" aria-expanded="false" onclick="TYPO3.CleanupTools.toggleMessage(this)">
+    			<button aria-label="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.history.togglebutton')}" class="toggle-button" data-toggle="log-message-group-{log.uid}" aria-expanded="false" onclick="TYPO3.CleanupTools.toggleMessage(this)">
     				<span class="icon"><core:icon identifier="actions-move-down" size="small" /></span>
     			</button>
     		</f:then>
@@ -42,7 +42,7 @@
 
 <f:if condition="{log.messages}">
     <f:for each="{log.messages}" as="message" iteration="iterator">
-        <tr class="log-message log-message-group-{log.uid}">
+        <tr class="toggle-container log-message log-message-group-{log.uid}">
             <td colspan="7">
                 #{iterator.cycle} | 
             

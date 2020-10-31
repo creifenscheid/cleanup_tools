@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Backend\Toolbar;
+namespace CReifenscheid\CleanupTools\Backend\Toolbar;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Backend\Toolbar;
 /**
  * Class CleanupToolbarItem
  *
- * @package creifenscheid\CleanupTools\Backend\Toolbar
+ * @package CReifenscheid\CleanupTools\Backend\Toolbar
  * @author C. Reifenscheid
  */
 class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
@@ -52,12 +52,12 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     /**
      * CleanupToolbarItem constructor.
      *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      * @param \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder)
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder)
     {
         $this->localizationFile = $configurationService->getLocalizationFile();
 
@@ -68,7 +68,7 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             $uri = (string) $uriBuilder->buildUriFromRoute('cleanuptools_ajax', [
                 'class' => $serviceConfiguration['class'],
                 'method' => $configurationService::FUNCTION_MAIN,
-                'executionContext' => \creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
+                'executionContext' => \CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
             $this->cleanupServices[$service]['description'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);

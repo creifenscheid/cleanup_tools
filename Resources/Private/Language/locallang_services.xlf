@@ -8,14 +8,26 @@
             <trans-unit id="description.CleanFlexFormsService">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
             </trans-unit>
+            <trans-unit id="description.extended.CleanFlexFormsService">
+                <source>Updates all database records which have a FlexForm field and the XML data does not match the chosen datastructure.</source>
+            </trans-unit>
             <trans-unit id="description.DeletedRecordsService">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
+            </trans-unit>
+            <trans-unit id="description.extended.DeletedRecordsService">
+                <source>Permanently deletes all records marked as "deleted" in the database.</source>
             </trans-unit>
             <trans-unit id="description.LostFilesService">
                 <source>Finds files within uploads/ which are not needed anymore</source>
             </trans-unit>
+            <trans-unit id="description.extended.LostFilesService">
+                <source>Looking for files in the uploads/ folder which does not have a reference in TYPO3 managed records.</source>
+            </trans-unit>
             <trans-unit id="description.OrphanRecordsService">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
+            </trans-unit>
+            <trans-unit id="description.extended.OrphanRecordsService">
+                <source>Find and delete records that have lost their connection with the page tree.</source>
             </trans-unit>
             
            <!-- PARAMETER -->

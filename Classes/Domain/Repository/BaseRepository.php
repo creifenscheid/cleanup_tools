@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Domain\Repository;
+namespace CReifenscheid\CleanupTools\Domain\Repository;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Domain\Repository;
 /**
  * Class LogRepository
  *
- * @package creifenscheid\CleanupTools\Domain\Repository
+ * @package CReifenscheid\CleanupTools\Domain\Repository
  * @author C. Reifenscheid
  */
 class BaseRepository extends \TYPO3\CMS\Extbase\Persistence\Repository

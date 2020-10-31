@@ -62,7 +62,7 @@ Service configuration
 
    module.tx_cleanuptools {
        services {
-           creifenscheid\CleanupTools\Service\CleanFlexFormsService {
+           CReifenscheid\CleanupTools\Service\CleanFlexFormsService {
                enable = 1
                additionalUsage {
                    schedulerTask = 1

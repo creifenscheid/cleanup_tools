@@ -16,9 +16,10 @@ defined('TYPO3_MODE') or die();
                 'tx_cleanuptools',
                 '',
                 [
-                    \creifenscheid\CleanupTools\Controller\CleanupController::class => 'index, cleanup',
-                    \creifenscheid\CleanupTools\Controller\AjaxController::class => 'main',
-                    \creifenscheid\CleanupTools\Controller\HistoryController::class => 'index,cleanup'
+                    \CReifenscheid\CleanupTools\Controller\CleanupController::class => 'index, cleanup',
+                    \CReifenscheid\CleanupTools\Controller\AjaxController::class => 'main',
+                    \CReifenscheid\CleanupTools\Controller\HistoryController::class => 'index,cleanup',
+                    \CReifenscheid\CleanupTools\Controller\InfoController::class => 'index'
                 ],
                 [
                     'access' => 'admin',

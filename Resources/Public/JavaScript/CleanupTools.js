@@ -44,16 +44,19 @@ define([
     
     CleanupTools.toggleMessage = function (element) {
     	const elementObject = $(element);
-    	const toggleGroup = elementObject.attr('data-group');
+    	const toggleContainer = '.' + elementObject.attr('data-toggle');
+
+		console.log(toggleContainer);
 
     	if (elementObject.hasClass('expanded')) {
     		elementObject.removeClass('expanded');
     		elementObject.attr('aria-expanded', 'false');
-    		$('.log-message-group-' + toggleGroup).hide();
+    		$(toggleContainer).hide();
     	} else {
     		elementObject.addClass('expanded');
     		elementObject.attr('aria-expanded', 'true');
-    		$('.log-message-group-' + toggleGroup).show();
+    		$(toggleContainer).show();
+			
     	}
     }
 
