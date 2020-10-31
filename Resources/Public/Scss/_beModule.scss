@@ -2,6 +2,10 @@
     .card {
         position: relative;
         padding-bottom: $footerHeight;
+
+		&.no-footer {
+			padding-bottom: 0;
+		}
     }
 
     .card-header {
@@ -142,4 +146,20 @@
 	   	   }
    	   }
    }
+
+	&.info {
+		.card {
+			box-shadow: none;
+		}
+
+	    .card-header {
+	        text-align: left;
+	    }
+			
+		.toggle-button {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+	}
 }

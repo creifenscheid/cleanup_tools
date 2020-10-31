@@ -1,12 +1,12 @@
-<div class="service">
-    <div class="headline">
-       {service.name}
+<div class="service card no-footer">
+    <div class="card-header">
        <button aria-label="{f:translate(key:'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:aria.info.togglebutton')}" class="toggle-button" data-toggle="description-{service.name}" aria-expanded="false" onclick="TYPO3.CleanupTools.toggleMessage(this)">
+	       <span class="card-title">{service.name}</span>
     		<span class="icon"><core:icon identifier="actions-move-down" size="small" /></span>
     	</button>
     </div>
-    <div class="toggle-container description description-{service.name}">
-        <f:variable name="descriptionKey">description.extended.{service.name}</f:variable>
+    <div class="card-body toggle-container description description-{service.name}">
+	    <f:variable name="descriptionKey">description.extended.{service.name}</f:variable>
         <f:translate key="{localizationFile}:{descriptionKey}" />
     </div>
 </div>

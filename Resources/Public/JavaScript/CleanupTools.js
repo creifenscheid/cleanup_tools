@@ -44,7 +44,9 @@ define([
     
     CleanupTools.toggleMessage = function (element) {
     	const elementObject = $(element);
-    	const toggleContainer = elementObject.attr('data-toggle');
+    	const toggleContainer = '.' + elementObject.attr('data-toggle');
+
+		console.log(toggleContainer);
 
     	if (elementObject.hasClass('expanded')) {
     		elementObject.removeClass('expanded');
@@ -54,6 +56,7 @@ define([
     		elementObject.addClass('expanded');
     		elementObject.attr('aria-expanded', 'true');
     		$(toggleContainer).show();
+			
     	}
     }
 
