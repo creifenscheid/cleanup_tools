@@ -1,6 +1,6 @@
 <?php
 
-namespace creifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
@@ -32,7 +32,7 @@ namespace creifenscheid\CleanupTools\Controller;
 /**
  * Class AjaxController
  *
- * @package creifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Controller
  * @author  C. Reifenscheid
  */
 class AjaxController
@@ -40,14 +40,14 @@ class AjaxController
     /**
      * Cleanup service
      *
-     * @var \creifenscheid\CleanupTools\Service\CleanupService
+     * @var \CReifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Configuration service
      *
-     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -61,10 +61,10 @@ class AjaxController
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\CleanupService $cleanupService, \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\CleanupService $cleanupService, \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         $this->cleanupService = $cleanupService;
         $this->configurationService = $configurationService;

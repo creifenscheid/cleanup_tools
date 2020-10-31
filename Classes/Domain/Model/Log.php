@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Domain\Model;
+namespace CReifenscheid\CleanupTools\Domain\Model;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Domain\Model;
 /**
  * Class Log
  *
- * @package creifenscheid\CleanupTools\Domain\Model
+ * @package CReifenscheid\CleanupTools\Domain\Model
  * @author C. Reifenscheid
  */
 class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
@@ -89,7 +89,7 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * messages
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\creifenscheid\CleanupTools\Domain\Model\LogMessage>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CReifenscheid\CleanupTools\Domain\Model\LogMessage>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $messages;
@@ -266,10 +266,10 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /*
      * Add a message
      *
-     * @param \creifenscheid\CleanupTools\Domain\Model\LogMessage $message
+     * @param \CReifenscheid\CleanupTools\Domain\Model\LogMessage $message
      * @return void
      */
-    public function addMessage(\creifenscheid\CleanupTools\Domain\Model\LogMessage $message): void
+    public function addMessage(\CReifenscheid\CleanupTools\Domain\Model\LogMessage $message): void
     {
         $this->messages->attach($message);
     }
@@ -277,10 +277,10 @@ class Log extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /*
      * Remove a message
      *
-     * @param \creifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove
+     * @param \CReifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove
      * @return void
      */
-    public function removeMessage(\creifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove): void
+    public function removeMessage(\CReifenscheid\CleanupTools\Domain\Model\LogMessage $messageToRemove): void
     {
         $this->messages->detach($messageToRemove);
     }

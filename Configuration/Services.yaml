@@ -4,13 +4,13 @@ services:
     autoconfigure: true
     public: false
 
-  creifenscheid\CleanupTools\:
+  CReifenscheid\CleanupTools\:
     resource: '../Classes/*'
 
   widgets.dashboard.widget.cleanupInformation:
-    class: 'creifenscheid\CleanupTools\Widgets\CleanupInformationWidget'
+    class: 'CReifenscheid\CleanupTools\Widgets\CleanupInformationWidget'
     arguments:
-      $dataProvider: '@creifenscheid\CleanupTools\Widgets\Provider\CleanupServicesDataProvider'
+      $dataProvider: '@CReifenscheid\CleanupTools\Widgets\Provider\CleanupServicesDataProvider'
       $view: '@dashboard.views.widget'
       $options:
         template: 'Widget/CleanupInformation'

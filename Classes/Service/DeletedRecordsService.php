@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
@@ -34,7 +34,7 @@ namespace creifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
- * @package creifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service
  * @author C. Reifenscheid
  */
 class DeletedRecordsService extends AbstractCleanupService

@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Controller;
 /**
  * Class BaseController
  *
- * @package creifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Controller
  * @author C. Reifenscheid
  */
 class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
@@ -39,7 +39,7 @@ class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      *
-     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -53,9 +53,9 @@ class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         $this->configurationService = $configurationService;
         $this->localizationFile = $this->configurationService->getLocalizationFile();

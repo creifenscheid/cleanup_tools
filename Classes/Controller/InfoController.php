@@ -1,6 +1,6 @@
 <?php
 
-namespace ChristianReifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
@@ -32,15 +32,15 @@ namespace ChristianReifenscheid\CleanupTools\Controller;
 /**
  * Class InfoController
  *
- * @package ChristianReifenscheid\CleanupTools\Controller
- * @author  Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Controller
+ * @author  C. Reifenscheid
  */
-class InfoController
+class InfoController extends BaseController
 {
     /**
      * Configuration service
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -54,12 +54,11 @@ class InfoController
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
-        $this->configurationService = $configurationService;
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
+        parent::__construct($configurationService);
     }
 
     /**

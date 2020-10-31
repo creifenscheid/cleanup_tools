@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace creifenscheid\CleanupTools\Widgets\Provider;
+namespace CReifenscheid\CleanupTools\Widgets\Provider;
 
 /**
  * *************************************************************
@@ -32,28 +32,28 @@ namespace creifenscheid\CleanupTools\Widgets\Provider;
 /**
  * Class CleanupServicesDataProvider
  *
- * @package creifenscheid\CleanupTools\Widgets\Provider
+ * @package CReifenscheid\CleanupTools\Widgets\Provider
  * @author C. Reifenscheid
  */
 class CleanupServicesDataProvider implements \TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface
 {
     /**
-     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     private $configurationService;
     
     /**
-     * @var \creifenscheid\CleanupTools\Service\CleanupService
+     * @var \CReifenscheid\CleanupTools\Service\CleanupService
      */
     private $cleanupService;
     
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \creifenscheid\CleanupTools\Service\CleanupService $cleanupService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
         $this->configurationService = $configurationService;
         $this->cleanupService = $cleanupService;

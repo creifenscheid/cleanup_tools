@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Domain\Model;
+namespace CReifenscheid\CleanupTools\Domain\Model;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Domain\Model;
 /**
  * Class LogMessage
  *
- * @package creifenscheid\SplCleanupTools\Domain\Model
+ * @package CReifenscheid\SplCleanupTools\Domain\Model
  * @author C. Reifenscheid
  */
 class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
@@ -40,7 +40,7 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Log
      *
-     * @var \creifenscheid\CleanupTools\Domain\Model\Log
+     * @var \CReifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
 
@@ -68,9 +68,9 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns log
      *
-     * @return \creifenscheid\CleanupTools\Domain\Model\Log
+     * @return \CReifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): \creifenscheid\CleanupTools\Domain\Model\Log
+    public function getLog(): \CReifenscheid\CleanupTools\Domain\Model\Log
     {
         return $this->log;
     }
@@ -78,10 +78,10 @@ class LogMessage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Set log
      *
-     * @param \creifenscheid\CleanupTools\Domain\Model\Log $log
+     * @param \CReifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(\creifenscheid\CleanupTools\Domain\Model\Log $log): void
+    public function setLog(\CReifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
     }

@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Hooks;
+namespace CReifenscheid\CleanupTools\Hooks;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Hooks;
 /**
  * Class PreviewRenderer
  *
- * @package creifenscheid\CleanupTools\Hooks
+ * @package CReifenscheid\CleanupTools\Hooks
  * @author C. Reifenscheid
  */
 class PreviewRenderer implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface
@@ -62,13 +62,13 @@ class PreviewRenderer implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemH
             // check if field:pi_flexform is set
             if ($row['pi_flexform']) {
 
-                /* @var \creifenscheid\CleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
-                $cleanFlexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\CleanFlexFormsService::class);
+                /* @var \CReifenscheid\CleanupTools\Service\CleanFlexFormsService $cleanFlexFormService */
+                $cleanFlexFormService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanFlexFormsService::class);
 
                 if (!$cleanFlexFormService->isValid($row)) {
 
                     /** @var ConfigurationService $configurationService */
-                    $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\ConfigurationService::class);
+                    $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
 
                     /** @var \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder * */
                     $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
@@ -80,11 +80,11 @@ class PreviewRenderer implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemH
                     $view->setFormat('html');
 
                     $uri = (string) $uriBuilder->buildUriFromRoute('cleanuptools_ajax', [
-                        'class' => 'creifenscheid\CleanupTools\Service\CleanFlexFormsService',
+                        'class' => 'CReifenscheid\CleanupTools\Service\CleanFlexFormsService',
                         'method' => 'executeByUid',
                         'recordUid' => $row['uid'],
-                        'executionContext' => \creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_PREVIEWRENDERER,
-                        'executionMode' => \creifenscheid\CleanupTools\Service\CleanupService::USE_METHOD_PROPERTIES
+                        'executionContext' => \CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_PREVIEWRENDERER,
+                        'executionMode' => \CReifenscheid\CleanupTools\Service\CleanupService::USE_METHOD_PROPERTIES
                     ]);
 
                     // assignments

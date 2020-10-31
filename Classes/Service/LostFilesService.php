@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace creifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
@@ -35,7 +35,7 @@ namespace creifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\LostFilesCommand::class
  *
- * @package creifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service
  * @author C. Reifenscheid
  */
 class LostFilesService extends AbstractCleanupService
