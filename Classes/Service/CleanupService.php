@@ -1,6 +1,8 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * *************************************************************
  *
@@ -91,21 +93,30 @@ class CleanupService
      * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
-
+    
     /**
-     * Constructor
+     * Inject configuration service
      *
      * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function injectConfigurationService(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         // set configuration service
         $this->configurationService = $configurationService;
-
+    }
+    
+    /**
+     * Inject log repository
+     *
+     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     */
+    public function injectLogRepository(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    {
         // set log repository
         $this->logRepository = $logRepository;
     }
+    
+    
 
     /**
      * Set execution context
@@ -158,7 +169,7 @@ class CleanupService
     {
         // init service
         $service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($class);
-
+        
         // if parameter are given
         if ($parameters) {
 
@@ -211,7 +222,7 @@ class CleanupService
             $return = $service->$method();
         }
         
-        if (!$this->dryRun) {
+        if (!$service->getDryRun()) {
             // get updated log from service
             $log = $service->getLog();
 
@@ -221,6 +232,7 @@ class CleanupService
                 
                 // if message is defined during process preparation
                 if ($message) {
+                    
                     // create new log message
                     $newLogMessage = new \CReifenscheid\CleanupTools\Domain\Model\LogMessage();
                     $newLogMessage->setLog($log);

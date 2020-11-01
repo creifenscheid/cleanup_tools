@@ -36,31 +36,31 @@ namespace CReifenscheid\CleanupTools\Backend\Toolbar;
  */
 class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
 {
-
     /**
+     * CLeanup services
      *
      * @var array
      */
     protected $cleanupServices = [];
 
     /**
+     * Localization file
      *
      * @var string
      */
     protected $localizationFile = '';
 
     /**
-     * CleanupToolbarItem constructor.
-     *
-     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder
+     * CleanupToolbarItem constructor
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder)
+    public function __construct()
     {
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
+        
         $this->localizationFile = $configurationService->getLocalizationFile();
-
         $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 
         foreach ($this->cleanupServices as $service => $serviceConfiguration) {
