@@ -117,7 +117,7 @@
             
             <!-- INFO MODULE -->
             <trans-unit id="module.info.headline">
-                <source>Service info</source>
+                <source>Service information</source>
             </trans-unit>
 
             <!-- TASKS -->

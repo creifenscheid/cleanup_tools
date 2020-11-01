@@ -100,10 +100,10 @@ class CleanupService
      */
     public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        // init configuration service
+        // set configuration service
         $this->configurationService = $configurationService;
 
-        // init log repository
+        // set log repository
         $this->logRepository = $logRepository;
     }
 

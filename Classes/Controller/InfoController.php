@@ -38,30 +38,6 @@ namespace CReifenscheid\CleanupTools\Controller;
 class InfoController extends BaseController
 {
     /**
-     * Configuration service
-     *
-     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
-     */
-    protected $configurationService;
-
-    /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
-     * Constructor
-     *
-     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     */
-    public function __construct(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
-    {
-        parent::__construct($configurationService);
-    }
-
-    /**
      * Index action
      *
      * @return void
@@ -69,7 +45,6 @@ class InfoController extends BaseController
     public function indexAction(): void
     {
          $services = $this->configurationService->getServices();
-         
          $this->view->assign('services', $services);
     }
 }

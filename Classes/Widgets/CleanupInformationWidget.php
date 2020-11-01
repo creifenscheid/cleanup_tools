@@ -58,20 +58,6 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      * @var array
      */
     private $options;
-    
-    /**
-     * Configuration service
-     * 
-     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
-     */
-    private $configuationService;
-
-    /**
-     * Cleanup service
-     * 
-     * @var \CReifenscheid\CleanupTools\Service\CleanupService
-     */
-    private $cleanupService;
 
     /**
      * Constructor
@@ -95,9 +81,6 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
             ],
             $options
         );
-        
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
-        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
     }
 
     /**

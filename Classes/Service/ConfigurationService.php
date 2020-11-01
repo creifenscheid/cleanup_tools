@@ -102,6 +102,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Constructor
      *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
      * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository

@@ -41,13 +41,6 @@ abstract class AbstractCleanupService
      */
     protected $objectManager;
 
-    /**
-     * Execute cleanup process
-     *
-     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
-     */
-    abstract public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage;
-
     /*
      * dry run
      *
@@ -61,6 +54,23 @@ abstract class AbstractCleanupService
      * @var \CReifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
+    
+    /**
+     * Execute cleanup process
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
+     */
+    abstract public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage;
+    
+    /**
+     * Inject object manager
+     * 
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
+     */
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
     /**
      * Sets dry run
@@ -110,17 +120,6 @@ abstract class AbstractCleanupService
     public function setLog(\CReifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
-    }
-    
-    /**
-     * Constructor
-     *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
-     */
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager)
-    {
-        // init object manager
-        $this->objectManager = $objectManager;
     }
 
     /**

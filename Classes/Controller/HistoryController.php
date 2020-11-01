@@ -48,11 +48,9 @@ class HistoryController extends BaseController
      * Constructor
      *
      * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
-     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository, \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        parent::__construct($configurationService);
         $this->logRepository = $logRepository;
     }
 

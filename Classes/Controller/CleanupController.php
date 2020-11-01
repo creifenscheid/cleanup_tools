@@ -1,6 +1,8 @@
 <?php
 namespace CReifenscheid\CleanupTools\Controller;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * *************************************************************
  *
@@ -47,11 +49,9 @@ class CleanupController extends BaseController
      * Constructor
      *
      * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
-     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\CReifenscheid\CleanupTools\Service\CleanupService $cleanupService, \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
-        parent::__construct($configurationService);
         $this->cleanupService = $cleanupService;
         $this->cleanupService->setExecutionContext(\CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
