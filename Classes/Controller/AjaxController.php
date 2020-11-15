@@ -35,7 +35,7 @@ namespace CReifenscheid\CleanupTools\Controller;
  * @package CReifenscheid\CleanupTools\Controller
  * @author  C. Reifenscheid
  */
-class AjaxController
+class AjaxController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
      * Cleanup service

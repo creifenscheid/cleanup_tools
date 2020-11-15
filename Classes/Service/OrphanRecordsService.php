@@ -99,7 +99,7 @@ class OrphanRecordsService extends AbstractCleanupService
         } else {
             $message = 'No orphan records found.';
             $this->addMessage($message);
-            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
         }
     }
 

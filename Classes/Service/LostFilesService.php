@@ -131,7 +131,7 @@ class LostFilesService extends AbstractCleanupService
         } else {
             $message = 'Nothing to do, no lost files found';
             $this->addMessage($message);
-            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
         }
     }
 
