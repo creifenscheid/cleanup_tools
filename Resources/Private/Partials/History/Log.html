@@ -7,7 +7,21 @@
     </td>
     <td>
         <f:for each="{log.parameters}" as="parameter"  key="key">
-            {key}: {parameter}<br />
+            <f:if condition="{parameter} === TRUE">
+            	<f:then>
+            		{key}: <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:yes"/><br />
+            	</f:then>
+            	<f:else>
+            		<f:if condition="{parameter} === FALSE">
+            			<f:then>
+            				{key}: <f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:no"/><br />
+            			</f:then>
+            			<f:else>
+            				{key}: {parameter}<br />
+            			</f:else>
+            		</f:if>
+            	</f:else>
+            </f:if>
         </f:for>
     </td>
     <td>

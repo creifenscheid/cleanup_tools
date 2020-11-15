@@ -39,6 +39,12 @@
             <trans-unit id="label.no">
                 <source>No, thank you.</source>
             </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+            </trans-unit>
 
             <!-- MISC -->
             <trans-unit id="tx_cleanuptools.general.inExectionContext">
