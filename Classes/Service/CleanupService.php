@@ -95,6 +95,21 @@ class CleanupService
     protected $logRepository;
     
     /**
+     * CleanupService constructor
+     */
+    public function __construct()
+    {
+        // init object manager
+        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        
+        // init configuration service
+        #$this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConfigurationService::class);
+        
+        // init log repository
+        $this->logRepository = $this->objectManager->get(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+    }
+    
+    /**
      * Inject configuration service
      *
      * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
@@ -104,19 +119,6 @@ class CleanupService
         // set configuration service
         $this->configurationService = $configurationService;
     }
-    
-    /**
-     * Inject log repository
-     *
-     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
-     */
-    public function injectLogRepository(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
-    {
-        // set log repository
-        $this->logRepository = $logRepository;
-    }
-    
-    
 
     /**
      * Set execution context
