@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,15 +31,15 @@ namespace ChristianReifenscheid\CleanupTools\Task;
 /**
  * Class CleanupAdditionalFieldProvider
  *
- * @package ChristianReifenscheid\CleanupTools\Task
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Task
+ * @author C. Reifenscheid
  */
 class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
 {
     /**
      * Configuration service
      *
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -59,13 +59,11 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
 
     /**
      * CleanupAdditionalFieldProvider constructor.
-     *
-     * @param \ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct()
     {
         // init configurationService
-        $this->configurationService = $configurationService;
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
         $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 

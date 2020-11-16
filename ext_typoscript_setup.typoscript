@@ -12,7 +12,7 @@ module.tx_cleanuptools {
     }
 
     services {
-        ChristianReifenscheid\CleanupTools\Service\CleanFlexFormsService {
+        CReifenscheid\CleanupTools\Service\CleanFlexFormsService {
 	        enable = 1 
 	        additionalUsage {
 	            schedulerTask = 1
@@ -20,7 +20,7 @@ module.tx_cleanuptools {
 	        }
 		}
 	        
-		ChristianReifenscheid\CleanupTools\Service\DeletedRecordsService {
+		CReifenscheid\CleanupTools\Service\DeletedRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1
@@ -28,7 +28,7 @@ module.tx_cleanuptools {
 	        }
 		} 
 	        
-		ChristianReifenscheid\CleanupTools\Service\LostFilesService {
+		CReifenscheid\CleanupTools\Service\LostFilesService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1
@@ -44,7 +44,7 @@ module.tx_cleanuptools {
 	        }
 		}
 	        
-		ChristianReifenscheid\CleanupTools\Service\OrphanRecordsService {
+		CReifenscheid\CleanupTools\Service\OrphanRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1

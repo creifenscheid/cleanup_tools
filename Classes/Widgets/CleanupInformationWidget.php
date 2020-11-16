@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace ChristianReifenscheid\CleanupTools\Widgets;
+namespace CReifenscheid\CleanupTools\Widgets;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -34,8 +34,8 @@ namespace ChristianReifenscheid\CleanupTools\Widgets;
 /**
  * Class CleanupInformationWidget
  *
- * @package ChristianReifenscheid\CleanupTools\Widgets
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Widgets
+ * @author C. Reifenscheid
  */
 class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInterface
 {
@@ -58,20 +58,6 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
      * @var array
      */
     private $options;
-    
-    /**
-     * Configuration service
-     * 
-     * @var \ChristianReifenscheid\CleanupTools\Service\ConfigurationService
-     */
-    private $configuationService;
-
-    /**
-     * Cleanup service
-     * 
-     * @var \ChristianReifenscheid\CleanupTools\Service\CleanupService
-     */
-    private $cleanupService;
 
     /**
      * Constructor
@@ -95,9 +81,6 @@ class CleanupInformationWidget implements \TYPO3\CMS\Dashboard\Widgets\WidgetInt
             ],
             $options
         );
-        
-        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\ConfigurationService::class);
-        $this->cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
     }
 
     /**

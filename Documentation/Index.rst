@@ -20,7 +20,7 @@ Cleanup Tools
    en
 
 :Authors:
-   Christian Reifenscheid
+   C. Reifenscheid
 
 :Email:
    christian.reifenscheid.2112@gmail.com

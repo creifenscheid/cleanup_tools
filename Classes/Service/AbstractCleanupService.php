@@ -1,12 +1,15 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,23 +34,11 @@ namespace ChristianReifenscheid\CleanupTools\Service;
 /**
  * Class AbstractCleanupService
  *
- * @packagee ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @packagee CReifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 abstract class AbstractCleanupService
 {
-    /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * Execute cleanup process
-     *
-     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
-     */
-    abstract public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage;
-
     /*
      * dry run
      *
@@ -58,10 +49,27 @@ abstract class AbstractCleanupService
     /**
      * log
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @var \CReifenscheid\CleanupTools\Domain\Model\Log
      */
     protected $log;
-
+    
+    /**
+     * Execute cleanup process
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
+     */
+    abstract public function execute(): \TYPO3\CMS\Core\Messaging\FlashMessage;
+    
+    /**
+     * Returns dry run
+     *
+     * @return bool
+     */
+    public function getDryRun(): bool
+    {
+        return $this->dryRun;
+    }
+    
     /**
      * Sets dry run
      *
@@ -75,17 +83,18 @@ abstract class AbstractCleanupService
     /**
      * Returns log
      *
-     * @return \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+     * @return \CReifenscheid\CleanupTools\Domain\Model\Log
      */
-    public function getLog(): \ChristianReifenscheid\CleanupTools\Domain\Model\Log
+    public function getLog(): \CReifenscheid\CleanupTools\Domain\Model\Log
     {
+        
         // if a log exists, return
         if ($this->log) {
             return $this->log;
         }
         
         // else return new log object
-        $log = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Domain\Model\Log::class);
+        $log = new \CReifenscheid\CleanupTools\Domain\Model\Log();
         
         // set creation time
         $log->setCrdate(time());
@@ -104,23 +113,12 @@ abstract class AbstractCleanupService
     /**
      * Sets log
      *
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Model\Log $log
+     * @param \CReifenscheid\CleanupTools\Domain\Model\Log $log
      * @return void
      */
-    public function setLog(\ChristianReifenscheid\CleanupTools\Domain\Model\Log $log): void
+    public function setLog(\CReifenscheid\CleanupTools\Domain\Model\Log $log): void
     {
         $this->log = $log;
-    }
-    
-    /**
-     * Constructor
-     *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
-     */
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager)
-    {
-        // init object manager
-        $this->objectManager = $objectManager;
     }
 
     /**
@@ -134,7 +132,7 @@ abstract class AbstractCleanupService
             $log = $this->getLog();
         
             // create new message
-            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+            $newLogMessage = new \CReifenscheid\CleanupTools\Domain\Model\LogMessage();
             $newLogMessage->setLog($log);
             $newLogMessage->setMessage($message);
 
@@ -158,7 +156,7 @@ abstract class AbstractCleanupService
             $log = $this->getLog();
         
             // create new message
-            $newLogMessage = $this->objectManager->get(\ChristianReifenscheid\CleanupTools\Domain\Model\LogMessage::class);
+            $newLogMessage = new \CReifenscheid\CleanupTools\Domain\Model\LogMessage();
         
             $newLogMessage->setLog($log);
             $newLogMessage->setLocalLangKey($key);

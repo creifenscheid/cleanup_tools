@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Task;
 /**
  * Class CleanupTask
  *
- * @package ChristianReifenscheid\CleanupTools\Task
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Task
+ * @author C. Reifenscheid
  */
 class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 {
@@ -50,7 +50,7 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function execute(): bool
     {
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
         
         return $cleanupService->processHistoryCleanup($this->logLifetime);
     }

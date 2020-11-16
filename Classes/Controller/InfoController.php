@@ -1,14 +1,13 @@
 <?php
-namespace CReifenscheid\CleanupTools\Controller;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 C. Reifenscheid
+ * (c) 2020 creifenscheid
  *
  * All rights reserved
  *
@@ -31,34 +30,21 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 
 /**
- * Class BaseController
+ * Class InfoController
  *
  * @package CReifenscheid\CleanupTools\Controller
- * @author C. Reifenscheid
+ * @author  C. Reifenscheid
  */
-class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class InfoController extends BaseController
 {
-
     /**
-     * Configuration service
+     * Index action
      *
-     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
+     * @return void
      */
-    protected $configurationService;
-
-    /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-    
-    /**
-     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     */
-    public function injectConfigurationService(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function indexAction(): void
     {
-        $this->configurationService = $configurationService;
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
+         $services = $this->configurationService->getServices();
+         $this->view->assign('services', $services);
     }
 }

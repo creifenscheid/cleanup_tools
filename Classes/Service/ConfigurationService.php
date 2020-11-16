@@ -1,12 +1,14 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +33,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
 /**
  * Class ConfigurationService
  *
- * @package ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 {
@@ -41,10 +43,16 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * Functions
      */
     const FUNCTION_MAIN = 'execute';
-
+    
     /**
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected $objectManager;
+    
+    /**
+     *
+     * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
@@ -94,19 +102,23 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Constructor
      *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
-    {
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager,\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    {   
         $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
-        // init log repository
+        // set object manager
+        $this->objectManager = $objectManager;
+        
+        // set log repository
         $this->logRepository = $logRepository;
 
         // get module configuration
-        $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
+        $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
 
         // set localization from typoscript configuration
         $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
@@ -219,13 +231,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Function to prepare class configuration
-     *
+     * 
      * @param string $class
      * @param string $method
      * @param array $configuration
-     *
      * @return array
-     * @throws \ReflectionException
      */
     private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
@@ -243,7 +253,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             ];
 
             if (\gettype($defaultValue) && \gettype($defaultValue) !== 'NULL') {
-                $parameterConfiguraton['type'] = \gettype($defaultValue);
+                $parameterConfiguraton['type'] = ucfirst(\gettype($defaultValue));
             } else if ($configuration['mapping']['parameter'][$parameterName]) {
                 $parameterConfiguraton['type'] = $configuration['mapping']['parameter'][$parameterName];
             }

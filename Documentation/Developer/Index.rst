@@ -12,7 +12,7 @@ Target group: **Developers**
 Developing your own service
 ---------------------------
 
-1. Extend \\ChristianReifenscheid\\CleanupTools\\Services\\AbstractCleanupService
+1. Extend \\CReifenscheid\\CleanupTools\\Services\\AbstractCleanupService
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What you get:
@@ -93,7 +93,7 @@ Localization key specifications:
    <?php
    namespace Vendor\MyExtension\Service;
 
-   class MyService extends \ChristianReifenscheid\CleanupTools\Service\AbstractCleanupService
+   class MyService extends \CReifenscheid\CleanupTools\Service\AbstractCleanupService
    {
         /**
          * my first class var

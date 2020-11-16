@@ -39,6 +39,12 @@
             <trans-unit id="label.no">
                 <source>No, thank you.</source>
             </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+            </trans-unit>
 
             <!-- MISC -->
             <trans-unit id="tx_cleanuptools.general.inExectionContext">
@@ -60,6 +66,9 @@
             </trans-unit>
             <trans-unit id="module.menu.history">
                 <source>History</source>
+            </trans-unit>
+            <trans-unit id="module.menu.info">
+                <source>Info</source>
             </trans-unit>
             <trans-unit id="module.lastLog.days">
                 <source>executed %s days ago</source>
@@ -110,6 +119,11 @@
             </trans-unit>
             <trans-unit id="module.history.cleanupForm.label.submit">
                 <source>Clean up</source>
+            </trans-unit>
+            
+            <!-- INFO MODULE -->
+            <trans-unit id="module.info.headline">
+                <source>Service information</source>
             </trans-unit>
 
             <!-- TASKS -->
@@ -187,6 +201,9 @@
             </trans-unit>
             <trans-unit id="aria.previewRenderer.cleanup">
                 <source>Clean up flexform.</source>
+            </trans-unit>
+            <trans-unit id="aria.info.togglebutton">
+                <source>Show/hide description.</source>
             </trans-unit>
         </body>
     </file>

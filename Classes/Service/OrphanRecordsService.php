@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
-namespace ChristianReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -35,8 +35,8 @@ namespace ChristianReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\OrphanRecordsCommand::class
  *
- * @package ChristianReifenscheid\CleanupTools\Service
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Service
+ * @author C. Reifenscheid
  */
 class OrphanRecordsService extends AbstractCleanupService
 {
@@ -95,7 +95,7 @@ class OrphanRecordsService extends AbstractCleanupService
         } else {
             $message = 'No orphan records found.';
             $this->addMessage($message);
-            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::OK, $message);
+            return $this->createFlashMessage(\TYPO3\CMS\Core\Messaging\FlashMessage::INFO, $message);
         }
     }
 

@@ -1,12 +1,12 @@
 <?php
-namespace ChristianReifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 Christian Reifenscheid <christian.reifenscheid.2112@gmail.com>
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,8 +31,8 @@ namespace ChristianReifenscheid\CleanupTools\Controller;
 /**
  * Class HistoryController
  *
- * @package ChristianReifenscheid\CleanupTools\Controller
- * @author Christian Reifenscheid
+ * @package CReifenscheid\CleanupTools\Controller
+ * @author C. Reifenscheid
  */
 class HistoryController extends BaseController
 {
@@ -40,18 +40,17 @@ class HistoryController extends BaseController
     /**
      * Log repository
      *
-     * @var \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
     
     /**
      * Constructor
      *
-     * @param \ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\ChristianReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        parent::__construct();
         $this->logRepository = $logRepository;
     }
 
@@ -86,7 +85,7 @@ class HistoryController extends BaseController
      */
     public function cleanupAction(string $logLifetime): void
     {
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\ChristianReifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
         
         $cleanupService->processHistoryCleanup($logLifetime);
 

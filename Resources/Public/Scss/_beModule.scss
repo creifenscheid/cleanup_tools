@@ -2,6 +2,10 @@
     .card {
         position: relative;
         padding-bottom: $footerHeight;
+
+		&.no-footer {
+			padding-bottom: 0;
+		}
     }
 
     .card-header {
@@ -66,6 +70,21 @@
             }
         }
     }
+   	
+   	.toggle-button {
+   		background: none;
+   		border: none;
+   			
+   		&.expanded {
+   			.icon {
+   				transform: rotate(90deg);
+   			}
+   		}
+   	}
+   	
+   	.toggle-container {
+   	    display: none;
+   	}
    
    &.history {
    	    .f3-widget-paginator {
@@ -87,19 +106,7 @@
    	    	}
    	    }
    	
-   		.toggle-button {
-   			background: none;
-   			border: none;
-   			
-   			&.expanded {
-   				.icon {
-   					transform: rotate(90deg);
-   				}
-   			}
-   		}
-   	
    	    .log-message {
-   	    	display: none;
    	    	background-color: white;
    	    	
    	    	td {
@@ -139,4 +146,20 @@
 	   	   }
    	   }
    }
+
+	&.info {
+		.card {
+			box-shadow: none;
+		}
+
+	    .card-header {
+	        text-align: left;
+	    }
+			
+		.toggle-button {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+	}
 }
