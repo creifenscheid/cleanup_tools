@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace CReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service\CleanupService;
 
 /**
  * *************************************************************
@@ -35,7 +35,7 @@ namespace CReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\OrphanRecordsCommand::class
  *
- * @package CReifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
 class OrphanRecordsService extends AbstractCleanupService

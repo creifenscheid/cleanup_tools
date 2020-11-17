@@ -1,8 +1,6 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * *************************************************************
  *
@@ -276,7 +274,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         ];
 
         // get last log of method
-        /** @var Log $lastLog */
+        /** @var \CReifenscheid\CleanupTools\Domain\Model\Log $lastLog */
         $lastLog = $this->logRepository->findByService($class);
 
         if ($lastLog) {

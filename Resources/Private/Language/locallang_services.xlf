@@ -29,6 +29,12 @@
             <trans-unit id="description.extended.OrphanRecordsService">
                 <source>Find and delete records that have lost their connection with the page tree.</source>
             </trans-unit>
+            <trans-unit id="description.MissingRelationsService">
+                <source>Find all record references pointing to a non-existing record</source>
+            </trans-unit>
+            <trans-unit id="description.extended.MissingRelationsService">
+                <source>Find all record references pointing to a non-existing record</source>
+            </trans-unit>
             
            <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">

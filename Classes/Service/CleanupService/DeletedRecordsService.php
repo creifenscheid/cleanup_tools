@@ -1,5 +1,5 @@
 <?php
-namespace CReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service\CleanupService;
 
 /**
  * *************************************************************
@@ -34,7 +34,7 @@ namespace CReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\DeletedRecordsCommand::class
  *
- * @package CReifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
 class DeletedRecordsService extends AbstractCleanupService
@@ -122,7 +122,7 @@ class DeletedRecordsService extends AbstractCleanupService
      */
     protected function findAllFlaggedRecordsInPage(int $pageId, int $depth, array $deletedRecords = []): array
     {
-        /** @var QueryBuilder $queryBuilderForPages */
+        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilderForPages */
         $queryBuilderForPages = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)->getQueryBuilderForTable('pages');
         $queryBuilderForPages->getRestrictions()->removeAll();
 

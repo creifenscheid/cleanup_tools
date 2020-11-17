@@ -1,4 +1,4 @@
-module.tx_cleanuptools {
+module.tx_cleanuptools {cleanupService
     view {
         templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Templates/
         partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Partials/
@@ -12,7 +12,7 @@ module.tx_cleanuptools {
     }
 
     services {
-        CReifenscheid\CleanupTools\Service\CleanFlexFormsService {
+        CReifenscheid\CleanupTools\Service\CleanupService\CleanFlexFormsService {
 	        enable = 1 
 	        additionalUsage {
 	            schedulerTask = 1
@@ -20,7 +20,7 @@ module.tx_cleanuptools {
 	        }
 		}
 	        
-		CReifenscheid\CleanupTools\Service\DeletedRecordsService {
+		CReifenscheid\CleanupTools\Service\CleanupService\DeletedRecordsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1
@@ -28,15 +28,7 @@ module.tx_cleanuptools {
 	        }
 		} 
 	        
-		CReifenscheid\CleanupTools\Service\LostFilesService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		} 
-	        
-		ChristianReifenscheid\CleanupTools\Service\MissingFilesService {
+		CReifenscheid\CleanupTools\Service\CleanupService\LostFilesService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1
@@ -44,7 +36,15 @@ module.tx_cleanuptools {
 	        }
 		}
 	        
-		CReifenscheid\CleanupTools\Service\OrphanRecordsService {
+		CReifenscheid\CleanupTools\Service\CleanupService\OrphanRecordsService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+		} 
+	        
+		CReifenscheid\CleanupTools\Service\CleanupService\MissingRelationsService {
 	        enable = 1
 	        additionalUsage {
 	            schedulerTask = 1
