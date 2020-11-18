@@ -49,6 +49,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class MissingRelationsService extends AbstractCleanupService
 {
     /**
+     * Setting this option automatically updates the reference index
+     *
+     * @var bool
+     */
+    protected $updateRefindex = false;
+    
+    /**
+     * @param boolean $updateRefindex
+     * @return void
+     */
+    public function setUpdateRefindex(bool $updateRefindex) : void
+    {
+        $this->updateRefindex = $updateRefindex;
+    }
+
+    /**
      * @var ConnectionPool
      */
     private $connectionPool;
