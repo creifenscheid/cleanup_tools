@@ -44,6 +44,14 @@ module.tx_cleanuptools {cleanupService
 	        }
 		} 
 	        
+		CReifenscheid\CleanupTools\Service\CleanupService\MissingFilesService {
+	        enable = 1
+	        additionalUsage {
+	            schedulerTask = 1
+	            toolbar = 1
+	        }
+		} 
+	        
 		CReifenscheid\CleanupTools\Service\CleanupService\MissingRelationsService {
 	        enable = 1
 	        additionalUsage {
