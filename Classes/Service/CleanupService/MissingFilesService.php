@@ -42,7 +42,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
-class MissingFiles extends AbstractCleanupService
+class MissingFilesService extends AbstractCleanupService
 {
     /**
      * Setting this option automatically updates the reference index

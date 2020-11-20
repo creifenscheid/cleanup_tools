@@ -69,7 +69,7 @@ class AfterDatabaseOperationsHook
             $cleanupService->setDryRun(false);
 
             // process
-            return $cleanupService->process(\CReifenscheid\CleanupTools\Service\CleanFlexFormsService::class, 'executeByUid', [
+            return $cleanupService->process(\CReifenscheid\CleanupTools\Service\CleanupService\CleanFlexFormsService::class, 'executeByUid', [
                 'recordUid' => (int) $recordUid
             ]);
         }
