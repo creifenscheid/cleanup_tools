@@ -1,6 +1,8 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * *************************************************************
  *
@@ -185,7 +187,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getServices(): array
     {
-        return $this->services;
+        $services = $this->services;
+        ksort($services);
+        return $services;
     }
 
     /**
