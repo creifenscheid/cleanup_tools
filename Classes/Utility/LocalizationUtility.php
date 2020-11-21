@@ -1,14 +1,13 @@
 <?php
 
-namespace CReifenscheid\CleanupTools\Controller;
-
+namespace CReifenscheid\CleanupTools\Utility;
 
 /**
  * *************************************************************
  *
  * Copyright notice
  *
- * (c) 2020 creifenscheid
+ * (c) 2020 C. Reifenscheid
  *
  * All rights reserved
  *
@@ -31,21 +30,20 @@ namespace CReifenscheid\CleanupTools\Controller;
  */
 
 /**
- * Class InfoController
+ * Class LocalizationUtility
  *
- * @package CReifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Utility
  * @author  C. Reifenscheid
  */
-class InfoController extends BaseController
+class LocalizationUtility
 {
     /**
-     * Index action
+     * Returns the localized label of the LOCAL_LANG key, $key.
      *
-     * @return void
+     * @param string $key The key from the LOCAL_LANG array for which to return the value.
      */
-    public function indexAction(): void
+    public static function translate(string $key): ?string
     {
-        $services = $this->configurationService->getServices();
-        $this->view->assign('services', $services);
+        
     }
 }

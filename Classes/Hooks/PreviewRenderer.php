@@ -90,8 +90,7 @@ class PreviewRenderer implements \TYPO3\CMS\Backend\View\PageLayoutViewDrawItemH
                     // assignments
                     $view->assignMultiple([
                         'onClickCode' => 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . ',' . $row['uid'] . '); return false;',
-                        'recordUid' => $row['uid'],
-                        'localizationFile' => $configurationService->getLocalizationFile()
+                        'recordUid' => $row['uid']
                     ]);
 
                     // set template path

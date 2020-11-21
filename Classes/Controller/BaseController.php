@@ -45,13 +45,6 @@ class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
-
-    /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
     
     /**
      * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
@@ -59,6 +52,5 @@ class BaseController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function injectConfigurationService(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
     {
         $this->configurationService = $configurationService;
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 }

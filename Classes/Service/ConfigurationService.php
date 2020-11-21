@@ -86,11 +86,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $additionalUsages = [];
 
     /**
-     * localizationFile
+     * localizationFilePaths
      *
-     * @var string
+     * @var array
      */
-    protected $localizationFile = '';
+    protected $localizationFilePaths = [];
 
     /**
      * log lifetime options
@@ -120,9 +120,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         // get module configuration
         $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
 
-        // set localization from typoscript configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
-
+        // get localization file paths from typoscript configuration
+        $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
+        
         // set log lifetime options from typoscript config
         $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
         
@@ -158,15 +158,17 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
     }
-
+    
     /**
-     * Returns the localization file
+     * Returns the localization file paths
      *
-     * @return string
+     * @return array
      */
-    public function getLocalizationFile(): string
+    public function getLocalizationFilePaths(): array
     {
-        return $this->localizationFile;
+        $localizationPaths = $this->localizationFilePaths;
+        krsort($localizationPaths);
+        return $localizationPaths;
     }
 
     /**

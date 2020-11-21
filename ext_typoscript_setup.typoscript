@@ -6,7 +6,11 @@ module.tx_cleanuptools {cleanupService
     }
 
     settings {
-        localizationFile = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
+        localizationFilePaths {
+        	10 = EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
+        	20 = EXT:cleanup_tools/Resources/Private/Language/locallang.xlf
+        }
+        
         # comma separated list of time spans
         logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
     }

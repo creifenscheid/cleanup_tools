@@ -51,20 +51,12 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $taskName = 'cleanuptools_historytask_';
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * HistoryAdditionalFieldProvider constructor.
      */
     public function __construct()
     {
         // init configurationService
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
