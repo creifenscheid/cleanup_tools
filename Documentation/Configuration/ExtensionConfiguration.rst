@@ -13,7 +13,7 @@ Properties
 ~~~~~~~~~~
 
 enableBackendModule
-"""""""""""""""""
+"""""""""""""""""""
 
 .. container:: table-row
 
@@ -55,7 +55,7 @@ enableAfterDatabaseOperationsHook
          Clean up flexform of a content element after database operations
 
 enablePreviewRenderer
-""""""""""""""""""
+"""""""""""""""""""""
 
 .. container:: table-row
 

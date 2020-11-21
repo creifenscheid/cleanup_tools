@@ -160,7 +160,7 @@ Example
 
    module.tx_cleanuptools {
        services {
-           Vendor\MyExtension\Service\MyService {
+           Vendor\MyExtension\Service\CleanupService\MyService {
                enable = 1
                additionalUsage {
                    schedulerTask = 0

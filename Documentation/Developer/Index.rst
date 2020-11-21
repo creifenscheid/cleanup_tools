@@ -12,7 +12,7 @@ Target group: **Developers**
 Developing your own service
 ---------------------------
 
-1. Extend \\CReifenscheid\\CleanupTools\\Services\\AbstractCleanupService
+1. Extend \\CReifenscheid\\CleanupTools\\Services\\CleanupService\\AbstractCleanupService
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What you get:
@@ -31,7 +31,7 @@ Every registered service has to provide a function named „execute“. Otherwis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your service requires configurable parameters to run, e.g. depth or pageId, be sure to define them as class property. If you don’t provide default values, the fields are mandatory in the backend module, otherwise they are optional. 
-Make sure to define setter function for each property.
+Make sure to define a setter function for each property.
 
 All properties are parsed to set up the service form in the backend module automatically. 
 The corresponding form field is based on the var type definition.
@@ -70,7 +70,9 @@ Therefor:
 Localization key specifications:
 
 * Service description: description.serviceName
+* Extended service description for info module: description.extended.serviceName
 * Parameter form label: label.parameterName
+* Parameter description for info module: description.parameterName
 
 .. code-block:: xlfxml
 
@@ -78,10 +80,16 @@ Localization key specifications:
    <trans-unit id="description.myService">
         <source>My service can do magic</source>
     </trans-unit>
+    <trans-unit id="description.extended.myService">
+        <source>My service can do magic</source>
+    </trans-unit>
     
    <!-- PARAMETER -->
     <trans-unit id="label.myProperty">
         <source>My property</source>
+    </trans-unit>
+    <trans-unit id="description.myProperty">
+        <source>My property is used for</source>
     </trans-unit>
 
 
@@ -93,7 +101,7 @@ Localization key specifications:
    <?php
    namespace Vendor\MyExtension\Service;
 
-   class MyService extends \CReifenscheid\CleanupTools\Service\AbstractCleanupService
+   class MyService extends \CReifenscheid\CleanupTools\Service\CleanupService\AbstractCleanupService
    {
         /**
          * my first class var

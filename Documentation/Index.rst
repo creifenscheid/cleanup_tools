@@ -22,9 +22,6 @@ Cleanup Tools
 :Authors:
    C. Reifenscheid
 
-:Email:
-   christian.reifenscheid.2112@gmail.com
-
 :License:
    This extension documentation is published under the
    `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons)
