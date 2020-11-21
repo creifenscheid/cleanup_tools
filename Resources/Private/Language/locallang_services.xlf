@@ -41,6 +41,12 @@
             <trans-unit id="description.extended.MissingFilesService">
                 <source>Find all file references from records pointing to a missing (non-existing) file.</source>
             </trans-unit>
+             <trans-unit id="description.FilesWithMultipleReferencesService">
+                <source>Finds files within uploads/ which are used multiple times by relations within the database</source>
+            </trans-unit>
+            <trans-unit id="description.extended.FilesWithMultipleReferencesService">
+                <source>Looking for files from TYPO3 managed records which are referenced more than once</source>
+            </trans-unit>
             
            <!-- PARAMETER -->
             <trans-unit id="label.updateRefindex">
