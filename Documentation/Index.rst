@@ -20,7 +20,7 @@ Cleanup Tools
    en
 
 :Authors:
-   C. Reifenscheid
+   Christian Reifenscheid
 
 :License:
    This extension documentation is published under the
