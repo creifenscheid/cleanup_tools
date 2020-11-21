@@ -1,7 +1,6 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * *************************************************************
@@ -83,7 +82,7 @@ class CleanupService
     /**
      * Configuration service
      *
-     * @var ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 

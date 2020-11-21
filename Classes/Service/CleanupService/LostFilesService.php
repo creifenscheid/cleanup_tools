@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace CReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service\CleanupService;
 
 /**
  * *************************************************************
@@ -35,7 +35,7 @@ namespace CReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\LostFilesCommand::class
  *
- * @package CReifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
 class LostFilesService extends AbstractCleanupService
@@ -230,8 +230,10 @@ class LostFilesService extends AbstractCleanupService
      *
      * @param array $lostFiles
      *            Contains the lost files found
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function deleteLostFiles(array $lostFiles)
+    protected function deleteLostFiles(array $lostFiles) : \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // error counter
         $errors = 0;

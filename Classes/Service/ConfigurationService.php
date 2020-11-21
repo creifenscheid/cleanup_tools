@@ -187,7 +187,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getServices(): array
     {
-        return $this->services;
+        $services = $this->services;
+        ksort($services);
+        return $services;
     }
 
     /**
@@ -276,7 +278,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         ];
 
         // get last log of method
-        /** @var Log $lastLog */
+        /** @var \CReifenscheid\CleanupTools\Domain\Model\Log $lastLog */
         $lastLog = $this->logRepository->findByService($class);
 
         if ($lastLog) {

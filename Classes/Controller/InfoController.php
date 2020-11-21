@@ -2,6 +2,7 @@
 
 namespace CReifenscheid\CleanupTools\Controller;
 
+
 /**
  * *************************************************************
  *
@@ -44,7 +45,8 @@ class InfoController extends BaseController
      */
     public function indexAction(): void
     {
-         $services = $this->configurationService->getServices();
+        $services = $this->configurationService->getServices();
+         
          $this->view->assign('services', $services);
     }
 }

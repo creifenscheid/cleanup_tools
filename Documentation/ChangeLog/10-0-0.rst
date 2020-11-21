@@ -3,9 +3,9 @@
 
 .. _10-0-0:
 
-10.0.0 - 2020/19/04
+10.0.0 - 2020/21/11
 ==================
 
 Changes
 -------
-No changes - this is the inital release for TYPO3 10.
+No changes - this is the inital release for TYPO3 10LTS.

@@ -1,8 +1,5 @@
 <?php
-namespace CReifenscheid\CleanupTools\Service;
-
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+namespace CReifenscheid\CleanupTools\Service\CleanupService;
 
 /**
  * *************************************************************
@@ -34,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class AbstractCleanupService
  *
- * @packagee CReifenscheid\CleanupTools\Service
+ * @packagee CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
 abstract class AbstractCleanupService

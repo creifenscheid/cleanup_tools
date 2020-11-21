@@ -20,10 +20,7 @@ Cleanup Tools
    en
 
 :Authors:
-   C. Reifenscheid
-
-:Email:
-   christian.reifenscheid.2112@gmail.com
+   Christian Reifenscheid
 
 :License:
    This extension documentation is published under the

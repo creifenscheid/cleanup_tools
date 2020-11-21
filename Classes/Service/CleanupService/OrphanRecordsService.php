@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace CReifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service\CleanupService;
 
 /**
  * *************************************************************
@@ -35,7 +35,7 @@ namespace CReifenscheid\CleanupTools\Service;
  *
  * @see \TYPO3\CMS\Lowlevel\Command\OrphanRecordsCommand::class
  *
- * @package CReifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service\CleanupService
  * @author C. Reifenscheid
  */
 class OrphanRecordsService extends AbstractCleanupService
@@ -79,10 +79,6 @@ class OrphanRecordsService extends AbstractCleanupService
                 $orphans[$tableName] = [];
                 while ($orphanRecord = $result->fetch()) {
                     $orphans[$tableName][$orphanRecord['uid']] = $orphanRecord['uid'];
-                }
-
-                if (count($orphans[$tableName])) {
-                    $io->note('Found ' . count($orphans[$tableName]) . ' orphan records in table "' . $tableName . '" with following ids: ' . implode(', ', $orphans[$tableName]));
                 }
             }
         }
@@ -189,8 +185,10 @@ class OrphanRecordsService extends AbstractCleanupService
      *
      * @param array $orphanedRecords
      *            two level array with tables and uids
+     *
+     * @return \TYPO3\CMS\Core\Messaging\FlashMessage
      */
-    protected function deleteRecords(array $orphanedRecords)
+    protected function deleteRecords(array $orphanedRecords) : \TYPO3\CMS\Core\Messaging\FlashMessage
     {
         // Putting "pages" table in the bottom
         if (isset($orphanedRecords['pages'])) {
