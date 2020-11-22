@@ -1,8 +1,8 @@
-# TYPO3 Extension `Cleanup Tools`
+# TYPO3 Extension "Cleanup Tools"
 
 ### Purpose
-The core extension `lowlevel`[1] provides some great features, e.g. checking and cleaning flexforms.
-Inspired by these tools, `Cleanup tools` provides various possibilities to check and clean up your TYPO3 installation.
+The core extension [**"lowlevel"**][1] provides some great features, e.g. checking and cleaning flexforms.
+Inspired by these tools, "Cleanup tools" provides various possibilities to check and clean up your TYPO3 installation.
 It is shipped with adaptions of the lowlevel tools and can be extended by your own services easily.
 
 ### Tools
