@@ -8,7 +8,6 @@ module.tx_cleanuptools {cleanupService
     settings {
         localizationFilePaths {
         	10 = EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
-        	20 = EXT:cleanup_tools/Resources/Private/Language/locallang.xlf
         }
         
         # comma separated list of time spans
