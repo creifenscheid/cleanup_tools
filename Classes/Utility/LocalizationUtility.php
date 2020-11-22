@@ -44,6 +44,22 @@ class LocalizationUtility
      */
     public static function translate(string $key): ?string
     {
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class)
         
+        $localizationPaths = $configurationService->getLocalizationFilePaths();
+        
+        foreach ($localizationPaths as $localizationPath) {
+            if (!\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($key, 'LLL:')) {
+                $localizationPath = "LLL:" . $localizationPath;
+            }
+            
+            $localizationValue = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($localizationPath . ':' . $key);
+            
+            if (!empty($localizationValue)) {
+                return $localizationValue;
+            }
+        }
+        
+        return null;
     }
 }
