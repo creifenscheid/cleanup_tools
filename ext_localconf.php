@@ -5,7 +5,7 @@ defined('TYPO3_MODE') or die();
 
 (function ($extKey) {
    
-    // Register icons
+    // ICONS
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Imaging\IconRegistry::class);
     
     $icons = [
@@ -19,10 +19,10 @@ defined('TYPO3_MODE') or die();
         ]);
     }
     
-    // get extension configuration
+    // EXTENSION CONFIGURATION
     $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
     
-    // Register toolbar item
+    // TOOLBAR ITEM
     if ($extensionConfiguration['enableToolbarItem']) {
         $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1435433112] = \CReifenscheid\CleanupTools\Backend\Toolbar\CleanupToolbarItem::class;
     }
@@ -62,5 +62,8 @@ defined('TYPO3_MODE') or die();
             }
         }
     ');
+    
+    // VIEWHELPER NAMESPACE
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['ct'] = ['CReifenscheid\\CleanupTools\\ViewHelpers'];
     
 })('cleanup_tools');
