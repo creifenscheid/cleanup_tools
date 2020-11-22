@@ -63,8 +63,8 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
                 'executionContext' => \CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
-            // @ToDo:Localizaton
-            //$this->cleanupServices[$service]['description'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
+            $this->cleanupServices[$service]['description'] = \CReifenscheid\CleanupTools\Utility\LocalizationUtility::translate('description.' . $serviceConfiguration['name']);
+            
             $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
