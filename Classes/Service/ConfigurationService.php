@@ -116,43 +116,50 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         $this->logRepository = $logRepository;
 
         // get module configuration
-        $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
-
-        // get localization file paths from typoscript configuration
-        $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
+        $moduleConfiguration = $extbaseFrameworkConfiguration['module.']['tx_cleanuptools.'];
         
-        // set log lifetime options from typoscript config
-        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
-        
-        if ($logLifetimeOptions) {
-            foreach ($logLifetimeOptions as $logLifetimeOption) {
-                $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
-            }
+        if ($moduleConfiguration) {
+            $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($moduleConfiguration);
         }
 
-        // loop through configured utilities
-        foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
+        if ($this->configuration) {
+            // get localization file paths from typoscript configuration
+            $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
 
-            // skip service if not enabled
-            if (! $serviceConfiguration['enable']) {
-                continue;
+            // set log lifetime options from typoscript config
+            $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+
+            if ($logLifetimeOptions) {
+                foreach ($logLifetimeOptions as $logLifetimeOption) {
+                    $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
+                }
             }
 
-            // check if execute() exists
-            if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
+            // loop through configured services
+            if ($this->configuration['services']) {
+                foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
 
-                // set up service configuration
-                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
-                
-                // check additional usage configuration of service
-                foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                    if ((int) $state === 1) {
-                        $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                    // skip service if not enabled
+                    if (! $serviceConfiguration['enable']) {
+                        continue;
                     }
-                 }
-            } else {
 
-                $this->errorServices[] = $serviceClass;
+                    // check if execute() exists
+                    if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
+
+                        // set up service configuration
+                        $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
+
+                        // check additional usage configuration of service
+                        foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                            if ((int) $state === 1) {
+                                $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                            }
+                         }
+                    } else {
+                        $this->errorServices[] = $serviceClass;
+                    }
+                }
             }
         }
     }
