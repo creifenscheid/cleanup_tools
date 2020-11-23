@@ -1,8 +1,6 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * *************************************************************
  *
