@@ -1,4 +1,4 @@
-module.tx_cleanuptools {cleanupService
+module.tx_cleanuptools {
     view {
         templateRootPaths.0 = EXT:cleanup_tools/Resources/Private/Templates/
         partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Partials/
