@@ -47,67 +47,6 @@
             <trans-unit id="description.extended.FilesWithMultipleReferencesService">
                 <source>Looking for files from TYPO3 managed records which are referenced more than once</source>
             </trans-unit>
-            
-           <!-- PARAMETER -->
-            <trans-unit id="label.updateRefindex">
-                <source>Update reference index</source>
-            </trans-unit>
-            <trans-unit id="description.updateRefindex">
-                <source>Setting this option automatically updates the reference index and does not ask on command line. Alternatively, use -n to avoid the interactive mode</source>
-            </trans-unit>
-            <trans-unit id="label.recordUid">
-                <source>Record uid</source>
-            </trans-unit>
-            <trans-unit id="label.pid">
-                <source>Page uid</source>
-            </trans-unit>
-            <trans-unit id="description.pid">
-                <source>Setting start page in page tree. Default is the page tree root, 0 (zero)</source>
-            </trans-unit>
-            <trans-unit id="label.depth">
-                <source>Depth</source>
-            </trans-unit>
-            <trans-unit id="description.depth">
-                <source>Setting traversal depth. 0 (zero) will only analyze start page (see --pid), 1 will traverse one level of subpages etc.</source>
-            </trans-unit>
-            <trans-unit id="label.dryRun">
-                <source>Dry run</source>
-            </trans-unit>
-            <trans-unit id="description.dryRun">
-                <source>If this option is set, the records will not be updated, but only show the output which records would have been updated.</source>
-            </trans-unit>
-            <trans-unit id="label.exclude">
-                <source>Paths that should be excluded</source>
-            </trans-unit>
-            <trans-unit id="description.exclude">
-                <source>Comma-separated list of paths that should be excluded, e.g. "uploads/pics,uploads/media"</source>
-            </trans-unit>
-            <trans-unit id="label.customPath">
-                <source>Paths to process (default: uploads)</source>
-            </trans-unit>
-            <trans-unit id="description.customPath">
-                <source>Comma separated list of paths to process. Example: "fileadmin/[path1],fileadmin/[path2],...", if not passed, uploads/ will be used by default.</source>
-            </trans-unit>
-            
-            <!-- CONFIGURATION -->
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-day">
-                <source>1 day</source>
-            </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-week">
-                <source>1 week</source>
-            </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-month">
-                <source>1 month</source>
-            </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.3-months">
-                <source>3 months</source>
-            </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.6-months">
-                <source>6 months</source>
-            </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-year">
-                <source>1 year</source>
-            </trans-unit>
         </body>
     </file>
 </xliff>
