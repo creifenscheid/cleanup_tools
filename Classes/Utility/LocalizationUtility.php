@@ -41,8 +41,9 @@ class LocalizationUtility
      * Returns the localized label of the LOCAL_LANG key, $key.
      *
      * @param string $key The key from the LOCAL_LANG array for which to return the value.
+     * @param array|null $arguments
      */
-    public static function translate(string $key): ?string
+    public static function translate(string $key, array $arguments = null): ?string
     {
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class)
         
@@ -53,7 +54,7 @@ class LocalizationUtility
                 $localizationPath = "LLL:" . $localizationPath;
             }
             
-            $localizationValue = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($localizationPath . ':' . $key);
+            $localizationValue = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($localizationPath . ':' . $key, null, $arguments);
             
             if (!empty($localizationValue)) {
                 return $localizationValue;
