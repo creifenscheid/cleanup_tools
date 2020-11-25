@@ -62,7 +62,7 @@
             
                 <f:if condition="{message.localLangKey}">
                     <f:then>
-                        <f:translate key="{localizationFile}:{message.localLangKey}" arguments="{message.localLangArguments}" />
+                        <ct:translate key="{message.localLangKey}" arguments="{message.localLangArguments}" />
                     </f:then>
                     <f:else>
                         {message.message}

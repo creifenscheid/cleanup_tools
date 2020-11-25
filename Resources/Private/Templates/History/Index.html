@@ -43,7 +43,7 @@
                     <tbody>
                     <f:widget.paginate objects="{logs}" as="paginatedLogs" configuration="{itemsPerPage: 15, insertAbove: 1, insertBelow: 0, maximumNumberOfLinks: 3}">
                     	<f:for each="{paginatedLogs}" as="log">
-	                        <f:render partial="History/Log" arguments="{localizationFile:localizationFile,log:log}"/>
+	                        <f:render partial="History/Log" arguments="{log:log}"/>
 	                    </f:for>
                     </f:widget.paginate>
                     
@@ -57,7 +57,7 @@
                     	<f:form.select name="logLifetime" id="log-lifetime-select" class="form-control input-sm">
                     		<f:for each="{logLifetimeOptions}" as="logLifetimeOption" key="key">
                     			<f:form.select.option value="{logLifetimeOption}">
-                    				<f:translate key="{localizationFile}:module.history.cleanupForm.label.logLiftime.{key}" />
+                    				<f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.cleanupForm.label.logLiftime.{key}" />
                     			</f:form.select.option>
                     		</f:for>
                     	</f:form.select>

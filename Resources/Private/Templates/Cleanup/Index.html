@@ -13,7 +13,7 @@
                 
                 <div class="card-container">
                     <f:for each="{services}" as="service" iteration="iterator">
-                        <f:render partial="Cleanup/Item" arguments="{localizationFile:localizationFile,service:service}"/>
+                        <f:render partial="Cleanup/Item" arguments="{service:service}"/>
                     </f:for>
                 </div>
             </div>
