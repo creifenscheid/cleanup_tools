@@ -18,7 +18,9 @@ Settings
 
    module.tx_cleanuptools {
        settings {
-           localizationFile = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
+           localizationFilePaths { 
+               10 = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_properties.xlf
+           }
         # comma separated list of time spans
         logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
        }
@@ -27,19 +29,19 @@ Settings
 Properties
 ~~~~~~~~~~
 
-localizationFile
-""""""""""""""""
+localizationFilePaths
+"""""""""""""""""""""
 
 .. container:: table-row
 
     Property
-         localizationFile
+         localizationFilePaths
 
     Data type
-         string
+         array
 
     Description
-         Path to localization file with service related values
+         Paths to localization files with service related values. Paths will be resolved automatically
          
 logLifetimeOptions
 """"""""""""""""""
