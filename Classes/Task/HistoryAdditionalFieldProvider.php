@@ -51,20 +51,12 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $taskName = 'cleanuptools_historytask_';
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * HistoryAdditionalFieldProvider constructor.
      */
     public function __construct()
     {
         // init configurationService
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
@@ -167,7 +159,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 }
                 
                 // add option to option storage
-                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':module.history.cleanupForm.label.logLiftime.'.$label, 'CleanupTools') . '</option>';
+                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \CReifenscheid\CleanupTools\Utility\LocalizationUtility::translate('module.history.cleanupForm.label.logLiftime.'.$label) . '</option>';
             }
             
             // return html for select field with option groups and options

@@ -8,14 +8,14 @@
     <div class="card-body toggle-container description description-{service.name}">
 	    <f:variable name="descriptionKey">description.extended.{service.name}</f:variable>
         <p>
-        	<f:translate key="{localizationFile}:{descriptionKey}" />
+        	<ct:translate key="{descriptionKey}" />
         </p><br />
         <p>
         	<strong><f:translate key="LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:module.history.th.parameter" /></strong>
         	
         	<f:for each="{service.method.parameters}" as="parameter">
 	            <f:if condition="{parameter.type}">
-	            	<p>{parameter.name}: <f:translate key="{localizationFile}:description.{parameter.name}" /></p>
+	            	<p>{parameter.name}: <ct:translate key="description.{parameter.name}" /></p>
 			    </f:if>
 	        </f:for>
         </p>

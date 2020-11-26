@@ -1,7 +1,7 @@
-<f:variable name="labelFloat">{localizationFile}:label.{name}</f:variable>
+<f:variable name="labelFloat">label.{name}</f:variable>
 
 <div class="form-group">
-    <label for="{serviceMethod}-{name}">{f:translate(key:labelFloat)} [float]</label>
+    <label for="{serviceMethod}-{name}">{ct:translate(key:labelFloat)} [float]</label>
     <f:if condition="{mandatory}">
         <f:then>
             <f:form.textfield id="{service}-{name}" class="form-control" name="parameters[{name}]" value="" type="text" additionalAttributes="{pattern:'[0-9.]', required:'required'}" placeholder="<required>"/>

@@ -51,20 +51,12 @@ class CleanupAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $taskName = 'cleanuptools_cleanuptask_';
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * CleanupAdditionalFieldProvider constructor.
      */
     public function __construct()
     {
         // init configurationService
         $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**

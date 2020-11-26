@@ -44,13 +44,6 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     protected $cleanupServices = [];
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * CleanupToolbarItem constructor
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
@@ -60,7 +53,6 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
         $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
         $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
         
-        $this->localizationFile = $configurationService->getLocalizationFile();
         $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 
         foreach ($this->cleanupServices as $service => $serviceConfiguration) {
@@ -71,7 +63,8 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
                 'executionContext' => \CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
-            $this->cleanupServices[$service]['description'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
+            $this->cleanupServices[$service]['description'] = \CReifenscheid\CleanupTools\Utility\LocalizationUtility::translate('description.' . $serviceConfiguration['name']);
+            
             $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
@@ -99,7 +92,6 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getItem()
     {
         $view = $this->getFluidTemplateObject('CleanupToolbarItem.html');
-        $view->assign('localizationFile', $this->localizationFile);
 
         return $view->render();
     }
@@ -123,8 +115,7 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     {
         $view = $this->getFluidTemplateObject('CleanupToolbarItemDropDown.html');
         $view->assignMultiple([
-            'cleanupServices' => $this->cleanupServices,
-            'localizationFile' => $this->localizationFile
+            'cleanupServices' => $this->cleanupServices
         ]);
 
         return $view->render();

@@ -69,7 +69,6 @@ class HistoryController extends BaseController
 
         // assign to the view
         $this->view->assignMultiple([
-            'localizationFile' => $this->localizationFile,
             'logs' => $this->logRepository->findAll(),
             'logLifetimeOptions' => $this->configurationService->getLogLifetimeOptions()
         ]);

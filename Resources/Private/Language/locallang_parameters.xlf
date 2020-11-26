@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+   <file source-language="en" datatype="plaintext" original="EXT:cleanup_tools/Resources/Private/Language/locallang_parameters.xlf" date="2020-11-26T11:55:00Z" product-name="cleanup_tools">
+      <header/>
+      <body>
+        	<!-- PARAMETER -->
+            <trans-unit id="label.updateRefindex" resname="label.updateRefindex">
+                <source>Update reference index</source>
+            </trans-unit>
+            <trans-unit id="description.updateRefindex" resname="description.updateRefindex">
+                <source>Setting this option automatically updates the reference index and does not ask on command line. Alternatively, use -n to avoid the interactive mode</source>
+            </trans-unit>
+            <trans-unit id="label.recordUid" resname="label.recordUid">
+                <source>Record uid</source>
+            </trans-unit>
+            <trans-unit id="label.pid" resname="label.pid">
+                <source>Page uid</source>
+            </trans-unit>
+            <trans-unit id="description.pid" resname="description.pid">
+                <source>Setting start page in page tree. Default is the page tree root, 0 (zero)</source>
+            </trans-unit>
+            <trans-unit id="label.depth" resname="label.depth">
+                <source>Depth</source>
+            </trans-unit>
+            <trans-unit id="description.depth" resname="description.depth">
+                <source>Setting traversal depth. 0 (zero) will only analyze start page (see --pid), 1 will traverse one level of subpages etc.</source>
+            </trans-unit>
+            <trans-unit id="label.dryRun" resname="label.dryRun">
+                <source>Dry run</source>
+            </trans-unit>
+            <trans-unit id="description.dryRun" resname="description.dryRun">
+                <source>If this option is set, the records will not be updated, but only show the output which records would have been updated.</source>
+            </trans-unit>
+            <trans-unit id="label.exclude" resname="label.exclude">
+                <source>Paths that should be excluded</source>
+            </trans-unit>
+            <trans-unit id="description.exclude" resname="description.exclude">
+                <source>Comma-separated list of paths that should be excluded, e.g. "uploads/pics,uploads/media"</source>
+            </trans-unit>
+            <trans-unit id="label.customPath" resname="label.customPath">
+                <source>Paths to process (default: uploads)</source>
+            </trans-unit>
+            <trans-unit id="description.customPath" resname="description.customPath">
+                <source>Comma separated list of paths to process. Example: "fileadmin/[path1],fileadmin/[path2],...", if not passed, uploads/ will be used by default.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

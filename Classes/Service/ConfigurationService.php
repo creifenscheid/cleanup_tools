@@ -1,8 +1,6 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * *************************************************************
  *
@@ -86,11 +84,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $additionalUsages = [];
 
     /**
-     * localizationFile
+     * localizationFilePaths
      *
-     * @var string
+     * @var array
      */
-    protected $localizationFile = '';
+    protected $localizationFilePaths = [];
 
     /**
      * log lifetime options
@@ -118,55 +116,64 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         $this->logRepository = $logRepository;
 
         // get module configuration
-        $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
-
-        // set localization from typoscript configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
-
-        // set log lifetime options from typoscript config
-        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        $moduleConfiguration = $extbaseFrameworkConfiguration['module.']['tx_cleanuptools.'];
         
-        if ($logLifetimeOptions) {
-            foreach ($logLifetimeOptions as $logLifetimeOption) {
-                $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
-            }
+        if ($moduleConfiguration) {
+            $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($moduleConfiguration);
         }
 
-        // loop through configured utilities
-        foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
+        if ($this->configuration) {
+            // get localization file paths from typoscript configuration
+            $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
 
-            // skip service if not enabled
-            if (! $serviceConfiguration['enable']) {
-                continue;
+            // set log lifetime options from typoscript config
+            $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+
+            if ($logLifetimeOptions) {
+                foreach ($logLifetimeOptions as $logLifetimeOption) {
+                    $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
+                }
             }
 
-            // check if execute() exists
-            if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
+            // loop through configured services
+            if ($this->configuration['services']) {
+                foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
 
-                // set up service configuration
-                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
-                
-                // check additional usage configuration of service
-                foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                    if ((int) $state === 1) {
-                        $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                    // skip service if not enabled
+                    if (! $serviceConfiguration['enable']) {
+                        continue;
                     }
-                 }
-            } else {
 
-                $this->errorServices[] = $serviceClass;
+                    // check if execute() exists
+                    if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
+
+                        // set up service configuration
+                        $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
+
+                        // check additional usage configuration of service
+                        foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                            if ((int) $state === 1) {
+                                $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                            }
+                         }
+                    } else {
+                        $this->errorServices[] = $serviceClass;
+                    }
+                }
             }
         }
     }
-
+    
     /**
-     * Returns the localization file
+     * Returns the localization file paths
      *
-     * @return string
+     * @return array
      */
-    public function getLocalizationFile(): string
+    public function getLocalizationFilePaths(): array
     {
-        return $this->localizationFile;
+        $localizationPaths = $this->localizationFilePaths;
+        krsort($localizationPaths);
+        return $localizationPaths;
     }
 
     /**

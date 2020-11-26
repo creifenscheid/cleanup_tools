@@ -52,13 +52,6 @@ class AjaxController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $configurationService;
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * Constructor
      *
      * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
@@ -68,7 +61,6 @@ class AjaxController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $this->cleanupService = $cleanupService;
         $this->configurationService = $configurationService;
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
     }
 
     /**
