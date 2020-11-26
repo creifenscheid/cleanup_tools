@@ -3,6 +3,7 @@
 namespace CReifenscheid\CleanupTools\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * *************************************************************
@@ -56,10 +57,11 @@ class TranslateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractView
      * Return array element by key.
      *
      * @param array $arguments
-     * @throws Exception
-     * @return string
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return mixed
      */
-    public static function renderStatic(array $arguments)
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         $key = $arguments['key'];
         $translateArguments = $arguments['arguments'];

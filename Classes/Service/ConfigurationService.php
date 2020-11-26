@@ -122,7 +122,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($moduleConfiguration);
         }
 
-        if ($this->configuration) {
+        if ($this->configuration) {
             // get localization file paths from typoscript configuration
             $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
 

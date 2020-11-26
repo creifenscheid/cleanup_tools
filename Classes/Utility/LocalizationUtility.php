@@ -45,7 +45,7 @@ class LocalizationUtility
      */
     public static function translate(string $key, array $arguments = null): ?string
     {
-        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class)
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
         
         $localizationPaths = $configurationService->getLocalizationFilePaths();
         
