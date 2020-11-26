@@ -4,6 +4,9 @@ defined('TYPO3_MODE') or die();
 
 
 (function ($extKey) {
+    
+    // CLEANUP SERVICE REGISTRATION
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService('cleanFlexFormsService', \CReifenscheid\CleanupTools\Service\CleanupService\CleanFlexFormsService::class);
    
     // ICONS
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Imaging\IconRegistry::class);
