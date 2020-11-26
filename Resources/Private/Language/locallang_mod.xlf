@@ -1,226 +1,225 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2020-04-19T11:55:00Z"
-          product-name="cleanup_tools">
-        <header/>
-        <body>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+   <file source-language="en" datatype="plaintext" original="EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf" date="2020-11-26T11:55:00Z" product-name="cleanup_tools">
+      <header/>
+      <body>
             <!-- EXECUTION CONTEXTS -->
-            <trans-unit id="tx_cleanuptools.general.executioncontext.0">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.0"  resname="tx_cleanuptools.general.executioncontext.0">
                 <source>BE module</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.executioncontext.1">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.1" resname="tx_cleanuptools.general.executioncontext.1">
                 <source>Toolbar</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.executioncontext.2">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.2" resname="tx_cleanuptools.general.executioncontext.2">
                 <source>Scheduler</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.executioncontext.3">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.3" resname="tx_cleanuptools.general.executioncontext.3">
                 <source>Preview renderer</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.executioncontext.4">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.4" resname="tx_cleanuptools.general.executioncontext.4">
                 <source>After database operation</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.executioncontext.5">
+            <trans-unit id="tx_cleanuptools.general.executioncontext.5" resname="tx_cleanuptools.general.executioncontext.5">
                 <source>Dashboard widget</source>
             </trans-unit>
 
             <!-- STATES -->
-            <trans-unit id="tx_cleanuptools.general.state.error">
+            <trans-unit id="tx_cleanuptools.general.state.error" resname="tx_cleanuptools.general.state.error">
                 <source>error</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools.general.state.ok">
+            <trans-unit id="tx_cleanuptools.general.state.ok" resname="tx_cleanuptools.general.state.ok">
                 <source>ok</source>
             </trans-unit>
 
             <!-- LABEL -->
-            <trans-unit id="label.yes">
+            <trans-unit id="label.yes" resname="label.yes">
                 <source>Yes, please.</source>
             </trans-unit>
-            <trans-unit id="label.no">
+            <trans-unit id="label.no" resname="label.no">
                 <source>No, thank you.</source>
             </trans-unit>
-            <trans-unit id="yes">
+            <trans-unit id="yes" resname="yes">
                 <source>yes</source>
             </trans-unit>
-            <trans-unit id="no">
+            <trans-unit id="no" resname="no">
                 <source>no</source>
             </trans-unit>
 
             <!-- MISC -->
-            <trans-unit id="tx_cleanuptools.general.inExectionContext">
+            <trans-unit id="tx_cleanuptools.general.inExectionContext" resname="tx_cleanuptools.general.inExectionContext">
                 <source>in "%s" context</source>
             </trans-unit>
 
             <!-- BE MODULE -->
-            <trans-unit id="mlang_tabs_tab">
+            <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
                 <source>Cleanup Tools</source>
             </trans-unit>
-            <trans-unit id="mlang_labels_tabdescr">
+            <trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr">
                 <source>Cleanup Tools</source>
             </trans-unit>
-            <trans-unit id="module.headline">
+            <trans-unit id="module.headline" resname="module.headline">
                 <source>Cleanup Tools</source>
             </trans-unit>
-            <trans-unit id="module.menu.cleanup">
+            <trans-unit id="module.menu.cleanup" resname="module.menu.cleanup">
                 <source>Cleanup Tools</source>
             </trans-unit>
-            <trans-unit id="module.menu.history">
+            <trans-unit id="module.menu.history" resname="module.menu.history">
                 <source>History</source>
             </trans-unit>
-            <trans-unit id="module.menu.info">
+            <trans-unit id="module.menu.info" resname="module.menu.info">
                 <source>Info</source>
             </trans-unit>
-            <trans-unit id="module.lastLog.days">
+            <trans-unit id="module.lastLog.days" resname="module.lastLog.days">
                 <source>executed %s days ago</source>
             </trans-unit>
-            <trans-unit id="module.lastLog.yesterday">
+            <trans-unit id="module.lastLog.yesterday" resname="module.lastLog.yesterday">
                 <source>executed yesterday</source>
             </trans-unit>
-            <trans-unit id="module.lastLog.today">
+            <trans-unit id="module.lastLog.today" resname="module.lastLog.today">
                 <source>executed today, %s</source>
             </trans-unit>
-            <trans-unit id="module.lastLog.user">
+            <trans-unit id="module.lastLog.user" resname="module.lastLog.user">
                 <source>by</source>
             </trans-unit>
-            <trans-unit id="module.notProcessed">
+            <trans-unit id="module.notProcessed" resname="module.notProcessed">
                 <source>not executed so far</source>
             </trans-unit>
-            <trans-unit id="module.submit">
+            <trans-unit id="module.submit" resname="module.submit">
                 <source>Clean up</source>
             </trans-unit>
 
             <!-- HISTORY MODULE -->
-            <trans-unit id="module.history.headline">
+            <trans-unit id="module.history.headline" resname="module.history.headline">
                 <source>History</source>
             </trans-unit>
-            <trans-unit id="module.history.th.date">
+            <trans-unit id="module.history.th.date" resname="module.history.th.date">
                 <source>Date</source>
             </trans-unit>
-            <trans-unit id="module.history.th.service">
+            <trans-unit id="module.history.th.service" resname="module.history.th.service">
                 <source>Service</source>
             </trans-unit>
-            <trans-unit id="module.history.th.parameter">
+            <trans-unit id="module.history.th.parameter" resname="module.history.th.parameter">
                 <source>Parameter</source>
             </trans-unit>
-            <trans-unit id="module.history.th.user">
+            <trans-unit id="module.history.th.user" resname="module.history.th.user">
                 <source>User</source>
             </trans-unit>
-            <trans-unit id="module.history.th.executionContext">
+            <trans-unit id="module.history.th.executionContext" resname="module.history.th.executionContext">
                 <source>Execution context</source>
             </trans-unit>
-            <trans-unit id="module.history.th.state">
+            <trans-unit id="module.history.th.state" resname="module.history.th.state">
                 <source>State</source>
             </trans-unit>
-            <trans-unit id="module.history.th.messages">
+            <trans-unit id="module.history.th.messages" resname="module.history.th.messages">
                 <source>Messages</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime" resname="module.history.cleanupForm.label.logLiftime">
                 <source>Delete logs older then:</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.submit">
+            <trans-unit id="module.history.cleanupForm.label.submit" resname="module.history.cleanupForm.label.submit">
                 <source>Clean up</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-day">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-day" resname="module.history.cleanupForm.label.logLiftime.1-day">
                 <source>1 day</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-week">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-week" resname="module.history.cleanupForm.label.logLiftime.1-week">
                 <source>1 week</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-month">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-month" resname="module.history.cleanupForm.label.logLiftime.1-month">
                 <source>1 month</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.3-months">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.3-months" resname="module.history.cleanupForm.label.logLiftime.3-months">
                 <source>3 months</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.6-months">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.6-months" resname="module.history.cleanupForm.label.logLiftime.6-months">
                 <source>6 months</source>
             </trans-unit>
-            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-year">
+            <trans-unit id="module.history.cleanupForm.label.logLiftime.1-year" resname="module.history.cleanupForm.label.logLiftime.1-year">
                 <source>1 year</source>
             </trans-unit>
             
             <!-- INFO MODULE -->
-            <trans-unit id="module.info.headline">
+            <trans-unit id="module.info.headline" resname="module.info.headline">
                 <source>Service information</source>
             </trans-unit>
 
             <!-- TASKS -->
-            <trans-unit id="tasks.error.noServices">
+            <trans-unit id="tasks.error.noServices" resname="tasks.error.noServices">
                 <source>No services configured</source>
             </trans-unit>
-            <trans-unit id="tasks.cleanup.title">
+            <trans-unit id="tasks.cleanup.title" resname="tasks.cleanup.title">
                 <source>CleanupTools</source>
             </trans-unit>
-            <trans-unit id="tasks.cleanup.description">
+            <trans-unit id="tasks.cleanup.description" resname="tasks.cleanup.description">
                 <source>Various tools to cleanup your TYPO3.</source>
             </trans-unit>
-            <trans-unit id="tasks.cleanup.fields.serviceToProcess">
+            <trans-unit id="tasks.cleanup.fields.serviceToProcess" resname="tasks.cleanup.fields.serviceToProcess">
                 <source>Which service shall be executed?</source>
             </trans-unit>
-            <trans-unit id="tasks.cleanup.information">
+            <trans-unit id="tasks.cleanup.information" resname="tasks.cleanup.information">
                 <source>Configured service:</source>
             </trans-unit>
-            <trans-unit id="tasks.history.title">
+            <trans-unit id="tasks.history.title" resname="tasks.history.title">
                 <source>History cleanup</source>
             </trans-unit>
-            <trans-unit id="tasks.history.description">
+            <trans-unit id="tasks.history.description" resname="tasks.history.description">
                 <source>With this task log entries older then a defined lifetime can be deleted.</source>
             </trans-unit>
-            <trans-unit id="tasks.fields.logLifetime">
+            <trans-unit id="tasks.fields.logLifetime" resname="tasks.fields.logLifetime">
                 <source>Log lifetime</source>
             </trans-unit>
 
             <!-- DRAW ITEM HOOK -->
-            <trans-unit id="previewRenderer.message">
+            <trans-unit id="previewRenderer.message" resname="previewRenderer.message">
                 <source>The flexform of this element is not valid and needs to be cleaned up.</source>
             </trans-unit>
 
             <!-- DASHBOARD -->
-            <trans-unit id="dashboard.widget.cleanupinformation.title">
+            <trans-unit id="dashboard.widget.cleanupinformation.title" resname="dashboard.widget.cleanupinformation.title">
                 <source>Cleanup information</source>
             </trans-unit>
-            <trans-unit id="dashboard.widget.cleanupinformation.description">
+            <trans-unit id="dashboard.widget.cleanupinformation.description" resname="dashboard.widget.cleanupinformation.description">
                 <source>Shows information in which points your typo3 installation can be cleaned up.</source>
             </trans-unit>
 
             <!-- FLASH MESSAGES -->
-            <trans-unit id="messages.fallback.headline">
+            <trans-unit id="messages.fallback.headline" resname="messages.fallback.headline">
                 <source>Cleanup Tools says</source>
             </trans-unit>
-            <trans-unit id="messages.error.headline">
+            <trans-unit id="messages.error.headline" resname="messages.error.headline">
                 <source>Oops</source>
             </trans-unit>
-            <trans-unit id="messages.error.message">
+            <trans-unit id="messages.error.message" resname="messages.error.message">
                 <source>Execution of class "%s" was not successfull.</source>
             </trans-unit>
-            <trans-unit id="messages.success.message">
+            <trans-unit id="messages.success.message" resname="messages.success.message">
                 <source>Execution was successfull.</source>
             </trans-unit>
-            <trans-unit id="messages.error.message.no-method">
+            <trans-unit id="messages.error.message.no-method" resname="messages.error.message.no-method">
                 <source>No method was set.</source>
             </trans-unit>
-            <trans-unit id="messages.error-services.message">
+            <trans-unit id="messages.error-services.message" resname="messages.error-services.message">
                 <source>In the following services, the execute function is missing: %s.</source>
             </trans-unit>
-            <trans-unit id="messages.error-services.headline">
+            <trans-unit id="messages.error-services.headline" resname="messages.error-services.headline">
                 <source>Watch out</source>
             </trans-unit>
-            <trans-unit id="messages.hook.warning.headline">
+            <trans-unit id="messages.hook.warning.headline" resname="messages.hook.warning.headline">
                 <source>Watch out</source>
             </trans-unit>
-            <trans-unit id="message.hook.warning.message">
+            <trans-unit id="message.hook.warning.message" resname="message.hook.warning.message">
                 <source>The flexform optimizer had some problems while updating the flexform field with the cleaned flexform. Your changes are saved, but the flexform might be not well formed.
                 </source>
             </trans-unit>
 
             <!-- ARIA -->
-            <trans-unit id="aria.history.togglebutton">
+            <trans-unit id="aria.history.togglebutton" resname="aria.history.togglebutton">
                 <source>Show/hide log messages.</source>
             </trans-unit>
-            <trans-unit id="aria.previewRenderer.cleanup">
+            <trans-unit id="aria.previewRenderer.cleanup" resname="aria.previewRenderer.cleanup">
                 <source>Clean up flexform.</source>
             </trans-unit>
-            <trans-unit id="aria.info.togglebutton">
+            <trans-unit id="aria.info.togglebutton" resname="aria.info.togglebutton">
                 <source>Show/hide description.</source>
             </trans-unit>
         </body>

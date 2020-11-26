@@ -1,50 +1,49 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2020-04-19T11:55:00Z"
-          product-name="cleanup_tools">
-        <header/>
-        <body>
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+   <file source-language="en" datatype="plaintext" original="EXT:cleanup_tools/Resources/Private/Language/locallang_descriptions.xlf" date="2020-11-26T11:55:00Z" product-name="cleanup_tools">
+      <header/>
+      <body>
         	<!-- DESCRIPTIONS -->
-            <trans-unit id="description.CleanFlexFormsService">
+            <trans-unit id="description.CleanFlexFormsService" resname="description.CleanFlexFormsService">
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
             </trans-unit>
-            <trans-unit id="description.extended.CleanFlexFormsService">
-                <source>Updates all database records which have a FlexForm field and the XML data does not match the chosen datastructure.</source>
+            <trans-unit id="description.extended.CleanFlexFormsService" resname="description.extended.CleanFlexFormsService">
+                <source>Updates all database records2 which have a FlexForm field and the XML data does not match the chosen datastructure.</source>
             </trans-unit>
-            <trans-unit id="description.DeletedRecordsService">
+            <trans-unit id="description.DeletedRecordsService" resname="description.DeletedRecordsService">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>
             </trans-unit>
-            <trans-unit id="description.extended.DeletedRecordsService">
+            <trans-unit id="description.extended.DeletedRecordsService" resname="description.extended.DeletedRecordsService">
                 <source>Permanently deletes all records marked as "deleted" in the database</source>
             </trans-unit>
-            <trans-unit id="description.LostFilesService">
+            <trans-unit id="description.LostFilesService" resname="description.LostFilesService">
                 <source>Finds files within uploads/ which are not needed anymore</source>
             </trans-unit>
-            <trans-unit id="description.extended.LostFilesService">
+            <trans-unit id="description.extended.LostFilesService" resname="description.extended.LostFilesService">
                 <source>Looking for files in the uploads/ folder which does not have a reference in TYPO3 managed records.</source>
             </trans-unit>
-            <trans-unit id="description.OrphanRecordsService">
+            <trans-unit id="description.OrphanRecordsService" resname="description.OrphanRecordsService">
                 <source>Finds (and fixes) all records that have an invalid / deleted page ID</source>
             </trans-unit>
-            <trans-unit id="description.extended.OrphanRecordsService">
+            <trans-unit id="description.extended.OrphanRecordsService" resname="description.extended.OrphanRecordsService">
                 <source>Find and delete records that have lost their connection with the page tree.</source>
             </trans-unit>
-            <trans-unit id="description.MissingRelationsService">
+            <trans-unit id="description.MissingRelationsService" resname="description.MissingRelationsService">
                 <source>Find all record references pointing to a non-existing record</source>
             </trans-unit>
-            <trans-unit id="description.extended.MissingRelationsService">
+            <trans-unit id="description.extended.MissingRelationsService" resname="description.extended.MissingRelationsService">
                 <source>Find all record references pointing to a non-existing record</source>
             </trans-unit>
-             <trans-unit id="description.MissingFilesService">
+             <trans-unit id="description.MissingFilesService" resname="description.MissingFilesService">
                 <source>Finds files which are referenced by TYPO3 but not found in the file system</source>
             </trans-unit>
-            <trans-unit id="description.extended.MissingFilesService">
+            <trans-unit id="description.extended.MissingFilesService" resname="description.extended.MissingFilesService">
                 <source>Find all file references from records pointing to a missing (non-existing) file.</source>
             </trans-unit>
-             <trans-unit id="description.FilesWithMultipleReferencesService">
+             <trans-unit id="description.FilesWithMultipleReferencesService" resname="description.FilesWithMultipleReferencesService">
                 <source>Finds files within uploads/ which are used multiple times by relations within the database</source>
             </trans-unit>
-            <trans-unit id="description.extended.FilesWithMultipleReferencesService">
+            <trans-unit id="description.extended.FilesWithMultipleReferencesService" resname="description.extended.FilesWithMultipleReferencesService">
                 <source>Looking for files from TYPO3 managed records which are referenced more than once</source>
             </trans-unit>
         </body>

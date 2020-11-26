@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2020-04-19T11:55:00Z"
-          product-name="cleanup_tools">
-        <header/>
-        <body>
+<xliff version="1.0" xmlns="urn:oasis:names:tc:xliff:document:1.1">
+   <file source-language="en" datatype="plaintext" original="EXT:cleanup_tools/Resources/Private/Language/locallang_tca.xlf" date="2020-11-26T11:55:00Z" product-name="cleanup_tools">
+      <header/>
+      <body>
             <!-- PALETTES -->
-            <trans-unit id="tx_cleanuptools_domain_model.general.palettes.creation">
+            <trans-unit id="tx_cleanuptools_domain_model.general.palettes.creation" resname="tx_cleanuptools_domain_model.general.palettes.creation">
                 <source>Creation</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log.palettes.logData">
+            <trans-unit id="tx_cleanuptools_domain_model_log.palettes.logData" resname="tx_cleanuptools_domain_model_log.palettes.logData">
                 <source>Log data</source>
             </trans-unit>
             
             <!-- TABS -->
-            <trans-unit id="tx_cleanuptools_domain_model_log.tab.messages">
+            <trans-unit id="tx_cleanuptools_domain_model_log.tab.messages" resname="tx_cleanuptools_domain_model_log.tab.messages">
                 <source>Messages</source>
             </trans-unit>
 
             <!-- GENERAL -->
-            <trans-unit id="tx_cleanuptools_domain_model.general.crdate">
+            <trans-unit id="tx_cleanuptools_domain_model.general.crdate" resname="tx_cleanuptools_domain_model.general.crdate">
                 <source>Creation date</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model.general.cruser_id">
+            <trans-unit id="tx_cleanuptools_domain_model.general.cruser_id" resname="tx_cleanuptools_domain_model.general.cruser_id">
                 <source>Created by user</source>
             </trans-unit>
 
             <!-- LOG -->
-            <trans-unit id="tx_cleanuptools_domain_model_log">
+            <trans-unit id="tx_cleanuptools_domain_model_log" resname="tx_cleanuptools_domain_model_log">
                 <source>Log</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log.execution_context">
+            <trans-unit id="tx_cleanuptools_domain_model_log.execution_context" resname="tx_cleanuptools_domain_model_log.execution_context">
                 <source>Execution context</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log.service">
+            <trans-unit id="tx_cleanuptools_domain_model_log.service" resname="tx_cleanuptools_domain_model_log.service">
                 <source>Service</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log.state">
+            <trans-unit id="tx_cleanuptools_domain_model_log.state" resname="tx_cleanuptools_domain_model_log.state">
                 <source>State</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log.messages">
+            <trans-unit id="tx_cleanuptools_domain_model_log.messages" resname="tx_cleanuptools_domain_model_log.messages">
                 <source>Messages</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log.parameters“>
+            <trans-unit id=„tx_cleanuptools_domain_model_log.parameters“ resname="tx_cleanuptools_domain_model_log.parameters">
                 <source>Parameters</source>
             </trans-unit>
             
             <!-- LOG MESSAGE -->
-            <trans-unit id="tx_cleanuptools_domain_model_log_message">
+            <trans-unit id="tx_cleanuptools_domain_model_log_message" resname="tx_cleanuptools_domain_model_log_message">
                 <source>Log message</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log_message.log">
+            <trans-unit id="tx_cleanuptools_domain_model_log_message.log" resname="tx_cleanuptools_domain_model_log_message.log">
                 <source>Log</source>
             </trans-unit>
-            <trans-unit id="tx_cleanuptools_domain_model_log_message.message">
+            <trans-unit id="tx_cleanuptools_domain_model_log_message.message" resname="tx_cleanuptools_domain_model_log_message.message">
                 <source>Message</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_key“>
+            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_key“ resname="tx_cleanuptools_domain_model_log_message.local_lang_key">
                 <source>Localization key</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_arguments“>
+            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_arguments“ resname="tx_cleanuptools_domain_model_log_message.local_lang_arguments">
                 <source>Localization arguments</source>
             </trans-unit>
         </body>
