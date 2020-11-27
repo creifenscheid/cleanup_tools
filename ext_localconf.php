@@ -6,8 +6,45 @@ defined('TYPO3_MODE') or die();
 (function ($extKey) {
     
     // CLEANUP SERVICE REGISTRATION
-    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService('cleanFlexFormsService', \CReifenscheid\CleanupTools\Service\CleanupService\CleanFlexFormsService::class);
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'cleanFlexFormsService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\CleanFlexFormsService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'deletedRecordsService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\DeletedRecordsService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'lostFilesService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\LostFilesService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'orphanRecordsService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\OrphanRecordsService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'missingFilesService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\MissingFilesService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'missingRelationsService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\MissingRelationsService::class
+    );
+    
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'filesWithMultipleReferencesService',
+        \CReifenscheid\CleanupTools\Service\CleanupService\FilesWithMultipleReferencesService::class
+    );
    
+    // LOCALLANGUAGE FILE PATH REGISTRATION
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addLocalizationFilePath('EXT:cleanup_tools/Resources/Private/Language/locallang_descriptions.xlf');
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addLocalizationFilePath('EXT:cleanup_tools/Resources/Private/Language/locallang_parameters.xlf');
+    
     // ICONS
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Imaging\IconRegistry::class);
     
@@ -23,7 +60,7 @@ defined('TYPO3_MODE') or die();
     }
     
     // EXTENSION CONFIGURATION
-    $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
+    $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
     
     // TOOLBAR ITEM
     if ($extensionConfiguration['enableToolbarItem']) {

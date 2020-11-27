@@ -38,7 +38,7 @@ namespace CReifenscheid\CleanupTools\Utility;
 class ConfigurationManagementUtility
 {
     /**
-     * Register cleanup service
+     * Registers cleanup service
      * 
      * @param string $identifier
      * @param string $className
@@ -54,11 +54,25 @@ class ConfigurationManagementUtility
        
         $configurationArray['cleanup_services'][$identifier] = [
             'class' => $className,
-            'schedulerTask' => $enabledInSchedulerTask,
-            'toolbar' => $enabledInToolbar,
+            'schedulerTask' => $schedulerTask,
+            'toolbar' => $toolbar,
             'enabled' => $enabled
         ];
         
+        self::writeConfiguration($configurationArray);
+    }
+    
+    /**
+     * Registers localization file path
+     * 
+     * @param string $localizationFilePath
+     * 
+     * @return void
+     */
+    public static function addLocalizationFilePath(string $localizationFilePath) : void
+    {
+        $configurationArray = self::getConfiguration();
+        $configurationArray['localizationFilePaths'][] = $localizationFilePath;
         self::writeConfiguration($configurationArray);
     }
     
@@ -82,7 +96,8 @@ class ConfigurationManagementUtility
             
             self::writeConfiguration($configurationArray);
         } else {
-            // @todo throw property exception 
+            $message = 'Property "'.$property.'" of CleanupService "'.$identifier.'" is not registered.';
+            throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198402);
         }
     }
     
@@ -136,7 +151,11 @@ class ConfigurationManagementUtility
     {
         self::validateIdentifier($identifier);
         
+        $configurationArray = self::getConfiguration();
         
+        unset($configurationArray['cleanup_services'][$identifier]);
+        
+        self::writeConfiguration($configurationArray);
     }
     
     /**
@@ -164,7 +183,8 @@ class ConfigurationManagementUtility
         $configurationArray = self::getConfiguration();
        
         if (!$configurationArray['cleanup_services'][$identifier]) {
-            // @todo throw exception
+            $message = 'CleanupService with identifier "'. $identifier . '" is not registered.';
+            throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198401);
         }
     }
 }

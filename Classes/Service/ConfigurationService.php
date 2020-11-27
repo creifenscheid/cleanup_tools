@@ -1,6 +1,8 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * *************************************************************
  *
@@ -107,6 +109,27 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager,\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {   
+        // get extension configuration
+        $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
+        
+        // log lifetime options
+        $logLifetimeOptions = $extensionConfiguration['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $extensionConfiguration['logLifetimeOptions']) : [];
+        
+        if ($logLifetimeOptions) {
+            foreach ($logLifetimeOptions as $logLifetimeOption) {
+                $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
+            }
+        }
+        
+        // get localization file paths from typoscript configuration
+        $this->localizationFilePaths = $extensionConfiguration['localizationFilePaths'];
+                
+        
+        ########
+        ### OLD        
+        
+        
+        
         $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
         // set object manager
@@ -123,18 +146,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         if ($this->configuration) {
-            // get localization file paths from typoscript configuration
-            $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
-
-            // set log lifetime options from typoscript config
-            $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
-
-            if ($logLifetimeOptions) {
-                foreach ($logLifetimeOptions as $logLifetimeOption) {
-                    $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
-                }
-            }
-
             // loop through configured services
             if ($this->configuration['services']) {
                 foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
