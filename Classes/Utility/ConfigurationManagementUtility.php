@@ -38,23 +38,77 @@ namespace CReifenscheid\CleanupTools\Utility;
 class ConfigurationManagementUtility
 {
     /**
+     * ConfigurationManagementUtility constructor
+     */
+    public function __construct()
+    {
+        // check if configuration array exists
+        if(!$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services']) {
+            // otherwise create it
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services'] = [];
+        }
+    }
+
+    /**
      * Register cleanup service
      * 
      * @param string $identifier
      * @param string $className
-     * @param bool $availableInTask
-     * @param bool $availableInToolbar
+     * @param bool $schedulerTask
+     * @param bool $toolbar
      * @param bool $enabled
+     *
+     * @return void
      */
-    public static function addCleanupService (string $identifier, string $className, bool $availableInTask = true, bool $availableInToolbar = true, bool $enabled = true) : void
+    public static function addCleanupService (string $identifier, string $className, bool $schedulerTask = true, bool $toolbar = true, bool $enabled = true) : void
     {
         $configurationArray = self::getConfiguration();
        
         $configurationArray[$identifier] = [
-            'class' => $className
+            'class' => $className,
+            'schedulerTask' => $enabledInSchedulerTask,
+            'toolbar' => $enabledInToolbar,
+            'enabled' => $enabled
         ];
         
         self::writeConfiguration($configurationArray);
+    }
+    
+    /**
+     * Set property of cleanup service
+     * 
+     * @param string $identifier
+     * @param string $property
+     * @param string|bool $value
+     *
+     * @return void
+     */
+    private static function setProperty(string $identifier, string $property, $value) : void
+    {
+        $configurationArray = self::getConfiguration();
+       
+        if ($configurationArray[$identifier] && $configurationArray[$identifier][$property]) {
+            $configurationArray[$identifier][$property] =  $value;
+            
+            self::writeConfiguration($configurationArray);
+        } else if (!$configurationArray[$identifier]) {
+            // @todo throw identifier error
+        } else {
+            // @todo throw property error 
+        }
+    }
+    
+    /**
+     * Enable/disable cleanup service
+     * 
+     * @param string $identifier
+     * @param bool $value
+     *
+     * @return void
+     */
+    public static function setEnable (string $identifier, bool $value) : void
+    {
+        self::setProperty($identifier, 'enabled', $value);
     }
     
     /**
@@ -64,16 +118,7 @@ class ConfigurationManagementUtility
      */
     private static function getConfiguration() : array 
     {
-        // check if configuration array already exists
-        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services']) {
-            return $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services'];
-        }
-        
-        // create configuration array
-        $configurationArray = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'];
-        $configurationArray['cleanup_services'] = [];
-        
-        return $configurationArray;
+        return $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services'];
     }
     
     /**
@@ -83,6 +128,6 @@ class ConfigurationManagementUtility
      */
     private static function writeConfiguration(array $configurationArray) : void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'] = $configurationArray;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']['cleanup_services'] = $configurationArray;
     }
 }
