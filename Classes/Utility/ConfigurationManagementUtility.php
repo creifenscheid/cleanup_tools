@@ -73,16 +73,16 @@ class ConfigurationManagementUtility
      */
     private static function setProperty(string $identifier, string $property, $value) : void
     {
+        self::validateIdentifier($identifier);
+    
         $configurationArray = self::getConfiguration();
        
-        if ($configurationArray['cleanup_services'][$identifier] && $configurationArray['cleanup_services'][$identifier][$property]) {
+        if ($configurationArray['cleanup_services'][$identifier][$property]) {
             $configurationArray['cleanup_services'][$identifier][$property] =  $value;
             
             self::writeConfiguration($configurationArray);
-        } else if (!$configurationArray['cleanup_services'][$identifier]) {
-            // @todo throw identifier error
         } else {
-            // @todo throw property error 
+            // @todo throw property exception 
         }
     }
     
@@ -120,9 +120,23 @@ class ConfigurationManagementUtility
      *
      * @return void
      */
-    public static function setSchedulerTask (string $identifier, bool $value) : void
+    public static function setToolbar (string $identifier, bool $value) : void
     {
         self::setProperty($identifier, 'toolbar', $value);
+    }
+    
+    /**
+     * Remove cleanup service
+     * 
+     * @param string $identifier
+     *
+     * @return void
+     */
+    public static function removeCleanupService (string $identifier) : void
+    {
+        self::validateIdentifier($identifier);
+        
+        
     }
     
     /**
@@ -143,5 +157,14 @@ class ConfigurationManagementUtility
     private static function writeConfiguration(array $configurationArray) : void
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'] = $configurationArray;
+    }
+    
+    private static function validateIdentifier(string $identifier) : void
+    {
+        $configurationArray = self::getConfiguration();
+       
+        if (!$configurationArray['cleanup_services'][$identifier]) {
+            // @todo throw exception
+        }
     }
 }
