@@ -107,8 +107,14 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
      * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager,\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {   
+        // object manager
+        $this->objectManager = $objectManager;
+        
+        // log repository
+        $this->logRepository = $logRepository;
+        
         // get extension configuration
         $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
         
@@ -121,55 +127,35 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
         
-        // get localization file paths from typoscript configuration
+        // localization file paths
         $this->localizationFilePaths = $extensionConfiguration['localizationFilePaths'];
                 
-        
-        ########
-        ### OLD        
-        
-        
-        
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        // cleanup services
+        if ($extensionConfiguration['cleanup_services']) {
+            
+            foreach ($this->extensionConfiguration['services'] as $serviceConfiguration) {
 
-        // set object manager
-        $this->objectManager = $objectManager;
-        
-        // set log repository
-        $this->logRepository = $logRepository;
+                // skip service if not enabled
+                if (! $serviceConfiguration['enable']) {
+                    continue;
+                }
+                
+                $serviceClass = $serviceConfiguration['class']
 
-        // get module configuration
-        $moduleConfiguration = $extbaseFrameworkConfiguration['module.']['tx_cleanuptools.'];
-        
-        if ($moduleConfiguration) {
-            $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($moduleConfiguration);
-        }
+                // check if execute() exists
+                if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
 
-        if ($this->configuration) {
-            // loop through configured services
-            if ($this->configuration['services']) {
-                foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
+                    // set up service configuration
+                    $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
 
-                    // skip service if not enabled
-                    if (! $serviceConfiguration['enable']) {
-                        continue;
+                    // check additional usage configuration of service
+                    foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                        if ((int) $state === 1) {
+                            $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
+                        }
                     }
-
-                    // check if execute() exists
-                    if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
-
-                        // set up service configuration
-                        $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
-
-                        // check additional usage configuration of service
-                        foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                            if ((int) $state === 1) {
-                                $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
-                            }
-                         }
-                    } else {
-                        $this->errorServices[] = $serviceClass;
-                    }
+                } else {
+                    $this->errorServices[] = $serviceClass;
                 }
             }
         }

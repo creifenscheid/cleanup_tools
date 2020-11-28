@@ -50,9 +50,9 @@ class ConfigurationManagementUtility
      */
     public static function addCleanupService (string $identifier, string $className, bool $schedulerTask = true, bool $toolbar = true, bool $enabled = true) : void
     {
-        $configurationArray = self::getConfiguration();
+        $configuration = self::getConfiguration();
        
-        $configurationArray['cleanup_services'][$identifier] = [
+        $configuration['cleanup_services'][$identifier] = [
             'class' => $className,
             'enabled' => $enabled,
             'additionalUsage' => [
@@ -61,7 +61,7 @@ class ConfigurationManagementUtility
             ]
         ];
         
-        self::writeConfiguration($configurationArray);
+        self::writeConfiguration($configuration);
     }
     
     /**
@@ -73,9 +73,9 @@ class ConfigurationManagementUtility
      */
     public static function addLocalizationFilePath(string $localizationFilePath) : void
     {
-        $configurationArray = self::getConfiguration();
-        $configurationArray['localizationFilePaths'][] = $localizationFilePath;
-        self::writeConfiguration($configurationArray);
+        $configuration = self::getConfiguration();
+        $configuration['localizationFilePaths'][] = $localizationFilePath;
+        self::writeConfiguration($configuration);
     }
     
     /**
@@ -90,10 +90,10 @@ class ConfigurationManagementUtility
     {
         self::validateIdentifier($identifier);
     
-        $configurationArray = self::getConfiguration();
+        $configuration = self::getConfiguration();
        
-        $configurationArray['cleanup_services'][$identifier]['enabled'] =  $value;
-            self::writeConfiguration($configurationArray);
+        $configuration['cleanup_services'][$identifier]['enabled'] =  $value;
+            self::writeConfiguration($configuration);
     }
     
     /**
@@ -109,10 +109,10 @@ class ConfigurationManagementUtility
     {
         self::validateIdentifier($identifier);
     
-        $configurationArray = self::getConfiguration();
+        $configuration = self::getConfiguration();
        
-        $configurationArray['cleanup_services'][$identifier]['additionalUsage'][$usage] =  $value;
-            self::writeConfiguration($configurationArray);
+        $configuration['cleanup_services'][$identifier]['additionalUsage'][$usage] =  $value;
+            self::writeConfiguration($configuration);
     }
     
     /**
@@ -152,11 +152,11 @@ class ConfigurationManagementUtility
     {
         self::validateIdentifier($identifier);
         
-        $configurationArray = self::getConfiguration();
+        $configuration = self::getConfiguration();
         
-        unset($configurationArray['cleanup_services'][$identifier]);
+        unset($configuration['cleanup_services'][$identifier]);
         
-        self::writeConfiguration($configurationArray);
+        self::writeConfiguration($configuration);
     }
     
     /**
@@ -164,7 +164,7 @@ class ConfigurationManagementUtility
      * 
      * @return array
      */
-    private static function getConfiguration() : array 
+    public static function getConfiguration() : array 
     {
         return $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'];
     }
@@ -172,18 +172,18 @@ class ConfigurationManagementUtility
     /**
      * Writes configuration array
      * 
-     * @param array $configurationArray
+     * @param array $configuration
      */
-    private static function writeConfiguration(array $configurationArray) : void
+    private static function writeConfiguration(array $configuration) : void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'] = $configurationArray;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'] = $configuration;
     }
     
     private static function validateIdentifier(string $identifier) : void
     {
-        $configurationArray = self::getConfiguration();
+        $configuration = self::getConfiguration();
        
-        if (!$configurationArray['cleanup_services'][$identifier]) {
+        if (!$configuration['cleanup_services'][$identifier]) {
             $message = 'CleanupService with identifier "'. $identifier . '" is not registered.';
             throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198401);
         }
