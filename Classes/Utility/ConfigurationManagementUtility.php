@@ -50,6 +50,16 @@ class ConfigurationManagementUtility
      */
     public static function addCleanupService (string $identifier, string $className, bool $schedulerTask = true, bool $toolbar = true, bool $enabled = true) : void
     {
+        if (!class_exists($className)) {
+            $message = sprintf('Class "%s" is not existing', $className);
+            throw new \CReifenscheid\CleanupTools\Exception\InvalidCleanupServiceException($message, 2112198401);
+        }
+        
+        if (!is_subclass_of($className, \CReifenscheid\CleanupTools\Service\CleanupService\AbstractCleanupService::class)) {
+            $message = sprintf('"%s" does not implement "%s" and is therefor invalid', $className, \CReifenscheid\CleanupTools\Service\CleanupService\AbstractCleanupService::class);
+            throw new \CReifenscheid\CleanupTools\Exception\InvalidCleanupServiceException($message, 2112198401);
+        }
+        
         $configuration = self::getConfiguration();
        
         $configuration['cleanup_services'][$identifier] = [
@@ -185,7 +195,7 @@ class ConfigurationManagementUtility
        
         if (!$configuration['cleanup_services'][$identifier]) {
             $message = 'CleanupService with identifier "'. $identifier . '" is not registered.';
-            throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198401);
+            throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198402);
         }
     }
 }

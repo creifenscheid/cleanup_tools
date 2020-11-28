@@ -72,13 +72,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $services = [];
 
     /**
-     * Services which not provide function "execute"
-     *
-     * @var array
-     */
-    protected $errorServices = [];
-
-    /**
      * Configured additional usages of services
      *
      * @var array
@@ -133,29 +126,23 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         // cleanup services
         if ($extensionConfiguration['cleanup_services']) {
             
-            foreach ($this->extensionConfiguration['services'] as $serviceConfiguration) {
+            foreach ($extensionConfiguration['cleanup_services'] as $serviceConfiguration) {
 
                 // skip service if not enabled
-                if (! $serviceConfiguration['enable']) {
+                if (! $serviceConfiguration['enabled']) {
                     continue;
                 }
                 
-                $serviceClass = $serviceConfiguration['class']
+                $serviceClass = $serviceConfiguration['class'];
 
-                // check if execute() exists
-                if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
-
-                    // set up service configuration
-                    $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
-
-                    // check additional usage configuration of service
-                    foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                        if ((int) $state === 1) {
-                            $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
-                        }
+                // set up service configuration
+                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
+                
+                // check additional usage configuration of service
+                foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                    if ((int) $state === 1) {
+                        $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                     }
-                } else {
-                    $this->errorServices[] = $serviceClass;
                 }
             }
         }
@@ -207,16 +194,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     public function getService($class): array
     {
         return $this->services[$class];
-    }
-
-    /**
-     * Returns failed services
-     *
-     * @return array
-     */
-    public function getErrorServices(): array
-    {
-        return $this->errorServices;
     }
 
     /**

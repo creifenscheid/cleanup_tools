@@ -63,12 +63,6 @@ class CleanupController extends BaseController
      */
     public function indexAction(): void
     {
-        if (! empty($this->configurationService->getErrorServices())) {
-            $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'CleanupTools', [
-                implode(',', $this->configurationService->getErrorServices())
-            ]), \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'CleanupTools'), \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING);
-        }
-
         // assign services to the view
         $this->view->assignMultiple([
             'services' => $this->configurationService->getServices()

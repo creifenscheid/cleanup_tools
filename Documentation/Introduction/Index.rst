@@ -25,7 +25,7 @@ It provides the following features:
 * afterDatabaseOperations hook to run cleanFlexFormsService
 * dashboard widget with dry run results of all configured services
 
-Cleanup services are registered in typoscript.
+Cleanup services are registered in ext_localconf.php via \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility.
 Therefor it is possible to extend the extension with your own services easily.
 
 Currently available services

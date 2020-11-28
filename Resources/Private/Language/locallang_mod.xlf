@@ -198,12 +198,6 @@
             <trans-unit id="messages.error.message.no-method" resname="messages.error.message.no-method">
                 <source>No method was set.</source>
             </trans-unit>
-            <trans-unit id="messages.error-services.message" resname="messages.error-services.message">
-                <source>In the following services, the execute function is missing: %s.</source>
-            </trans-unit>
-            <trans-unit id="messages.error-services.headline" resname="messages.error-services.headline">
-                <source>Watch out</source>
-            </trans-unit>
             <trans-unit id="messages.hook.warning.headline" resname="messages.hook.warning.headline">
                 <source>Watch out</source>
             </trans-unit>
