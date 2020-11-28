@@ -54,9 +54,11 @@ class ConfigurationManagementUtility
        
         $configurationArray['cleanup_services'][$identifier] = [
             'class' => $className,
-            'schedulerTask' => $schedulerTask,
-            'toolbar' => $toolbar,
-            'enabled' => $enabled
+            'enabled' => $enabled,
+            'additionalUsage' => [
+                'schedulerTask' => $schedulerTask,
+                'toolbar' => $toolbar
+            ]
         ];
         
         self::writeConfiguration($configurationArray);
@@ -77,41 +79,40 @@ class ConfigurationManagementUtility
     }
     
     /**
-     * Set property of cleanup service
-     * 
-     * @param string $identifier
-     * @param string $property
-     * @param string|bool $value
-     *
-     * @return void
-     */
-    private static function setProperty(string $identifier, string $property, $value) : void
-    {
-        self::validateIdentifier($identifier);
-    
-        $configurationArray = self::getConfiguration();
-       
-        if ($configurationArray['cleanup_services'][$identifier][$property]) {
-            $configurationArray['cleanup_services'][$identifier][$property] =  $value;
-            
-            self::writeConfiguration($configurationArray);
-        } else {
-            $message = 'Property "'.$property.'" of CleanupService "'.$identifier.'" is not registered.';
-            throw new \CReifenscheid\CleanupTools\Exception\NotRegisteredException($message, 2112198402);
-        }
-    }
-    
-    /**
-     * Enable/disable cleanup service
+     * Disable/enable cleanup service
      * 
      * @param string $identifier
      * @param bool $value
      *
      * @return void
      */
-    public static function setEnable (string $identifier, bool $value) : void
+    private static function setEnable(string $identifier, bool $value) : void
     {
-        self::setProperty($identifier, 'enabled', $value);
+        self::validateIdentifier($identifier);
+    
+        $configurationArray = self::getConfiguration();
+       
+        $configurationArray['cleanup_services'][$identifier]['enabled'] =  $value;
+            self::writeConfiguration($configurationArray);
+    }
+    
+    /**
+     * Disable/enable additional usage of cleanup service
+     * 
+     * @param string $identifier
+     * @param string $usage
+     * @param bool $value
+     *
+     * @return void
+     */
+    private static function setAdditionalUsage(string $identifier, string $usage, bool $value) : void
+    {
+        self::validateIdentifier($identifier);
+    
+        $configurationArray = self::getConfiguration();
+       
+        $configurationArray['cleanup_services'][$identifier]['additionalUsage'][$usage] =  $value;
+            self::writeConfiguration($configurationArray);
     }
     
     /**
@@ -124,7 +125,7 @@ class ConfigurationManagementUtility
      */
     public static function setSchedulerTask (string $identifier, bool $value) : void
     {
-        self::setProperty($identifier, 'schedulerTask', $value);
+        self::setAdditionalUsage($identifier, 'schedulerTask', $value);
     }
     
     /**
@@ -137,7 +138,7 @@ class ConfigurationManagementUtility
      */
     public static function setToolbar (string $identifier, bool $value) : void
     {
-        self::setProperty($identifier, 'toolbar', $value);
+        self::setAdditionalUsage($identifier, 'toolbar', $value);
     }
     
     /**
