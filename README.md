@@ -27,10 +27,14 @@ It is shipped with adaptions of the lowlevel tools and can be extended by your o
 * quick access to dry-run result of single service
 
 ### Configuration
-* hooks can be dis/enabled in extension configuration
-* services can be dis/enabled with typoscript
-* service usage in toolbar and scheduler can be dis/enabled with typoscript
-* your services can be registered with typoscript
+* hooks can be disabled/enabled in extension configuration
+
+\CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility
+* register your own service
+* register localizations file which include information about your service
+* enable/disable/remove already registered services
+* enable/disable usage of services in scheduler task or toolbar
+
 
 ### Release Management
 [**Semantic versioning**][2]
@@ -40,7 +44,7 @@ It is shipped with adaptions of the lowlevel tools and can be extended by your o
 
 ### Support
 I don't want your money or anything else.
-I am doing this for fun, with heart and to get better.
+I am doing this for fun, with heart and to improve my coding skills.
 Constructive critisismn is very welcome.
 If you want to contribute, feel free to do so.
 Thank you!
