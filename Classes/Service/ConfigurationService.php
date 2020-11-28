@@ -1,6 +1,8 @@
 <?php
 namespace CReifenscheid\CleanupTools\Service;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * *************************************************************
  *
@@ -70,13 +72,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $services = [];
 
     /**
-     * Services which not provide function "execute"
-     *
-     * @var array
-     */
-    protected $errorServices = [];
-
-    /**
      * Configured additional usages of services
      *
      * @var array
@@ -105,59 +100,48 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
      * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager,\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {   
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
-        // set object manager
+        // object manager
         $this->objectManager = $objectManager;
         
-        // set log repository
+        // log repository
         $this->logRepository = $logRepository;
-
-        // get module configuration
-        $moduleConfiguration = $extbaseFrameworkConfiguration['module.']['tx_cleanuptools.'];
         
-        if ($moduleConfiguration) {
-            $this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($moduleConfiguration);
-        }
-
-        if ($this->configuration) {
-            // get localization file paths from typoscript configuration
-            $this->localizationFilePaths = $this->configuration['settings']['localizationFilePaths'];
-
-            // set log lifetime options from typoscript config
-            $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
-
-            if ($logLifetimeOptions) {
-                foreach ($logLifetimeOptions as $logLifetimeOption) {
-                    $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
-                }
+        // get extension configuration
+        $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
+        
+        // log lifetime options
+        $logLifetimeOptions = $extensionConfiguration['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $extensionConfiguration['logLifetimeOptions']) : [];
+        
+        if ($logLifetimeOptions) {
+            foreach ($logLifetimeOptions as $logLifetimeOption) {
+                $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
             }
+        }
+        
+        // localization file paths
+        $this->localizationFilePaths = $extensionConfiguration['localizationFilePaths'];
+                
+        // cleanup services
+        if ($extensionConfiguration['cleanup_services']) {
+            
+            foreach ($extensionConfiguration['cleanup_services'] as $serviceConfiguration) {
 
-            // loop through configured services
-            if ($this->configuration['services']) {
-                foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
+                // skip service if not enabled
+                if (! $serviceConfiguration['enabled']) {
+                    continue;
+                }
+                
+                $serviceClass = $serviceConfiguration['class'];
 
-                    // skip service if not enabled
-                    if (! $serviceConfiguration['enable']) {
-                        continue;
-                    }
-
-                    // check if execute() exists
-                    if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
-
-                        // set up service configuration
-                        $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
-
-                        // check additional usage configuration of service
-                        foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
-                            if ((int) $state === 1) {
-                                $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
-                            }
-                         }
-                    } else {
-                        $this->errorServices[] = $serviceClass;
+                // set up service configuration
+                $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
+                
+                // check additional usage configuration of service
+                foreach ($serviceConfiguration['additionalUsage'] as $additionalUsageType => $state) {
+                    if ((int) $state === 1) {
+                        $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                     }
                 }
             }
@@ -210,16 +194,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     public function getService($class): array
     {
         return $this->services[$class];
-    }
-
-    /**
-     * Returns failed services
-     *
-     * @return array
-     */
-    public function getErrorServices(): array
-    {
-        return $this->errorServices;
     }
 
     /**

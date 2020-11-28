@@ -8,7 +8,7 @@
                 <source>Checks if TCA records with a FlexForm includes values that don't match the connected FlexForm value</source>
             </trans-unit>
             <trans-unit id="description.extended.CleanFlexFormsService" resname="description.extended.CleanFlexFormsService">
-                <source>Updates all database records2 which have a FlexForm field and the XML data does not match the chosen datastructure.</source>
+                <source>Updates all database records which have a FlexForm field and the XML data does not match the chosen datastructure.</source>
             </trans-unit>
             <trans-unit id="description.DeletedRecordsService" resname="description.DeletedRecordsService">
                 <source>Force-deletes all records in the database which have a deleted=1 flag</source>

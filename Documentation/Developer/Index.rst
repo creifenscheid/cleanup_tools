@@ -50,22 +50,16 @@ With the following methods, log messages can be added to the log:
 4. Localization
 ~~~~~~~~~~~~~~~
 
-Service related localizations are set in locallang_services.xlf.
-
-You can create your own localization file to implement your service.
+You can create your own localization file for your implemented service.
 Therefor:
 
 * create your localization file
-* include localization nodes for all configured services
-* set your localization file in typoscript
+* register your localization file in ext_localconf.php of your extension
 
-.. code-block:: typoscript
+.. code-block:: php
 
-   module.tx_cleanuptools {
-       settings {
-           localizationFile = LLL:EXT:MyExtension/Resources/Private/Language/locallang_custom_services.xlf
-       }
-   }
+    \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addLocalizationFilePath('EXT:my_extension/Resources/Private/Language/locallang_myfile.xlf');
+    
 
 Localization key specifications:
 
@@ -130,4 +124,15 @@ Localization key specifications:
 Register your own service
 -------------------------
 
-Service registration is done with typoscript (see :ref:`typoscriptConfiguration`)
+You can easliy register your cleanup service within ext_localconf.php of your extension by using \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService()
+
+
+.. code-block:: php
+
+   \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility::addCleanupService(
+        'myCleanupService', // identifier
+        \Vendor\MyExtension\Service\CleanupService\MyService::class, // class
+        true, // service enabled in scheduler task
+        true, // service enabled in toolbar
+        true // enable
+    );

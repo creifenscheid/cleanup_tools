@@ -17,4 +17,3 @@ After installation, no configuration is required to make the extension work.
    :glob:
    
    ExtensionConfiguration
-   TypoScriptConfiguration
