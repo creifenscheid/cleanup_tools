@@ -4,44 +4,4 @@ module.tx_cleanuptools {
         partialRootPaths.0 = EXT:cleanup_tools/Resources/Private/Partials/
         layoutRootPaths.0 = EXT:cleanup_tools/Resources/Private/Layouts/
     }
-
-    settings {
-        localizationFile = LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf
-        # comma separated list of time spans
-        logLifetimeOptions = 1 day, 1 week, 1 month, 3 months, 6 months, 1 year
-    }
-
-    services {
-        creifenscheid\CleanupTools\Service\CleanFlexFormsService {
-	        enable = 1 
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-	        
-		creifenscheid\CleanupTools\Service\DeletedRecordsService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		} 
-	        
-		creifenscheid\CleanupTools\Service\LostFilesService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 0
-	            toolbar = 1
-	        }
-		}
-	        
-		creifenscheid\CleanupTools\Service\OrphanRecordsService {
-	        enable = 1
-	        additionalUsage {
-	            schedulerTask = 1
-	            toolbar = 1
-	        }
-		}
-	}
 }

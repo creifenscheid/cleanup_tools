@@ -17,14 +17,15 @@ This extension provides the possibility to implement cleanup services in your TY
 It provides the following features:
 
 * backend module to run services
-* history module to take a look on previous runs 
+* history module to take a look on previous runs
+* info module with extended information about every service
 * toolbar to run services in dry-run mode
 * scheduler task
 * preview renderer to run cleanFlexFormsService
 * afterDatabaseOperations hook to run cleanFlexFormsService
 * dashboard widget with dry run results of all configured services
 
-Cleanup services are registered in typoscript.
+Cleanup services are registered in ext_localconf.php via \CReifenscheid\CleanupTools\Utility\ConfigurationManagementUtility.
 Therefor it is possible to extend the extension with your own services easily.
 
 Currently available services
@@ -58,6 +59,20 @@ DeletedRecordsService
     Source
          \\TYPO3\\CMS\\Lowlevel\\Command\DeletedRecordsCommand::class
          
+FilesWithMultipleReferencesService
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         FilesWithMultipleReferencesService
+
+    Description
+          Finds files within uploads/ which are used multiple times by relations within the database
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\FilesWithMultipleReferencesCommand::class
+         
 LostFilesService
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -71,6 +86,34 @@ LostFilesService
     
     Source
          \\TYPO3\\CMS\\Lowlevel\\Command\LostFilesCommand::class
+         
+MissingFilesService
+~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         MissingFilesService
+
+    Description
+          Find all file references from records pointing to a missing (non-existing) file
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\MissingFilesCommand::class
+         
+MissingRelationsService
+~~~~~~~~~~~~~~~~~~~
+
+.. container:: table-row
+
+    Service
+         MissingRelationsService
+
+    Description
+          Find all record references pointing to a non-existing record
+    
+    Source
+         \\TYPO3\\CMS\\Lowlevel\\Command\MissingRelationsCommand::class
          
 OrphanRecordsService
 ~~~~~~~~~~~~~~~~~~~~~

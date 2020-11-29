@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Controller;
 /**
  * Class HistoryController
  *
- * @package creifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Controller
  * @author C. Reifenscheid
  */
 class HistoryController extends BaseController
@@ -40,18 +40,17 @@ class HistoryController extends BaseController
     /**
      * Log repository
      *
-     * @var \creifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
     
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
     {
-        parent::__construct();
         $this->logRepository = $logRepository;
     }
 
@@ -70,7 +69,6 @@ class HistoryController extends BaseController
 
         // assign to the view
         $this->view->assignMultiple([
-            'localizationFile' => $this->localizationFile,
             'logs' => $this->logRepository->findAll(),
             'logLifetimeOptions' => $this->configurationService->getLogLifetimeOptions()
         ]);
@@ -86,7 +84,7 @@ class HistoryController extends BaseController
      */
     public function cleanupAction(string $logLifetime): void
     {
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
         
         $cleanupService->processHistoryCleanup($logLifetime);
 

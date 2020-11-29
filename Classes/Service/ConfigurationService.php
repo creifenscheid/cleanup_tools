@@ -1,5 +1,7 @@
 <?php
-namespace creifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * *************************************************************
@@ -31,7 +33,7 @@ namespace creifenscheid\CleanupTools\Service;
 /**
  * Class ConfigurationService
  *
- * @package creifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service
  * @author C. Reifenscheid
  */
 class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
@@ -41,10 +43,16 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      * Functions
      */
     const FUNCTION_MAIN = 'execute';
-
+    
     /**
      *
-     * @var \creifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected $objectManager;
+    
+    /**
+     *
+     * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
 
@@ -64,13 +72,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $services = [];
 
     /**
-     * Services which not provide function "execute"
-     *
-     * @var array
-     */
-    protected $errorServices = [];
-
-    /**
      * Configured additional usages of services
      *
      * @var array
@@ -78,11 +79,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     protected $additionalUsages = [];
 
     /**
-     * localizationFile
+     * localizationFilePaths
      *
-     * @var string
+     * @var array
      */
-    protected $localizationFile = '';
+    protected $localizationFilePaths = [];
 
     /**
      * log lifetime options
@@ -94,42 +95,45 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Constructor
      *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
-     * @param \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * @param \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
      */
-    public function __construct(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager, \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService, \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
-    {
-        $extbaseFrameworkConfiguration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
-        // init log repository
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManager $objectManager, \CReifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    {   
+        // object manager
+        $this->objectManager = $objectManager;
+        
+        // log repository
         $this->logRepository = $logRepository;
-
-        // get module configuration
-        $this->configuration = $typoscriptService->convertTypoScriptArrayToPlainArray($extbaseFrameworkConfiguration['module.']['tx_cleanuptools.']);
-
-        // set localization from typoscript configuration
-        $this->localizationFile = $this->configuration['settings']['localizationFile'] ?: 'LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_services.xlf';
-
-        // set log lifetime options from typoscript config
-        $logLifetimeOptions = $this->configuration['settings']['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['settings']['logLifetimeOptions']) : [];
+        
+        // get extension configuration
+        $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('cleanup_tools');
+        
+        // log lifetime options
+        $logLifetimeOptions = $extensionConfiguration['logLifetimeOptions'] ? \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $extensionConfiguration['logLifetimeOptions']) : [];
         
         if ($logLifetimeOptions) {
             foreach ($logLifetimeOptions as $logLifetimeOption) {
                 $this->logLifetimeOptions[str_replace(' ', '-', $logLifetimeOption)] = $logLifetimeOption;
             }
         }
+        
+        // localization file paths
+        $this->localizationFilePaths = $extensionConfiguration['localizationFilePaths'];
+                
+        // cleanup services
+        if ($extensionConfiguration['cleanup_services']) {
+            
+            foreach ($extensionConfiguration['cleanup_services'] as $serviceConfiguration) {
 
-        // loop through configured utilities
-        foreach ($this->configuration['services'] as $serviceClass => $serviceConfiguration) {
-
-            // skip service if not enabled
-            if (! $serviceConfiguration['enable']) {
-                continue;
-            }
-
-            // check if execute() exists
-            if (method_exists($serviceClass, self::FUNCTION_MAIN)) {
+                // skip service if not enabled
+                if (! $serviceConfiguration['enabled']) {
+                    continue;
+                }
+                
+                $serviceClass = $serviceConfiguration['class'];
 
                 // set up service configuration
                 $this->services[$serviceClass] = $this->prepareClassConfiguration($serviceClass, self::FUNCTION_MAIN, $serviceConfiguration);
@@ -139,22 +143,21 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
                     if ((int) $state === 1) {
                         $this->additionalUsages[$additionalUsageType][$serviceClass] = $this->prepareClassConfiguration($serviceClass, 'execute', $serviceConfiguration);
                     }
-                 }
-            } else {
-
-                $this->errorServices[] = $serviceClass;
+                }
             }
         }
     }
-
+    
     /**
-     * Returns the localization file
+     * Returns the localization file paths
      *
-     * @return string
+     * @return array
      */
-    public function getLocalizationFile(): string
+    public function getLocalizationFilePaths(): array
     {
-        return $this->localizationFile;
+        $localizationPaths = $this->localizationFilePaths;
+        krsort($localizationPaths);
+        return $localizationPaths;
     }
 
     /**
@@ -175,7 +178,9 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getServices(): array
     {
-        return $this->services;
+        $services = $this->services;
+        ksort($services);
+        return $services;
     }
 
     /**
@@ -189,16 +194,6 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
     public function getService($class): array
     {
         return $this->services[$class];
-    }
-
-    /**
-     * Returns failed services
-     *
-     * @return array
-     */
-    public function getErrorServices(): array
-    {
-        return $this->errorServices;
     }
 
     /**
@@ -219,13 +214,11 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Function to prepare class configuration
-     *
+     * 
      * @param string $class
      * @param string $method
      * @param array $configuration
-     *
      * @return array
-     * @throws \ReflectionException
      */
     private function prepareClassConfiguration(string $class, string $method, array $configuration): array
     {
@@ -243,7 +236,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
             ];
 
             if (\gettype($defaultValue) && \gettype($defaultValue) !== 'NULL') {
-                $parameterConfiguraton['type'] = \gettype($defaultValue);
+                $parameterConfiguraton['type'] = ucfirst(\gettype($defaultValue));
             } else if ($configuration['mapping']['parameter'][$parameterName]) {
                 $parameterConfiguraton['type'] = $configuration['mapping']['parameter'][$parameterName];
             }
@@ -266,7 +259,7 @@ class ConfigurationService implements \TYPO3\CMS\Core\SingletonInterface
         ];
 
         // get last log of method
-        /** @var Log $lastLog */
+        /** @var \CReifenscheid\CleanupTools\Domain\Model\Log $lastLog */
         $lastLog = $this->logRepository->findByService($class);
 
         if ($lastLog) {

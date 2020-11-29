@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Task;
 /**
  * Class HistoryAdditionalFieldProvider
  *
- * @package creifenscheid\CleanupTools\Task
+ * @package CReifenscheid\CleanupTools\Task
  * @author C. Reifenscheid
  */
 class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider
@@ -39,7 +39,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     /**
      * Configuration service
      *
-     * @var \creifenscheid\CleanupTools\Service\ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
@@ -51,22 +51,12 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
     protected $taskName = 'cleanuptools_historytask_';
 
     /**
-     * Localization file
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
      * HistoryAdditionalFieldProvider constructor.
-     *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    public function __construct()
     {
         // init configurationService
-        $this->configurationService = $configurationService;
-        $this->localizationFile = $this->configurationService->getLocalizationFile();
+        $this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
     }
 
     /**
@@ -169,7 +159,7 @@ class HistoryAdditionalFieldProvider extends \TYPO3\CMS\Scheduler\AbstractAdditi
                 }
                 
                 // add option to option storage
-                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile.':module.history.cleanupForm.label.logLiftime.'.$label, 'CleanupTools') . '</option>';
+                $options[] = '<option value="' . $option . '" ' . $selected . '>' . \CReifenscheid\CleanupTools\Utility\LocalizationUtility::translate('module.history.cleanupForm.label.logLiftime.'.$label) . '</option>';
             }
             
             // return html for select field with option groups and options

@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Task;
+namespace CReifenscheid\CleanupTools\Task;
 
 /**
  * *************************************************************
@@ -31,7 +31,7 @@ namespace creifenscheid\CleanupTools\Task;
 /**
  * Class CleanupTask
  *
- * @package creifenscheid\CleanupTools\Task
+ * @package CReifenscheid\CleanupTools\Task
  * @author C. Reifenscheid
  */
 class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
@@ -50,7 +50,7 @@ class HistoryTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      */
     public function execute(): bool
     {
-        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Service\CleanupService::class);
+        $cleanupService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\CleanupService::class);
         
         return $cleanupService->processHistoryCleanup($this->logLifetime);
     }

@@ -1,5 +1,5 @@
 <?php
-namespace creifenscheid\CleanupTools\Backend\Toolbar;
+namespace CReifenscheid\CleanupTools\Backend\Toolbar;
 
 /**
  * *************************************************************
@@ -31,36 +31,28 @@ namespace creifenscheid\CleanupTools\Backend\Toolbar;
 /**
  * Class CleanupToolbarItem
  *
- * @package creifenscheid\CleanupTools\Backend\Toolbar
+ * @package CReifenscheid\CleanupTools\Backend\Toolbar
  * @author C. Reifenscheid
  */
 class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface
 {
-
     /**
+     * CLeanup services
      *
      * @var array
      */
     protected $cleanupServices = [];
 
     /**
-     *
-     * @var string
-     */
-    protected $localizationFile = '';
-
-    /**
-     * CleanupToolbarItem constructor.
-     *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder
+     * CleanupToolbarItem constructor
      *
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \TYPO3\CMS\Backend\Routing\UriBuilder $uriBuilder)
+    public function __construct()
     {
-        $this->localizationFile = $configurationService->getLocalizationFile();
-
+        $configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Service\ConfigurationService::class);
+        $uriBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
+        
         $this->cleanupServices = $configurationService->getServicesByAdditionalUsage('toolbar');
 
         foreach ($this->cleanupServices as $service => $serviceConfiguration) {
@@ -68,10 +60,11 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
             $uri = (string) $uriBuilder->buildUriFromRoute('cleanuptools_ajax', [
                 'class' => $serviceConfiguration['class'],
                 'method' => $configurationService::FUNCTION_MAIN,
-                'executionContext' => \creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
+                'executionContext' => \CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_TOOLBAR
             ]);
 
-            $this->cleanupServices[$service]['description'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($this->localizationFile . ':description.' . $serviceConfiguration['name']);
+            $this->cleanupServices[$service]['description'] = \CReifenscheid\CleanupTools\Utility\LocalizationUtility::translate('description.' . $serviceConfiguration['name']);
+            
             $this->cleanupServices[$service]['onclickCode'] = 'TYPO3.CleanupTools.process(' . \TYPO3\CMS\Core\Utility\GeneralUtility::quoteJSvalue($uri) . '); return false;';
         }
     }
@@ -99,7 +92,6 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     public function getItem()
     {
         $view = $this->getFluidTemplateObject('CleanupToolbarItem.html');
-        $view->assign('localizationFile', $this->localizationFile);
 
         return $view->render();
     }
@@ -123,8 +115,7 @@ class CleanupToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemInterf
     {
         $view = $this->getFluidTemplateObject('CleanupToolbarItemDropDown.html');
         $view->assignMultiple([
-            'cleanupServices' => $this->cleanupServices,
-            'localizationFile' => $this->localizationFile
+            'cleanupServices' => $this->cleanupServices
         ]);
 
         return $view->render();

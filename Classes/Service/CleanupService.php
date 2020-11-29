@@ -1,5 +1,6 @@
 <?php
-namespace creifenscheid\CleanupTools\Service;
+namespace CReifenscheid\CleanupTools\Service;
+
 
 /**
  * *************************************************************
@@ -31,7 +32,7 @@ namespace creifenscheid\CleanupTools\Service;
 /**
  * Class CleanupService
  *
- * @package creifenscheid\CleanupTools\Service
+ * @package CReifenscheid\CleanupTools\Service
  * @author C. Reifenscheid
  */
 class CleanupService
@@ -81,30 +82,41 @@ class CleanupService
     /**
      * Configuration service
      *
-     * @var ConfigurationService
+     * @var \CReifenscheid\CleanupTools\Service\ConfigurationService
      */
     protected $configurationService;
 
     /**
      * Log repository
      *
-     * @var \creifenscheid\CleanupTools\Domain\Repository\LogRepository
+     * @var \CReifenscheid\CleanupTools\Domain\Repository\LogRepository
      */
     protected $logRepository;
-
+    
     /**
-     * Constructor
-     *
-     * @param \creifenscheid\CleanupTools\Service\ConfigurationService $configurationService
-     * @param \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository
+     * CleanupService constructor
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\ConfigurationService $configurationService, \creifenscheid\CleanupTools\Domain\Repository\LogRepository $logRepository)
+    public function __construct()
     {
+        // init object manager
+        $this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        
         // init configuration service
-        $this->configurationService = $configurationService;
-
+        #$this->configurationService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ConfigurationService::class);
+        
         // init log repository
-        $this->logRepository = $logRepository;
+        $this->logRepository = $this->objectManager->get(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+    }
+    
+    /**
+     * Inject configuration service
+     *
+     * @param \CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService
+     */
+    public function injectConfigurationService(\CReifenscheid\CleanupTools\Service\ConfigurationService $configurationService)
+    {
+        // set configuration service
+        $this->configurationService = $configurationService;
     }
 
     /**
@@ -158,7 +170,7 @@ class CleanupService
     {
         // init service
         $service = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($class);
-
+        
         // if parameter are given
         if ($parameters) {
 
@@ -211,7 +223,7 @@ class CleanupService
             $return = $service->$method();
         }
         
-        if (!$this->dryRun) {
+        if (!$service->getDryRun()) {
             // get updated log from service
             $log = $service->getLog();
 
@@ -221,8 +233,9 @@ class CleanupService
                 
                 // if message is defined during process preparation
                 if ($message) {
+                    
                     // create new log message
-                    $newLogMessage = new \creifenscheid\CleanupTools\Domain\Model\LogMessage();
+                    $newLogMessage = new \CReifenscheid\CleanupTools\Domain\Model\LogMessage();
                     $newLogMessage->setLog($log);
                     $newLogMessage->setMessage($message);
                 }
@@ -261,7 +274,7 @@ class CleanupService
     {
         
         // init log repository
-        $logRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\creifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
+        $logRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\CReifenscheid\CleanupTools\Domain\Repository\LogRepository::class);
     
         // create timestamp of log lifetime
         $logLifetime = strtotime('-' . $logLifetime);

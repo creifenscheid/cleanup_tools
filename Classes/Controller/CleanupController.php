@@ -1,5 +1,7 @@
 <?php
-namespace creifenscheid\CleanupTools\Controller;
+namespace CReifenscheid\CleanupTools\Controller;
+
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * *************************************************************
@@ -31,7 +33,7 @@ namespace creifenscheid\CleanupTools\Controller;
 /**
  * Class CleanupController
  *
- * @package creifenscheid\CleanupTools\Controller
+ * @package CReifenscheid\CleanupTools\Controller
  * @author C. Reifenscheid
  */
 class CleanupController extends BaseController
@@ -39,20 +41,19 @@ class CleanupController extends BaseController
 
     /**
      *
-     * @var \creifenscheid\CleanupTools\Service\CleanupService
+     * @var \CReifenscheid\CleanupTools\Service\CleanupService
      */
     protected $cleanupService;
 
     /**
      * Constructor
      *
-     * @param \creifenscheid\CleanupTools\Service\CleanupService $cleanupService
+     * @param \CReifenscheid\CleanupTools\Service\CleanupService $cleanupService
      */
-    public function __construct(\creifenscheid\CleanupTools\Service\CleanupService $cleanupService)
+    public function __construct(\CReifenscheid\CleanupTools\Service\CleanupService $cleanupService)
     {
-        parent::__construct();
         $this->cleanupService = $cleanupService;
-        $this->cleanupService->setExecutionContext(\creifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
+        $this->cleanupService->setExecutionContext(\CReifenscheid\CleanupTools\Service\CleanupService::EXECUTION_CONTEXT_BEMODULE);
     }
 
     /**
@@ -62,16 +63,9 @@ class CleanupController extends BaseController
      */
     public function indexAction(): void
     {
-        if (! empty($this->configurationService->getErrorServices())) {
-            $this->addFlashMessage(\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.message', 'CleanupTools', [
-                implode(',', $this->cleanupService->getErrorServices())
-            ]), \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('LLL:EXT:cleanup_tools/Resources/Private/Language/locallang_mod.xlf:messages.error-services.headline', 'CleanupTools'), \TYPO3\CMS\Core\Messaging\FlashMessage::WARNING);
-        }
-
         // assign services to the view
         $this->view->assignMultiple([
-            'services' => $this->configurationService->getServices(),
-            'localizationFile' => $this->localizationFile
+            'services' => $this->configurationService->getServices()
         ]);
     }
 

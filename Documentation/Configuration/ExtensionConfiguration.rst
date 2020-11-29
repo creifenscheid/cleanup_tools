@@ -13,7 +13,7 @@ Properties
 ~~~~~~~~~~
 
 enableBackendModule
-"""""""""""""""""
+"""""""""""""""""""
 
 .. container:: table-row
 
@@ -55,7 +55,7 @@ enableAfterDatabaseOperationsHook
          Clean up flexform of a content element after database operations
 
 enablePreviewRenderer
-""""""""""""""""""
+"""""""""""""""""""""
 
 .. container:: table-row
 
@@ -67,3 +67,17 @@ enablePreviewRenderer
 
     Description
          Show hint and cleanup button in content elements if their flexform is not valid
+
+logLifetimeOptions
+"""""""""""""""""""""
+
+.. container:: table-row
+
+    Property
+         logLifetimeOptions
+
+    Data type
+         string (default: 1 day, 1 week, 1 month, 3 months, 6 months, 1 year)
+
+    Description
+         Selectable options to deleted log entries in history module
