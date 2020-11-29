@@ -36,12 +36,6 @@ It is shipped with adaptions of the lowlevel tools and can be extended by your o
 * enable/disable usage of services in scheduler task or toolbar
 
 
-### Release Management
-[**Semantic versioning**][2]
-* **bugfix updates** (e.g. 1.0.0 => 1.0.1): small bugfixes or security fixes without breaking changes,
-* **minor updates** (e.g. 1.0.0 => 1.1.0): new features or smaller tasks without breaking changes,
-* **major updates** (e.g. 1.0.0 => 2.0.0): breaking changes as refactorings, features, bugfixes or support of new LTS versions of TYPO3
-
 ### Support
 I don't want your money or anything else.
 I am doing this for fun, with heart and to improve my coding skills.
@@ -50,4 +44,3 @@ If you want to contribute, feel free to do so.
 Thank you!
 
 [1]: https://github.com/TYPO3/TYPO3.CMS/tree/master/typo3/sysext/lowlevel/Classes/Command
-[2]: https://semver.org/
