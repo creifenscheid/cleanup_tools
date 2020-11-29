@@ -176,7 +176,14 @@ class ConfigurationManagementUtility
      */
     public static function getConfiguration() : array 
     {
-        return $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'];
+        if ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools']) {
+            return $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleanup_tools'];
+        }
+        
+        $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'];
+        $configuration['cleanup_tools'] = [];
+        
+        return $configuration;
     }
     
     /**
