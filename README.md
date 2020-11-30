@@ -1,5 +1,8 @@
 ## TYPO3 Extension "Cleanup Tools"
 
+[![Latest Stable Version](https://poser.pugx.org/creifenscheid/cleanup-tools/v)](//packagist.org/packages/creifenscheid/cleanup-tools)
+[![License](https://poser.pugx.org/creifenscheid/cleanup-tools/license)](//packagist.org/packages/creifenscheid/cleanup-tools)
+
 ### Purpose
 The core extension [**"lowlevel"**][1] provides some great features, e.g. checking and cleaning flexforms.
 Inspired by these tools, "Cleanup tools" provides various possibilities to check and clean up your TYPO3 installation.
@@ -39,7 +42,7 @@ It is shipped with adaptions of the lowlevel tools and can be extended by your o
 ### Support
 I don't want your money or anything else.
 I am doing this for fun, with heart and to improve my coding skills.
-Constructive critisismn is very welcome.
+Constructive critisism is very welcome.
 If you want to contribute, feel free to do so.
 Thank you!
 
