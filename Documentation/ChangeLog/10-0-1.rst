@@ -1,0 +1,13 @@
+.. include:: ../../Includes.txt
+
+
+.. _10-0-1:
+
+10.0.1 - 2020/30/11
+==================
+
+Changes
+-------
+* set core extension "dashboard" as suggest not as dependency
+* remove unnecessary documentation content
+* fix typo in README file

@@ -11,7 +11,7 @@
 			"CReifenscheid\\CleanupTools\\" : "Classes/"
 		}
 	},
-	"minimum-stability" : "alpha",
+	"minimum-stability" : "stable",
 	"authors" : [{
 			"name" : "C. Reifenscheid",
 			"email" : "christian.reifenscheid.2112@gmail.com"
