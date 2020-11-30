@@ -30,11 +30,13 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'This extension provides cleanup tools and the possibility to implement cleanup services in your TYPO3 installation.',
     'category' => 'module',
     'author' => 'C. Reifenscheid',
-    'version' => '10.0.0',
-    'state' => 'alpha',
+    'version' => '10.0.1',
+    'state' => 'stable',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-10.4.99',
+            'typo3' => '10.4.0-10.4.99'
+        ],
+        'suggest' => [
             'dashboard' => '10.4.0 - 10.4.99'
         ]
     ],
