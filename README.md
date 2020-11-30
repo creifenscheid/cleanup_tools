@@ -2,8 +2,6 @@
 
 [![Latest Stable Version](https://poser.pugx.org/creifenscheid/cleanup-tools/v)](//packagist.org/packages/creifenscheid/cleanup-tools)
 [![License](https://poser.pugx.org/creifenscheid/cleanup-tools/license)](//packagist.org/packages/creifenscheid/cleanup-tools)
-[![Dependents](https://poser.pugx.org/creifenscheid/cleanup-tools/dependents)](//packagist.org/packages/creifenscheid/cleanup-tools)
-[![Suggesters](https://poser.pugx.org/creifenscheid/cleanup-tools/suggesters)](//packagist.org/packages/creifenscheid/cleanup-tools)
 
 ### Purpose
 The core extension [**"lowlevel"**][1] provides some great features, e.g. checking and cleaning flexforms.
