@@ -40,7 +40,7 @@
             <trans-unit id="tx_cleanuptools_domain_model_log.messages" resname="tx_cleanuptools_domain_model_log.messages">
                 <source>Messages</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log.parameters“ resname="tx_cleanuptools_domain_model_log.parameters">
+            <trans-unit id="tx_cleanuptools_domain_model_log.parameters" resname="tx_cleanuptools_domain_model_log.parameters">
                 <source>Parameters</source>
             </trans-unit>
             
