@@ -37,7 +37,8 @@ $EM_CONF[$_EXTKEY] = [
             'typo3' => '10.4.0-10.4.99'
         ],
         'suggests' => [
-            'dashboard' => '10.4.0 - 10.4.99'
+            'dashboard' => '10.4.0 - 10.4.99',
+            'scheduler' => '10.4.0 - 10.4.99'
         ]
     ],
     'autoload' => [
