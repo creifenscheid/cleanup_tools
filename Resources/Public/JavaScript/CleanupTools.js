@@ -46,8 +46,6 @@ define([
     	const elementObject = $(element);
     	const toggleContainer = '.' + elementObject.attr('data-toggle');
 
-		console.log(toggleContainer);
-
     	if (elementObject.hasClass('expanded')) {
     		elementObject.removeClass('expanded');
     		elementObject.attr('aria-expanded', 'false');

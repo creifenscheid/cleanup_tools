@@ -40,7 +40,7 @@
             <trans-unit id="tx_cleanuptools_domain_model_log.messages" resname="tx_cleanuptools_domain_model_log.messages">
                 <source>Messages</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log.parameters“ resname="tx_cleanuptools_domain_model_log.parameters">
+            <trans-unit id="tx_cleanuptools_domain_model_log.parameters" resname="tx_cleanuptools_domain_model_log.parameters">
                 <source>Parameters</source>
             </trans-unit>
             
@@ -54,10 +54,10 @@
             <trans-unit id="tx_cleanuptools_domain_model_log_message.message" resname="tx_cleanuptools_domain_model_log_message.message">
                 <source>Message</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_key“ resname="tx_cleanuptools_domain_model_log_message.local_lang_key">
+            <trans-unit id="tx_cleanuptools_domain_model_log_message.local_lang_key" resname="tx_cleanuptools_domain_model_log_message.local_lang_key">
                 <source>Localization key</source>
             </trans-unit>
-            <trans-unit id=„tx_cleanuptools_domain_model_log_message.local_lang_arguments“ resname="tx_cleanuptools_domain_model_log_message.local_lang_arguments">
+            <trans-unit id="tx_cleanuptools_domain_model_log_message.local_lang_arguments" resname="tx_cleanuptools_domain_model_log_message.local_lang_arguments">
                 <source>Localization arguments</source>
             </trans-unit>
         </body>
